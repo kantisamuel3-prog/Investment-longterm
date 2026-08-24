@@ -1,1 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InvestPro Demo</title>
 
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f3f6fb;
+  color: #172033;
+}
+
+header {
+  background: #111827;
+  color: white;
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.login {
+  background: #2563eb;
+  color: white;
+  border: 0;
+  padding: 10px 16px;
+  border-radius: 8px;
+}
+
+.hero {
+  background: linear-gradient(135deg,#111827,#2563eb);
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero h1 {
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  margin-bottom: 25px;
+}
+
+.btn {
+  background: white;
+  color: #2563eb;
+  border: 0;
+  padding: 13px 22px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.section {
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,.08);
+}
+
+.card h3 {
+  color: #2563eb;
+  margin-bottom: 15px;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 15px;
+}
+
+.card button {
+  background: #2563eb;
+  color: white;
+  border: 0;
+  padding: 11px 20px;
+  border-radius: 8px;
+}
+
+.dashboard {
+  margin-top: 35px;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 15px;
+}
+
+.stat {
+  background: #f3f6fb;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.stat h3 {
+  margin-top: 8px;
+}
+
+.notice {
+  background: #fff7ed;
+  color: #9a3412;
+  text-align: center;
+  padding: 10px;
+  font-size: 13px;
+}
+
+footer {
+  background: #111827;
+  color: white;
+  text-align: center;
+  padding: 25px;
+  margin-top: 40px;
+}
+
+@media(max-width:600px) {
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="notice">
+DEMO WEBSITE — No real money or transactions.
+</div>
+
+<header>
+  <div class="logo">InvestPro</div>
+  <button class="login" onclick="login()">Login</button>
+</header>
+
+<section class="hero">
+  <h1>Smart Investment Demo</h1>
+  <p>Explore our investment platform demo.</p>
+  <button class="btn" onclick="plans()">View Plans</button>
+</section>
+
+<section class="section" id="plans">
+
+<h2>Investment Plans</h2>
+
+<div class="plans">
+
+<div class="card">
+<h3>Starter</h3>
+<p>Demo Plan</p>
+<div class="price">₱1,000</div>
+<p>Example only</p>
+<br>
+<button onclick="selectPlan('Starter')">View Plan</button>
+</div>
+
+<div class="card">
+<h3>Premium</h3>
+<p>Demo Plan</p>
+<div class="price">₱5,000</div>
+<p>Example only</p>
+<br>
+<button onclick="selectPlan('Premium')">View Plan</button>
+</div>
+
+<div class="card">
+<h3>VIP</h3>
+<p>Demo Plan</p>
+<div class="price">₱10,000</div>
+<p>Example only</p>
+<br>
+<button onclick="selectPlan('VIP')">View Plan</button>
+</div>
+
+</div>
+
+<div class="dashboard">
+
+<h2>Demo Dashboard</h2>
+
+<div class="stats">
+
+<div class="stat">
+<small>Demo Balance</small>
+<h3>₱0.00</h3>
+</div>
+
+<div class="stat">
+<small>Investments</small>
+<h3>0</h3>
+</div>
+
+<div class="stat">
+<small>Demo Earnings</small>
+<h3>₱0.00</h3>
+</div>
+
+</div>
+</div>
+
+</section>
+
+<footer>
+<p>© 2026 InvestPro Demo</p>
+<p>For demonstration purposes only.</p>
+</footer>
+
+<script>
+
+function plans() {
+  document.getElementById("plans").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+function selectPlan(name) {
+  alert(name + " selected. Demo only.");
+}
+
+function login() {
+  alert("Demo Login — Login system not connected.");
+}
+
+</script>
+
+</body>
+</html>
