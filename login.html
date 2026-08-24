@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>InvestPro - Login</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f3f6fb;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  background: white;
+  width: 90%;
+  max-width: 400px;
+  padding: 35px 25px;
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.12);
+}
+
+.logo {
+  text-align: center;
+  color: #2563eb;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  margin-bottom: 18px;
+  font-size: 16px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  border: 0;
+  border-radius: 9px;
+  background: #2563eb;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.back {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.demo {
+  margin-top: 20px;
+  background: #fff7ed;
+  color: #9a3412;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+  <div class="logo">InvestPro</div>
+
+  <div class="subtitle">
+    Demo Member Login
+  </div>
+
+  <form onsubmit="loginDemo(event)">
+
+    <label>Email</label>
+    <input
+      type="email"
+      placeholder="Enter your email"
+      required
+    >
+
+    <label>Password</label>
+    <input
+      type="password"
+      placeholder="Enter your password"
+      required
+    >
+
+    <button class="login-btn" type="submit">
+      Login
+    </button>
+
+  </form>
+
+  <a class="back" href="index.html">
+    ← Back to Home
+  </a>
+
+  <div class="demo">
+    DEMO ONLY — No real account or password is stored.
+  </div>
+
+</div>
+
+<script>
+function loginDemo(event) {
+  event.preventDefault();
+
+  alert(
+    "Demo login successful!\n\n" +
+    "This is only a demonstration."
+  );
+}
+</script>
+
+</body>
+  </html>
