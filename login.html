@@ -100,27 +100,29 @@ input {
   <div class="subtitle">
   </div>
 
-  <form onsubmit="login(event)">
+  <form onsubmit="demoLogin(); return false;">
 
     <label>Email</label>
     <input
-      type="email"
-      placeholder="Enter your email"
-      required
-    > 
-    
+        type="email"
+        placeholder="Enter your email"
+        required
+    >
+
     <label>Password</label>
     <input
-      type="password"
-      placeholder="Enter your password"
-      required
+        type="password"
+        placeholder="Enter your password"
+        required
     >
 
     <button type="submit">Login</button>
 
-}
+</form>
+
+<script>
+
 </script>
-  </form>
 
   <a class="back" href="index.html">
     ← Back to Home
