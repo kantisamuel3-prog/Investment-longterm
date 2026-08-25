@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InvestPro Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f3f6fb;
+      color: #172033;
+    }
+
+    .top {
+      background: #111827;
+      color: white;
+      padding: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .logout {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .welcome {
+      background: linear-gradient(135deg, #173b8f, #2864e8);
+      color: white;
+      padding: 40px 25px;
+    }
+
+    .welcome h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .container {
+      padding: 25px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .card h3 {
+      color: #2563eb;
+      margin-bottom: 12px;
+    }
+
+    .amount {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .demo {
+      margin-top: 25px;
+      padding: 15px;
+      background: #fff7ed;
+      color: #9a3412;
+      border-radius: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top">
+    <div class="logo">InvestPro</div>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="welcome">
+    <h1>Welcome, Demo Member! 👋</h1>
+    <p>Your demo investment dashboard</p>
+  </div>
+
+  <div class="container">
+
+    <h2>Dashboard</h2>
+
+    <div class="cards">
+
+      <div class="card">
+        <h3>Demo Balance</h3>
+        <div class="amount">₱10,000</div>
+      </div>
+
+      <div class="card">
+        <h3>Total Investment</h3>
+        <div class="amount">₱5,000</div>
+      </div>
+
+      <div class="card">
+        <h3>Demo Profit</h3>
+        <div class="amount">₱500</div>
+      </div>
+
+    </div>
+
+    <div class="demo">
+      DEMO ONLY — No real money, deposits, withdrawals, or transactions.
+    </div>
+
+  </div>
+
+  <script>
+    function logout() {
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+  </html>
