@@ -95,34 +95,38 @@ input {
 
 <div class="login-box">
 
-  <div class="logo">Investment ni Barro</div>
+  <div class="logo">Paldo ta Diri</div>
 
   <div class="subtitle">
   </div>
 
   <form onsubmit="demoLogin(); return false;">
 
-    <label>Email</label>
-    <input
-        type="email"
-        placeholder="Enter your email"
-        required
-    >
+  <label>Email</label>
+  <input
+    type="email"
+    placeholder="Enter your email"
+    required
+  >
 
-    <label>Password</label>
-    <input
-        type="password"
-        placeholder="Enter your password"
-        required
-    >
+  <label>Password</label>
+  <input
+    type="password"
+    placeholder="Enter your password"
+    required
+  >
 
-    <button type="submit">Login</button>
+  <button class="login-btn" type="submit">Login</button>
 
 </form>
 
 <script>
-
+function demoLogin() {
+  window.location.href = "dashboard.html";
+}
 </script>
+
+
 
   <a class="back" href="index.html">
     ← Back to Home
