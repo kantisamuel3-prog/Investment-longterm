@@ -1,144 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>InvestPro Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<title>InvestPro Demo Dashboard</title>
 
-    body {
-      background: #f3f6fb;
-      color: #172033;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
 
-    .top {
-      background: #111827;
-      color: white;
-      padding: 22px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+body {
+  background: #f3f6fb;
+  color: #172033;
+}
 
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-    }
+.top {
+  background: #111827;
+  color: white;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    .logout {
-      background: #ef4444;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-size: 16px;
-    }
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
 
-    .welcome {
-      background: linear-gradient(135deg, #173b8f, #2864e8);
-      color: white;
-      padding: 40px 25px;
-    }
+.logout {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
-    .welcome h1 {
-      font-size: 30px;
-      margin-bottom: 10px;
-    }
+.welcome {
+  background: linear-gradient(135deg, #173b8f, #2864e8);
+  color: white;
+  padding: 35px 22px;
+}
 
-    .container {
-      padding: 25px;
-      max-width: 900px;
-      margin: auto;
-    }
+.welcome h1 {
+  font-size: 29px;
+  margin-bottom: 8px;
+}
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      margin-top: 20px;
-    }
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 25px 20px;
+}
 
-    .card {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    }
+.section-title {
+  margin-bottom: 18px;
+}
 
-    .card h3 {
-      color: #2563eb;
-      margin-bottom: 12px;
-    }
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
 
-    .amount {
-      font-size: 28px;
-      font-weight: bold;
-    }
+.card {
+  background: white;
+  padding: 22px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.07);
+}
 
-    .demo {
-      margin-top: 25px;
-      padding: 15px;
-      background: #fff7ed;
-      color: #9a3412;
-      border-radius: 10px;
-      text-align: center;
-    }
-  </style>
+.card h3 {
+  color: #2563eb;
+  margin-bottom: 10px;
+}
+
+.amount {
+  font-size: 27px;
+  font-weight: bold;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.action-btn {
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.deposit {
+  background: #16a34a;
+}
+
+.withdraw {
+  background: #dc2626;
+}
+
+.activity {
+  margin-top: 30px;
+}
+
+.activity-item {
+  background: white;
+  padding: 17px;
+  margin-top: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.demo {
+  margin-top: 30px;
+  padding: 15px;
+  background: #fff7ed;
+  color: #9a3412;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+@media(max-width:700px) {
+  .summary {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .activity-item {
+    flex-direction: column;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="top">
-    <div class="logo">InvestPro</div>
-    <button class="logout" onclick="logout()">Logout</button>
+<div class="top">
+
+  <div class="logo">
+    InvestPro
   </div>
 
-  <div class="welcome">
-    <h1>Welcome, Demo Member! 👋</h1>
-    <p>Your demo investment dashboard</p>
+  <button class="logout" onclick="logout()">
+    Logout
+  </button>
+
+</div>
+
+<div class="welcome">
+
+  <h1>
+    Welcome, Demo Member! 👋
+  </h1>
+
+  <p>
+    Your demonstration investment dashboard
+  </p>
+
+</div>
+
+<div class="container">
+
+  <h2 class="section-title">
+    Portfolio Summary
+  </h2>
+
+  <div class="summary">
+
+    <div class="card">
+      <h3>Demo Balance</h3>
+      <div class="amount" id="balance">₱10,000.00</div>
+    </div>
+
+    <div class="card">
+      <h3>Total Investment</h3>
+      <div class="amount" id="investment">₱5,000.00</div>
+    </div>
+
+    <div class="card">
+      <h3>Demo Profit</h3>
+      <div class="amount">₱500.00</div>
+    </div>
+
   </div>
 
-  <div class="container">
 
-    <h2>Dashboard</h2>
+  <div class="actions">
 
-    <div class="cards">
+    <button
+      class="action-btn deposit"
+      onclick="depositDemo()">
+      + Deposit Demo
+    </button>
 
-      <div class="card">
-        <h3>Demo Balance</h3>
-        <div class="amount">₱10,000</div>
-      </div>
+    <button
+      class="action-btn withdraw"
+      onclick="withdrawDemo()">
+      - Withdraw Demo
+    </button>
 
-      <div class="card">
-        <h3>Total Investment</h3>
-        <div class="amount">₱5,000</div>
-      </div>
+  </div>
 
-      <div class="card">
-        <h3>Demo Profit</h3>
-        <div class="amount">₱500</div>
+
+  <div class="activity">
+
+    <h2 class="section-title">
+      Transaction History
+    </h2>
+
+    <div id="transactions">
+
+      <div class="activity-item">
+        <span>Demo account created</span>
+        <span>₱10,000.00</span>
       </div>
 
     </div>
 
-    <div class="demo">
-      DEMO ONLY — No real money, deposits, withdrawals, or transactions.
-    </div>
-
   </div>
 
-  <script>
-    function logout() {
-      window.location.href = "index.html";
-    }
-  </script>
+
+  <div class="demo">
+    DEMO ONLY — No real money, deposits,
+    withdrawals, payments, or financial transactions.
+  </div>
+
+</div>
+
+
+<script>
+
+let balance = 10000;
+
+function formatMoney(amount) {
+
+  return "₱" + amount.toLocaleString("en-PH", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+
+}
+
+
+function updateBalance() {
+
+  document.getElementById("balance").textContent =
+    formatMoney(balance);
+
+}
+
+
+function addTransaction(type, amount) {
+
+  const container =
+    document.getElementById("transactions");
+
+  const item =
+    document.createElement("div");
+
+  item.className = "activity-item";
+
+  item.innerHTML =
+    "<span>" + type + "</span>" +
+    "<span>" + formatMoney(amount) + "</span>";
+
+  container.prepend(item);
+
+}
+
+
+function depositDemo() {
+
+  const input =
+    prompt("Enter demo deposit amount:");
+
+  const amount =
+    Number(input);
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+
+    alert("Please enter a valid amount.");
+
+    return;
+  }
+
+  if (amount > 1000000) {
+
+    alert("Demo amount is too large.");
+
+    return;
+  }
+
+  balance += amount;
+
+  updateBalance();
+
+  addTransaction(
+    "Demo Deposit",
+    amount
+  );
+
+  alert(
+    "Demo deposit added: " +
+    formatMoney(amount)
+  );
+
+}
+
+
+function withdrawDemo() {
+
+  const input =
+    prompt("Enter demo withdrawal amount:");
+
+  const amount =
+    Number(input);
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+
+    alert("Please enter a valid amount.");
+
+    return;
+  }
+
+  if (amount > balance) {
+
+    alert(
+      "Demo withdrawal exceeds the demo balance."
+    );
+
+    return;
+  }
+
+  balance -= amount;
+
+  updateBalance();
+
+  addTransaction(
+    "Demo Withdrawal",
+    -amount
+  );
+
+  alert(
+    "Demo withdrawal recorded: " +
+    formatMoney(amount)
+  );
+
+}
+
+
+function logout() {
+
+  window.location.href = "index.html";
+
+}
+
+</script>
 
 </body>
-  </html>
+</html>
+Compose
+Write to Ybarro Batilo
