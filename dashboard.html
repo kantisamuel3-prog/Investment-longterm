@@ -168,7 +168,7 @@ body {
 <div class="welcome">
 
   <h1>
-    Welcome, Demo Member! 👋
+    Welcome, Members! 👋
   </h1>
 
   <p>
@@ -187,17 +187,17 @@ body {
 
     <div class="card">
       <h3>Demo Balance</h3>
-      <div class="amount" id="balance">₱10,000.00</div>
+      <div class="amount" id="balance">₱0</div>
     </div>
 
     <div class="card">
       <h3>Total Investment</h3>
-      <div class="amount" id="investment">₱5,000.00</div>
+      <div class="amount" id="investment">₱0</div>
     </div>
 
     <div class="card">
       <h3>Demo Profit</h3>
-      <div class="amount">₱500.00</div>
+      <div class="amount">₱0</div>
     </div>
 
   </div>
@@ -207,14 +207,14 @@ body {
 
     <button
       class="action-btn deposit"
-      onclick="depositDemo()">
-      + Deposit Demo
+      onclick="deposit()">
+      + Deposit
     </button>
 
     <button
       class="action-btn withdraw"
-      onclick="withdrawDemo()">
-      - Withdraw Demo
+      onclick="withdraw()">
+      - Withdraw
     </button>
 
   </div>
@@ -238,8 +238,8 @@ body {
   </div>
 
 
-  <div class="demo">
-    DEMO ONLY — No real money, deposits,
+  <div class="Invest">
+    Investment,
     withdrawals, payments, or financial transactions.
   </div>
 
@@ -287,10 +287,10 @@ function addTransaction(type, amount) {
 }
 
 
-function depositDemo() {
+function deposit() {
 
   const input =
-    prompt("Enter demo deposit amount:");
+    prompt("Enter deposit amount:");
 
   const amount =
     Number(input);
@@ -304,7 +304,7 @@ function depositDemo() {
 
   if (amount > 1000000) {
 
-    alert("Demo amount is too large.");
+    alert("amount is too large.");
 
     return;
   }
@@ -314,22 +314,22 @@ function depositDemo() {
   updateBalance();
 
   addTransaction(
-    "Demo Deposit",
+    "Deposit",
     amount
   );
 
   alert(
-    "Demo deposit added: " +
+    "deposit added: " +
     formatMoney(amount)
   );
 
 }
 
 
-function withdrawDemo() {
+function withdraw() {
 
   const input =
-    prompt("Enter demo withdrawal amount:");
+    prompt("Enter withdrawal amount:");
 
   const amount =
     Number(input);
@@ -344,7 +344,7 @@ function withdrawDemo() {
   if (amount > balance) {
 
     alert(
-      "Demo withdrawal exceeds the demo balance."
+      "withdrawal exceeds the demo balance."
     );
 
     return;
@@ -355,7 +355,7 @@ function withdrawDemo() {
   updateBalance();
 
   addTransaction(
-    "Demo Withdrawal",
+    "Withdrawal",
     -amount
   );
 
