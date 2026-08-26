@@ -100,7 +100,7 @@ input {
   <div class="subtitle">
   </div>
 
-  <form onsubmit="demoLogin(); return false;">
+  <form onsubmit="login(event)">
 
   <label>Email</label>
   <input
@@ -109,7 +109,7 @@ input {
     required
   >
 
-  <form onsubmit="login(event)">
+  
   <input
     type="password"
     placeholder="Enter your password"
