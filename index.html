@@ -272,7 +272,18 @@ function selectPlan(name) {
 }
 
 function login() {
-  alert("Login — Login system connected.");
+  const email = prompt("Ilagay ang email:");
+const password = prompt("Ilagay ang password:");
+
+if (email && password) {
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      alert("Login successful!");
+    })
+    .catch((error) => {
+      alert("Login failed: " + error.message);
+    });
+  }
 }
 
 </script>
