@@ -243,9 +243,24 @@ Investment ni Barro
 <p>© 2026 InvestPro</p>
 <p>For demonstration purposes only.</p>
 </footer>
-
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+  authDomain: "investpro-2dafb.firebaseapp.com",
+  projectId: "investpro-2dafb",
+  storageBucket: "investpro-2dafb.firebasestorage.app",
+  messagingSenderId: "135092039764",
+  appId: "1:135092039764:web:c4c71eef0c904346a77dc1",
+  measurementId: "G-0L77SFTC4F"
+};
+  firebase.initializeApp(firebaseConfig);
 
+const db = firebase.firestore();
+const auth = firebase.auth();
 function plans() {
   document.getElementById("plans").scrollIntoView({
     behavior: "smooth"
