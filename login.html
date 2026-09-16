@@ -186,7 +186,12 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+console.log("Firebase Project:", firebaseConfig.projectId);
+console.log("Firebase Auth Domain:", firebaseConfig.authDomain);
+console.log("Firebase API Key:", firebaseConfig.apiKey);
+
 const auth = firebase.auth();
+
 
 
 // Convert Philippine phone number
