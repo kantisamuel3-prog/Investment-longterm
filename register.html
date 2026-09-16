@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>InvestPro - Register</title>
+
+  <title>Novarise - Register</title>
 
   <style>
     body {
@@ -28,6 +29,7 @@
     h1 {
       text-align: center;
       color: #1e293b;
+      margin-bottom: 25px;
     }
 
     input {
@@ -54,6 +56,7 @@
 
     button:disabled {
       background: #94a3b8;
+      cursor: not-allowed;
     }
 
     .login {
@@ -77,22 +80,25 @@
 <body>
 
   <div class="card">
+
     <h1>Create Account</h1>
 
     <form id="registerForm">
 
-<input
-  type="tel"
-  id="phone"
-  placeholder="Phone Number"
-  required
->
-      
+      <input
+        type="tel"
+        id="phone"
+        placeholder="Phone Number"
+        autocomplete="tel"
+        required
+      >
+
       <input
         type="password"
         id="password"
         placeholder="Password"
         minlength="6"
+        autocomplete="new-password"
         required
       >
 
@@ -101,10 +107,14 @@
         id="confirmPassword"
         placeholder="Confirm Password"
         minlength="6"
+        autocomplete="new-password"
         required
       >
 
-      <button type="submit" id="registerButton">
+      <button
+        type="submit"
+        id="registerButton"
+      >
         Create Account
       </button>
 
@@ -116,6 +126,7 @@
       Already have an account?
       <a href="login.html">Login</a>
     </div>
+
   </div>
 
 
@@ -138,40 +149,66 @@
     } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-    // =====================================================
-    // ILAGAY DITO ANG FIREBASE CONFIG NA KINOPYA MO
-    // =====================================================
-
+    // Firebase configuration
     const firebaseConfig = {
-  apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
-  authDomain: "investpro-2dafb.firebaseapp.com",
-  projectId: "investpro-2dafb",
-  storageBucket: "investpro-2dafb.firebasestorage.app",
-  messagingSenderId: "135092039764",
-  appId: "1:135092039764:web:c4c71eef0c904346a77dc1",
-  measurementId: "G-0L77SFTC4F"
-};
+      apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+      authDomain: "investpro-2dafb.firebaseapp.com",
+      projectId: "investpro-2dafb",
+      storageBucket: "investpro-2dafb.firebasestorage.app",
+      messagingSenderId: "135092039764",
+      appId: "1:135092039764:web:c4c71eef0c904346a77dc1",
+      measurementId: "G-0L77SFTC4F"
+    };
 
 
-    // Firebase initialization
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
 
     const auth = getAuth(app);
     const db = getFirestore(app);
 
 
-    // Register
+    // Normalize Philippine phone number
+    function normalizePhone(phone) {
+
+      phone = phone.trim();
+
+      // Remove spaces, dashes and parentheses
+      phone = phone.replace(/[\s\-()]/g, "");
+
+      // 09171234567 -> 639171234567
+      if (phone.startsWith("09")) {
+        phone = "63" + phone.substring(1);
+      }
+
+      // +639171234567 -> 639171234567
+      if (phone.startsWith("+63")) {
+        phone = phone.substring(1);
+      }
+
+      return phone;
+    }
+
+
+    // Convert phone number to internal Firebase email
+    function phoneToFirebaseEmail(phone) {
+
+      const normalizedPhone = normalizePhone(phone);
+
+      return normalizedPhone + "@novarise.local";
+    }
+
+
+    // Registration
     document
       .getElementById("registerForm")
       .addEventListener("submit", async function(e) {
 
         e.preventDefault();
 
-        const name =
-          document.getElementById("name").value.trim();
 
-        const email =
-          document.getElementById("email").value.trim();
+        const phone =
+          document.getElementById("phone").value;
 
         const password =
           document.getElementById("password").value;
@@ -186,34 +223,65 @@
           document.getElementById("message");
 
 
-        // Check password
-        if (password !== confirmPassword) {
+        // Normalize phone
+        const normalizedPhone =
+          normalizePhone(phone);
+
+
+        // Validate Philippine phone number
+        if (!/^639\d{9}$/.test(normalizedPhone)) {
+
           message.style.color = "red";
-          message.textContent = "Passwords do not match.";
+
+          message.textContent =
+            "Please enter a valid Philippine phone number.";
+
           return;
         }
 
 
+        // Check password
+        if (password !== confirmPassword) {
+
+          message.style.color = "red";
+
+          message.textContent =
+            "Passwords do not match.";
+
+          return;
+        }
+
+
+        // Firebase requires an email-style identifier
+        const firebaseEmail =
+          phoneToFirebaseEmail(phone);
+
+
         button.disabled = true;
-        button.textContent = "Creating account...";
+        button.textContent =
+          "Creating account...";
 
 
         try {
 
           // Create Firebase Authentication account
+          // using phone as the internal identifier.
+          // NO SMS and NO OTP are used.
           const userCredential =
             await createUserWithEmailAndPassword(
               auth,
-              email,
+              firebaseEmail,
               password
             );
 
-          const user = userCredential.user;
+
+          const user =
+            userCredential.user;
 
 
-          // Save display name
+          // Save phone as display name
           await updateProfile(user, {
-            displayName: name
+            displayName: normalizedPhone
           });
 
 
@@ -221,8 +289,7 @@
           await setDoc(
             doc(db, "Users", user.uid),
             {
-              name: name,
-              email: email,
+              phone: normalizedPhone,
               balance: 0,
               createdAt: new Date()
             }
@@ -230,13 +297,17 @@
 
 
           message.style.color = "green";
+
           message.textContent =
             "Account created successfully!";
 
 
           // Go to login page
           setTimeout(() => {
-            window.location.href = "login.html";
+
+            window.location.href =
+              "login.html";
+
           }, 1500);
 
 
@@ -246,25 +317,39 @@
 
           message.style.color = "red";
 
-          if (error.code === "auth/email-already-in-use") {
+
+          if (
+            error.code ===
+            "auth/email-already-in-use"
+          ) {
+
             message.textContent =
-              "This email is already registered.";
-          }
-          else if (error.code === "auth/invalid-email") {
-            message.textContent =
-              "Please enter a valid email.";
-          }
-          else if (error.code === "auth/weak-password") {
-            message.textContent =
-              "Password must be at least 6 characters.";
-          }
-          else {
-            message.textContent =
-              error.message;
+              "This phone number is already registered.";
+
           }
 
+          else if (
+            error.code ===
+            "auth/weak-password"
+          ) {
+
+            message.textContent =
+              "Password must be at least 6 characters.";
+
+          }
+
+          else {
+
+            message.textContent =
+              error.message;
+
+          }
+
+
           button.disabled = false;
-          button.textContent = "Create Account";
+
+          button.textContent =
+            "Create Account";
         }
 
       });
