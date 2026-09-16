@@ -1,1 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InvestPro - Register</title>
 
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: white;
+      width: 90%;
+      max-width: 400px;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #1e293b;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px;
+      margin: 8px 0;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #94a3b8;
+    }
+
+    .login {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h1>Create Account</h1>
+
+    <form id="registerForm">
+
+      <input
+        type="text"
+        id="name"
+        placeholder="Full Name"
+        required
+      >
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Email Address"
+        required
+      >
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        minlength="6"
+        required
+      >
+
+      <input
+        type="password"
+        id="confirmPassword"
+        placeholder="Confirm Password"
+        minlength="6"
+        required
+      >
+
+      <button type="submit" id="registerButton">
+        Create Account
+      </button>
+
+    </form>
+
+    <div id="message"></div>
+
+    <div class="login">
+      Already have an account?
+      <a href="login.html">Login</a>
+    </div>
+  </div>
+
+
+  <!-- Firebase -->
+  <script type="module">
+
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      updateProfile
+    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+    import {
+      getFirestore,
+      doc,
+      setDoc
+    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+    // =====================================================
+    // ILAGAY DITO ANG FIREBASE CONFIG NA KINOPYA MO
+    // =====================================================
+
+    const firebaseConfig = {
+  apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+  authDomain: "investpro-2dafb.firebaseapp.com",
+  projectId: "investpro-2dafb",
+  storageBucket: "investpro-2dafb.firebasestorage.app",
+  messagingSenderId: "135092039764",
+  appId: "1:135092039764:web:c4c71eef0c904346a77dc1",
+  measurementId: "G-0L77SFTC4F"
+};
+
+
+    // Firebase initialization
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+
+    // Register
+    document
+      .getElementById("registerForm")
+      .addEventListener("submit", async function(e) {
+
+        e.preventDefault();
+
+        const name =
+          document.getElementById("name").value.trim();
+
+        const email =
+          document.getElementById("email").value.trim();
+
+        const password =
+          document.getElementById("password").value;
+
+        const confirmPassword =
+          document.getElementById("confirmPassword").value;
+
+        const button =
+          document.getElementById("registerButton");
+
+        const message =
+          document.getElementById("message");
+
+
+        // Check password
+        if (password !== confirmPassword) {
+          message.style.color = "red";
+          message.textContent = "Passwords do not match.";
+          return;
+        }
+
+
+        button.disabled = true;
+        button.textContent = "Creating account...";
+
+
+        try {
+
+          // Create Firebase Authentication account
+          const userCredential =
+            await createUserWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
+
+          const user = userCredential.user;
+
+
+          // Save display name
+          await updateProfile(user, {
+            displayName: name
+          });
+
+
+          // Save user information to Firestore
+          await setDoc(
+            doc(db, "Users", user.uid),
+            {
+              name: name,
+              email: email,
+              balance: 0,
+              createdAt: new Date()
+            }
+          );
+
+
+          message.style.color = "green";
+          message.textContent =
+            "Account created successfully!";
+
+
+          // Go to login page
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 1500);
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          message.style.color = "red";
+
+          if (error.code === "auth/email-already-in-use") {
+            message.textContent =
+              "This email is already registered.";
+          }
+          else if (error.code === "auth/invalid-email") {
+            message.textContent =
+              "Please enter a valid email.";
+          }
+          else if (error.code === "auth/weak-password") {
+            message.textContent =
+              "Password must be at least 6 characters.";
+          }
+          else {
+            message.textContent =
+              error.message;
+          }
+
+          button.disabled = false;
+          button.textContent = "Create Account";
+        }
+
+      });
+
+  </script>
+
+</body>
+</html>
