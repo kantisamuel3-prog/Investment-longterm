@@ -1,880 +1,579 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>InvestPro Dashboard</title>
+  <title>InvestPro Dashboard</title>
 
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  background: #f3f6fb;
-  color: #172033;
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
 
-.top {
-  background: #111827;
-  color: white;
-  padding: 18px 22px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    header {
+      background: #111827;
+      color: white;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-}
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
 
-.logout {
-  background: #ef4444;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-}
+    #logoutButton {
+      border: 0;
+      background: #dc2626;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-.welcome {
-  background: linear-gradient(135deg, #173b8f, #2864e8);
-  color: white;
-  padding: 35px 22px;
-}
+    main {
+      max-width: 1000px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
 
-.welcome h1 {
-  font-size: 29px;
-  margin-bottom: 8px;
-}
+    .welcome {
+      margin-bottom: 20px;
+    }
 
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 25px 20px;
-}
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
 
-.section-title {
-  margin-bottom: 18px;
-}
+    .balance {
+      font-size: 34px;
+      font-weight: bold;
+      margin: 12px 0 20px;
+    }
 
-.summary {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-.card {
-  background: white;
-  padding: 22px;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,.07);
-}
+    button {
+      border: 0;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+    }
 
-.card h3 {
-  color: #2563eb;
-  margin-bottom: 10px;
-}
+    #depositButton {
+      background: #16a34a;
+      color: white;
+    }
 
-.amount {
-  font-size: 27px;
-  font-weight: bold;
-}
+    #withdrawButton {
+      background: #f59e0b;
+      color: white;
+    }
 
-.actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-top: 25px;
-}
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
 
-.action-btn {
-  padding: 15px;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    .product {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 18px;
+    }
 
-.deposit {
-  background: #16a34a;
-}
+    .product h3 {
+      margin-top: 0;
+    }
 
-.withdraw {
-  background: #dc2626;
-}
+    .buyButton {
+      background: #2563eb;
+      color: white;
+      width: 100%;
+    }
 
-.action-btn:hover {
-  opacity: .9;
-}
+    .transaction {
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
 
-.activity {
-  margin-top: 30px;
-}
+    .transaction:last-child {
+      border-bottom: 0;
+    }
 
-.activity-item {
-  background: white;
-  padding: 17px;
-  margin-top: 10px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
+    .positive {
+      color: #16a34a;
+      font-weight: bold;
+    }
 
-.empty {
-  background: white;
-  padding: 17px;
-  border-radius: 10px;
-  color: #64748b;
-}
+    .negative {
+      color: #dc2626;
+      font-weight: bold;
+    }
 
-.products-section {
-  margin-top: 35px;
-}
-
-.products {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.product-card {
-  background: white;
-  padding: 22px;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,.07);
-}
-
-.product-card h3 {
-  color: #2563eb;
-  margin-bottom: 10px;
-}
-
-.product-price {
-  font-size: 27px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.product-card p {
-  color: #64748b;
-  margin-bottom: 18px;
-}
-
-.product-card button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background: #2563eb;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.product-card button:hover {
-  opacity: .9;
-}
-
-.demo {
-  margin-top: 30px;
-  padding: 15px;
-  background: #fff7ed;
-  color: #9a3412;
-  border-radius: 10px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.loading {
-  text-align: center;
-  padding: 20px;
-  color: #64748b;
-}
-
-@media (max-width: 700px) {
-  .summary {
-    grid-template-columns: 1fr;
-  }
-
-  .actions {
-    grid-template-columns: 1fr;
-  }
-
-  .products {
-    grid-template-columns: 1fr;
-  }
-
-  .activity-item {
-    flex-direction: column;
-  }
-}
-</style>
+    .status {
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="top">
+<header>
+  <h1>InvestPro</h1>
+  <button id="logoutButton">Logout</button>
+</header>
 
-  <div class="logo">
-    InvestPro
+<main>
+
+  <div class="welcome">
+    <h2>Dashboard</h2>
+    <div id="userEmail">Checking account...</div>
   </div>
 
-  <button class="logout" id="logoutButton">
-    Logout
-  </button>
+  <div class="card">
+    <h3>Your Balance</h3>
 
-</div>
-
-<div class="welcome">
-
-  <h1>
-    Welcome, Members! 👋
-  </h1>
-
-  <p>
-    Your investment dashboard
-  </p>
-
-</div>
-
-<div class="container">
-
-  <h2 class="section-title">
-    Portfolio Summary
-  </h2>
-
-  <div class="summary">
-
-    <div class="card">
-      <h3>Balance</h3>
-      <div class="amount" id="balance">₱0.00</div>
+    <div class="balance" id="balance">
+      ₱0.00
     </div>
 
-    <div class="card">
-      <h3>Total Investment</h3>
-      <div class="amount" id="investment">₱0.00</div>
+    <div class="buttons">
+      <button id="depositButton">Deposit</button>
+      <button id="withdrawButton">Withdraw</button>
     </div>
-
-    <div class="card">
-      <h3>Profit</h3>
-      <div class="amount">₱0.00</div>
-    </div>
-
   </div>
 
-
-  <div class="actions">
-
-    <button
-      class="action-btn deposit"
-      id="depositButton">
-      + Deposit
-    </button>
-
-    <button
-      class="action-btn withdraw"
-      id="withdrawButton">
-      - Withdraw
-    </button>
-
-  </div>
-
-
-  <div class="activity">
-
-    <h2 class="section-title">
-      Transaction History
-    </h2>
-
-    <div id="transactions">
-      <div class="loading">
-        Loading transactions...
-      </div>
-    </div>
-
-  </div>
-
-
-  <!-- PRODUCTS -->
-
-  <div class="products-section">
-
-    <h2 class="section-title">
-      Products
-    </h2>
+  <div class="card">
+    <h3>Investment Products</h3>
 
     <div class="products">
 
-      <div class="product-card">
-
-        <h3>Starter Plan</h3>
-
-        <div class="product-price">
-          ₱100
-        </div>
-
-        <p>
-          Demo product
-        </p>
-
-        <button
-          class="buy-button"
-          data-name="Starter Plan"
-          data-price="100">
-          Buy Product
+      <div class="product">
+        <h3>Starter Investment</h3>
+        <p>Minimum: ₱500</p>
+        <p>Long-term investment product.</p>
+        <button class="buyButton" data-price="500">
+          Invest ₱500
         </button>
-
       </div>
 
-
-      <div class="product-card">
-
-        <h3>Basic Plan</h3>
-
-        <div class="product-price">
-          ₱500
-        </div>
-
-        <p>
-          Demo product
-        </p>
-
-        <button
-          class="buy-button"
-          data-name="Basic Plan"
-          data-price="500">
-          Buy Product
+      <div class="product">
+        <h3>Growth Investment</h3>
+        <p>Minimum: ₱1,000</p>
+        <p>Long-term growth product.</p>
+        <button class="buyButton" data-price="1000">
+          Invest ₱1,000
         </button>
-
       </div>
 
-
-      <div class="product-card">
-
-        <h3>Premium Plan</h3>
-
-        <div class="product-price">
-          ₱1,000
-        </div>
-
-        <p>
-          Demo product
-        </p>
-
-        <button
-          class="buy-button"
-          data-name="Premium Plan"
-          data-price="1000">
-          Buy Product
+      <div class="product">
+        <h3>Premium Investment</h3>
+        <p>Minimum: ₱5,000</p>
+        <p>Premium long-term investment product.</p>
+        <button class="buyButton" data-price="5000">
+          Invest ₱5,000
         </button>
-
       </div>
 
     </div>
-
   </div>
 
-
-  <div class="demo">
-    Demo dashboard. Deposits and withdrawals are currently for testing.
+  <div class="card">
+    <h3>Transaction History</h3>
+    <div id="transactions">
+      <div class="status">Loading transactions...</div>
+    </div>
   </div>
 
-</div>
-
+</main>
 
 <script type="module">
 
-/* ================================
-   FIREBASE IMPORTS
-================================ */
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-import {
-  getAuth,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  runTransaction
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc,
+    runTransaction
+  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
-/* ================================
-   FIREBASE CONFIG
-================================ */
+  /* =========================
+     FIREBASE CONFIG
+     ========================= */
 
-const firebaseConfig = {
+  const firebaseConfig = {
 
-  apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+    apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
 
-  authDomain: "investpro-2dafb.firebaseapp.com",
+    authDomain: "investpro-2dafb.firebaseapp.com",
 
-  projectId: "investpro-2dafb",
+    projectId: "investpro-2dafb",
 
-  storageBucket: "investpro-2dafb.firebasestorage.app",
+    storageBucket: "investpro-2dafb.firebasestorage.app",
 
-  messagingSenderId: "135092039764",
+    messagingSenderId: "135092039764",
 
-  appId: "1:135092039764:web:c4c71eef0c904346a77dc1",
+    appId: "1:135092039764:web:c4c71eef0c904346a77dc1"
 
-  measurementId: "G-0L77SFTC4F"
-
-};
+  };
 
 
-/* ================================
-   FIREBASE START
-================================ */
+  /* =========================
+     FIREBASE START
+     ========================= */
 
-const app = initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+  const auth = getAuth(app);
 
-const db = getFirestore(app);
-
-
-/* ================================
-   VARIABLES
-================================ */
-
-let balance = 0;
-
-let currentUser = null;
+  const db = getFirestore(app);
 
 
-/* ================================
-   FORMAT MONEY
-================================ */
-
-function formatMoney(amount) {
-
-  return "₱" + Number(amount).toLocaleString("en-PH", {
-
-    minimumFractionDigits: 2,
-
-    maximumFractionDigits: 2
-
-  });
-
-}
+  let currentUser = null;
 
 
-/* ================================
-   UPDATE BALANCE
-================================ */
+  /* =========================
+     ELEMENTS
+     ========================= */
 
-function updateBalance() {
+  const balanceElement =
+    document.getElementById("balance");
 
-  document.getElementById("balance").textContent =
-    formatMoney(balance);
+  const emailElement =
+    document.getElementById("userEmail");
 
-}
-
-
-/* ================================
-   LOAD TRANSACTIONS
-================================ */
-
-function loadTransactions(transactions) {
-
-  const container =
+  const transactionsElement =
     document.getElementById("transactions");
 
-  container.innerHTML = "";
+  const depositButton =
+    document.getElementById("depositButton");
+
+  const withdrawButton =
+    document.getElementById("withdrawButton");
+
+  const logoutButton =
+    document.getElementById("logoutButton");
 
 
-  if (!transactions || transactions.length === 0) {
+  /* =========================
+     MONEY FORMAT
+     ========================= */
 
-    container.innerHTML =
-      '<div class="empty">No transactions yet.</div>';
+  function formatMoney(amount) {
 
-    return;
+    return "₱" + Number(amount || 0).toLocaleString(
+      "en-PH",
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }
+    );
 
   }
 
 
-  transactions
-    .slice()
-    .reverse()
-    .forEach(transaction => {
+  /* =========================
+     SHOW BALANCE
+     ========================= */
 
-      const item =
-        document.createElement("div");
+  function showBalance(amount) {
 
-      item.className = "activity-item";
+    balanceElement.textContent =
+      formatMoney(amount);
 
-
-      const type =
-        document.createElement("span");
-
-      type.textContent =
-        transaction.type || "Transaction";
+  }
 
 
-      const amount =
-        document.createElement("span");
+  /* =========================
+     LOAD USER
+     ========================= */
 
-      amount.textContent =
-        formatMoney(transaction.amount || 0);
+  async function loadUserData(user) {
 
+    const userRef =
+      doc(db, "users", user.uid);
 
-      item.appendChild(type);
-
-      item.appendChild(amount);
-
-      container.appendChild(item);
-
-    });
-
-}
-
-
-/* ================================
-   LOAD USER DATA
-================================ */
-
-async function loadUserData(user) {
-
-  currentUser = user;
-
-
-  const userRef =
-    doc(db, "users", user.uid);
-
-
-  try {
-
-    const userSnap =
+    const snapshot =
       await getDoc(userRef);
 
-
-    if (userSnap.exists()) {
-
-      const data =
-        userSnap.data();
-
-
-      balance =
-        Number(data.balance || 0);
-
-
-      document.getElementById("investment")
-        .textContent =
-        formatMoney(
-          Number(data.investment || 0)
-        );
-
-
-      loadTransactions(
-        data.transactions || []
-      );
-
-
-    } else {
-
-      balance = 0;
-
+    if (!snapshot.exists()) {
 
       await setDoc(userRef, {
 
         balance: 0,
 
-        investment: 0,
-
         transactions: []
 
       });
 
+      showBalance(0);
 
-      document.getElementById("investment")
-        .textContent =
-        formatMoney(0);
-
-
-      loadTransactions([]);
+      return;
 
     }
 
+    const data = snapshot.data();
 
-    updateBalance();
+    showBalance(data.balance || 0);
 
-
-  } catch (error) {
-
-    console.error(
-      "Error loading user data:",
-      error
-    );
-
-
-    alert(
-      "Hindi ma-load ang account data.\n\n" +
-      error.message
-    );
-
-  }
-
-}
-
-
-/* ================================
-   DEPOSIT
-================================ */
-
-async function deposit() {
-
-  if (!currentUser) {
-
-    alert("Please login first.");
-
-    return;
+    loadTransactions(data.transactions || []);
 
   }
 
 
-  const input =
-    prompt("Enter deposit amount:");
+  /* =========================
+     TRANSACTIONS
+     ========================= */
 
+  function loadTransactions(list) {
 
-  if (input === null) {
+    transactionsElement.innerHTML = "";
 
-    return;
+    if (!list || list.length === 0) {
+
+      transactionsElement.innerHTML =
+        '<div class="status">No transactions yet.</div>';
+
+      return;
+
+    }
+
+    const sorted =
+      [...list].reverse();
+
+    sorted.forEach(transaction => {
+
+      const div =
+        document.createElement("div");
+
+      div.className = "transaction";
+
+      const type =
+        transaction.type || "Transaction";
+
+      const amount =
+        Number(transaction.amount || 0);
+
+      const date =
+        transaction.date || "";
+
+      const positive =
+        type === "Deposit";
+
+      div.innerHTML = `
+
+        <div>
+          <strong>${type}</strong>
+        </div>
+
+        <div class="${positive ? "positive" : "negative"}">
+          ${positive ? "+" : "-"}${formatMoney(amount)}
+        </div>
+
+        <div class="status">
+          ${date}
+        </div>
+
+      `;
+
+      transactionsElement.appendChild(div);
+
+    });
 
   }
 
 
-  const amount =
-    Number(input);
+  /* =========================
+     DEPOSIT
+     ========================= */
 
+  async function deposit() {
 
-  if (!Number.isFinite(amount) || amount <= 0) {
+    if (!currentUser) {
 
-    alert("Please enter a valid amount.");
+      alert("Please login first.");
 
-    return;
+      return;
 
-  }
+    }
 
+    const input =
+      prompt("Enter deposit amount:");
 
-  if (amount > 1000000) {
+    if (input === null) return;
 
-    alert("Amount is too large.");
+    const amount =
+      Number(input);
 
-    return;
+    if (!Number.isFinite(amount) || amount <= 0) {
 
-  }
+      alert("Please enter a valid amount.");
 
+      return;
 
-  try {
+    }
 
-    const userRef =
-      doc(db, "users", currentUser.uid);
+    try {
 
+      const userRef =
+        doc(db, "users", currentUser.uid);
 
-    await runTransaction(
-      db,
-      async (transaction) => {
+      await runTransaction(db, async transaction => {
 
-        const userSnap =
+        const snapshot =
           await transaction.get(userRef);
 
+        const data =
+          snapshot.exists()
+            ? snapshot.data()
+            : {};
 
-        let currentBalance = 0;
-
-        let transactions = [];
-
-
-        if (userSnap.exists()) {
-
-          const data =
-            userSnap.data();
-
-
-          currentBalance =
-            Number(data.balance || 0);
-
-
-          transactions =
-            Array.isArray(data.transactions)
-              ? data.transactions
-              : [];
-
-        }
-
+        const oldBalance =
+          Number(data.balance || 0);
 
         const newBalance =
-          currentBalance + amount;
+          oldBalance + amount;
 
+        const transactions =
+          Array.isArray(data.transactions)
+            ? data.transactions
+            : [];
 
-        const newTransaction = {
+        transactions.push({
 
           type: "Deposit",
 
           amount: amount,
 
-          date: new Date().toISOString()
+          date: new Date().toLocaleString("en-PH")
 
-        };
-
-
-        transactions.push(
-          newTransaction
-        );
-
+        });
 
         transaction.set(
           userRef,
           {
-
             balance: newBalance,
-
             transactions: transactions
-
           },
-          {
-            merge: true
-          }
+          { merge: true }
         );
 
+        showBalance(newBalance);
 
-        balance = newBalance;
+        loadTransactions(transactions);
 
-      }
-    );
+      });
 
+      alert(
+        "Deposit added successfully."
+      );
 
-    updateBalance();
+    } catch (error) {
 
+      console.error(
+        "Deposit error:",
+        error
+      );
 
-    alert(
-      "Deposit saved!\n\n" +
-      "Amount: " +
-      formatMoney(amount) +
-      "\n" +
-      "New Balance: " +
-      formatMoney(balance)
-    );
+      alert(
+        "Deposit failed. Please try again."
+      );
 
-
-    await loadUserData(currentUser);
-
-
-  } catch (error) {
-
-    console.error(
-      "Deposit error:",
-      error
-    );
-
-
-    alert(
-      "Deposit could not be saved.\n\n" +
-      error.message
-    );
-
-  }
-
-}
-
-
-/* ================================
-   WITHDRAW
-================================ */
-
-async function withdraw() {
-
-  if (!currentUser) {
-
-    alert("Please login first.");
-
-    return;
+    }
 
   }
 
 
-  const input =
-    prompt("Enter withdrawal amount:");
+  /* =========================
+     WITHDRAW
+     ========================= */
 
+  async function withdraw() {
 
-  if (input === null) {
+    if (!currentUser) {
 
-    return;
+      alert("Please login first.");
 
-  }
+      return;
 
+    }
 
-  const amount =
-    Number(input);
+    const input =
+      prompt("Enter withdrawal amount:");
 
+    if (input === null) return;
 
-  if (!Number.isFinite(amount) || amount <= 0) {
+    const amount =
+      Number(input);
 
-    alert("Please enter a valid amount.");
+    if (!Number.isFinite(amount) || amount <= 0) {
 
-    return;
+      alert("Please enter a valid amount.");
 
-  }
+      return;
 
+    }
 
-  if (amount > 1000000) {
+    try {
 
-    alert("Amount is too large.");
+      const userRef =
+        doc(db, "users", currentUser.uid);
 
-    return;
+      await runTransaction(db, async transaction => {
 
-  }
-
-
-  try {
-
-    const userRef =
-      doc(db, "users", currentUser.uid);
-
-
-    await runTransaction(
-      db,
-      async (transaction) => {
-
-        const userSnap =
+        const snapshot =
           await transaction.get(userRef);
 
-
-        if (!userSnap.exists()) {
+        if (!snapshot.exists()) {
 
           throw new Error(
-            "Account data not found."
+            "User account not found."
           );
 
         }
 
-
         const data =
-          userSnap.data();
+          snapshot.data();
 
-
-        const currentBalance =
+        const oldBalance =
           Number(data.balance || 0);
 
-
-        if (amount > currentBalance) {
+        if (amount > oldBalance) {
 
           throw new Error(
             "Insufficient balance."
@@ -882,121 +581,297 @@ async function withdraw() {
 
         }
 
-
         const newBalance =
-          currentBalance - amount;
-
+          oldBalance - amount;
 
         const transactions =
           Array.isArray(data.transactions)
             ? data.transactions
             : [];
 
-
         transactions.push({
 
-          type: "Withdrawal",
+          type: "Withdraw",
 
           amount: amount,
 
-          date: new Date().toISOString()
+          date: new Date().toLocaleString("en-PH")
 
         });
-
 
         transaction.set(
           userRef,
           {
-
             balance: newBalance,
-
             transactions: transactions
-
           },
-          {
-            merge: true
-          }
+          { merge: true }
         );
 
+        showBalance(newBalance);
 
-        balance = newBalance;
+        loadTransactions(transactions);
+
+      });
+
+      alert(
+        "Withdrawal recorded successfully."
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Withdraw error:",
+        error
+      );
+
+      if (
+        error.message ===
+        "Insufficient balance."
+      ) {
+
+        alert(
+          "Insufficient balance."
+        );
+
+      } else {
+
+        alert(
+          "Withdrawal failed. Please try again."
+        );
 
       }
-    );
 
-
-    updateBalance();
-
-
-    alert(
-      "Withdrawal saved!\n\n" +
-      "Amount: " +
-      formatMoney(amount) +
-      "\n" +
-      "New Balance: " +
-      formatMoney(balance)
-    );
-
-
-    await loadUserData(currentUser);
-
-
-  } catch (error) {
-
-    console.error(
-      "Withdrawal error:",
-      error
-    );
-
-
-    alert(
-      "Withdrawal could not be saved.\n\n" +
-      error.message
-    );
+    }
 
   }
 
-}
+
+  /* =========================
+     BUY PRODUCT
+     ========================= */
+
+  async function buyProduct(price) {
+
+    if (!currentUser) {
+
+      alert("Please login first.");
+
+      return;
+
+    }
+
+    try {
+
+      const userRef =
+        doc(db, "users", currentUser.uid);
+
+      await runTransaction(db, async transaction => {
+
+        const snapshot =
+          await transaction.get(userRef);
+
+        if (!snapshot.exists()) {
+
+          throw new Error(
+            "User account not found."
+          );
+
+        }
+
+        const data =
+          snapshot.data();
+
+        const oldBalance =
+          Number(data.balance || 0);
+
+        if (oldBalance < price) {
+
+          throw new Error(
+            "Insufficient balance."
+          );
+
+        }
+
+        const newBalance =
+          oldBalance - price;
+
+        const transactions =
+          Array.isArray(data.transactions)
+            ? data.transactions
+            : [];
+
+        transactions.push({
+
+          type: "Investment",
+
+          amount: price,
+
+          date: new Date().toLocaleString("en-PH")
+
+        });
+
+        transaction.set(
+          userRef,
+          {
+            balance: newBalance,
+            transactions: transactions
+          },
+          { merge: true }
+        );
+
+        showBalance(newBalance);
+
+        loadTransactions(transactions);
+
+      });
+
+      alert(
+        "Investment recorded successfully."
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Investment error:",
+        error
+      );
+
+      if (
+        error.message ===
+        "Insufficient balance."
+      ) {
+
+        alert(
+          "Insufficient balance for this investment."
+        );
+
+      } else {
+
+        alert(
+          "Investment failed. Please try again."
+        );
+
+      }
+
+    }
+
+  }
 
 
-/* ================================
-   BUY PRODUCT
-================================ */
+  /* =========================
+     LOGOUT
+     ========================= */
 
-function buyProduct(name, price) {
+  async function logout() {
 
-  alert(
-    name +
-    "\n\n" +
-    "Price: " +
-    formatMoney(price) +
-    "\n\n" +
-    "Demo product only.\n" +
-    "Payment system will be connected later."
+    try {
+
+      await signOut(auth);
+
+      window.location.href =
+        "index.html";
+
+    } catch (error) {
+
+      console.error(
+        "Logout error:",
+        error
+      );
+
+      alert(
+        "Logout failed. Please try again."
+      );
+
+    }
+
+  }
+
+
+  /* =========================
+     BUTTON EVENTS
+     ========================= */
+
+  depositButton.addEventListener(
+    "click",
+    deposit
   );
 
-}
+  withdrawButton.addEventListener(
+    "click",
+    withdraw
+  );
+
+  logoutButton.addEventListener(
+    "click",
+    logout
+  );
 
 
-/* ================================
-   LOGOUT
-================================ */
+  document
+    .querySelectorAll(".buyButton")
+    .forEach(button => {
 
-async function logout() {
+      button.addEventListener(
+        "click",
+        () => {
 
-  try {
+          const price =
+            Number(
+              button.dataset.price
+            );
 
-    await signOut(auth);
+          buyProduct(price);
 
-    window.location.href =
-      "index.html";
+        }
+      );
 
-  } catch (error) {
+    });
 
-    console.error(
-      "Logout error:",
-      error
-    );
 
-    alert(
-      "Logout failed.\
+  /* =========================
+     LOGIN CHECK
+     ========================= */
+
+  onAuthStateChanged(
+    auth,
+    async user => {
+
+      if (!user) {
+
+        window.location.href =
+          "login.html";
+
+        return;
+
+      }
+
+      currentUser = user;
+
+      emailElement.textContent =
+        user.email || "Logged in";
+
+      try {
+
+        await loadUserData(user);
+
+      } catch (error) {
+
+        console.error(
+          "Loading user data failed:",
+          error
+        );
+
+        alert(
+          "Unable to load your account data."
+        );
+
+      }
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
