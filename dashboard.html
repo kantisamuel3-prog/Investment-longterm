@@ -111,6 +111,10 @@ body {
   background: #dc2626;
 }
 
+.action-btn:hover {
+  opacity: .9;
+}
+
 .activity {
   margin-top: 30px;
 }
@@ -123,6 +127,13 @@ body {
   display: flex;
   justify-content: space-between;
   gap: 10px;
+}
+
+.empty {
+  background: white;
+  padding: 17px;
+  border-radius: 10px;
+  color: #64748b;
 }
 
 .products-section {
@@ -184,6 +195,12 @@ body {
   font-size: 14px;
 }
 
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #64748b;
+}
+
 @media (max-width: 700px) {
   .summary {
     grid-template-columns: 1fr;
@@ -212,7 +229,7 @@ body {
     InvestPro
   </div>
 
-  <button class="logout" onclick="logout()">
+  <button class="logout" id="logoutButton">
     Logout
   </button>
 
@@ -260,13 +277,13 @@ body {
 
     <button
       class="action-btn deposit"
-      onclick="deposit()">
+      id="depositButton">
       + Deposit
     </button>
 
     <button
       class="action-btn withdraw"
-      onclick="withdraw()">
+      id="withdrawButton">
       - Withdraw
     </button>
 
@@ -279,7 +296,11 @@ body {
       Transaction History
     </h2>
 
-    <div id="transactions"></div>
+    <div id="transactions">
+      <div class="loading">
+        Loading transactions...
+      </div>
+    </div>
 
   </div>
 
@@ -295,35 +316,68 @@ body {
     <div class="products">
 
       <div class="product-card">
+
         <h3>Starter Plan</h3>
-        <div class="product-price">₱100</div>
-        <p>Demo product</p>
 
-        <button onclick="buyProduct('Starter Plan', 100)">
+        <div class="product-price">
+          ₱100
+        </div>
+
+        <p>
+          Demo product
+        </p>
+
+        <button
+          class="buy-button"
+          data-name="Starter Plan"
+          data-price="100">
           Buy Product
         </button>
+
       </div>
 
 
       <div class="product-card">
+
         <h3>Basic Plan</h3>
-        <div class="product-price">₱500</div>
-        <p>Demo product</p>
 
-        <button onclick="buyProduct('Basic Plan', 500)">
+        <div class="product-price">
+          ₱500
+        </div>
+
+        <p>
+          Demo product
+        </p>
+
+        <button
+          class="buy-button"
+          data-name="Basic Plan"
+          data-price="500">
           Buy Product
         </button>
+
       </div>
 
 
       <div class="product-card">
-        <h3>Premium Plan</h3>
-        <div class="product-price">₱1,000</div>
-        <p>Demo product</p>
 
-        <button onclick="buyProduct('Premium Plan', 1000)">
+        <h3>Premium Plan</h3>
+
+        <div class="product-price">
+          ₱1,000
+        </div>
+
+        <p>
+          Demo product
+        </p>
+
+        <button
+          class="buy-button"
+          data-name="Premium Plan"
+          data-price="1000">
           Buy Product
         </button>
+
       </div>
 
     </div>
@@ -340,15 +394,19 @@ body {
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+/* ================================
+   FIREBASE IMPORTS
+================================ */
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 import {
   getAuth,
   onAuthStateChanged,
   signOut
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 import {
   getFirestore,
@@ -356,9 +414,12 @@ import {
   getDoc,
   setDoc,
   runTransaction
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
+
+/* ================================
+   FIREBASE CONFIG
+================================ */
 
 const firebaseConfig = {
 
@@ -379,6 +440,10 @@ const firebaseConfig = {
 };
 
 
+/* ================================
+   FIREBASE START
+================================ */
+
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
@@ -386,10 +451,18 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 
+/* ================================
+   VARIABLES
+================================ */
+
 let balance = 0;
 
 let currentUser = null;
 
+
+/* ================================
+   FORMAT MONEY
+================================ */
 
 function formatMoney(amount) {
 
@@ -404,6 +477,10 @@ function formatMoney(amount) {
 }
 
 
+/* ================================
+   UPDATE BALANCE
+================================ */
+
 function updateBalance() {
 
   document.getElementById("balance").textContent =
@@ -412,49 +489,9 @@ function updateBalance() {
 }
 
 
-async function loadUserData(user) {
-
-  currentUser = user;
-
-  const userRef =
-    doc(db, "users", user.uid);
-
-  const userSnap =
-    await getDoc(userRef);
-
-
-  if (userSnap.exists()) {
-
-    const data = userSnap.data();
-
-    balance = Number(data.balance || 0);
-
-    document.getElementById("investment").textContent =
-      formatMoney(Number(data.investment || 0));
-
-    loadTransactions(data.transactions || []);
-
-  } else {
-
-    balance = 0;
-
-    await setDoc(userRef, {
-
-      balance: 0,
-
-      investment: 0,
-
-      transactions: []
-
-    });
-
-  }
-
-
-  updateBalance();
-
-}
-
+/* ================================
+   LOAD TRANSACTIONS
+================================ */
 
 function loadTransactions(transactions) {
 
@@ -464,28 +501,143 @@ function loadTransactions(transactions) {
   container.innerHTML = "";
 
 
-  transactions.forEach(transaction => {
+  if (!transactions || transactions.length === 0) {
 
-    const item =
-      document.createElement("div");
+    container.innerHTML =
+      '<div class="empty">No transactions yet.</div>';
 
-    item.className = "activity-item";
+    return;
 
-    item.innerHTML =
-      "<span>" +
-      transaction.type +
-      "</span>" +
+  }
 
-      "<span>" +
-      formatMoney(transaction.amount) +
-      "</span>";
 
-    container.appendChild(item);
+  transactions
+    .slice()
+    .reverse()
+    .forEach(transaction => {
 
-  });
+      const item =
+        document.createElement("div");
+
+      item.className = "activity-item";
+
+
+      const type =
+        document.createElement("span");
+
+      type.textContent =
+        transaction.type || "Transaction";
+
+
+      const amount =
+        document.createElement("span");
+
+      amount.textContent =
+        formatMoney(transaction.amount || 0);
+
+
+      item.appendChild(type);
+
+      item.appendChild(amount);
+
+      container.appendChild(item);
+
+    });
 
 }
 
+
+/* ================================
+   LOAD USER DATA
+================================ */
+
+async function loadUserData(user) {
+
+  currentUser = user;
+
+
+  const userRef =
+    doc(db, "users", user.uid);
+
+
+  try {
+
+    const userSnap =
+      await getDoc(userRef);
+
+
+    if (userSnap.exists()) {
+
+      const data =
+        userSnap.data();
+
+
+      balance =
+        Number(data.balance || 0);
+
+
+      document.getElementById("investment")
+        .textContent =
+        formatMoney(
+          Number(data.investment || 0)
+        );
+
+
+      loadTransactions(
+        data.transactions || []
+      );
+
+
+    } else {
+
+      balance = 0;
+
+
+      await setDoc(userRef, {
+
+        balance: 0,
+
+        investment: 0,
+
+        transactions: []
+
+      });
+
+
+      document.getElementById("investment")
+        .textContent =
+        formatMoney(0);
+
+
+      loadTransactions([]);
+
+    }
+
+
+    updateBalance();
+
+
+  } catch (error) {
+
+    console.error(
+      "Error loading user data:",
+      error
+    );
+
+
+    alert(
+      "Hindi ma-load ang account data.\n\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ================================
+   DEPOSIT
+================================ */
 
 async function deposit() {
 
@@ -500,6 +652,14 @@ async function deposit() {
 
   const input =
     prompt("Enter deposit amount:");
+
+
+  if (input === null) {
+
+    return;
+
+  }
+
 
   const amount =
     Number(input);
@@ -529,69 +689,88 @@ async function deposit() {
       doc(db, "users", currentUser.uid);
 
 
-    await runTransaction(db, async (transaction) => {
+    await runTransaction(
+      db,
+      async (transaction) => {
 
-      const userSnap =
-        await transaction.get(userRef);
-
-
-      let currentBalance = 0;
-
-      let transactions = [];
+        const userSnap =
+          await transaction.get(userRef);
 
 
-      if (userSnap.exists()) {
+        let currentBalance = 0;
 
-        const data = userSnap.data();
+        let transactions = [];
 
-        currentBalance =
-          Number(data.balance || 0);
 
-        transactions =
-          data.transactions || [];
+        if (userSnap.exists()) {
+
+          const data =
+            userSnap.data();
+
+
+          currentBalance =
+            Number(data.balance || 0);
+
+
+          transactions =
+            Array.isArray(data.transactions)
+              ? data.transactions
+              : [];
+
+        }
+
+
+        const newBalance =
+          currentBalance + amount;
+
+
+        const newTransaction = {
+
+          type: "Deposit",
+
+          amount: amount,
+
+          date: new Date().toISOString()
+
+        };
+
+
+        transactions.push(
+          newTransaction
+        );
+
+
+        transaction.set(
+          userRef,
+          {
+
+            balance: newBalance,
+
+            transactions: transactions
+
+          },
+          {
+            merge: true
+          }
+        );
+
+
+        balance = newBalance;
 
       }
-
-
-      const newBalance =
-        currentBalance + amount;
-
-
-      transactions.push({
-
-        type: "Deposit",
-
-        amount: amount,
-
-        date: new Date().toISOString()
-
-      });
-
-
-      transaction.set(userRef, {
-
-        balance: newBalance,
-
-        transactions: transactions
-
-      }, {
-
-        merge: true
-
-      });
-
-
-      balance = newBalance;
-
-    });
+    );
 
 
     updateBalance();
 
 
     alert(
-      "Deposit saved: " +
-      formatMoney(amount)
+      "Deposit saved!\n\n" +
+      "Amount: " +
+      formatMoney(amount) +
+      "\n" +
+      "New Balance: " +
+      formatMoney(balance)
     );
 
 
@@ -600,7 +779,11 @@ async function deposit() {
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Deposit error:",
+      error
+    );
+
 
     alert(
       "Deposit could not be saved.\n\n" +
@@ -611,6 +794,10 @@ async function deposit() {
 
 }
 
+
+/* ================================
+   WITHDRAW
+================================ */
 
 async function withdraw() {
 
@@ -626,5 +813,190 @@ async function withdraw() {
   const input =
     prompt("Enter withdrawal amount:");
 
+
+  if (input === null) {
+
+    return;
+
+  }
+
+
   const amount =
-    Number
+    Number(input);
+
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+
+    alert("Please enter a valid amount.");
+
+    return;
+
+  }
+
+
+  if (amount > 1000000) {
+
+    alert("Amount is too large.");
+
+    return;
+
+  }
+
+
+  try {
+
+    const userRef =
+      doc(db, "users", currentUser.uid);
+
+
+    await runTransaction(
+      db,
+      async (transaction) => {
+
+        const userSnap =
+          await transaction.get(userRef);
+
+
+        if (!userSnap.exists()) {
+
+          throw new Error(
+            "Account data not found."
+          );
+
+        }
+
+
+        const data =
+          userSnap.data();
+
+
+        const currentBalance =
+          Number(data.balance || 0);
+
+
+        if (amount > currentBalance) {
+
+          throw new Error(
+            "Insufficient balance."
+          );
+
+        }
+
+
+        const newBalance =
+          currentBalance - amount;
+
+
+        const transactions =
+          Array.isArray(data.transactions)
+            ? data.transactions
+            : [];
+
+
+        transactions.push({
+
+          type: "Withdrawal",
+
+          amount: amount,
+
+          date: new Date().toISOString()
+
+        });
+
+
+        transaction.set(
+          userRef,
+          {
+
+            balance: newBalance,
+
+            transactions: transactions
+
+          },
+          {
+            merge: true
+          }
+        );
+
+
+        balance = newBalance;
+
+      }
+    );
+
+
+    updateBalance();
+
+
+    alert(
+      "Withdrawal saved!\n\n" +
+      "Amount: " +
+      formatMoney(amount) +
+      "\n" +
+      "New Balance: " +
+      formatMoney(balance)
+    );
+
+
+    await loadUserData(currentUser);
+
+
+  } catch (error) {
+
+    console.error(
+      "Withdrawal error:",
+      error
+    );
+
+
+    alert(
+      "Withdrawal could not be saved.\n\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ================================
+   BUY PRODUCT
+================================ */
+
+function buyProduct(name, price) {
+
+  alert(
+    name +
+    "\n\n" +
+    "Price: " +
+    formatMoney(price) +
+    "\n\n" +
+    "Demo product only.\n" +
+    "Payment system will be connected later."
+  );
+
+}
+
+
+/* ================================
+   LOGOUT
+================================ */
+
+async function logout() {
+
+  try {
+
+    await signOut(auth);
+
+    window.location.href =
+      "index.html";
+
+  } catch (error) {
+
+    console.error(
+      "Logout error:",
+      error
+    );
+
+    alert(
+      "Logout failed.\
