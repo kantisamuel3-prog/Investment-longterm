@@ -1,1 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Transaction History - InvestPro</title>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+
+      margin: 0;
+
+      font-family: Arial, sans-serif;
+
+      background:
+        linear-gradient(
+          135deg,
+          #f3f7ff,
+          #eef4ff
+        );
+
+      color: #14213d;
+
+    }
+
+
+    /* =========================
+       HEADER
+       ========================= */
+
+    header {
+
+      background:
+        linear-gradient(
+          135deg,
+          #101827,
+          #172554
+        );
+
+      color: white;
+
+      padding: 18px 5%;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      box-shadow:
+        0 4px 18px
+        rgba(0,0,0,0.15);
+
+    }
+
+
+    .logo {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      font-size: 23px;
+
+      font-weight: bold;
+
+    }
+
+
+    .logo-icon {
+
+      width: 38px;
+
+      height: 38px;
+
+      border-radius: 11px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #60a5fa
+        );
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 21px;
+
+    }
+
+
+    .header-buttons {
+
+      display: flex;
+
+      gap: 10px;
+
+    }
+
+
+    button {
+
+      border: 0;
+
+      padding: 11px 18px;
+
+      border-radius: 9px;
+
+      cursor: pointer;
+
+      font-weight: bold;
+
+      font-size: 14px;
+
+      transition: 0.2s ease;
+
+    }
+
+
+    button:hover {
+
+      transform: translateY(-1px);
+
+    }
+
+
+    #homeButton {
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #3b82f6
+        );
+
+      color: white;
+
+    }
+
+
+    #logoutButton {
+
+      background: #ef4444;
+
+      color: white;
+
+    }
+
+
+    #logoutButton:hover {
+
+      background: #dc2626;
+
+    }
+
+
+    /* =========================
+       MAIN
+       ========================= */
+
+    main {
+
+      max-width: 950px;
+
+      margin: 35px auto;
+
+      padding: 0 20px;
+
+    }
+
+
+    .page-title {
+
+      margin-bottom: 25px;
+
+    }
+
+
+    .page-title h2 {
+
+      margin: 0 0 8px;
+
+      font-size: 32px;
+
+    }
+
+
+    #userEmail {
+
+      color: #64748b;
+
+      font-size: 15px;
+
+    }
+
+
+    /* =========================
+       TRANSACTION CARD
+       ========================= */
+
+    .card {
+
+      background: white;
+
+      border-radius: 20px;
+
+      padding: 28px;
+
+      box-shadow:
+        0 8px 30px
+        rgba(37,99,235,0.08);
+
+      border:
+        1px solid
+        rgba(148,163,184,0.18);
+
+    }
+
+
+    .card-header {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      margin-bottom: 20px;
+
+    }
+
+
+    .transaction-icon {
+
+      width: 55px;
+
+      height: 55px;
+
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #6366f1
+        );
+
+      color: white;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 26px;
+
+      box-shadow:
+        0 7px 18px
+        rgba(37,99,235,0.22);
+
+    }
+
+
+    .card-header h3 {
+
+      margin: 0 0 5px;
+
+      font-size: 21px;
+
+    }
+
+
+    .card-header p {
+
+      margin: 0;
+
+      color: #64748b;
+
+      font-size: 14px;
+
+    }
+
+
+    /* =========================
+       TRANSACTION ITEM
+       ========================= */
+
+    .transaction {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 20px;
+
+      padding: 18px 0;
+
+      border-bottom:
+        1px solid #e5e7eb;
+
+    }
+
+
+    .transaction:last-child {
+
+      border-bottom: 0;
+
+    }
+
+
+    .transaction-left {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+    }
+
+
+    .transaction-type-icon {
+
+      width: 46px;
+
+      height: 46px;
+
+      border-radius: 13px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 20px;
+
+      flex-shrink: 0;
+
+    }
+
+
+    .deposit-icon {
+
+      background: #dcfce7;
+
+    }
+
+
+    .withdraw-icon {
+
+      background: #fef3c7;
+
+    }
+
+
+    .investment-icon {
+
+      background: #dbeafe;
+
+    }
+
+
+    .transaction-info strong {
+
+      display: block;
+
+      font-size: 16px;
+
+      margin-bottom: 5px;
+
+    }
+
+
+    .transaction-date {
+
+      color: #64748b;
+
+      font-size: 13px;
+
+    }
+
+
+    .transaction-amount {
+
+      font-size: 17px;
+
+      font-weight: bold;
+
+      white-space: nowrap;
+
+    }
+
+
+    .deposit-amount {
+
+      color: #16a34a;
+
+    }
+
+
+    .withdraw-amount {
+
+      color: #dc2626;
+
+    }
+
+
+    .investment-amount {
+
+      color: #2563eb;
+
+    }
+
+
+    /* =========================
+       EMPTY / LOADING
+       ========================= */
+
+    .message {
+
+      text-align: center;
+
+      padding: 45px 20px;
+
+      color: #64748b;
+
+    }
+
+
+    .message-icon {
+
+      font-size: 45px;
+
+      margin-bottom: 12px;
+
+    }
+
+
+    .message h3 {
+
+      margin: 0 0 8px;
+
+      color: #334155;
+
+    }
+
+
+    .message p {
+
+      margin: 0;
+
+    }
+
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 600px) {
+
+      header {
+
+        padding: 15px;
+
+      }
+
+
+      .header-buttons {
+
+        gap: 6px;
+
+      }
+
+
+      .header-buttons button {
+
+        padding: 9px 11px;
+
+        font-size: 12px;
+
+      }
+
+
+      main {
+
+        margin: 25px auto;
+
+        padding: 0 14px;
+
+      }
+
+
+      .card {
+
+        padding: 20px;
+
+      }
+
+
+      .page-title h2 {
+
+        font-size: 27px;
+
+      }
+
+
+      .transaction {
+
+        align-items: flex-start;
+
+      }
+
+
+      .transaction-amount {
+
+        font-size: 15px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       HEADER
+       ========================= -->
+
+  <header>
+
+
+    <div class="logo">
+
+      <div class="logo-icon">
+        📈
+      </div>
+
+      InvestPro
+
+    </div>
+
+
+    <div class="header-buttons">
+
+      <button id="homeButton">
+        🏠 Home
+      </button>
+
+
+      <button id="logoutButton">
+        Logout
+      </button>
+
+    </div>
+
+
+  </header>
+
+
+
+  <!-- =========================
+       MAIN
+       ========================= -->
+
+  <main>
+
+
+    <div class="page-title">
+
+      <h2>
+        Transaction History
+      </h2>
+
+      <div id="userEmail">
+        Checking account...
+      </div>
+
+    </div>
+
+
+
+    <div class="card">
+
+
+      <div class="card-header">
+
+        <div class="transaction-icon">
+          📄
+        </div>
+
+
+        <div>
+
+          <h3>
+            Your Transactions
+          </h3>
+
+          <p>
+            Your deposits, withdrawals,
+            and investments.
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <div id="transactions">
+
+        <div class="message">
+
+          <div class="message-icon">
+            ⏳
+          </div>
+
+          <h3>
+            Loading transactions...
+          </h3>
+
+          <p>
+            Please wait.
+          </p>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+  </main>
+
+
+
+  <!-- =========================
+       FIREBASE
+       ========================= -->
+
+  <script type="module">
+
+
+    import {
+
+      initializeApp
+
+    } from
+      "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+    import {
+
+      getAuth,
+
+      onAuthStateChanged,
+
+      signOut
+
+    } from
+      "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+    import {
+
+      getFirestore,
+
+      doc,
+
+      getDoc
+
+    } from
+      "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+
+    /* =========================
+       FIREBASE CONFIG
+       ========================= */
+
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+
+      authDomain:
+        "investpro-2dafb.firebaseapp.com",
+
+      projectId:
+        "investpro-2dafb",
+
+      storageBucket:
+        "investpro-2dafb.firebasestorage.app",
+
+      messagingSenderId:
+        "135092039764",
+
+      appId:
+        "1:135092039764:web:c4c71eef0c904346a77dc1"
+
+    };
+
+
+
+    /* =========================
+       FIREBASE START
+       ========================= */
+
+    const app =
+      initializeApp(firebaseConfig);
+
+
+    const auth =
+      getAuth(app);
+
+
+    const db =
+      getFirestore(app);
+
+
+
+    /* =========================
+       ELEMENTS
+       ========================= */
+
+    const emailElement =
+      document.getElementById(
+        "userEmail"
+      );
+
+
+    const transactionsElement =
+      document.getElementById(
+        "transactions"
+      );
+
+
+    const homeButton =
+      document.getElementById(
+        "homeButton"
+      );
+
+
+    const logoutButton =
+      document.getElementById(
+        "logoutButton"
+      );
+
+
+
+    /* =========================
+       MONEY FORMAT
+       ========================= */
+
+    function formatMoney(amount) {
+
+      return "₱" +
+        Number(
+          amount || 0
+        ).toLocaleString(
+          "en-PH",
+          {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }
+        );
+
+    }
+
+
+
+    /* =========================
+       TRANSACTION TYPE
+       ========================= */
+
+    function getTransactionDetails(type) {
+
+
+      if (type === "Deposit") {
+
+        return {
+
+          icon: "↓",
+
+          iconClass:
+            "deposit-icon",
+
+          amountClass:
+            "deposit-amount",
+
+          sign: "+"
+
+        };
+
+      }
+
+
+      if (type === "Withdraw") {
+
+        return {
+
+          icon: "↑",
+
+          iconClass:
+            "withdraw-icon",
+
+          amountClass:
+            "withdraw-amount",
+
+          sign: "-"
+
+        };
+
+      }
+
+
+      return {
+
+        icon: "📈",
+
+        iconClass:
+          "investment-icon",
+
+        amountClass:
+          "investment-amount",
+
+        sign: "-"
+
+      };
+
+    }
+
+
+
+    /* =========================
+       LOAD TRANSACTIONS
+       ========================= */
+
+    async function loadTransactions(user) {
+
+
+      try {
+
+
+        const userRef =
+          doc(
+            db,
+            "users",
+            user.uid
+          );
+
+
+        const snapshot =
+          await getDoc(userRef);
+
+
+        if (!snapshot.exists()) {
+
+          showEmpty();
+
+          return;
+
+        }
+
+
+        const data =
+          snapshot.data();
+
+
+        const transactions =
+          Array.isArray(
+            data.transactions
+          )
+            ? data.transactions
+            : [];
+
+
+        if (
+          transactions.length === 0
+        ) {
+
+          showEmpty();
+
+          return;
+
+        }
+
+
+        transactionsElement.innerHTML =
+          "";
+
+
+        /*
+          Newest transaction first
+        */
+
+        const sortedTransactions =
+          [...transactions].reverse();
+
+
+
+        sortedTransactions.forEach(
+          transaction => {
+
+
+            const type =
+              transaction.type ||
+              "Transaction";
+
+
+            const amount =
+              Number(
+                transaction.amount || 0
+              );
+
+
+            const date =
+              transaction.date ||
+              "Date unavailable";
+
+
+            const details =
+              getTransactionDetails(
+                type
+              );
+
+
+
+            const transactionDiv =
+              document.createElement(
+                "div"
+              );
+
+
+            transactionDiv.className =
+              "transaction";
+
+
+
+            /* LEFT SIDE */
+
+            const left =
+              document.createElement(
+                "div"
+              );
+
+
+            left.className =
+              "transaction-left";
+
+
+
+            const icon =
+              document.createElement(
+                "div"
+              );
+
+
+            icon.className =
+              "transaction-type-icon " +
+              details.iconClass;
+
+
+            icon.textContent =
+              details.icon;
+
+
+
+            const info =
+              document.createElement(
+                "div"
+              );
+
+
+            info.className =
+              "transaction-info";
+
+
+
+            const title =
+              document.createElement(
+                "strong"
+              );
+
+
+            title.textContent =
+              type;
+
+
+
+            const dateElement =
+              document.createElement(
+                "div"
+              );
+
+
+            dateElement.className =
+              "transaction-date";
+
+
+            dateElement.textContent =
+              date;
+
+
+
+            info.appendChild(
+              title
+            );
+
+
+            info.appendChild(
+              dateElement
+            );
+
+
+            left.appendChild(
+              icon
+            );
+
+
+            left.appendChild(
+              info
+            );
+
+
+
+            /* RIGHT SIDE */
+
+            const amountElement =
+              document.createElement(
+                "div"
+              );
+
+
+            amountElement.className =
+              "transaction-amount " +
+              details.amountClass;
+
+
+            amountElement.textContent =
+              details.sign +
+              formatMoney(amount);
+
+
+
+            transactionDiv.appendChild(
+              left
+            );
+
+
+            transactionDiv.appendChild(
+              amountElement
+            );
+
+
+            transactionsElement.appendChild(
+              transactionDiv
+            );
+
+          }
+        );
+
+
+      } catch (error) {
+
+
+        console.error(
+          "Transaction loading error:",
+          error
+        );
+
+
+        transactionsElement.innerHTML = `
+
+          <div class="message">
+
+            <div class="message-icon">
+              ⚠️
+            </div>
+
+            <h3>
+              Unable to load transactions
+            </h3>
+
+            <p>
+              Please refresh the page
+              and try again.
+            </p>
+
+          </div>
+
+        `;
+
+      }
+
+    }
+
+
+
+    /* =========================
+       EMPTY TRANSACTIONS
+       ========================= */
+
+    function showEmpty() {
+
+      transactionsElement.innerHTML = `
+
+        <div class="message">
+
+          <div class="message-icon">
+            📭
+          </div>
+
+          <h3>
+            No transactions yet
+          </h3>
+
+          <p>
+            Your deposits, withdrawals,
+            and investments will appear here.
+          </p>
+
+        </div>
+
+      `;
+
+    }
+
+
+
+    /* =========================
+       HOME
+       ========================= */
+
+    homeButton.addEventListener(
+      "click",
+      () => {
+
+        window.location.href =
+          "dashboard.html";
+
+      }
+    );
+
+
+
+    /* =========================
+       LOGOUT
+       ========================= */
+
+    logoutButton.addEventListener(
+      "click",
+      async () => {
+
+
+        try {
+
+
+          await signOut(auth);
+
+
+          window.location.href =
+            "index.html";
+
+
+        } catch (error) {
+
+
+          console.error(
+            "Logout error:",
+            error
+          );
+
+
+          alert(
+            "Logout failed. Please try again."
+          );
+
+        }
+
+      }
+    );
+
+
+
+    /* =========================
+       LOGIN CHECK
+       ========================= */
+
+    onAuthStateChanged(
+      auth,
+      async user => {
+
+
+        if (!user) {
+
+          window.location.href =
+            "login.html";
+
+          return;
+
+        }
+
+
+        emailElement.textContent =
+          user.email ||
+          "Logged in";
+
+
+        await loadTransactions(
+          user
+        );
+
+      }
+    );
+
+
+  </script>
+
+
+</body>
+
+</html>
