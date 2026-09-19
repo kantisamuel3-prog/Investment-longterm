@@ -73,6 +73,7 @@
       margin-bottom: 17px;
     }
 
+    /* NORMAL INPUTS */
     input {
       width: 100%;
       padding: 14px;
@@ -92,6 +93,59 @@
       color: #94a3b8;
     }
 
+    /* PHONE NUMBER */
+    .phone-input {
+      width: 100%;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 0 14px;
+      transition: 0.2s;
+    }
+
+    .phone-input:focus-within {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    }
+
+    .country-code {
+      color: #1e293b;
+      font-size: 16px;
+      font-weight: bold;
+      padding-right: 12px;
+      margin-right: 12px;
+      border-right: 1px solid #e2e8f0;
+      line-height: 25px;
+      white-space: nowrap;
+    }
+
+    .phone-input input {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      outline: none;
+      box-shadow: none;
+      font-size: 16px;
+      background: transparent;
+      color: #1e293b;
+    }
+
+    .phone-input input:focus {
+      border: none;
+      box-shadow: none;
+    }
+
+    .phone-input input::placeholder {
+      color: #94a3b8;
+    }
+
+    /* REGISTER BUTTON */
     .register-btn {
       width: 100%;
       padding: 14px;
@@ -214,6 +268,10 @@
       h1 {
         font-size: 26px;
       }
+
+      .logo img {
+        width: 200px;
+      }
     }
   </style>
 </head>
@@ -240,18 +298,31 @@
 
       <form id="registerForm">
 
+        <!-- PHONE NUMBER -->
         <div class="input-group">
           <label for="phone">Phone Number</label>
 
-          <input
-            type="tel"
-            id="phone"
-            placeholder="Enter your phone number"
-            autocomplete="tel"
-            required
-          >
+          <div class="phone-input">
+
+            <span class="country-code">
+              +63
+            </span>
+
+            <input
+              type="tel"
+              id="phone"
+              placeholder="Enter your phone number"
+              autocomplete="tel"
+              maxlength="10"
+              inputmode="numeric"
+              required
+            >
+
+          </div>
         </div>
 
+
+        <!-- PASSWORD -->
         <div class="input-group">
           <label for="password">Password</label>
 
@@ -265,8 +336,12 @@
           >
         </div>
 
+
+        <!-- CONFIRM PASSWORD -->
         <div class="input-group">
-          <label for="confirmPassword">Confirm Password</label>
+          <label for="confirmPassword">
+            Confirm Password
+          </label>
 
           <input
             type="password"
@@ -278,6 +353,8 @@
           >
         </div>
 
+
+        <!-- REGISTER BUTTON -->
         <button
           type="submit"
           id="registerButton"
@@ -288,7 +365,9 @@
 
       </form>
 
+
       <div id="message" class="message"></div>
+
 
       <div class="login">
         Already have an account?
@@ -378,26 +457,58 @@
 
     function normalizePhone(phone) {
 
-      phone = phone.trim();
+      // Remove everything except numbers
+      phone = phone.replace(/\D/g, "");
 
-      // Remove spaces, dashes and parentheses
-      phone = phone.replace(/[\s\-()]/g, "");
 
-      // 09171234567
-      // becomes
-      // 639171234567
+      /*
+        USER INPUT:
 
-      if (phone.startsWith("09")) {
-        phone = "63" + phone.substring(1);
+        9123456789
+        ↓
+        639123456789
+      */
+
+      if (
+        phone.length === 10 &&
+        phone.startsWith("9")
+      ) {
+
+        return "63" + phone;
       }
 
-      // +639171234567
-      // becomes
-      // 639171234567
 
-      if (phone.startsWith("+63")) {
-        phone = phone.substring(1);
+      /*
+        USER INPUT:
+
+        09123456789
+        ↓
+        639123456789
+      */
+
+      if (
+        phone.length === 11 &&
+        phone.startsWith("09")
+      ) {
+
+        return "63" + phone.substring(1);
       }
+
+
+      /*
+        ALLOW:
+
+        639123456789
+      */
+
+      if (
+        phone.length === 12 &&
+        phone.startsWith("639")
+      ) {
+
+        return phone;
+      }
+
 
       return phone;
     }
@@ -412,8 +523,7 @@
       const normalizedPhone =
         normalizePhone(phone);
 
-      return normalizedPhone +
-        "@novarise.local";
+      return normalizedPhone + "";
     }
 
 
@@ -435,6 +545,54 @@
 
 
     // ==========================================
+    // CLEAR MESSAGE
+    // ==========================================
+
+    function clearMessage() {
+
+      const messageBox =
+        document.getElementById("message");
+
+      messageBox.className =
+        "message";
+
+      messageBox.textContent =
+        "";
+    }
+
+
+    // ==========================================
+    // ONLY ALLOW NUMBERS IN PHONE FIELD
+    // ==========================================
+
+    document
+      .getElementById("phone")
+      .addEventListener(
+        "input",
+        function() {
+
+          this.value =
+            this.value.replace(/\D/g, "");
+
+          /*
+            Maximum 10 digits:
+
+            9123456789
+          */
+
+          if (this.value.length > 10) {
+
+            this.value =
+              this.value.substring(0, 10);
+          }
+
+          clearMessage();
+
+        }
+      );
+
+
+    // ==========================================
     // REGISTER
     // ==========================================
 
@@ -448,7 +606,7 @@
 
 
           const phone =
-            document.getElementById("phone").value;
+            document.getElementById("phone").value.trim();
 
           const password =
             document.getElementById("password").value;
@@ -458,6 +616,9 @@
 
           const button =
             document.getElementById("registerButton");
+
+
+          clearMessage();
 
 
           // ======================================
@@ -475,7 +636,7 @@
           if (!/^639\d{9}$/.test(normalizedPhone)) {
 
             showError(
-              "Please enter a valid Philippine phone number."
+              "Please enter a valid Philippine mobile number, for example 9123456789."
             );
 
             return;
@@ -561,13 +722,6 @@
             // ====================================
             // SAVE USER TO FIRESTORE
             // ====================================
-            //
-            // IMPORTANT:
-            // Collection is "users"
-            // NOT "Users"
-            //
-            // This MUST match the Firestore Rules.
-            // ====================================
 
             await setDoc(
               doc(db, "users", user.uid),
@@ -602,12 +756,6 @@
 
             // ====================================
             // ROLLBACK AUTH ACCOUNT
-            // ====================================
-            //
-            // If Firebase Auth succeeded but
-            // Firestore failed, delete the newly
-            // created Auth account so the user
-            // isn't stuck as partially registered.
             // ====================================
 
             if (user) {
