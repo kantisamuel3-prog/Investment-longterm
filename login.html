@@ -16,29 +16,34 @@
 :root {
   --blue: #168ff0;
   --blue-dark: #155fd6;
-  --blue-light: #eaf6ff;
   --green: #a8d92d;
   --text: #12365d;
   --muted: #7890aa;
   --border: #dcecff;
 }
 
+html, body {
+  width: 100%;
+  min-height: 100%;
+}
+
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 10% 20%, rgba(39,154,245,.12), transparent 27%),
-    radial-gradient(circle at 88% 78%, rgba(168,217,45,.13), transparent 25%),
-    linear-gradient(135deg, #f8fcff 0%, #edf7ff 52%, #f8fbff 100%);
+    radial-gradient(circle at 8% 8%, rgba(39,154,245,.11), transparent 25%),
+    radial-gradient(circle at 92% 88%, rgba(168,217,45,.10), transparent 22%),
+    linear-gradient(135deg, #f9fcff 0%, #edf7ff 52%, #f8fbff 100%);
   color: var(--text);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 34px;
+  padding: 18px 28px;
   overflow-x: hidden;
+  overflow-y: auto;
   position: relative;
 }
 
-/* Soft decorative waves */
+/* Background decorations */
 body::before,
 body::after {
   content: "";
@@ -48,72 +53,81 @@ body::after {
 }
 
 body::before {
-  width: 560px;
-  height: 560px;
-  left: -250px;
-  top: -240px;
-  border-radius: 48% 52% 58% 42%;
-  background:
-    linear-gradient(145deg, rgba(22,143,240,.95), rgba(22,143,240,.12));
-  transform: rotate(-24deg);
-  opacity: .95;
+  width: 430px;
+  height: 430px;
+  left: -235px;
+  top: -225px;
+  border-radius: 50%;
+  background: linear-gradient(
+    145deg,
+    rgba(22,143,240,.80),
+    rgba(22,143,240,.08)
+  );
+  opacity: .78;
 }
 
 body::after {
-  width: 600px;
-  height: 260px;
-  right: -170px;
-  bottom: -90px;
-  border-radius: 55% 45% 0 0;
-  background:
-    linear-gradient(160deg, rgba(22,143,240,.92), rgba(22,143,240,.05));
-  transform: rotate(-10deg);
+  width: 500px;
+  height: 210px;
+  right: -180px;
+  bottom: -105px;
+  border-radius: 50% 50% 0 0;
+  background: linear-gradient(
+    160deg,
+    rgba(22,143,240,.78),
+    rgba(22,143,240,.04)
+  );
 }
 
-/* Small floating dots */
 .bg-dots {
   position: fixed;
-  right: 5%;
+  right: 5.5%;
   top: 9%;
-  width: 90px;
-  height: 90px;
-  opacity: .42;
-  background-image: radial-gradient(#68b9f4 2px, transparent 2px);
-  background-size: 18px 18px;
+  width: 72px;
+  height: 72px;
+  opacity: .34;
+  background-image: radial-gradient(
+    #68b9f4 1.8px,
+    transparent 1.8px
+  );
+  background-size: 16px 16px;
   z-index: 0;
 }
 
 /* Main layout */
 .page {
-  width: min(1180px, 100%);
+  width: min(1120px, 100%);
   display: grid;
-  grid-template-columns: minmax(220px, .72fr) minmax(390px, 1fr) minmax(220px, .72fr);
+  grid-template-columns:
+    minmax(220px, .75fr)
+    minmax(420px, 1fr)
+    minmax(220px, .75fr);
   align-items: center;
-  gap: 34px;
+  gap: 26px;
   position: relative;
   z-index: 1;
 }
 
-/* Side content */
+/* Side sections */
 .side {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 22px;
 }
 
 .side-left {
-  padding: 25px 0 25px 15px;
+  padding: 14px 0 14px 8px;
 }
 
 .side-right {
-  padding: 25px 15px 25px 0;
+  padding: 14px 8px 14px 0;
 }
 
 .side-title {
-  font-size: clamp(31px, 3vw, 47px);
-  line-height: 1.05;
+  font-size: clamp(30px, 3vw, 42px);
+  line-height: 1.03;
   font-weight: 700;
-  letter-spacing: -1.8px;
+  letter-spacing: -1.4px;
   color: #168ff0;
 }
 
@@ -122,67 +136,72 @@ body::after {
 }
 
 .side-copy {
-  max-width: 300px;
+  max-width: 255px;
   color: #6d87a1;
-  line-height: 1.7;
-  font-size: 15px;
+  line-height: 1.55;
+  font-size: 14px;
 }
 
 .wave-line {
-  width: 135px;
-  height: 5px;
+  width: 115px;
+  height: 4px;
   border-radius: 99px;
-  background: linear-gradient(90deg, var(--blue), var(--green));
+  background: linear-gradient(
+    90deg,
+    var(--blue),
+    var(--green)
+  );
 }
 
+/* Feature items */
 .feature {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   align-items: center;
 }
 
 .feature-icon {
-  width: 48px;
-  height: 48px;
-  flex: 0 0 48px;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   color: var(--blue);
   background: rgba(232,245,255,.92);
   border: 1px solid #d8edff;
-  box-shadow: 0 8px 22px rgba(39,125,198,.09);
+  box-shadow: 0 7px 18px rgba(39,125,198,.08);
 }
 
 .feature-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 .feature h3 {
   color: #1765b6;
-  font-size: 16px;
-  margin-bottom: 5px;
+  font-size: 15px;
+  margin-bottom: 4px;
 }
 
 .feature p {
   color: #7b93aa;
-  font-size: 13px;
-  line-height: 1.45;
+  font-size: 12.5px;
+  line-height: 1.4;
 }
 
 /* Login card */
 .login-box {
   width: 100%;
-  max-width: 510px;
+  max-width: 440px;
   justify-self: center;
-  background: rgba(255,255,255,.96);
-  border: 1px solid rgba(210,232,250,.9);
-  border-radius: 28px;
-  padding: 34px 44px 38px;
+  background: rgba(255,255,255,.97);
+  border: 1px solid rgba(210,232,250,.95);
+  border-radius: 24px;
+  padding: 24px 34px 25px;
   box-shadow:
-    0 28px 70px rgba(37,105,157,.15),
-    0 8px 25px rgba(37,105,157,.07);
+    0 24px 55px rgba(37,105,157,.13),
+    0 7px 20px rgba(37,105,157,.06);
   position: relative;
   overflow: hidden;
 }
@@ -190,28 +209,33 @@ body::after {
 .login-box::before {
   content: "";
   position: absolute;
-  width: 180px;
-  height: 180px;
-  right: -92px;
-  bottom: -98px;
+  width: 135px;
+  height: 135px;
+  right: -76px;
+  bottom: -76px;
   border-radius: 50%;
-  border: 12px solid rgba(22,143,240,.12);
+  border: 10px solid rgba(22,143,240,.10);
   box-shadow:
-    0 0 0 12px rgba(168,217,45,.10),
-    0 0 0 24px rgba(22,143,240,.07);
+    0 0 0 10px rgba(168,217,45,.08),
+    0 0 0 20px rgba(22,143,240,.05);
 }
 
 .login-box::after {
   content: "";
   position: absolute;
-  left: -65px;
-  top: -95px;
-  width: 165px;
-  height: 165px;
+  left: -55px;
+  top: -75px;
+  width: 135px;
+  height: 135px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(22,143,240,.15), rgba(168,217,45,.10));
+  background: linear-gradient(
+    135deg,
+    rgba(22,143,240,.11),
+    rgba(168,217,45,.08)
+  );
 }
 
+/* Logo */
 .logo {
   text-align: center;
   position: relative;
@@ -219,20 +243,20 @@ body::after {
 }
 
 .logo img {
-  width: 245px;
-  max-width: 82%;
+  width: 178px;
+  max-width: 72%;
   height: auto;
   display: block;
-  margin: 0 auto 8px;
+  margin: 0 auto 5px;
 }
 
 .brand-tagline {
   color: #6f8ca8;
-  font-size: 12px;
-  letter-spacing: 2.4px;
+  font-size: 10px;
+  letter-spacing: 2px;
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .brand-tagline b {
@@ -245,32 +269,38 @@ body::after {
 }
 
 .divider-accent {
-  width: 100px;
+  width: 84px;
   height: 4px;
-  margin: 0 auto 17px;
+  margin: 0 auto 13px;
   border-radius: 99px;
-  background: linear-gradient(90deg, var(--blue), var(--green));
+  background: linear-gradient(
+    90deg,
+    var(--blue),
+    var(--green)
+  );
 }
 
+/* Welcome */
 .welcome {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   position: relative;
   z-index: 1;
 }
 
 .welcome h1 {
   color: #123f70;
-  font-size: 24px;
-  margin-bottom: 7px;
+  font-size: 22px;
+  margin-bottom: 5px;
 }
 
 .subtitle {
   color: #7890aa;
-  font-size: 14px;
-  line-height: 1.55;
+  font-size: 13px;
+  line-height: 1.45;
 }
 
+/* Form */
 .form-area {
   position: relative;
   z-index: 1;
@@ -278,8 +308,8 @@ body::after {
 
 label {
   display: block;
-  margin: 0 0 8px;
-  font-size: 14px;
+  margin: 0 0 6px;
+  font-size: 13px;
   font-weight: 700;
   color: #164e80;
 }
@@ -288,55 +318,50 @@ label {
   position: relative;
 }
 
-.field-icon {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #2293e9;
-  pointer-events: none;
-}
-
-.field-icon svg {
-  width: 19px;
-  height: 19px;
-}
-
-.phone-input,
-.password-input {
+/* Phone */
+.phone-input {
   width: 100%;
-  height: 54px;
+  height: 49px;
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 12px;
   background: #fbfdff;
-  box-shadow: inset 0 1px 2px rgba(40,90,130,.025);
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
   transition: .2s ease;
 }
 
-.phone-input {
-  display: flex;
-  align-items: center;
-  margin-bottom: 19px;
-}
-
-.phone-input:focus-within,
-.field-wrap:focus-within .password-input {
+.phone-input:focus-within {
   border-color: #65b8f5;
   background: #fff;
   box-shadow:
-    0 0 0 4px rgba(22,143,240,.10),
-    0 8px 20px rgba(22,143,240,.07);
+    0 0 0 4px rgba(22,143,240,.08);
+}
+
+.field-icon {
+  color: #2293e9;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.phone-input .field-icon {
+  margin-left: 13px;
+}
+
+.field-icon svg {
+  width: 17px;
+  height: 17px;
 }
 
 .country-code {
-  height: 29px;
+  height: 26px;
   display: flex;
   align-items: center;
   color: #164a78;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
-  padding: 0 13px;
-  margin-left: 7px;
+  padding: 0 10px;
+  margin-left: 5px;
   border-right: 1px solid #dce8f2;
   white-space: nowrap;
 }
@@ -345,10 +370,10 @@ label {
   flex: 1;
   min-width: 0;
   height: 100%;
-  padding: 0 14px;
+  padding: 0 12px;
   border: 0;
   outline: none;
-  font-size: 15px;
+  font-size: 14px;
   background: transparent;
   color: #173e61;
 }
@@ -358,21 +383,36 @@ label {
   color: #9aadc0;
 }
 
+/* Password */
 .password-input {
-  padding: 0 48px 0 45px;
+  width: 100%;
+  height: 49px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fbfdff;
+  padding: 0 44px 0 42px;
   outline: none;
-  font-size: 15px;
+  font-size: 14px;
   color: #173e61;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  transition: .2s ease;
 }
 
+.field-wrap:focus-within .password-input {
+  border-color: #65b8f5;
+  background: #fff;
+  box-shadow:
+    0 0 0 4px rgba(22,143,240,.08);
+}
+
+/* Eye */
 .eye-button {
   position: absolute;
-  right: 13px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border: 0;
   background: transparent;
   color: #7d94aa;
@@ -388,19 +428,19 @@ label {
 }
 
 .eye-button svg {
-  width: 20px;
-  height: 20px;
+  width: 19px;
+  height: 19px;
 }
 
-/* Messages */
+/* Message */
 .message {
   display: none;
-  margin-bottom: 17px;
-  padding: 11px 13px;
-  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 9px 11px;
+  border-radius: 10px;
   text-align: center;
-  font-size: 13px;
-  line-height: 1.45;
+  font-size: 12.5px;
+  line-height: 1.35;
 }
 
 .message.error {
@@ -417,24 +457,34 @@ label {
   color: #28733e;
 }
 
-/* Buttons */
+/* Login button */
 .login-btn {
   width: 100%;
-  height: 54px;
+  height: 49px;
   border: 0;
-  border-radius: 15px;
-  background: linear-gradient(100deg, #19a8ee 0%, #1673e7 58%, #1d5ddd 100%);
+  border-radius: 12px;
+  background: linear-gradient(
+    100deg,
+    #19a8ee 0%,
+    #1673e7 58%,
+    #1d5ddd 100%
+  );
   color: #fff;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 12px 24px rgba(25,122,226,.23);
-  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+  box-shadow:
+    0 10px 20px rgba(25,122,226,.19);
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    opacity .18s ease;
 }
 
 .login-btn:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 15px 28px rgba(25,122,226,.28);
+  box-shadow:
+    0 13px 23px rgba(25,122,226,.23);
 }
 
 .login-btn:active:not(:disabled) {
@@ -447,18 +497,19 @@ label {
 }
 
 .login-arrow {
-  margin-left: 8px;
-  font-size: 19px;
+  margin-left: 7px;
+  font-size: 18px;
   vertical-align: -1px;
 }
 
+/* Register */
 .or-line {
   display: flex;
   align-items: center;
-  gap: 11px;
-  margin: 17px 0 14px;
+  gap: 9px;
+  margin: 13px 0 11px;
   color: #9ab0c5;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .or-line::before,
@@ -469,21 +520,17 @@ label {
   background: #e4eef7;
 }
 
-.register {
-  text-align: center;
-}
-
 .register a {
-  height: 48px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid #9fd2fb;
-  border-radius: 14px;
+  border-radius: 11px;
   color: #1578d8;
   text-decoration: none;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 14px;
   background: #fbfdff;
   transition: .18s ease;
 }
@@ -494,24 +541,23 @@ label {
   transform: translateY(-1px);
 }
 
-/* Footer text inside the card */
 .card-note {
   text-align: center;
   color: #9aafc2;
-  font-size: 11px;
-  margin-top: 16px;
-  letter-spacing: .2px;
+  font-size: 10.5px;
+  margin-top: 12px;
+  letter-spacing: .15px;
 }
 
-/* Responsive */
+/* Tablet / smaller desktop */
 @media (max-width: 980px) {
   body {
-    padding: 24px;
+    padding: 18px;
   }
 
   .page {
     grid-template-columns: 1fr;
-    max-width: 570px;
+    max-width: 500px;
   }
 
   .side {
@@ -519,99 +565,215 @@ label {
   }
 
   .login-box {
-    max-width: 540px;
+    max-width: 500px;
   }
 }
 
+/* Phone */
 @media (max-width: 520px) {
   body {
-    padding: 14px;
+    padding: 12px;
   }
 
   .login-box {
-    padding: 27px 20px 29px;
-    border-radius: 22px;
+    padding: 21px 20px 22px;
+    border-radius: 20px;
   }
 
   .logo img {
-    width: 220px;
+    width: 160px;
   }
 
   .welcome h1 {
-    font-size: 22px;
+    font-size: 21px;
+  }
+
+  .subtitle {
+    font-size: 12.5px;
+  }
+}
+
+/* Short screens */
+@media (max-height: 760px) and (min-width: 981px) {
+  body {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .login-box {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .logo img {
+    width: 150px;
   }
 
   .brand-tagline {
-    font-size: 10px;
-    letter-spacing: 1.8px;
+    margin-bottom: 5px;
+  }
+
+  .divider-accent {
+    margin-bottom: 9px;
+  }
+
+  .welcome {
+    margin-bottom: 11px;
+  }
+
+  .phone-input {
+    margin-bottom: 10px;
+  }
+
+  .password-input {
+    margin-bottom: 11px;
+  }
+
+  .or-line {
+    margin: 9px 0 8px;
+  }
+
+  .register a {
+    height: 40px;
+  }
+
+  .card-note {
+    margin-top: 9px;
   }
 }
 </style>
 </head>
 
 <body>
+
 <div class="bg-dots"></div>
 
 <main class="page">
 
-  <!-- LEFT DECORATIVE PANEL -->
+  <!-- LEFT SIDE -->
   <section class="side side-left">
+
     <div>
-      <div class="side-title">Together<br><span>We Rise</span></div>
-      <div class="wave-line" style="margin:18px 0;"></div>
+      <div class="side-title">
+        Together<br>
+        <span>We Rise</span>
+      </div>
+
+      <div
+        class="wave-line"
+        style="margin:18px 0;"
+      ></div>
+
       <p class="side-copy">
-        More opportunities. A brighter future. With <strong>Novarise.</strong>
+        More opportunities. A brighter future.
+        With <strong>Novarise.</strong>
       </p>
     </div>
 
     <div class="feature">
+
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
           <path d="M12 3l7 3v5c0 4.6-3 8.7-7 10-4-1.3-7-5.4-7-10V6l7-3z"/>
           <path d="M9.5 12l1.7 1.7 3.5-3.7"/>
         </svg>
+
       </div>
+
       <div>
         <h3>Secure Access</h3>
         <p>Your information is protected.</p>
       </div>
+
     </div>
+
   </section>
+
 
   <!-- LOGIN CARD -->
   <section class="login-box">
 
     <div class="logo">
-      <img src="novarise-logo.png.avif" alt="Novarise Logo">
+      <img
+        src="novarise-logo.png.avif"
+        alt="Novarise Logo"
+      >
     </div>
 
     <div class="brand-tagline">
-      <b>BUILD</b> &nbsp;•&nbsp; <b>INVEST</b> &nbsp;•&nbsp; <em>GROW</em>
+      <b>BUILD</b>
+      &nbsp;•&nbsp;
+      <b>INVEST</b>
+      &nbsp;•&nbsp;
+      <em>GROW</em>
     </div>
 
     <div class="divider-accent"></div>
 
+
     <div class="welcome">
+
       <h1>Welcome Back!</h1>
+
       <div class="subtitle">
         Login to your account to continue<br>
         your journey with Novarise.
       </div>
+
     </div>
 
-    <div id="message" class="message"></div>
 
-    <form id="loginForm" class="form-area">
+    <div
+      id="message"
+      class="message"
+    ></div>
 
-      <label for="phone">Phone Number</label>
+
+    <!-- LOGIN FORM -->
+    <form
+      id="loginForm"
+      class="form-area"
+    >
+
+      <!-- PHONE -->
+      <label for="phone">
+        Phone Number
+      </label>
+
       <div class="field-wrap">
+
         <div class="phone-input">
-          <span class="field-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+          <span
+            class="field-icon"
+            aria-hidden="true"
+          >
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+
               <path d="M6.6 3.5h2.2l1.1 4-1.8 1.5a15.5 15.5 0 0 0 6.9 6.9l1.5-1.8 4 1.1v2.2c0 1-.8 1.9-1.8 1.9C11.1 19.2 4.8 12.9 4.7 5.3c0-1 .8-1.8 1.9-1.8z"/>
+
             </svg>
+
           </span>
-          <span class="country-code">+63</span>
+
+
+          <span class="country-code">
+            +63
+          </span>
+
+
           <input
             id="phone"
             type="tel"
@@ -622,17 +784,46 @@ label {
             pattern="9[0-9]{9}"
             required
           >
+
         </div>
+
       </div>
 
-      <label for="password">Password</label>
+
+      <!-- PASSWORD -->
+      <label for="password">
+        Password
+      </label>
+
       <div class="field-wrap">
-        <span class="field-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="5" y="10" width="14" height="10" rx="2"/>
+
+        <span
+          class="field-icon"
+          aria-hidden="true"
+          style="position:absolute;left:13px;top:50%;transform:translateY(-50%);"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+
+            <rect
+              x="5"
+              y="10"
+              width="14"
+              height="10"
+              rx="2"
+            />
+
             <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+
           </svg>
+
         </span>
+
 
         <input
           id="password"
@@ -643,24 +834,69 @@ label {
           required
         >
 
-        <button type="button" class="eye-button" id="togglePassword" aria-label="Show password">
-          <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+        <button
+          type="button"
+          class="eye-button"
+          id="togglePassword"
+          aria-label="Show password"
+        >
+
+          <svg
+            id="eyeIcon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+
             <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/>
-            <circle cx="12" cy="12" r="2.5"/>
+
+            <circle
+              cx="12"
+              cy="12"
+              r="2.5"
+            />
+
           </svg>
+
         </button>
+
       </div>
 
-      <button id="loginBtn" class="login-btn" type="submit">
-        Login <span class="login-arrow">→</span>
+
+      <!-- LOGIN BUTTON -->
+      <button
+        id="loginBtn"
+        class="login-btn"
+        type="submit"
+      >
+
+        Login
+        <span class="login-arrow">
+          →
+        </span>
+
       </button>
+
     </form>
 
-    <div class="or-line"><span>or</span></div>
 
-    <div class="register">
-      <a href="register.html">Create Account</a>
+    <!-- OR -->
+    <div class="or-line">
+      <span>or</span>
     </div>
+
+
+    <!-- CREATE ACCOUNT -->
+    <div class="register">
+
+      <a href="register.html">
+        Create Account
+      </a>
+
+    </div>
+
 
     <div class="card-note">
       Secure access • Simple experience • Built for growth
@@ -668,154 +904,301 @@ label {
 
   </section>
 
-  <!-- RIGHT DECORATIVE PANEL -->
+
+  <!-- RIGHT SIDE -->
   <section class="side side-right">
+
     <div class="feature">
+
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+
           <path d="M4 19V5"/>
           <path d="M4 19h16"/>
           <path d="M7 15l3-4 3 2 5-7"/>
+
         </svg>
+
       </div>
+
       <div>
+
         <h3>Grow Together</h3>
-        <p>More opportunities for a better tomorrow.</p>
+
+        <p>
+          More opportunities for a better tomorrow.
+        </p>
+
       </div>
+
     </div>
 
+
     <div class="feature">
+
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="9" cy="8" r="3"/>
-          <circle cx="17" cy="9" r="2.5"/>
-          <path d="M3.5 19c.7-3 2.6-4.5 5.5-4.5S13.8 16 14.5 19"/>
-          <path d="M14 15c2.7-.8 5.5.4 6.5 3"/>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+
+          <circle
+            cx="9"
+            cy="8"
+            r="3"
+          />
+
+          <circle
+            cx="17"
+            cy="9"
+            r="2.5"
+          />
+
+          <path
+            d="M3.5 19c.7-3 2.6-4.5 5.5-4.5S13.8 16 14.5 19"
+          />
+
+          <path
+            d="M14 15c2.7-.8 5.5.4 6.5 3"
+          />
+
         </svg>
+
       </div>
+
       <div>
+
         <h3>Stronger Community</h3>
-        <p>We build progress, side by side.</p>
+
+        <p>
+          We build progress, side by side.
+        </p>
+
       </div>
+
     </div>
+
   </section>
 
 </main>
+
 
 <!-- =========================
      FIREBASE
      ========================= -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
+
 <script>
+
 /* =========================
    FIREBASE CONFIG
    ========================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
-  authDomain: "investpro-2dafb.firebaseapp.com",
-  projectId: "investpro-2dafb",
-  storageBucket: "investpro-2dafb.firebasestorage.app",
-  messagingSenderId: "135092039764",
-  appId: "1:135092039764:web:c4c71eef0c904346a77dc1",
-  measurementId: "G-0L77SFTC4F"
+
+  apiKey:
+    "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+
+  authDomain:
+    "investpro-2dafb.firebaseapp.com",
+
+  projectId:
+    "investpro-2dafb",
+
+  storageBucket:
+    "investpro-2dafb.firebasestorage.app",
+
+  messagingSenderId:
+    "135092039764",
+
+  appId:
+    "1:135092039764:web:c4c71eef0c904346a77dc1",
+
+  measurementId:
+    "G-0L77SFTC4F"
 };
+
 
 /* =========================
    INITIALIZE FIREBASE
    ========================= */
 
 firebase.initializeApp(firebaseConfig);
+
 const auth = firebase.auth();
+
 
 /* =========================
    ELEMENTS
    ========================= */
 
-const phoneInput = document.getElementById("phone");
-const passwordInput = document.getElementById("password");
-const loginButton = document.getElementById("loginBtn");
-const messageBox = document.getElementById("message");
-const togglePassword = document.getElementById("togglePassword");
+const phoneInput =
+  document.getElementById("phone");
+
+const passwordInput =
+  document.getElementById("password");
+
+const loginButton =
+  document.getElementById("loginBtn");
+
+const messageBox =
+  document.getElementById("message");
+
+const togglePassword =
+  document.getElementById("togglePassword");
+
 
 /* =========================
    PASSWORD VISIBILITY
    ========================= */
 
-togglePassword.addEventListener("click", function () {
-  const showing = passwordInput.type === "text";
-  passwordInput.type = showing ? "password" : "text";
-  this.setAttribute("aria-label", showing ? "Show password" : "Hide password");
-});
+togglePassword.addEventListener(
+  "click",
+  function () {
+
+    const showing =
+      passwordInput.type === "text";
+
+    passwordInput.type =
+      showing
+        ? "password"
+        : "text";
+
+    this.setAttribute(
+      "aria-label",
+      showing
+        ? "Show password"
+        : "Hide password"
+    );
+
+  }
+);
+
 
 /* =========================
    NORMALIZE PHONE
    ========================= */
 
 function normalizePhone(phone) {
-  phone = phone.replace(/\D/g, "");
+
+  phone =
+    phone.replace(/\D/g, "");
 
   if (/^9\d{9}$/.test(phone)) {
+
     return "63" + phone;
+
   }
 
   return "";
+
 }
+
 
 /* =========================
    PHONE → FIREBASE EMAIL
    ========================= */
 
 function phoneToFirebaseEmail(phone) {
-  const normalized = normalizePhone(phone);
+
+  const normalized =
+    normalizePhone(phone);
 
   if (!normalized) {
+
     return "";
+
   }
 
-  return normalized + "@novarise.local";
+  return normalized +
+    "@novarise.local";
+
 }
+
 
 /* =========================
    SHOW MESSAGE
    ========================= */
 
-function showMessage(message, type) {
-  messageBox.textContent = message;
-  messageBox.className = "message " + type;
+function showMessage(
+  message,
+  type
+) {
+
+  messageBox.textContent =
+    message;
+
+  messageBox.className =
+    "message " + type;
+
 }
+
 
 /* =========================
    PHONE INPUT
    ========================= */
 
-phoneInput.addEventListener("input", function () {
-  this.value = this.value.replace(/\D/g, "");
+phoneInput.addEventListener(
+  "input",
+  function () {
 
-  if (this.value.length > 10) {
-    this.value = this.value.substring(0, 10);
+    this.value =
+      this.value.replace(
+        /\D/g,
+        ""
+      );
+
+
+    if (this.value.length > 10) {
+
+      this.value =
+        this.value.substring(
+          0,
+          10
+        );
+
+    }
+
+
+    if (
+      this.value.length > 0 &&
+      this.value.charAt(0) !== "9"
+    ) {
+
+      this.value = "";
+
+      showMessage(
+        "Phone number must start with 9.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    messageBox.className =
+      "message";
+
+    messageBox.textContent =
+      "";
+
   }
+);
 
-  if (
-    this.value.length > 0 &&
-    this.value.charAt(0) !== "9"
-  ) {
-    this.value = "";
-
-    showMessage(
-      "Phone number must start with 9.",
-      "error"
-    );
-
-    return;
-  }
-
-  messageBox.className = "message";
-  messageBox.textContent = "";
-});
 
 /* =========================
    LOGIN
@@ -823,94 +1206,148 @@ phoneInput.addEventListener("input", function () {
 
 document
   .getElementById("loginForm")
-  .addEventListener("submit", function (event) {
+  .addEventListener(
+    "submit",
+    function (event) {
 
-    event.preventDefault();
+      event.preventDefault();
 
-    const phone = phoneInput.value.trim();
-    const password = passwordInput.value;
 
-    if (!phone || !password) {
-      showMessage(
-        "Please enter your phone number and password.",
-        "error"
-      );
-      return;
-    }
+      const phone =
+        phoneInput.value.trim();
 
-    if (!/^9\d{9}$/.test(phone)) {
-      showMessage(
-        "Please enter a valid 10-digit Philippine mobile number starting with 9.",
-        "error"
-      );
+      const password =
+        passwordInput.value;
 
-      phoneInput.focus();
-      return;
-    }
 
-    const firebaseEmail = phoneToFirebaseEmail(phone);
+      if (
+        !phone ||
+        !password
+      ) {
 
-    if (!firebaseEmail) {
-      showMessage(
-        "Invalid phone number.",
-        "error"
-      );
-      return;
-    }
-
-    loginButton.disabled = true;
-    loginButton.innerHTML = 'Logging in...';
-
-    auth
-      .signInWithEmailAndPassword(
-        firebaseEmail,
-        password
-      )
-
-      .then(() => {
-        window.location.href = "dashboard.html";
-      })
-
-      .catch((error) => {
-        console.error(
-          "Firebase login error:",
-          error
+        showMessage(
+          "Please enter your phone number and password.",
+          "error"
         );
 
-        let message =
-          "Login failed. Please check your phone number and password.";
+        return;
 
-        if (
-          error.code === "auth/invalid-credential" ||
-          error.code === "auth/wrong-password" ||
-          error.code === "auth/user-not-found"
-        ) {
-          message =
-            "Incorrect phone number or password.";
-        }
+      }
 
-        else if (
-          error.code === "auth/too-many-requests"
-        ) {
-          message =
-            "Too many login attempts. Please try again later.";
-        }
 
-        showMessage(message, "error");
+      if (
+        !/^9\d{9}$/.test(phone)
+      ) {
 
-        loginButton.disabled = false;
-        loginButton.innerHTML = 'Login <span class="login-arrow">→</span>';
-      });
-  });
+        showMessage(
+          "Please enter a valid 10-digit Philippine mobile number starting with 9.",
+          "error"
+        );
+
+        phoneInput.focus();
+
+        return;
+
+      }
+
+
+      const firebaseEmail =
+        phoneToFirebaseEmail(
+          phone
+        );
+
+
+      if (!firebaseEmail) {
+
+        showMessage(
+          "Invalid phone number.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      loginButton.disabled =
+        true;
+
+      loginButton.innerHTML =
+        "Logging in...";
+
+
+      auth
+        .signInWithEmailAndPassword(
+          firebaseEmail,
+          password
+        )
+
+        .then(() => {
+
+          window.location.href =
+            "dashboard.html";
+
+        })
+
+
+        .catch((error) => {
+
+          console.error(
+            "Firebase login error:",
+            error
+          );
+
+
+          let message =
+            "Login failed. Please check your phone number and password.";
+
+
+          if (
+            error.code ===
+              "auth/invalid-credential" ||
+
+            error.code ===
+              "auth/wrong-password" ||
+
+            error.code ===
+              "auth/user-not-found"
+          ) {
+
+            message =
+              "Incorrect phone number or password.";
+
+          }
+
+
+          else if (
+            error.code ===
+              "auth/too-many-requests"
+          ) {
+
+            message =
+              "Too many login attempts. Please try again later.";
+
+          }
+
+
+          showMessage(
+            message,
+            "error"
+          );
+
+
+          loginButton.disabled =
+            false;
+
+          loginButton.innerHTML =
+            'Login <span class="login-arrow">→</span>';
+
+        });
+
+    }
+  );
+
 </script>
 
 </body>
 </html>
-'''
-
-out = Path("/mnt/data/login_novarise_redesigned.html")
-out.write_text(html, encoding="utf-8")
-
-print(f"Created: {out}")
-print(f"Original source lines: {len(source.splitlines())}")
-print(f"New login.html lines: {len(html.splitlines())}")
