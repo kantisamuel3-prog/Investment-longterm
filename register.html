@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="theme-color" content="#168ff0">
   <title>Novarise - Register</title>
 
   <style>
@@ -11,597 +11,864 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    :root {
+      --blue: #168ff0;
+      --blue-dark: #155fd6;
+      --green: #a8d92d;
+      --text: #12365d;
+      --muted: #7890aa;
+      --border: #dcecff;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
     }
 
     body {
-      background: #f3f6fb;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 18px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+
+      background:
+        radial-gradient(circle at 8% 8%, rgba(39,154,245,.11), transparent 25%),
+        radial-gradient(circle at 92% 88%, rgba(168,217,45,.10), transparent 22%),
+        linear-gradient(135deg, #f9fcff 0%, #edf7ff 52%, #f8fbff 100%);
+
+      color: var(--text);
+    }
+
+    /* Decorative background only; nothing is displayed beside the card. */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      width: 410px;
+      height: 410px;
+      left: -230px;
+      top: -220px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, rgba(22,143,240,.68), rgba(22,143,240,.05));
+      opacity: .72;
+    }
+
+    body::after {
+      width: 480px;
+      height: 190px;
+      right: -175px;
+      bottom: -95px;
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(160deg, rgba(22,143,240,.65), rgba(22,143,240,.04));
+    }
+
+    .bg-dots {
+      position: fixed;
+      right: 5%;
+      top: 8%;
+      width: 70px;
+      height: 70px;
+      opacity: .30;
+      background-image: radial-gradient(#68b9f4 1.8px, transparent 1.8px);
+      background-size: 16px 16px;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .card {
-      width: 100%;
-      max-width: 430px;
-      background: #ffffff;
-      padding: 35px 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+      width: min(455px, 100%);
+      background: rgba(255,255,255,.97);
+      border: 1px solid rgba(210,232,250,.95);
+      border-radius: 24px;
+      padding: 24px 34px 23px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+
+      box-shadow:
+        0 24px 55px rgba(37,105,157,.13),
+        0 7px 20px rgba(37,105,157,.06);
     }
 
-    /* =========================
-       LOGO
-       ========================= */
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 135px;
+      height: 135px;
+      right: -76px;
+      bottom: -76px;
+      border-radius: 50%;
+      border: 10px solid rgba(22,143,240,.10);
+      box-shadow:
+        0 0 0 10px rgba(168,217,45,.08),
+        0 0 0 20px rgba(22,143,240,.05);
+      pointer-events: none;
+    }
 
+    .card::after {
+      content: "";
+      position: absolute;
+      left: -55px;
+      top: -75px;
+      width: 135px;
+      height: 135px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(22,143,240,.11), rgba(168,217,45,.08));
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Logo */
     .logo {
       text-align: center;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
     .logo img {
-      width: 220px;
-      max-width: 100%;
+      width: 175px;
+      max-width: 72%;
       height: auto;
       display: block;
-      margin: 0 auto;
+      margin: 0 auto 5px;
     }
 
-
-    /* =========================
-       TITLE
-       ========================= */
-
-    h1 {
+    .brand-tagline {
       text-align: center;
-      color: #1e293b;
-      font-size: 30px;
-      margin-top: 10px;
+      color: #6f8ca8;
+      font-size: 10px;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-transform: uppercase;
       margin-bottom: 8px;
     }
 
+    .brand-tagline .blue {
+      color: var(--blue);
+    }
 
-    /* =========================
-       SUBTITLE
-       ========================= */
+    .brand-tagline .green {
+      color: var(--green);
+    }
+
+    .divider-accent {
+      width: 84px;
+      height: 4px;
+      margin: 0 auto 13px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+    }
+
+    /* Title */
+    h1 {
+      text-align: center;
+      color: #123f70;
+      font-size: 23px;
+      margin-bottom: 6px;
+    }
 
     .subtitle {
       text-align: center;
-      color: #64748b;
-      font-size: 14px;
-      margin-bottom: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.48;
+      margin-bottom: 16px;
     }
 
-
-    /* =========================
-       LABEL
-       ========================= */
-
-    label {
-      display: block;
-      color: #334155;
-      font-size: 14px;
-      font-weight: bold;
-      margin-bottom: 7px;
+    .subtitle strong {
+      color: #4d7295;
     }
 
-    .input-group {
-      margin-bottom: 17px;
-    }
-
-
-    /* =========================
-       NORMAL INPUTS
-       ========================= */
-
-    input {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-      font-size: 16px;
-      outline: none;
-      transition: 0.2s;
-    }
-
-    input:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
-    }
-
-    input::placeholder {
-      color: #94a3b8;
-    }
-
-
-    /* =========================
-       PHONE INPUT
-       ========================= */
-
-    .phone-input {
-      width: 100%;
-      height: 52px;
-
-      display: flex;
-      align-items: center;
-
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-
-      background: #ffffff;
-
-      padding: 0 14px;
-
-      transition: 0.2s;
-    }
-
-    .phone-input:focus-within {
-      border-color: #2563eb;
-      box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.10);
-    }
-
-
-    /* FIXED +63 */
-
-    .country-code {
-      color: #1e293b;
-      font-size: 16px;
-      font-weight: bold;
-
-      padding-right: 12px;
-      margin-right: 12px;
-
-      border-right: 1px solid #e2e8f0;
-
-      line-height: 25px;
-
-      white-space: nowrap;
-    }
-
-
-    /* PHONE NUMBER */
-
-    .phone-input input {
-      flex: 1;
-
-      width: 100%;
-      height: 100%;
-
-      padding: 0;
-
-      border: none;
-      border-radius: 0;
-
-      outline: none;
-      box-shadow: none;
-
-      font-size: 16px;
-
-      background: transparent;
-
-      color: #1e293b;
-    }
-
-    .phone-input input:focus {
-      border: none;
-      box-shadow: none;
-    }
-
-    .phone-input input::placeholder {
-      color: #94a3b8;
-    }
-
-
-    /* =========================
-       REGISTER BUTTON
-       ========================= */
-
-    .register-btn {
-      width: 100%;
-
-      padding: 14px;
-
-      margin-top: 5px;
-
-      border: none;
-      border-radius: 10px;
-
-      background: #2563eb;
-
-      color: white;
-
-      font-size: 17px;
-      font-weight: bold;
-
-      cursor: pointer;
-
-      transition: 0.2s;
-    }
-
-    .register-btn:hover:not(:disabled) {
-      background: #1d4ed8;
-    }
-
-    .register-btn:disabled {
-      background: #93c5fd;
-      cursor: not-allowed;
-    }
-
-
-    /* =========================
-       MESSAGE
-       ========================= */
-
+    /* Message */
     .message {
       display: none;
-
-      margin-bottom: 18px;
-
-      padding: 13px;
-
+      margin-bottom: 13px;
+      padding: 10px 12px;
       border-radius: 10px;
-
       text-align: center;
-
-      font-size: 14px;
-
-      line-height: 1.5;
+      font-size: 12.5px;
+      line-height: 1.4;
     }
 
     .message.error {
       display: block;
-
-      background: #fee2e2;
-
-      color: #991b1b;
-
-      border: 1px solid #fecaca;
+      background: #fff0f0;
+      border: 1px solid #ffd6d6;
+      color: #a33333;
     }
 
     .message.success {
       display: block;
-
-      background: #dcfce7;
-
-      color: #166534;
-
-      border: 1px solid #bbf7d0;
+      background: #effcf3;
+      border: 1px solid #d3f4dc;
+      color: #28733e;
     }
 
-
-    /* =========================
-       SUCCESS SCREEN
-       ========================= */
-
-    .success-screen {
-      display: none;
-      text-align: center;
+    /* Form */
+    .input-group {
+      margin-bottom: 13px;
     }
 
-    .success-icon {
-      width: 75px;
-      height: 75px;
+    label {
+      display: block;
+      color: #164e80;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
 
-      margin: 0 auto 20px;
+    .field-wrap {
+      position: relative;
+    }
 
-      border-radius: 50%;
+    /* Phone field */
+    .phone-input {
+      width: 100%;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fbfdff;
+      transition: .2s ease;
+    }
 
-      background: #dcfce7;
+    .phone-input:focus-within {
+      border-color: #65b8f5;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(22,143,240,.08);
+    }
 
-      color: #16a34a;
-
+    .phone-icon,
+    .lock-icon {
+      color: #2293e9;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
 
-      font-size: 42px;
-      font-weight: bold;
+    .phone-icon {
+      margin-left: 13px;
+    }
+
+    .phone-icon svg,
+    .lock-icon svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .country-code {
+      height: 26px;
+      display: flex;
+      align-items: center;
+      color: #164a78;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 0 10px;
+      margin-left: 5px;
+      border-right: 1px solid #dce8f2;
+      white-space: nowrap;
+    }
+
+    .phone-input input {
+      flex: 1;
+      min-width: 0;
+      width: 100%;
+      height: 100%;
+      padding: 0 12px;
+      border: 0;
+      outline: none;
+      box-shadow: none;
+      border-radius: 0;
+      font-size: 14px;
+      background: transparent;
+      color: #173e61;
+    }
+
+    .phone-input input:focus {
+      border: 0;
+      outline: none;
+      box-shadow: none;
+    }
+
+    /* Password */
+    .password-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 44px 0 42px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      outline: none;
+      font-size: 14px;
+      background: #fbfdff;
+      color: #173e61;
+      transition: .2s ease;
+    }
+
+    .password-input:focus {
+      border-color: #65b8f5;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(22,143,240,.08);
+    }
+
+    .password-input::placeholder,
+    .phone-input input::placeholder {
+      color: #9aadc0;
+    }
+
+    .lock-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    /* Show/hide password */
+    .eye-button {
+      position: absolute;
+      right: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      border: 0;
+      background: transparent;
+      color: #7d94aa;
+      cursor: pointer;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+    }
+
+    .eye-button:hover {
+      background: #edf7ff;
+      color: var(--blue);
+    }
+
+    .eye-button svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    /* Main button */
+    .register-btn {
+      width: 100%;
+      height: 49px;
+      margin-top: 2px;
+      border: 0;
+      border-radius: 12px;
+
+      background:
+        linear-gradient(
+          100deg,
+          #19a8ee 0%,
+          #1673e7 58%,
+          #1d5ddd 100%
+        );
+
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+
+      box-shadow:
+        0 10px 20px rgba(25,122,226,.19);
+
+      transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        opacity .18s ease;
+    }
+
+    .register-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 13px 23px rgba(25,122,226,.23);
+    }
+
+    .register-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .register-btn:disabled {
+      opacity: .62;
+      cursor: not-allowed;
+    }
+
+    .button-arrow {
+      margin-left: 7px;
+      font-size: 18px;
+      vertical-align: -1px;
+    }
+
+    /* Divider */
+    .or-line {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 13px 0 11px;
+      color: #9ab0c5;
+      font-size: 11px;
+    }
+
+    .or-line::before,
+    .or-line::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: #e4eef7;
+    }
+
+    /* Login link */
+    .login a {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #9fd2fb;
+      border-radius: 11px;
+      color: #1578d8;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      background: #fbfdff;
+      transition: .18s ease;
+    }
+
+    .login a:hover {
+      background: #eff8ff;
+      border-color: #72bdf4;
+      transform: translateY(-1px);
+    }
+
+    /* Small note */
+    .card-note {
+      text-align: center;
+      color: #9aafc2;
+      font-size: 10.5px;
+      margin-top: 11px;
+      letter-spacing: .15px;
+    }
+
+    /* Success screen */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 8px 0 3px;
+    }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      background: #eafaf0;
+      color: #16a34a;
+      border: 1px solid #cfeeda;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      font-weight: 700;
     }
 
     .success-screen h2 {
       color: #166534;
-      font-size: 25px;
-      margin-bottom: 12px;
+      font-size: 23px;
+      margin-bottom: 8px;
     }
 
     .success-screen p {
       color: #64748b;
-      line-height: 1.6;
-      margin-bottom: 25px;
+      line-height: 1.55;
+      font-size: 13px;
+      margin-bottom: 18px;
     }
 
-
-    /* =========================
-       LOGIN BUTTON
-       ========================= */
-
-    .login-btn {
-      display: block;
-
+    .continue-login-btn {
       width: 100%;
-
-      padding: 14px;
-
-      background: #2563eb;
-
-      color: white;
-
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background:
+        linear-gradient(
+          100deg,
+          #19a8ee 0%,
+          #1673e7 58%,
+          #1d5ddd 100%
+        );
+      color: #fff;
       text-decoration: none;
-
-      border-radius: 10px;
-
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: 0 10px 20px rgba(25,122,226,.18);
     }
 
-    .login-btn:hover {
-      background: #1d4ed8;
+    .continue-login-btn:hover {
+      transform: translateY(-1px);
     }
 
-
-    /* =========================
-       LOGIN LINK
-       ========================= */
-
-    .login {
-      text-align: center;
-
-      margin-top: 22px;
-
-      color: #64748b;
-
-      font-size: 14px;
-    }
-
-    .login a {
-      color: #2563eb;
-
-      text-decoration: none;
-
-      font-weight: bold;
-    }
-
-    .login a:hover {
-      text-decoration: underline;
-    }
-
-
-    /* =========================
-       MOBILE
-       ========================= */
-
-    @media (max-width: 480px) {
-
-      .card {
-        padding: 30px 22px;
+    /* Responsive */
+    @media (max-width: 520px) {
+      body {
+        padding: 12px;
       }
 
-      h1 {
-        font-size: 26px;
+      .card {
+        padding: 21px 20px 22px;
+        border-radius: 20px;
       }
 
       .logo img {
-        width: 200px;
+        width: 160px;
       }
 
+      h1 {
+        font-size: 21px;
+      }
+
+      .subtitle {
+        font-size: 12.5px;
+      }
     }
 
+    @media (max-height: 760px) and (min-width: 521px) {
+      body {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+
+      .card {
+        padding-top: 17px;
+        padding-bottom: 17px;
+      }
+
+      .logo img {
+        width: 150px;
+      }
+
+      .brand-tagline {
+        margin-bottom: 5px;
+      }
+
+      .divider-accent {
+        margin-bottom: 9px;
+      }
+
+      .subtitle {
+        margin-bottom: 11px;
+      }
+
+      .input-group {
+        margin-bottom: 9px;
+      }
+
+      .or-line {
+        margin: 9px 0 8px;
+      }
+
+      .login a {
+        height: 40px;
+      }
+
+      .card-note {
+        margin-top: 8px;
+      }
+    }
   </style>
 </head>
 
-
 <body>
+
+  <div class="bg-dots"></div>
 
   <div class="card">
 
-
-    <!-- =========================
-         REGISTER SECTION
-         ========================= -->
-
-    <div id="registerSection">
-
-
-      <!-- LOGO -->
-
-      <div class="logo">
-
-        <img
-          src="novarise-logo.png.avif"
-          alt="Novarise Logo"
-        >
-
-      </div>
-
-
-      <!-- TITLE -->
-
-      <h1>
-        Create Account
-      </h1>
-
-
-      <!-- SUBTITLE -->
-
-      <div class="subtitle">
-        Create your Novarise account
-      </div>
-
+    <div class="content">
 
       <!-- =========================
-           MESSAGE
-           IMPORTANT:
-           NASA ITAAS NA NG FORM
+           REGISTER SECTION
            ========================= -->
 
-      <div
-        id="message"
-        class="message"
-      ></div>
+      <div id="registerSection">
 
+        <div class="logo">
+          <img
+            src="novarise-logo.png.avif"
+            alt="Novarise Logo"
+          >
+        </div>
 
-      <!-- =========================
-           REGISTER FORM
-           ========================= -->
+        <div class="brand-tagline">
+          <span class="blue">BUILD</span>
+          &nbsp;•&nbsp;
+          <span class="blue">INVEST</span>
+          &nbsp;•&nbsp;
+          <span class="green">GROW</span>
+        </div>
 
-      <form id="registerForm">
+        <div class="divider-accent"></div>
 
+        <h1>Create Account</h1>
 
-        <!-- PHONE NUMBER -->
+        <div class="subtitle">
+          Create your Novarise account<br>
+          Join today and start
+          <strong>building, investing, and growing together.</strong>
+        </div>
 
-        <div class="input-group">
+        <div
+          id="message"
+          class="message"
+          role="alert"
+          aria-live="polite"
+        ></div>
 
-          <label for="phone">
-            Phone Number
-          </label>
+        <form id="registerForm">
 
+          <!-- PHONE -->
+          <div class="input-group">
 
-          <div class="phone-input">
+            <label for="phone">
+              Phone Number
+            </label>
 
+            <div class="phone-input">
 
-            <!-- FIXED COUNTRY CODE -->
+              <span class="phone-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M6.6 3.5h2.2l1.1 4-1.8 1.5a15.5 15.5 0 0 0 6.9 6.9l1.5-1.8 4 1.1v2.2c0 1-.8 1.9-1.8 1.9C11.1 19.2 4.8 12.9 4.7 5.3c0-1 .8-1.8 1.9-1.8z"/>
+                </svg>
+              </span>
 
-            <span class="country-code">
-              +63
-            </span>
+              <span class="country-code">
+                +63
+              </span>
 
+              <input
+                type="tel"
+                id="phone"
+                placeholder="Enter your phone number"
+                autocomplete="tel"
+                maxlength="10"
+                inputmode="numeric"
+                pattern="9[0-9]{9}"
+                required
+              >
 
-            <!-- 10 DIGIT PHONE -->
-
-            <input
-              type="tel"
-              id="phone"
-              placeholder="Enter your phone number"
-              autocomplete="tel"
-              maxlength="10"
-              inputmode="numeric"
-              pattern="9[0-9]{9}"
-              required
-            >
+            </div>
 
           </div>
 
-        </div>
+
+          <!-- PASSWORD -->
+          <div class="input-group">
+
+            <label for="password">
+              Password
+            </label>
+
+            <div class="field-wrap">
+
+              <span class="lock-icon" aria-hidden="true">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect
+                    x="5"
+                    y="10"
+                    width="14"
+                    height="10"
+                    rx="2"
+                  />
+                  <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+                </svg>
+
+              </span>
+
+              <input
+                type="password"
+                id="password"
+                class="password-input"
+                placeholder="Create your password"
+                minlength="6"
+                autocomplete="new-password"
+                required
+              >
+
+              <button
+                type="button"
+                class="eye-button"
+                id="togglePassword"
+                aria-label="Show password"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/>
+                  <circle cx="12" cy="12" r="2.5"/>
+                </svg>
+              </button>
+
+            </div>
+
+          </div>
 
 
-        <!-- =========================
-             PASSWORD
-             ========================= -->
+          <!-- CONFIRM PASSWORD -->
+          <div class="input-group">
 
-        <div class="input-group">
+            <label for="confirmPassword">
+              Confirm Password
+            </label>
 
-          <label for="password">
-            Password
-          </label>
+            <div class="field-wrap">
+
+              <span class="lock-icon" aria-hidden="true">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect
+                    x="5"
+                    y="10"
+                    width="14"
+                    height="10"
+                    rx="2"
+                  />
+                  <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+                </svg>
+
+              </span>
+
+              <input
+                type="password"
+                id="confirmPassword"
+                class="password-input"
+                placeholder="Confirm your password"
+                minlength="6"
+                autocomplete="new-password"
+                required
+              >
+
+              <button
+                type="button"
+                class="eye-button"
+                id="toggleConfirmPassword"
+                aria-label="Show password"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/>
+                  <circle cx="12" cy="12" r="2.5"/>
+                </svg>
+              </button>
+
+            </div>
+
+          </div>
 
 
-          <input
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            minlength="6"
-            autocomplete="new-password"
-            required
+          <!-- CREATE ACCOUNT -->
+          <button
+            type="submit"
+            id="registerButton"
+            class="register-btn"
           >
+            Create Account
+            <span class="button-arrow">→</span>
+          </button>
 
+        </form>
+
+
+        <!-- LOGIN -->
+        <div class="or-line">
+          <span>or</span>
         </div>
 
-
-        <!-- =========================
-             CONFIRM PASSWORD
-             ========================= -->
-
-        <div class="input-group">
-
-          <label for="confirmPassword">
-            Confirm Password
-          </label>
-
-
-          <input
-            type="password"
-            id="confirmPassword"
-            placeholder="Confirm your password"
-            minlength="6"
-            autocomplete="new-password"
-            required
-          >
-
+        <div class="login">
+          <a href="login.html">
+            Already have an account? &nbsp;Login
+          </a>
         </div>
 
+        <div class="card-note">
+          Secure registration • Simple experience • Built for growth
+        </div>
 
-        <!-- =========================
-             REGISTER BUTTON
-             ========================= -->
+      </div>
 
-        <button
-          type="submit"
-          id="registerButton"
-          class="register-btn"
+
+      <!-- =========================
+           SUCCESS SCREEN
+           ========================= -->
+
+      <div
+        id="successScreen"
+        class="success-screen"
+      >
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <h2>
+          Account Registered!
+        </h2>
+
+        <p>
+          Your Novarise account has been
+          created successfully.
+        </p>
+
+        <a
+          href="login.html"
+          class="continue-login-btn"
         >
-          Create Account
-        </button>
-
-
-      </form>
-
-
-      <!-- LOGIN -->
-
-      <div class="login">
-
-        Already have an account?
-
-        <a href="login.html">
-          Login
+          Continue to Login
         </a>
 
       </div>
 
-
     </div>
-
-
-    <!-- =========================
-         SUCCESS SCREEN
-         ========================= -->
-
-    <div
-      id="successScreen"
-      class="success-screen"
-    >
-
-
-      <div class="success-icon">
-        ✓
-      </div>
-
-
-      <h2>
-        Account Registered!
-      </h2>
-
-
-      <p>
-        Your Novarise account has been
-        created successfully.
-      </p>
-
-
-      <a
-        href="login.html"
-        class="login-btn"
-      >
-        Continue to Login
-      </a>
-
-
-    </div>
-
-
   </div>
 
 
@@ -615,14 +882,12 @@
       initializeApp
     } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
-
     import {
       getAuth,
       createUserWithEmailAndPassword,
       updateProfile,
       deleteUser
     } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
 
     import {
       getFirestore,
@@ -658,7 +923,6 @@
 
       measurementId:
         "G-0L77SFTC4F"
-
     };
 
 
@@ -669,10 +933,8 @@
     const app =
       initializeApp(firebaseConfig);
 
-
     const auth =
       getAuth(app);
-
 
     const db =
       getFirestore(app);
@@ -685,46 +947,75 @@
     const phoneInput =
       document.getElementById("phone");
 
-
     const passwordInput =
       document.getElementById("password");
-
 
     const confirmPasswordInput =
       document.getElementById("confirmPassword");
 
-
     const registerButton =
       document.getElementById("registerButton");
-
 
     const messageBox =
       document.getElementById("message");
 
+    const togglePassword =
+      document.getElementById("togglePassword");
+
+    const toggleConfirmPassword =
+      document.getElementById("toggleConfirmPassword");
+
+
+    /* =========================
+       SHOW / HIDE PASSWORD
+       ========================= */
+
+    togglePassword.addEventListener(
+      "click",
+      function () {
+
+        const showing =
+          passwordInput.type === "text";
+
+        passwordInput.type =
+          showing ? "password" : "text";
+
+        this.setAttribute(
+          "aria-label",
+          showing ? "Show password" : "Hide password"
+        );
+
+      }
+    );
+
+
+    toggleConfirmPassword.addEventListener(
+      "click",
+      function () {
+
+        const showing =
+          confirmPasswordInput.type === "text";
+
+        confirmPasswordInput.type =
+          showing ? "password" : "text";
+
+        this.setAttribute(
+          "aria-label",
+          showing ? "Show password" : "Hide password"
+        );
+
+      }
+    );
+
 
     /* =========================
        NORMALIZE PHONE
-       =========================
-
-       USER ENTERS:
-
-       9123456789
-
-       FIREBASE USES:
-
-       639123456789
-    */
+       ========================= */
 
     function normalizePhone(phone) {
 
-      // Remove anything that is not a number
-
       phone =
         phone.replace(/\D/g, "");
-
-
-      // Only accept:
-      // 9123456789
 
       if (
         /^9\d{9}$/.test(phone)
@@ -733,7 +1024,6 @@
         return "63" + phone;
 
       }
-
 
       return "";
 
@@ -749,13 +1039,11 @@
       const normalizedPhone =
         normalizePhone(phone);
 
-
       if (!normalizedPhone) {
 
         return "";
 
       }
-
 
       return normalizedPhone +
         "@novarise.local";
@@ -802,23 +1090,16 @@
 
     phoneInput.addEventListener(
       "input",
-      function() {
+      function () {
 
-        /*
-          Numbers only
-        */
-
+        /* Numbers only */
         this.value =
           this.value.replace(
             /\D/g,
             ""
           );
 
-
-        /*
-          Maximum 10 digits
-        */
-
+        /* Maximum 10 digits */
         if (
           this.value.length > 10
         ) {
@@ -831,29 +1112,14 @@
 
         }
 
-
-        /*
-          First digit MUST be 9
-        */
-
+        /* First digit must be 9 */
         if (
           this.value.length > 0 &&
           this.value.charAt(0) !== "9"
         ) {
 
-          /*
-            Remove invalid
-            first character
-          */
-
           this.value =
             this.value.substring(1);
-
-
-          /*
-            Show message
-            ABOVE THE FORM
-          */
 
           showMessage(
             "Phone number must start with 9.",
@@ -863,12 +1129,6 @@
           return;
 
         }
-
-
-        /*
-          Clear old message
-          while typing valid number
-        */
 
         clearMessage();
 
@@ -884,26 +1144,18 @@
       .getElementById("registerForm")
       .addEventListener(
         "submit",
-        async function(event) {
+        async function (event) {
 
           event.preventDefault();
-
-
-          /* =====================
-             GET VALUES
-             ===================== */
 
           const phone =
             phoneInput.value.trim();
 
-
           const password =
             passwordInput.value;
 
-
           const confirmPassword =
             confirmPasswordInput.value;
-
 
           clearMessage();
 
@@ -935,7 +1187,6 @@
           const normalizedPhone =
             normalizePhone(phone);
 
-
           if (!normalizedPhone) {
 
             showMessage(
@@ -961,6 +1212,8 @@
               "error"
             );
 
+            passwordInput.focus();
+
             return;
 
           }
@@ -971,14 +1224,15 @@
              ===================== */
 
           if (
-            password !==
-            confirmPassword
+            password !== confirmPassword
           ) {
 
             showMessage(
               "Passwords do not match.",
               "error"
             );
+
+            confirmPasswordInput.focus();
 
             return;
 
@@ -993,7 +1247,6 @@
             phoneToFirebaseEmail(
               phone
             );
-
 
           if (!firebaseEmail) {
 
@@ -1014,7 +1267,7 @@
           registerButton.disabled =
             true;
 
-          registerButton.textContent =
+          registerButton.innerHTML =
             "Creating account...";
 
 
@@ -1022,7 +1275,6 @@
 
 
           try {
-
 
             /* ====================
                CREATE FIREBASE USER
@@ -1035,13 +1287,12 @@
                 password
               );
 
-
             user =
               userCredential.user;
 
 
             /* ====================
-               SAVE PHONE
+               SAVE PHONE IN PROFILE
                ==================== */
 
             await updateProfile(
@@ -1064,7 +1315,6 @@
                 user.uid
               ),
               {
-
                 phone:
                   normalizedPhone,
 
@@ -1073,7 +1323,6 @@
 
                 createdAt:
                   serverTimestamp()
-
               }
             );
 
@@ -1083,23 +1332,17 @@
                ==================== */
 
             document
-              .getElementById(
-                "registerSection"
-              )
+              .getElementById("registerSection")
               .style.display =
-              "none";
-
+                "none";
 
             document
-              .getElementById(
-                "successScreen"
-              )
+              .getElementById("successScreen")
               .style.display =
-              "block";
+                "block";
 
 
           } catch (error) {
-
 
             console.error(
               "Registration error:",
@@ -1202,8 +1445,8 @@
             registerButton.disabled =
               false;
 
-            registerButton.textContent =
-              "Create Account";
+            registerButton.innerHTML =
+              'Create Account <span class="button-arrow">→</span>';
 
           }
 
