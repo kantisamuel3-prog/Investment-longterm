@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Novarise - My Team</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background:
+        linear-gradient(
+          135deg,
+          #f3f7ff,
+          #eef4ff
+        );
+
+      color: #14213d;
+
+      padding-bottom: 92px;
+
+      overflow-x: hidden;
+    }
+
+
+    /* =================================
+       HEADER
+       ================================= */
+
+    header {
+
+      background:
+        linear-gradient(
+          135deg,
+          #101827,
+          #172554
+        );
+
+      color: white;
+
+      padding:
+        18px
+        5%;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      box-shadow:
+        0 4px 18px
+        rgba(0,0,0,0.15);
+
+    }
+
+
+    .logo {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      font-size: 23px;
+
+      font-weight: bold;
+
+    }
+
+
+    .logo-icon {
+
+      width: 38px;
+      height: 38px;
+
+      border-radius: 11px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #60a5fa
+        );
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 21px;
+
+    }
+
+
+    /* =================================
+       MAIN
+       ================================= */
+
+    main {
+
+      width: 100%;
+
+      max-width: 900px;
+
+      margin: 28px auto;
+
+      padding:
+        0 18px;
+
+    }
+
+
+    .page-title {
+
+      margin-bottom: 22px;
+
+    }
+
+
+    .page-title h1 {
+
+      margin: 0 0 7px;
+
+      font-size: 30px;
+
+      color: #14213d;
+
+    }
+
+
+    .page-title p {
+
+      margin: 0;
+
+      color: #64748b;
+
+      font-size: 14px;
+
+    }
+
+
+    /* =================================
+       INVITATION CARD
+       ================================= */
+
+    .invite-card {
+
+      position: relative;
+
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          135deg,
+          #101827,
+          #172554
+        );
+
+      border-radius: 24px;
+
+      padding: 25px;
+
+      color: white;
+
+      box-shadow:
+        0 12px 35px
+        rgba(15,23,42,0.18);
+
+      margin-bottom: 20px;
+
+    }
+
+
+    .invite-card::before {
+
+      content: "";
+
+      position: absolute;
+
+      width: 230px;
+
+      height: 230px;
+
+      border-radius: 50%;
+
+      right: -100px;
+
+      top: -120px;
+
+      background:
+        rgba(96,165,250,0.13);
+
+    }
+
+
+    .invite-card::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 180px;
+
+      height: 180px;
+
+      border-radius: 50%;
+
+      left: -100px;
+
+      bottom: -120px;
+
+      background:
+        rgba(37,99,235,0.12);
+
+    }
+
+
+    .invite-content {
+
+      position: relative;
+
+      z-index: 2;
+
+    }
+
+
+    .invite-label {
+
+      color: #93c5fd;
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+      letter-spacing: 1.8px;
+
+      margin-bottom: 10px;
+
+    }
+
+
+    .invite-title {
+
+      margin: 0 0 17px;
+
+      font-size: 24px;
+
+    }
+
+
+    .code-box {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 12px;
+
+      background:
+        rgba(255,255,255,0.09);
+
+      border:
+        1px solid
+        rgba(255,255,255,0.15);
+
+      border-radius: 15px;
+
+      padding:
+        15px 17px;
+
+      margin-bottom: 15px;
+
+    }
+
+
+    #referralCode {
+
+      font-size: 23px;
+
+      font-weight: bold;
+
+      letter-spacing: 3px;
+
+      word-break: break-all;
+
+      color: white;
+
+    }
+
+
+    .copy-small {
+
+      flex-shrink: 0;
+
+      border: 0;
+
+      background:
+        rgba(255,255,255,0.13);
+
+      color: white;
+
+      width: 43px;
+
+      height: 43px;
+
+      border-radius: 12px;
+
+      cursor: pointer;
+
+      font-size: 19px;
+
+    }
+
+
+    .copy-small:active {
+
+      transform: scale(0.95);
+
+    }
+
+
+    .invite-buttons {
+
+      display: grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap: 12px;
+
+    }
+
+
+    .invite-button {
+
+      border: 0;
+
+      padding: 14px 12px;
+
+      border-radius: 13px;
+
+      cursor: pointer;
+
+      font-size: 14px;
+
+      font-weight: bold;
+
+      transition: 0.2s ease;
+
+    }
+
+
+    .invite-button:active {
+
+      transform: scale(0.98);
+
+    }
+
+
+    #copyCodeButton {
+
+      background:
+        rgba(255,255,255,0.10);
+
+      border:
+        1px solid
+        rgba(255,255,255,0.20);
+
+      color: white;
+
+    }
+
+
+    #copyLinkButton {
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #3b82f6
+        );
+
+      color: white;
+
+      box-shadow:
+        0 7px 18px
+        rgba(37,99,235,0.28);
+
+    }
+
+
+    /* =================================
+       STATS
+       ================================= */
+
+    .stats {
+
+      display: grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap: 16px;
+
+      margin-bottom: 20px;
+
+    }
+
+
+    .stat-card {
+
+      background:
+        rgba(255,255,255,0.96);
+
+      border:
+        1px solid
+        rgba(148,163,184,0.18);
+
+      border-radius: 20px;
+
+      padding: 23px 18px;
+
+      text-align: center;
+
+      box-shadow:
+        0 8px 25px
+        rgba(37,99,235,0.07);
+
+    }
+
+
+    .stat-icon {
+
+      width: 48px;
+      height: 48px;
+
+      margin:
+        0 auto 12px;
+
+      border-radius: 14px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 22px;
+
+      background:
+        #eff6ff;
+
+      color:
+        #2563eb;
+
+    }
+
+
+    .stat-value {
+
+      font-size: 27px;
+
+      font-weight: bold;
+
+      color: #14213d;
+
+      margin-bottom: 6px;
+
+    }
+
+
+    .stat-label {
+
+      font-size: 13px;
+
+      color: #64748b;
+
+      font-weight: bold;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.5px;
+
+    }
+
+
+    /* =================================
+       TEAM INFORMATION
+       ================================= */
+
+    .info-card {
+
+      background:
+        rgba(255,255,255,0.96);
+
+      border:
+        1px solid
+        rgba(148,163,184,0.18);
+
+      border-radius: 20px;
+
+      padding: 24px;
+
+      box-shadow:
+        0 8px 25px
+        rgba(37,99,235,0.07);
+
+      margin-bottom: 20px;
+
+    }
+
+
+    .section-heading {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      margin-bottom: 18px;
+
+    }
+
+
+    .section-icon {
+
+      width: 44px;
+      height: 44px;
+
+      border-radius: 13px;
+
+      background:
+        #eff6ff;
+
+      color:
+        #2563eb;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 21px;
+
+    }
+
+
+    .section-heading h2 {
+
+      margin: 0;
+
+      font-size: 20px;
+
+    }
+
+
+    .section-heading p {
+
+      margin: 4px 0 0;
+
+      color: #64748b;
+
+      font-size: 13px;
+
+    }
+
+
+    .level-list {
+
+      display: grid;
+
+      gap: 10px;
+
+    }
+
+
+    .level {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 15px;
+
+      border-radius: 14px;
+
+      background:
+        #f8fafc;
+
+      border:
+        1px solid
+        #e2e8f0;
+
+    }
+
+
+    .level-left {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+    }
+
+
+    .level-number {
+
+      width: 38px;
+      height: 38px;
+
+      border-radius: 11px;
+
+      background:
+        #dbeafe;
+
+      color:
+        #1d4ed8;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-weight: bold;
+
+      font-size: 13px;
+
+    }
+
+
+    .level-name {
+
+      font-weight: bold;
+
+      color: #14213d;
+
+    }
+
+
+    .level-description {
+
+      font-size: 12px;
+
+      color: #64748b;
+
+      margin-top: 3px;
+
+    }
+
+
+    .level-count {
+
+      font-weight: bold;
+
+      color: #2563eb;
+
+    }
+
+
+    /* =================================
+       EMPTY / LOADING
+       ================================= */
+
+    .status {
+
+      text-align: center;
+
+      color: #64748b;
+
+      font-size: 13px;
+
+      padding: 10px;
+
+    }
+
+
+    /* =================================
+       BOTTOM NAVIGATION
+       ================================= */
+
+    .bottom-nav {
+
+      position: fixed;
+
+      left: 0;
+
+      right: 0;
+
+      bottom: 0;
+
+      z-index: 1000;
+
+      height: 78px;
+
+      background:
+        rgba(255,255,255,0.97);
+
+      border-top:
+        1px solid
+        rgba(148,163,184,0.18);
+
+      box-shadow:
+        0 -5px 20px
+        rgba(15,23,42,0.08);
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      padding:
+        7px 8px
+        env(safe-area-inset-bottom);
+
+    }
+
+
+    .nav-button {
+
+      border: 0;
+
+      background: transparent;
+
+      color: #64748b;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 4px;
+
+      cursor: pointer;
+
+      font-size: 11px;
+
+      font-weight: bold;
+
+      min-width: 0;
+
+      padding: 5px;
+
+    }
+
+
+    .nav-icon {
+
+      width: 32px;
+      height: 32px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 22px;
+
+      border-radius: 10px;
+
+    }
+
+
+    .nav-button.active {
+
+      color: #2563eb;
+
+    }
+
+
+    .nav-button.active .nav-icon {
+
+      background:
+        #eff6ff;
+
+    }
+
+
+    .nav-button:active {
+
+      transform: scale(0.96);
+
+    }
+
+
+    /* =================================
+       TOAST
+       ================================= */
+
+    .toast {
+
+      position: fixed;
+
+      left: 50%;
+
+      bottom: 95px;
+
+      transform:
+        translateX(-50%)
+        translateY(20px);
+
+      background:
+        #14213d;
+
+      color: white;
+
+      padding:
+        12px 18px;
+
+      border-radius: 12px;
+
+      font-size: 13px;
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition:
+        0.25s ease;
+
+      z-index: 2000;
+
+      white-space: nowrap;
+
+    }
+
+
+    .toast.show {
+
+      opacity: 1;
+
+      transform:
+        translateX(-50%)
+        translateY(0);
+
+    }
+
+
+    /* =================================
+       MOBILE
+       ================================= */
+
+    @media (max-width: 600px) {
+
+      header {
+
+        padding:
+          15px;
+
+      }
+
+
+      .logo {
+
+        font-size: 21px;
+
+      }
+
+
+      .logo-icon {
+
+        width: 36px;
+        height: 36px;
+
+      }
+
+
+      main {
+
+        margin:
+          22px auto;
+
+        padding:
+          0 14px;
+
+      }
+
+
+      .page-title h1 {
+
+        font-size: 27px;
+
+      }
+
+
+      .invite-card {
+
+        padding:
+          21px;
+
+        border-radius: 21px;
+
+      }
+
+
+      .invite-title {
+
+        font-size: 22px;
+
+      }
+
+
+      #referralCode {
+
+        font-size: 20px;
+
+        letter-spacing: 2px;
+
+      }
+
+
+      .code-box {
+
+        padding:
+          13px;
+
+      }
+
+
+      .stats {
+
+        gap: 12px;
+
+      }
+
+
+      .stat-card {
+
+        padding:
+          20px 12px;
+
+      }
+
+
+      .stat-value {
+
+        font-size: 23px;
+
+      }
+
+
+      .info-card {
+
+        padding:
+          20px 17px;
+
+      }
+
+    }
+
+
+    @media (max-width: 380px) {
+
+      .invite-buttons {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .stats {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      #referralCode {
+
+        font-size: 18px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- ===============================
+       HEADER
+       =============================== -->
+
+  <header>
+
+    <div class="logo">
+
+      <div class="logo-icon">
+        📈
+      </div>
+
+      Novarise
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ===============================
+       MAIN
+       =============================== -->
+
+  <main>
+
+
+    <div class="page-title">
+
+      <h1>
+        My Team
+      </h1>
+
+      <p>
+        Invite friends and grow your Novarise network.
+      </p>
+
+    </div>
+
+
+
+    <!-- ===============================
+         INVITATION
+         =============================== -->
+
+    <div class="invite-card">
+
+      <div class="invite-content">
+
+        <div class="invite-label">
+          INVITATION
+        </div>
+
+        <h2 class="invite-title">
+          Your Invitation Code
+        </h2>
+
+
+        <div class="code-box">
+
+          <span id="referralCode">
+            Loading...
+          </span>
+
+          <button
+            class="copy-small"
+            id="copySmallButton"
+            type="button"
+          >
+            ⧉
+          </button>
+
+        </div>
+
+
+        <div class="invite-buttons">
+
+          <button
+            class="invite-button"
+            id="copyCodeButton"
+            type="button"
+          >
+            ⧉ &nbsp; Copy Code
+          </button>
+
+
+          <button
+            class="invite-button"
+            id="copyLinkButton"
+            type="button"
+          >
+            ↗ &nbsp; Copy Link
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ===============================
+         STATS
+         =============================== -->
+
+    <div class="stats">
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          👥
+        </div>
+
+        <div
+          class="stat-value"
+          id="teamSize"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Team Size
+        </div>
+
+      </div>
+
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          ₱
+        </div>
+
+        <div
+          class="stat-value"
+          id="totalCommission"
+        >
+          ₱0.00
+        </div>
+
+        <div class="stat-label">
+          Total Commission
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+
+    <!-- ===============================
+         TEAM LEVELS
+         =============================== -->
+
+    <div class="info-card">
+
+      <div class="section-heading">
+
+        <div class="section-icon">
+          👥
+        </div>
+
+        <div>
+
+          <h2>
+            Team Overview
+          </h2>
+
+          <p>
+            Your direct and extended team members.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="level-list">
+
+
+        <div class="level">
+
+          <div class="level-left">
+
+            <div class="level-number">
+              L1
+            </div>
+
+            <div>
+
+              <div class="level-name">
+                Level 1
+              </div>
+
+              <div class="level-description">
+                Direct referrals
+              </div>
+
+            </div>
+
+          </div>
+
+          <div
+            class="level-count"
+            id="level1Count"
+          >
+            0
+          </div>
+
+        </div>
+
+
+
+        <div class="level">
+
+          <div class="level-left">
+
+            <div class="level-number">
+              L2
+            </div>
+
+            <div>
+
+              <div class="level-name">
+                Level 2
+              </div>
+
+              <div class="level-description">
+                Second-level referrals
+              </div>
+
+            </div>
+
+          </div>
+
+          <div
+            class="level-count"
+            id="level2Count"
+          >
+            0
+          </div>
+
+        </div>
+
+
+
+        <div class="level">
+
+          <div class="level-left">
+
+            <div class="level-number">
+              L3
+            </div>
+
+            <div>
+
+              <div class="level-name">
+                Level 3
+              </div>
+
+              <div class="level-description">
+                Third-level referrals
+              </div>
+
+            </div>
+
+          </div>
+
+          <div
+            class="level-count"
+            id="level3Count"
+          >
+            0
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+  </main>
+
+
+
+  <!-- ===============================
+       BOTTOM NAVIGATION
+       =============================== -->
+
+  <nav class="bottom-nav">
+
+
+    <button
+      class="nav-button"
+      id="homeNav"
+      type="button"
+    >
+
+      <span class="nav-icon">
+        🏠
+      </span>
+
+      <span>
+        Home
+      </span>
+
+    </button>
+
+
+
+    <button
+      class="nav-button"
+      id="productNav"
+      type="button"
+    >
+
+      <span class="nav-icon">
+        🛍️
+      </span>
+
+      <span>
+        Product
+      </span>
+
+    </button>
+
+
+
+    <button
+      class="nav-button active"
+      id="teamNav"
+      type="button"
+    >
+
+      <span class="nav-icon">
+        👥
+      </span>
+
+      <span>
+        Team
+      </span>
+
+    </button>
+
+
+
+    <button
+      class="nav-button"
+      id="myNav"
+      type="button"
+    >
+
+      <span class="nav-icon">
+        👤
+      </span>
+
+      <span>
+        My
+      </span>
+
+    </button>
+
+
+  </nav>
+
+
+
+  <!-- ===============================
+       TOAST
+       =============================== -->
+
+  <div
+    class="toast"
+    id="toast"
+  >
+    Copied successfully
+  </div>
+
+
+
+  <!-- ===============================
+       FIREBASE
+       =============================== -->
+
+  <script type="module">
+
+
+    import {
+      initializeApp
+    }
+    from
+      "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+    import {
+      getAuth,
+      onAuthStateChanged
+    }
+    from
+      "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      collection,
+      getDocs,
+      query,
+      where
+    }
+    from
+      "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+
+    /* ===============================
+       FIREBASE CONFIG
+       =============================== */
+
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+
+      authDomain:
+        "investpro-2dafb.firebaseapp.com",
+
+      projectId:
+        "investpro-2dafb",
+
+      storageBucket:
+        "investpro-2dafb.firebasestorage.app",
+
+      messagingSenderId:
+        "135092039764",
+
+      appId:
+        "1:135092039764:web:c4c71eef0c904346a77dc1"
+
+    };
+
+
+
+    /* ===============================
+       FIREBASE START
+       =============================== */
+
+    const app =
+      initializeApp(
+        firebaseConfig
+      );
+
+
+    const auth =
+      getAuth(app);
+
+
+    const db =
+      getFirestore(app);
+
+
+
+    /* ===============================
+       ELEMENTS
+       =============================== */
+
+    const referralCodeElement =
+      document.getElementById(
+        "referralCode"
+      );
+
+
+    const teamSizeElement =
+      document.getElementById(
+        "teamSize"
+      );
+
+
+    const commissionElement =
+      document.getElementById(
+        "totalCommission"
+      );
+
+
+    const level1Element =
+      document.getElementById(
+        "level1Count"
+      );
+
+
+    const level2Element =
+      document.getElementById(
+        "level2Count"
+      );
+
+
+    const level3Element =
+      document.getElementById(
+        "level3Count"
+      );
+
+
+    const toast =
+      document.getElementById(
+        "toast"
+      );
+
+
+
+    /* ===============================
+       MONEY
+       =============================== */
+
+    function formatMoney(amount) {
+
+      return "₱" +
+        Number(amount || 0)
+          .toLocaleString(
+            "en-PH",
+            {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            }
+          );
+
+    }
+
+
+
+    /* ===============================
+       TOAST
+       =============================== */
+
+    function showToast(message) {
+
+      toast.textContent =
+        message;
+
+      toast.classList.add(
+        "show"
+      );
+
+
+      setTimeout(
+        () => {
+
+          toast.classList.remove(
+            "show"
+          );
+
+        },
+        1800
+      );
+
+    }
+
+
+
+    /* ===============================
+       COPY
+       =============================== */
+
+    async function copyText(
+      text,
+      message
+    ) {
+
+      try {
+
+        await navigator.clipboard.writeText(
+          text
+        );
+
+        showToast(
+          message
+        );
+
+      } catch (error) {
+
+        const textarea =
+          document.createElement(
+            "textarea"
+          );
+
+        textarea.value =
+          text;
+
+        document.body.appendChild(
+          textarea
+        );
+
+        textarea.select();
+
+        document.execCommand(
+          "copy"
+        );
+
+        textarea.remove();
+
+        showToast(
+          message
+        );
+
+      }
+
+    }
+
+
+
+    /* ===============================
+       REFERRAL CODE
+       =============================== */
+
+    function createFallbackCode(uid) {
+
+      if (!uid) {
+
+        return "NOVARISE";
+
+      }
+
+      return (
+        "NOVA-" +
+        uid
+          .substring(0, 8)
+          .toUpperCase()
+      );
+
+    }
+
+
+
+    /* ===============================
+       LOAD TEAM
+       =============================== */
+
+    async function loadTeamData(user) {
+
+      try {
+
+        const userRef =
+          doc(
+            db,
+            "users",
+            user.uid
+          );
+
+
+        const userSnapshot =
+          await getDoc(
+            userRef
+          );
+
+
+        let userData = {};
+
+
+        if (
+          userSnapshot.exists()
+        ) {
+
+          userData =
+            userSnapshot.data();
+
+        }
+
+
+        /*
+         * Referral code
+         *
+         * Uses referralCode if
+         * available.
+         *
+         * Otherwise creates a
+         * stable code from UID.
+         */
+
+        const referralCode =
+          userData.referralCode ||
+          userData.invitationCode ||
+          createFallbackCode(
+            user.uid
+          );
+
+
+        referralCodeElement.textContent =
+          referralCode;
+
+
+
+        /*
+         * Commission
+         *
+         * Uses the existing
+         * commission fields if
+         * available.
+         */
+
+        const commission =
+          Number(
+            userData.totalCommission ??
+            userData.commission ??
+            userData.total_commission ??
+            0
+          );
+
+
+        commissionElement.textContent =
+          formatMoney(
+            commission
+          );
+
+
+
+        /*
+         * Find direct referrals.
+         *
+         * The page checks both
+         * referredBy and
+         * sponsorId.
+         */
+
+        let level1 = [];
+
+
+        try {
+
+          const q1 =
+            query(
+              collection(
+                db,
+                "users"
+              ),
+              where(
+                "referredBy",
+                "==",
+                user.uid
+              )
+            );
+
+
+          const result1 =
+            await getDocs(q1);
+
+
+          result1.forEach(
+            item => {
+
+              level1.push(
+                item.id
+              );
+
+            }
+          );
+
+        } catch (error) {
+
+          console.warn(
+            "referredBy query failed:",
+            error
+          );
+
+        }
+
+
+
+        /*
+         * If no referredBy result,
+         * check sponsorId.
+         */
+
+        if (
+          level1.length === 0
+        ) {
+
+          try {
+
+            const q2 =
+              query(
+                collection(
+                  db,
+                  "users"
+                ),
+                where(
+                  "sponsorId",
+                  "==",
+                  user.uid
+                )
+              );
+
+
+            const result2 =
+              await getDocs(q2);
+
+
+            result2.forEach(
+              item => {
+
+                if (
+                  !level1.includes(
+                    item.id
+                  )
+                ) {
+
+                  level1.push(
+                    item.id
+                  );
+
+                }
+
+              }
+            );
+
+          } catch (error) {
+
+            console.warn(
+              "sponsorId query failed:",
+              error
+            );
+
+          }
+
+        }
+
+
+
+        /*
+         * Display Level 1
+         */
+
+        level1Element.textContent =
+          level1.length;
+
+
+
+        /*
+         * Find Level 2
+         */
+
+        let level2 = [];
+
+
+        for (
+          const memberId of level1
+        ) {
+
+          try {
+
+            const memberRef =
+              doc(
+                db,
+                "users",
+                memberId
+              );
+
+
+            const memberSnapshot =
+              await getDoc(
+                memberRef
+              );
+
+
+            if (
+              memberSnapshot.exists()
+            ) {
+
+              const memberData =
+                memberSnapshot.data();
+
+
+              const memberReferralCode =
+                memberData.referralCode ||
+                memberData.invitationCode;
+
+
+              if (
+                memberReferralCode
+              ) {
+
+                const q =
+                  query(
+                    collection(
+                      db,
+                      "users"
+                    ),
+                    where(
+                      "referredBy",
+                      "==",
+                      memberId
+                    )
+                  );
+
+
+                const result =
+                  await getDocs(q);
+
+
+                result.forEach(
+                  item => {
+
+                    if (
+                      !level2.includes(
+                        item.id
+                      )
+                    ) {
+
+                      level2.push(
+                        item.id
+                      );
+
+                    }
+
+                  }
+                );
+
+              }
+
+            }
+
+          } catch (error) {
+
+            console.warn(
+              "Level 2 lookup failed:",
+              error
+            );
+
+          }
+
+        }
+
+
+
+        level2Element.textContent =
+          level2.length;
+
+
+
+        /*
+         * Level 3
+         */
+
+        let level3 = [];
+
+
+        for (
+          const memberId of level2
+        ) {
+
+          try {
+
+            const q =
+              query(
+                collection(
+                  db,
+                  "users"
+                ),
+                where(
+                  "referredBy",
+                  "==",
+                  memberId
+                )
+              );
+
+
+            const result =
+              await getDocs(q);
+
+
+            result.forEach(
+              item => {
+
+                if (
+                  !level3.includes(
+                    item.id
+                  )
+                ) {
+
+                  level3.push(
+                    item.id
+                  );
+
+                }
+
+              }
+            );
+
+          } catch (error) {
+
+            console.warn(
+              "Level 3 lookup failed:",
+              error
+            );
+
+          }
+
+        }
+
+
+
+        level3Element.textContent =
+          level3.length;
+
+
+        /*
+         * Total team size
+         */
+
+        teamSizeElement.textContent =
+          level1.length +
+          level2.length +
+          level3.length;
+
+
+      } catch (error) {
+
+        console.error(
+          "Team loading error:",
+          error
+        );
+
+
+        referralCodeElement.textContent =
+          createFallbackCode(
+            user.uid
+          );
+
+
+        teamSizeElement.textContent =
+          "0";
+
+
+        commissionElement.textContent =
+          "₱0.00";
+
+      }
+
+    }
+
+
+
+    /* ===============================
+       AUTH
+       =============================== */
+
+    onAuthStateChanged(
+      auth,
+      async user => {
+
+        if (!user) {
+
+          window.location.href =
+            "login.html";
+
+          return;
+
+        }
+
+
+        await loadTeamData(
+          user
+        );
+
+      }
+    );
+
+
+
+    /* ===============================
+       COPY CODE
+       =============================== */
+
+    document
+      .getElementById(
+        "copyCodeButton"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          const code =
+            referralCodeElement
+              .textContent;
+
+          copyText(
+            code,
+            "Invitation code copied"
+          );
+
+        }
+      );
+
+
+
+    document
+      .getElementById(
+        "copySmallButton"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          const code =
+            referralCodeElement
+              .textContent;
+
+          copyText(
+            code,
+            "Invitation code copied"
+          );
+
+        }
+      );
+
+
+
+    /* ===============================
+       COPY LINK
+       =============================== */
+
+    document
+      .getElementById(
+        "copyLinkButton"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          const code =
+            referralCodeElement
+              .textContent;
+
+          const link =
+            window.location.origin +
+            "/register.html?ref=" +
+            encodeURIComponent(
+              code
+            );
+
+
+          copyText(
+            link,
+            "Invitation link copied"
+          );
+
+        }
+      );
+
+
+
+    /* ===============================
+       NAVIGATION
+       =============================== */
+
+    document
+      .getElementById(
+        "homeNav"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          window.location.href =
+            "dashboard.html";
+
+        }
+      );
+
+
+    document
+      .getElementById(
+        "productNav"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          window.location.href =
+            "products.html";
+
+        }
+      );
+
+
+    document
+      .getElementById(
+        "teamNav"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          window.location.href =
+            "team.html";
+
+        }
+      );
+
+
+    document
+      .getElementById(
+        "myNav"
+      )
+      .addEventListener(
+        "click",
+        () => {
+
+          window.location.href =
+            "profile.html";
+
+        }
+      );
+
+
+  </script>
+
+
+</body>
+
+</html>
