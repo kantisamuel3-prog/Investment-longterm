@@ -10,10 +10,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <meta
-    name="theme-color"
-    content="#168ff0"
-  >
+  <meta name="theme-color" content="#168ff0">
 
   <title>Novarise - Register</title>
 
@@ -700,8 +697,6 @@
 
     <div class="content">
 
-      <!-- REGISTER -->
-
       <div id="registerSection">
 
         <div class="logo">
@@ -715,21 +710,11 @@
 
         <div class="brand-tagline">
 
-          <span class="blue">
-            BUILD
-          </span>
-
+          <span class="blue">BUILD</span>
           &nbsp;•&nbsp;
-
-          <span class="blue">
-            INVEST
-          </span>
-
+          <span class="blue">INVEST</span>
           &nbsp;•&nbsp;
-
-          <span class="green">
-            GROW
-          </span>
+          <span class="green">GROW</span>
 
         </div>
 
@@ -758,8 +743,6 @@
         ></div>
 
         <form id="registerForm">
-
-          <!-- PHONE -->
 
           <div class="input-group">
 
@@ -808,7 +791,6 @@
 
           </div>
 
-          <!-- REFERRAL -->
 
           <div class="input-group">
 
@@ -874,7 +856,6 @@
 
           </div>
 
-          <!-- PASSWORD -->
 
           <div class="input-group">
 
@@ -954,7 +935,6 @@
 
           </div>
 
-          <!-- CONFIRM PASSWORD -->
 
           <div class="input-group">
 
@@ -1017,7 +997,7 @@
                 >
 
                   <path
-                    d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"
+                    d="M2.5 12s3.5-6 9.5-6 9.5 6-9.5 6-9.5-6-9.5-6z"
                   />
 
                   <circle
@@ -1034,7 +1014,6 @@
 
           </div>
 
-          <!-- REGISTER -->
 
           <button
             type="submit"
@@ -1051,6 +1030,7 @@
           </button>
 
         </form>
+
 
         <div class="or-line">
           <span>or</span>
@@ -1074,7 +1054,6 @@
 
       </div>
 
-      <!-- SUCCESS -->
 
       <div
         id="successScreen"
@@ -1107,7 +1086,6 @@
 
   </div>
 
-  <!-- FIREBASE -->
 
   <script type="module">
 
@@ -1117,13 +1095,16 @@
     from
       "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
+
     import {
       getAuth,
       createUserWithEmailAndPassword,
-      updateProfile
+      updateProfile,
+      deleteUser
     }
     from
       "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
 
     import {
       getFirestore,
@@ -1133,7 +1114,6 @@
       query,
       where,
       getDocs,
-      getDoc,
       serverTimestamp
     }
     from
@@ -1147,7 +1127,7 @@
     const firebaseConfig = {
 
       apiKey:
-        "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+        "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgK",
 
       authDomain:
         "investpro-2dafb.firebaseapp.com",
@@ -1467,14 +1447,6 @@
       }
 
 
-      /*
-       * MAIN COLLECTION
-       *
-       * IMPORTANT:
-       * Firestore collection is "Users"
-       * with capital U.
-       */
-
       const usersRef =
         collection(
           db,
@@ -1482,9 +1454,9 @@
         );
 
 
-      /*
-       * 1. referralCode
-       */
+      /* -----------------------------------------
+         1. referralCode
+         ----------------------------------------- */
 
       const referralQuery =
         query(
@@ -1518,9 +1490,9 @@
       }
 
 
-      /*
-       * 2. invitationCode
-       */
+      /* -----------------------------------------
+         2. invitationCode
+         ----------------------------------------- */
 
       const invitationQuery =
         query(
@@ -1554,9 +1526,9 @@
       }
 
 
-      /*
-       * 3. inviteCode
-       */
+      /* -----------------------------------------
+         3. inviteCode
+         ----------------------------------------- */
 
       const inviteQuery =
         query(
@@ -1586,66 +1558,6 @@
           uid: item.id,
           data: item.data()
         };
-
-      }
-
-
-      /*
-       * 4. FALLBACK FOR OLD USERS
-       *
-       * Old user documents may not have
-       * referralCode yet.
-       *
-       * Their automatic code is:
-       *
-       * NOVA + first 8 characters of UID
-       *
-       * We inspect the Users documents only
-       * as a compatibility fallback.
-       */
-
-      try {
-
-        const allUsersSnapshot =
-          await getDocs(
-            usersRef
-          );
-
-
-        for (
-          const item of
-          allUsersSnapshot.docs
-        ) {
-
-          const data =
-            item.data() || {};
-
-          const generatedCode =
-            createReferralCode(
-              item.id
-            );
-
-
-          if (
-            generatedCode ===
-            cleanCode
-          ) {
-
-            return {
-              uid: item.id,
-              data: data
-            };
-
-          }
-
-        }
-
-      } catch (fallbackError) {
-
-        console.warn(
-          "Referral fallback lookup failed:",
-          fallbackError
-        );
 
       }
 
@@ -1777,15 +1689,30 @@
             true;
 
 
-          registerButton.innerHTML =
-            "Checking referral...";
-
-
           try {
+
+            /* =================================
+               CREATE AUTH ACCOUNT FIRST
+               ================================= */
+
+            registerButton.innerHTML =
+              "Creating account...";
+
+
+            const userCredential =
+              await createUserWithEmailAndPassword(
+                auth,
+                firebaseEmail,
+                password
+              );
+
+
+            const user =
+              userCredential.user;
 
 
             /* =================================
-               FIND REFERRER
+               FIND REFERRER AFTER AUTH
                ================================= */
 
             let referrer =
@@ -1794,6 +1721,10 @@
 
             if (referralCode) {
 
+              registerButton.innerHTML =
+                "Checking referral...";
+
+
               referrer =
                 await findUserByReferralCode(
                   referralCode
@@ -1801,6 +1732,8 @@
 
 
               if (!referrer) {
+
+                await deleteUser(user);
 
                 showMessage(
                   "Referral code not found. Please check the code and try again.",
@@ -1820,26 +1753,6 @@
               }
 
             }
-
-
-            /* =================================
-               CREATE AUTH ACCOUNT
-               ================================= */
-
-            registerButton.innerHTML =
-              "Creating account...";
-
-
-            const userCredential =
-              await createUserWithEmailAndPassword(
-                auth,
-                firebaseEmail,
-                password
-              );
-
-
-            const user =
-              userCredential.user;
 
 
             /* =================================
@@ -1933,17 +1846,12 @@
 
 
             /* =================================
-               FIRESTORE
+               SAVE TO FIRESTORE
                ================================= */
 
             registerButton.innerHTML =
               "Saving account...";
 
-
-            /*
-             * IMPORTANT:
-             * Capital "Users"
-             */
 
             await setDoc(
               doc(
@@ -2019,13 +1927,23 @@
 
             else if (
               error.code ===
+              "auth/operation-not-allowed"
+            ) {
+
+              errorMessage =
+                "Email/Password sign-in is not enabled in Firebase Authentication.";
+
+            }
+
+            else if (
+              error.code ===
               "permission-denied" ||
               error.code ===
               "firestore/permission-denied"
             ) {
 
               errorMessage =
-                "Firestore permission denied. Please check your Firestore Rules.";
+                "Firestore permission denied. Please make sure the Firestore Rules use the Users collection.";
 
             }
 
@@ -2047,7 +1965,7 @@
             ) {
 
               errorMessage =
-                "Firestore permission denied. Please check your Firestore Rules.";
+                "Firestore permission denied. Please make sure the Firestore Rules use the Users collection.";
 
             }
 
