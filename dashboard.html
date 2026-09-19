@@ -137,6 +137,44 @@
       color: #666;
       font-size: 14px;
     }
+
+    /* =========================
+       TRANSACTION HISTORY
+       ========================= */
+
+    .transaction-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .transaction-header h3 {
+      margin: 0 0 6px;
+    }
+
+    .transaction-header p {
+      margin: 0;
+    }
+
+    #transactionToggle {
+      background: #2563eb;
+      color: white;
+      white-space: nowrap;
+    }
+
+    #transactionToggle:hover {
+      background: #1d4ed8;
+    }
+
+    .transactions-hidden {
+      display: none;
+    }
+
+    #transactions {
+      margin-top: 20px;
+    }
   </style>
 </head>
 
@@ -202,11 +240,34 @@
     </div>
   </div>
 
-  <div class="card">
-    <h3>Transaction History</h3>
-    <div id="transactions">
-      <div class="status">Loading transactions...</div>
+  <!-- =========================
+       TRANSACTION HISTORY
+       ========================= -->
+
+  <div class="card transaction-card">
+
+    <div class="transaction-header">
+
+      <div>
+        <h3>Transaction History</h3>
+
+        <p class="status">
+          Your transaction history is hidden.
+        </p>
+      </div>
+
+      <button id="transactionToggle">
+        View Transactions
+      </button>
+
     </div>
+
+    <div id="transactions" class="transactions-hidden">
+      <div class="status">
+        Loading transactions...
+      </div>
+    </div>
+
   </div>
 
 </main>
@@ -289,6 +350,47 @@
   const logoutButton =
     document.getElementById("logoutButton");
 
+  const transactionToggle =
+    document.getElementById("transactionToggle");
+
+
+  /* =========================
+     TRANSACTION VISIBILITY
+     ========================= */
+
+  let transactionsVisible = false;
+
+
+  transactionToggle.addEventListener(
+    "click",
+    () => {
+
+      transactionsVisible =
+        !transactionsVisible;
+
+      if (transactionsVisible) {
+
+        transactionsElement.classList.remove(
+          "transactions-hidden"
+        );
+
+        transactionToggle.textContent =
+          "Hide Transactions";
+
+      } else {
+
+        transactionsElement.classList.add(
+          "transactions-hidden"
+        );
+
+        transactionToggle.textContent =
+          "View Transactions";
+
+      }
+
+    }
+  );
+
 
   /* =========================
      MONEY FORMAT
@@ -351,7 +453,9 @@
 
     showBalance(data.balance || 0);
 
-    loadTransactions(data.transactions || []);
+    loadTransactions(
+      data.transactions || []
+    );
 
   }
 
@@ -453,51 +557,54 @@
       const userRef =
         doc(db, "users", currentUser.uid);
 
-      await runTransaction(db, async transaction => {
+      await runTransaction(
+        db,
+        async transaction => {
 
-        const snapshot =
-          await transaction.get(userRef);
+          const snapshot =
+            await transaction.get(userRef);
 
-        const data =
-          snapshot.exists()
-            ? snapshot.data()
-            : {};
+          const data =
+            snapshot.exists()
+              ? snapshot.data()
+              : {};
 
-        const oldBalance =
-          Number(data.balance || 0);
+          const oldBalance =
+            Number(data.balance || 0);
 
-        const newBalance =
-          oldBalance + amount;
+          const newBalance =
+            oldBalance + amount;
 
-        const transactions =
-          Array.isArray(data.transactions)
-            ? data.transactions
-            : [];
+          const transactions =
+            Array.isArray(data.transactions)
+              ? data.transactions
+              : [];
 
-        transactions.push({
+          transactions.push({
 
-          type: "Deposit",
+            type: "Deposit",
 
-          amount: amount,
+            amount: amount,
 
-          date: new Date().toLocaleString("en-PH")
+            date: new Date().toLocaleString("en-PH")
 
-        });
+          });
 
-        transaction.set(
-          userRef,
-          {
-            balance: newBalance,
-            transactions: transactions
-          },
-          { merge: true }
-        );
+          transaction.set(
+            userRef,
+            {
+              balance: newBalance,
+              transactions: transactions
+            },
+            { merge: true }
+          );
 
-        showBalance(newBalance);
+          showBalance(newBalance);
 
-        loadTransactions(transactions);
+          loadTransactions(transactions);
 
-      });
+        }
+      );
 
       alert(
         "Deposit added successfully."
@@ -554,65 +661,68 @@
       const userRef =
         doc(db, "users", currentUser.uid);
 
-      await runTransaction(db, async transaction => {
+      await runTransaction(
+        db,
+        async transaction => {
 
-        const snapshot =
-          await transaction.get(userRef);
+          const snapshot =
+            await transaction.get(userRef);
 
-        if (!snapshot.exists()) {
+          if (!snapshot.exists()) {
 
-          throw new Error(
-            "User account not found."
+            throw new Error(
+              "User account not found."
+            );
+
+          }
+
+          const data =
+            snapshot.data();
+
+          const oldBalance =
+            Number(data.balance || 0);
+
+          if (amount > oldBalance) {
+
+            throw new Error(
+              "Insufficient balance."
+            );
+
+          }
+
+          const newBalance =
+            oldBalance - amount;
+
+          const transactions =
+            Array.isArray(data.transactions)
+              ? data.transactions
+              : [];
+
+          transactions.push({
+
+            type: "Withdraw",
+
+            amount: amount,
+
+            date: new Date().toLocaleString("en-PH")
+
+          });
+
+          transaction.set(
+            userRef,
+            {
+              balance: newBalance,
+              transactions: transactions
+            },
+            { merge: true }
           );
 
-        }
+          showBalance(newBalance);
 
-        const data =
-          snapshot.data();
-
-        const oldBalance =
-          Number(data.balance || 0);
-
-        if (amount > oldBalance) {
-
-          throw new Error(
-            "Insufficient balance."
-          );
+          loadTransactions(transactions);
 
         }
-
-        const newBalance =
-          oldBalance - amount;
-
-        const transactions =
-          Array.isArray(data.transactions)
-            ? data.transactions
-            : [];
-
-        transactions.push({
-
-          type: "Withdraw",
-
-          amount: amount,
-
-          date: new Date().toLocaleString("en-PH")
-
-        });
-
-        transaction.set(
-          userRef,
-          {
-            balance: newBalance,
-            transactions: transactions
-          },
-          { merge: true }
-        );
-
-        showBalance(newBalance);
-
-        loadTransactions(transactions);
-
-      });
+      );
 
       alert(
         "Withdrawal recorded successfully."
@@ -666,65 +776,68 @@
       const userRef =
         doc(db, "users", currentUser.uid);
 
-      await runTransaction(db, async transaction => {
+      await runTransaction(
+        db,
+        async transaction => {
 
-        const snapshot =
-          await transaction.get(userRef);
+          const snapshot =
+            await transaction.get(userRef);
 
-        if (!snapshot.exists()) {
+          if (!snapshot.exists()) {
 
-          throw new Error(
-            "User account not found."
+            throw new Error(
+              "User account not found."
+            );
+
+          }
+
+          const data =
+            snapshot.data();
+
+          const oldBalance =
+            Number(data.balance || 0);
+
+          if (oldBalance < price) {
+
+            throw new Error(
+              "Insufficient balance."
+            );
+
+          }
+
+          const newBalance =
+            oldBalance - price;
+
+          const transactions =
+            Array.isArray(data.transactions)
+              ? data.transactions
+              : [];
+
+          transactions.push({
+
+            type: "Investment",
+
+            amount: price,
+
+            date: new Date().toLocaleString("en-PH")
+
+          });
+
+          transaction.set(
+            userRef,
+            {
+              balance: newBalance,
+              transactions: transactions
+            },
+            { merge: true }
           );
 
-        }
+          showBalance(newBalance);
 
-        const data =
-          snapshot.data();
-
-        const oldBalance =
-          Number(data.balance || 0);
-
-        if (oldBalance < price) {
-
-          throw new Error(
-            "Insufficient balance."
-          );
+          loadTransactions(transactions);
 
         }
-
-        const newBalance =
-          oldBalance - price;
-
-        const transactions =
-          Array.isArray(data.transactions)
-            ? data.transactions
-            : [];
-
-        transactions.push({
-
-          type: "Investment",
-
-          amount: price,
-
-          date: new Date().toLocaleString("en-PH")
-
-        });
-
-        transaction.set(
-          userRef,
-          {
-            balance: newBalance,
-            transactions: transactions
-          },
-          { merge: true }
-        );
-
-        showBalance(newBalance);
-
-        loadTransactions(transactions);
-
-      });
+      );
 
       alert(
         "Investment recorded successfully."
