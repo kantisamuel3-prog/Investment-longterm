@@ -2,13 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Novarise Dashboard</title>
 
   <style>
+
     * {
       box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -16,335 +25,668 @@
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #f3f7ff, #eef4ff);
       color: #14213d;
+
+      /* Space for bottom navigation */
+      padding-bottom: 92px;
     }
 
-    /* =========================
+
+    /* =====================================================
        HEADER
-       ========================= */
+    ===================================================== */
 
     header {
-      background: linear-gradient(135deg, #101827, #172554);
+      background: linear-gradient(
+        135deg,
+        #101827,
+        #172554
+      );
+
       color: white;
+
       padding: 18px 5%;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+
+      box-shadow:
+        0 4px 18px rgba(0,0,0,0.15);
+
+      position: relative;
+      z-index: 10;
     }
+
 
     .logo {
       display: flex;
       align-items: center;
+
       gap: 10px;
+
       font-size: 23px;
       font-weight: bold;
     }
 
+
     .logo-icon {
       width: 38px;
       height: 38px;
+
       border-radius: 11px;
-      background: linear-gradient(135deg, #2563eb, #60a5fa);
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #60a5fa
+        );
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 21px;
     }
 
+
     #logoutButton {
       border: 0;
+
       background: #ef4444;
+
       color: white;
+
       padding: 11px 18px;
+
       border-radius: 9px;
+
       cursor: pointer;
+
       font-weight: bold;
       font-size: 14px;
     }
+
 
     #logoutButton:hover {
       background: #dc2626;
     }
 
-    /* =========================
+
+    /* =====================================================
        MAIN
-       ========================= */
+    ===================================================== */
 
     main {
       max-width: 1250px;
+
       margin: 35px auto;
+
       padding: 0 22px;
     }
+
 
     .welcome {
       margin-bottom: 25px;
     }
 
+
     .welcome h2 {
       margin: 0 0 8px;
+
       font-size: 32px;
     }
 
+
     #userEmail {
       color: #64748b;
+
       font-size: 15px;
+
+      word-break: break-word;
     }
 
-    /* =========================
+
+    /* =====================================================
        TOP DASHBOARD
-       ========================= */
+    ===================================================== */
 
     .top-grid {
       display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+
+      grid-template-columns:
+        minmax(0, 2fr)
+        minmax(320px, 1fr);
+
       gap: 22px;
+
       margin-bottom: 25px;
     }
 
+
     .card {
       background: rgba(255,255,255,0.96);
+
       border-radius: 20px;
+
       padding: 28px;
-      box-shadow: 0 8px 30px rgba(37, 99, 235, 0.08);
-      border: 1px solid rgba(148,163,184,0.18);
+
+      box-shadow:
+        0 8px 30px rgba(37,99,235,0.08);
+
+      border:
+        1px solid rgba(148,163,184,0.18);
     }
 
-    /* =========================
-       BALANCE CARD
-       ========================= */
+
+    /* =====================================================
+       BALANCE
+    ===================================================== */
 
     .balance-card {
       position: relative;
+
       overflow: hidden;
     }
 
+
     .balance-card::after {
       content: "";
+
       position: absolute;
+
       width: 260px;
       height: 260px;
+
       border-radius: 50%;
+
       right: -100px;
       bottom: -150px;
-      background: rgba(37,99,235,0.06);
+
+      background:
+        rgba(37,99,235,0.06);
+
+      pointer-events: none;
     }
+
 
     .balance-title {
       display: flex;
+
       align-items: center;
+
       gap: 13px;
     }
+
 
     .balance-icon {
       width: 55px;
       height: 55px;
+
       border-radius: 16px;
-      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+
+      background:
+        linear-gradient(
+          135deg,
+          #dbeafe,
+          #eff6ff
+        );
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 27px;
+
+      flex-shrink: 0;
     }
+
 
     .balance-title h3 {
       margin: 0;
+
       font-size: 20px;
     }
 
+
     .balance {
       font-size: 42px;
+
       font-weight: bold;
+
       margin: 20px 0;
+
       letter-spacing: -1px;
+
+      overflow-wrap: anywhere;
     }
+
 
     .buttons {
       display: flex;
+
       gap: 13px;
+
       flex-wrap: wrap;
     }
 
+
     button {
       border: 0;
+
       padding: 13px 22px;
+
       border-radius: 10px;
+
       cursor: pointer;
+
       font-weight: bold;
+
       font-size: 15px;
+
       transition: 0.2s ease;
     }
+
 
     button:hover {
       transform: translateY(-1px);
     }
 
+
     #depositButton {
-      background: linear-gradient(135deg, #16a34a, #22c55e);
+      background:
+        linear-gradient(
+          135deg,
+          #16a34a,
+          #22c55e
+        );
+
       color: white;
     }
+
 
     #withdrawButton {
-      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      background:
+        linear-gradient(
+          135deg,
+          #f59e0b,
+          #fbbf24
+        );
+
       color: white;
     }
 
-    /* =========================
+
+    /* =====================================================
        TRANSACTION CARD
-       ========================= */
+    ===================================================== */
 
     .transaction-card {
-      background: linear-gradient(145deg, #f8fbff, #edf5ff);
-      border: 1px solid #bfdbfe;
+      background:
+        linear-gradient(
+          145deg,
+          #f8fbff,
+          #edf5ff
+        );
+
+      border:
+        1px solid #bfdbfe;
+
       display: flex;
+
       flex-direction: column;
+
       justify-content: space-between;
     }
 
+
     .transaction-heading {
       display: flex;
+
       align-items: flex-start;
+
       gap: 15px;
     }
+
 
     .transaction-icon {
       width: 58px;
       height: 58px;
+
       flex-shrink: 0;
+
       border-radius: 17px;
-      background: linear-gradient(135deg, #2563eb, #6366f1);
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #6366f1
+        );
+
       color: white;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 27px;
-      box-shadow: 0 7px 18px rgba(37,99,235,0.25);
+
+      box-shadow:
+        0 7px 18px
+        rgba(37,99,235,0.25);
     }
+
 
     .transaction-heading h3 {
       margin: 2px 0 8px;
+
       font-size: 20px;
     }
 
+
     .transaction-heading p {
       margin: 0;
+
       color: #64748b;
+
       line-height: 1.5;
+
       font-size: 14px;
     }
 
+
     #transactionButton {
       width: 100%;
+
       margin-top: 25px;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #1d4ed8
+        );
+
       color: white;
+
       font-size: 16px;
+
       padding: 15px;
-      box-shadow: 0 7px 18px rgba(37,99,235,0.20);
+
+      box-shadow:
+        0 7px 18px
+        rgba(37,99,235,0.20);
     }
+
 
     #transactionButton:hover {
-      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      background:
+        linear-gradient(
+          135deg,
+          #1d4ed8,
+          #1e40af
+        );
     }
 
-    /* =========================
+
+    /* =====================================================
        INVESTMENT PRODUCTS
-       ========================= */
+    ===================================================== */
 
     .products-card {
       padding: 28px;
+
+      scroll-margin-top: 20px;
     }
+
 
     .section-title {
       display: flex;
+
       align-items: center;
+
       gap: 12px;
+
       margin-bottom: 22px;
     }
+
 
     .section-icon {
       width: 45px;
       height: 45px;
+
       border-radius: 13px;
+
       background: #eff6ff;
+
       color: #2563eb;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 22px;
     }
+
 
     .section-title h3 {
       margin: 0;
+
       font-size: 22px;
     }
 
+
     .products {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
       gap: 18px;
     }
 
+
     .product {
-      border: 1px solid #dbe3ef;
+      border:
+        1px solid #dbe3ef;
+
       border-radius: 16px;
+
       padding: 22px;
+
       background: white;
+
       transition: 0.2s ease;
     }
 
+
     .product:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 22px rgba(15,23,42,0.08);
+
+      box-shadow:
+        0 8px 22px
+        rgba(15,23,42,0.08);
     }
+
 
     .product-icon {
       width: 48px;
       height: 48px;
+
       border-radius: 14px;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 23px;
+
       margin-bottom: 15px;
     }
+
 
     .starter-icon {
       background: #dcfce7;
     }
 
+
     .growth-icon {
       background: #dbeafe;
     }
+
 
     .premium-icon {
       background: #f3e8ff;
     }
 
+
     .product h3 {
       margin: 0 0 12px;
+
       font-size: 18px;
     }
 
+
     .product p {
       color: #64748b;
+
       line-height: 1.5;
+
       margin: 9px 0;
     }
+
 
     .product strong {
       color: #14213d;
     }
 
+
     .buyButton {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      background:
+        linear-gradient(
+          135deg,
+          #2563eb,
+          #1d4ed8
+        );
+
       color: white;
+
       width: 100%;
+
       margin-top: 12px;
     }
 
-    /* =========================
+
+    /* =====================================================
+       BOTTOM NAVIGATION
+    ===================================================== */
+
+    .bottom-nav {
+      position: fixed;
+
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      height: 78px;
+
+      background:
+        rgba(255,253,246,0.97);
+
+      border-top:
+        1px solid #e7e2d7;
+
+      box-shadow:
+        0 -5px 20px
+        rgba(15,23,42,0.08);
+
+      display: flex;
+
+      align-items: stretch;
+
+      justify-content: space-around;
+
+      z-index: 99999;
+
+      padding-bottom:
+        env(safe-area-inset-bottom);
+
+      backdrop-filter: blur(12px);
+
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+
+    .nav-item {
+      flex: 1;
+
+      max-width: 150px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 4px;
+
+      text-decoration: none;
+
+      color: #777;
+
+      font-size: 13px;
+
+      font-weight: 500;
+
+      transition: 0.2s ease;
+
+      -webkit-tap-highlight-color:
+        transparent;
+    }
+
+
+    .nav-item svg {
+      width: 27px;
+      height: 27px;
+
+      stroke: #777;
+
+      stroke-width: 1.8;
+
+      fill: none;
+
+      stroke-linecap: round;
+      stroke-linejoin: round;
+
+      transition: 0.2s ease;
+    }
+
+
+    .nav-item.active {
+      color: #2563eb;
+
+      font-weight: 600;
+    }
+
+
+    .nav-item.active svg {
+      stroke: #2563eb;
+
+      transform: translateY(-1px);
+    }
+
+
+    .nav-item:active {
+      transform: scale(0.94);
+    }
+
+
+    /* =====================================================
        RESPONSIVE
-       ========================= */
+    ===================================================== */
 
     @media (max-width: 850px) {
 
@@ -352,9 +694,11 @@
         grid-template-columns: 1fr;
       }
 
+
       .products {
         grid-template-columns: 1fr;
       }
+
 
       .balance {
         font-size: 35px;
@@ -362,27 +706,170 @@
 
     }
 
-    @media (max-width: 500px) {
+
+    @media (max-width: 600px) {
+
+      body {
+        padding-bottom: 88px;
+      }
+
 
       header {
-        padding: 15px;
+        padding: 14px 15px;
       }
+
+
+      .logo {
+        font-size: 20px;
+
+        gap: 8px;
+      }
+
+
+      .logo-icon {
+        width: 35px;
+        height: 35px;
+
+        font-size: 19px;
+      }
+
+
+      #logoutButton {
+        padding: 9px 13px;
+
+        font-size: 13px;
+      }
+
 
       main {
         margin: 25px auto;
+
         padding: 0 14px;
       }
 
-      .card {
-        padding: 21px;
+
+      .welcome {
+        margin-bottom: 20px;
       }
+
 
       .welcome h2 {
         font-size: 27px;
       }
 
+
+      .card {
+        padding: 20px;
+
+        border-radius: 17px;
+      }
+
+
       .balance {
         font-size: 31px;
+
+        margin: 18px 0;
+      }
+
+
+      .buttons {
+        gap: 9px;
+      }
+
+
+      .buttons button {
+        flex: 1;
+
+        min-width: 120px;
+
+        padding:
+          12px 10px;
+
+        font-size: 14px;
+      }
+
+
+      .transaction-heading {
+        gap: 11px;
+      }
+
+
+      .transaction-icon {
+        width: 50px;
+        height: 50px;
+
+        font-size: 23px;
+      }
+
+
+      .transaction-heading h3 {
+        font-size: 18px;
+      }
+
+
+      .transaction-heading p {
+        font-size: 13px;
+      }
+
+
+      .products-card {
+        padding: 20px;
+      }
+
+
+      .section-title h3 {
+        font-size: 20px;
+      }
+
+
+      .product {
+        padding: 19px;
+      }
+
+
+      .bottom-nav {
+        height: 76px;
+      }
+
+
+      .nav-item {
+        font-size: 12px;
+      }
+
+
+      .nav-item svg {
+        width: 26px;
+        height: 26px;
+      }
+
+    }
+
+
+    @media (max-width: 360px) {
+
+      .logo {
+        font-size: 18px;
+      }
+
+
+      #logoutButton {
+        padding: 8px 10px;
+      }
+
+
+      .balance {
+        font-size: 28px;
+      }
+
+
+      .nav-item {
+        font-size: 11px;
+      }
+
+
+      .nav-item svg {
+        width: 24px;
+        height: 24px;
       }
 
     }
@@ -390,14 +877,26 @@
   </style>
 </head>
 
+
 <body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
 <header>
 
   <div class="logo">
-    <div class="logo-icon">📈</div>
+
+    <div class="logo-icon">
+      📈
+    </div>
+
     Novarise
+
   </div>
+
 
   <button id="logoutButton">
     Logout
@@ -406,15 +905,21 @@
 </header>
 
 
-<main>
 
-  <!-- =========================
-       WELCOME
-       ========================= -->
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main id="home">
+
+
+  <!-- WELCOME -->
 
   <div class="welcome">
 
-    <h2>Dashboard</h2>
+    <h2>
+      Dashboard
+    </h2>
 
     <div id="userEmail">
       Checking account...
@@ -423,9 +928,8 @@
   </div>
 
 
-  <!-- =========================
-       BALANCE + TRANSACTIONS
-       ========================= -->
+
+  <!-- BALANCE + TRANSACTIONS -->
 
   <div class="top-grid">
 
@@ -440,12 +944,17 @@
           💳
         </div>
 
-        <h3>Your Balance</h3>
+        <h3>
+          Your Balance
+        </h3>
 
       </div>
 
 
-      <div class="balance" id="balance">
+      <div
+        class="balance"
+        id="balance"
+      >
         ₱0.00
       </div>
 
@@ -456,6 +965,7 @@
           ↓ Deposit
         </button>
 
+
         <button id="withdrawButton">
           ↑ Withdraw
         </button>
@@ -463,6 +973,7 @@
       </div>
 
     </div>
+
 
 
     <!-- TRANSACTION HISTORY -->
@@ -477,11 +988,13 @@
             📄
           </div>
 
+
           <div>
 
             <h3>
               Transaction History
             </h3>
+
 
             <p>
               View your deposit, withdrawal
@@ -504,11 +1017,15 @@
   </div>
 
 
-  <!-- =========================
-       INVESTMENT PRODUCTS
-       ========================= -->
 
-  <div class="card products-card">
+  <!-- =================================================
+       INVESTMENT PRODUCTS
+  ================================================== -->
+
+  <div
+    class="card products-card"
+    id="products"
+  >
 
     <div class="section-title">
 
@@ -516,11 +1033,13 @@
         📊
       </div>
 
+
       <h3>
         Investment Products
       </h3>
 
     </div>
+
 
 
     <div class="products">
@@ -534,18 +1053,22 @@
           🌱
         </div>
 
+
         <h3>
           Starter Investment
         </h3>
+
 
         <p>
           Minimum:
           <strong>₱500</strong>
         </p>
 
+
         <p>
           Long-term investment product.
         </p>
+
 
         <button
           class="buyButton"
@@ -557,6 +1080,7 @@
       </div>
 
 
+
       <!-- GROWTH -->
 
       <div class="product">
@@ -565,18 +1089,22 @@
           📈
         </div>
 
+
         <h3>
           Growth Investment
         </h3>
+
 
         <p>
           Minimum:
           <strong>₱1,000</strong>
         </p>
 
+
         <p>
           Long-term growth product.
         </p>
+
 
         <button
           class="buyButton"
@@ -588,6 +1116,7 @@
       </div>
 
 
+
       <!-- PREMIUM -->
 
       <div class="product">
@@ -596,18 +1125,22 @@
           💎
         </div>
 
+
         <h3>
           Premium Investment
         </h3>
+
 
         <p>
           Minimum:
           <strong>₱5,000</strong>
         </p>
 
+
         <p>
           Premium long-term investment product.
         </p>
+
 
         <button
           class="buyButton"
@@ -618,7 +1151,6 @@
 
       </div>
 
-
     </div>
 
   </div>
@@ -626,17 +1158,180 @@
 </main>
 
 
+
+<!-- =====================================================
+     BOTTOM NAVIGATION
+===================================================== -->
+
+<nav class="bottom-nav">
+
+
+  <!-- HOME -->
+
+  <a
+    href="#home"
+    class="nav-item active"
+    id="homeNav"
+  >
+
+    <svg viewBox="0 0 24 24">
+
+      <path
+        d="M3 10.5L12 3l9 7.5"
+      />
+
+      <path
+        d="M5 9.5V21h14V9.5"
+      />
+
+      <path
+        d="M9 21v-6h6v6"
+      />
+
+    </svg>
+
+
+    <span>
+      Home
+    </span>
+
+  </a>
+
+
+
+  <!-- PRODUCT -->
+
+  <a
+    href="#products"
+    class="nav-item"
+    id="productNav"
+  >
+
+    <svg viewBox="0 0 24 24">
+
+      <path
+        d="M4 7h16"
+      />
+
+      <path
+        d="M6 7l1-3h10l1 3"
+      />
+
+      <rect
+        x="4"
+        y="7"
+        width="16"
+        height="13"
+        rx="2"
+      />
+
+      <path
+        d="M9 12h6"
+      />
+
+    </svg>
+
+
+    <span>
+      Product
+    </span>
+
+  </a>
+
+
+
+  <!-- TEAM -->
+
+  <a
+    href="team.html"
+    class="nav-item"
+  >
+
+    <svg viewBox="0 0 24 24">
+
+      <circle
+        cx="9"
+        cy="8"
+        r="3"
+      />
+
+      <circle
+        cx="17"
+        cy="9"
+        r="2.5"
+      />
+
+      <path
+        d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"
+      />
+
+      <path
+        d="M15 14c3.2 0 6 2.2 6 5"
+      />
+
+    </svg>
+
+
+    <span>
+      Team
+    </span>
+
+  </a>
+
+
+
+  <!-- MY -->
+
+  <a
+    href="my.html"
+    class="nav-item"
+  >
+
+    <svg viewBox="0 0 24 24">
+
+      <circle
+        cx="12"
+        cy="8"
+        r="4"
+      />
+
+      <path
+        d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"
+      />
+
+    </svg>
+
+
+    <span>
+      My
+    </span>
+
+  </a>
+
+</nav>
+
+
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
+
 <script type="module">
+
 
   import {
     initializeApp
-  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+  } from
+    "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
 
   import {
     getAuth,
     onAuthStateChanged,
     signOut
-  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+  } from
+    "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
 
   import {
     getFirestore,
@@ -644,12 +1339,14 @@
     getDoc,
     setDoc,
     runTransaction
-  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+  } from
+    "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
-  /* =========================
+
+  /* =====================================================
      FIREBASE CONFIG
-     ========================= */
+  ===================================================== */
 
   const firebaseConfig = {
 
@@ -674,15 +1371,18 @@
   };
 
 
-  /* =========================
+
+  /* =====================================================
      FIREBASE START
-     ========================= */
+  ===================================================== */
 
   const app =
     initializeApp(firebaseConfig);
 
+
   const auth =
     getAuth(app);
+
 
   const db =
     getFirestore(app);
@@ -691,32 +1391,39 @@
   let currentUser = null;
 
 
-  /* =========================
+
+  /* =====================================================
      ELEMENTS
-     ========================= */
+  ===================================================== */
 
   const balanceElement =
     document.getElementById("balance");
 
+
   const emailElement =
     document.getElementById("userEmail");
+
 
   const depositButton =
     document.getElementById("depositButton");
 
+
   const withdrawButton =
     document.getElementById("withdrawButton");
 
+
   const logoutButton =
     document.getElementById("logoutButton");
+
 
   const transactionButton =
     document.getElementById("transactionButton");
 
 
-  /* =========================
+
+  /* =====================================================
      MONEY FORMAT
-     ========================= */
+  ===================================================== */
 
   function formatMoney(amount) {
 
@@ -732,9 +1439,10 @@
   }
 
 
-  /* =========================
+
+  /* =====================================================
      SHOW BALANCE
-     ========================= */
+  ===================================================== */
 
   function showBalance(amount) {
 
@@ -744,34 +1452,46 @@
   }
 
 
-  /* =========================
+
+  /* =====================================================
      LOAD USER
-     ========================= */
+  ===================================================== */
 
   async function loadUserData(user) {
 
     const userRef =
-      doc(db, "users", user.uid);
+      doc(
+        db,
+        "users",
+        user.uid
+      );
+
 
     const snapshot =
       await getDoc(userRef);
 
+
     if (!snapshot.exists()) {
 
-      await setDoc(userRef, {
+      await setDoc(
+        userRef,
+        {
+          balance: 0,
+          transactions: []
+        }
+      );
 
-        balance: 0,
-        transactions: []
-
-      });
 
       showBalance(0);
 
       return;
+
     }
+
 
     const data =
       snapshot.data();
+
 
     showBalance(
       data.balance || 0
@@ -780,33 +1500,46 @@
   }
 
 
-  /* =========================
+
+  /* =====================================================
      DEPOSIT
-     ========================= */
+  ===================================================== */
 
   async function deposit() {
 
     if (!currentUser) {
 
-      alert("Please login first.");
+      alert(
+        "Please login first."
+      );
+
       return;
 
     }
 
+
     const input =
-      prompt("Enter deposit amount:");
+      prompt(
+        "Enter deposit amount:"
+      );
+
 
     if (input === null) return;
 
+
     const amount =
       Number(input);
+
 
     if (
       !Number.isFinite(amount) ||
       amount <= 0
     ) {
 
-      alert("Please enter a valid amount.");
+      alert(
+        "Please enter a valid amount."
+      );
+
       return;
 
     }
@@ -827,21 +1560,31 @@
         async transaction => {
 
           const snapshot =
-            await transaction.get(userRef);
+            await transaction.get(
+              userRef
+            );
+
 
           const data =
             snapshot.exists()
               ? snapshot.data()
               : {};
 
+
           const oldBalance =
-            Number(data.balance || 0);
+            Number(
+              data.balance || 0
+            );
+
 
           const newBalance =
             oldBalance + amount;
 
+
           const transactions =
-            Array.isArray(data.transactions)
+            Array.isArray(
+              data.transactions
+            )
               ? data.transactions
               : [];
 
@@ -863,8 +1606,11 @@
           transaction.set(
             userRef,
             {
-              balance: newBalance,
-              transactions: transactions
+              balance:
+                newBalance,
+
+              transactions:
+                transactions
             },
             {
               merge: true
@@ -872,7 +1618,9 @@
           );
 
 
-          showBalance(newBalance);
+          showBalance(
+            newBalance
+          );
 
         }
       );
@@ -890,6 +1638,7 @@
         error
       );
 
+
       alert(
         "Deposit failed. Please try again."
       );
@@ -899,23 +1648,32 @@
   }
 
 
-  /* =========================
+
+  /* =====================================================
      WITHDRAW
-     ========================= */
+  ===================================================== */
 
   async function withdraw() {
 
     if (!currentUser) {
 
-      alert("Please login first.");
+      alert(
+        "Please login first."
+      );
+
       return;
 
     }
 
+
     const input =
-      prompt("Enter withdrawal amount:");
+      prompt(
+        "Enter withdrawal amount:"
+      );
+
 
     if (input === null) return;
+
 
     const amount =
       Number(input);
@@ -926,7 +1684,10 @@
       amount <= 0
     ) {
 
-      alert("Please enter a valid amount.");
+      alert(
+        "Please enter a valid amount."
+      );
+
       return;
 
     }
@@ -947,7 +1708,9 @@
         async transaction => {
 
           const snapshot =
-            await transaction.get(userRef);
+            await transaction.get(
+              userRef
+            );
 
 
           if (!snapshot.exists()) {
@@ -962,8 +1725,11 @@
           const data =
             snapshot.data();
 
+
           const oldBalance =
-            Number(data.balance || 0);
+            Number(
+              data.balance || 0
+            );
 
 
           if (amount > oldBalance) {
@@ -980,7 +1746,9 @@
 
 
           const transactions =
-            Array.isArray(data.transactions)
+            Array.isArray(
+              data.transactions
+            )
               ? data.transactions
               : [];
 
@@ -1002,8 +1770,11 @@
           transaction.set(
             userRef,
             {
-              balance: newBalance,
-              transactions: transactions
+              balance:
+                newBalance,
+
+              transactions:
+                transactions
             },
             {
               merge: true
@@ -1011,7 +1782,9 @@
           );
 
 
-          showBalance(newBalance);
+          showBalance(
+            newBalance
+          );
 
         }
       );
@@ -1052,15 +1825,19 @@
   }
 
 
-  /* =========================
+
+  /* =====================================================
      BUY PRODUCT
-     ========================= */
+  ===================================================== */
 
   async function buyProduct(price) {
 
     if (!currentUser) {
 
-      alert("Please login first.");
+      alert(
+        "Please login first."
+      );
+
       return;
 
     }
@@ -1081,7 +1858,9 @@
         async transaction => {
 
           const snapshot =
-            await transaction.get(userRef);
+            await transaction.get(
+              userRef
+            );
 
 
           if (!snapshot.exists()) {
@@ -1096,8 +1875,11 @@
           const data =
             snapshot.data();
 
+
           const oldBalance =
-            Number(data.balance || 0);
+            Number(
+              data.balance || 0
+            );
 
 
           if (oldBalance < price) {
@@ -1114,7 +1896,9 @@
 
 
           const transactions =
-            Array.isArray(data.transactions)
+            Array.isArray(
+              data.transactions
+            )
               ? data.transactions
               : [];
 
@@ -1136,8 +1920,11 @@
           transaction.set(
             userRef,
             {
-              balance: newBalance,
-              transactions: transactions
+              balance:
+                newBalance,
+
+              transactions:
+                transactions
             },
             {
               merge: true
@@ -1145,7 +1932,9 @@
           );
 
 
-          showBalance(newBalance);
+          showBalance(
+            newBalance
+          );
 
         }
       );
@@ -1186,15 +1975,17 @@
   }
 
 
-  /* =========================
+
+  /* =====================================================
      LOGOUT
-     ========================= */
+  ===================================================== */
 
   async function logout() {
 
     try {
 
       await signOut(auth);
+
 
       window.location.href =
         "index.html";
@@ -1207,6 +1998,7 @@
         error
       );
 
+
       alert(
         "Logout failed. Please try again."
       );
@@ -1216,9 +2008,10 @@
   }
 
 
-  /* =========================
+
+  /* =====================================================
      BUTTON EVENTS
-     ========================= */
+  ===================================================== */
 
   depositButton.addEventListener(
     "click",
@@ -1238,9 +2031,10 @@
   );
 
 
-  /* =========================
+
+  /* =====================================================
      INVESTMENT BUTTONS
-     ========================= */
+  ===================================================== */
 
   document
     .querySelectorAll(".buyButton")
@@ -1255,6 +2049,7 @@
               button.dataset.price
             );
 
+
           buyProduct(price);
 
         }
@@ -1263,9 +2058,10 @@
     });
 
 
-  /* =========================
+
+  /* =====================================================
      VIEW TRANSACTIONS
-     ========================= */
+  ===================================================== */
 
   transactionButton.addEventListener(
     "click",
@@ -1278,9 +2074,59 @@
   );
 
 
-  /* =========================
+
+  /* =====================================================
+     BOTTOM NAV ACTIVE STATE
+  ===================================================== */
+
+  const homeNav =
+    document.getElementById(
+      "homeNav"
+    );
+
+
+  const productNav =
+    document.getElementById(
+      "productNav"
+    );
+
+
+  homeNav.addEventListener(
+    "click",
+    () => {
+
+      homeNav.classList.add(
+        "active"
+      );
+
+      productNav.classList.remove(
+        "active"
+      );
+
+    }
+  );
+
+
+  productNav.addEventListener(
+    "click",
+    () => {
+
+      productNav.classList.add(
+        "active"
+      );
+
+      homeNav.classList.remove(
+        "active"
+      );
+
+    }
+  );
+
+
+
+  /* =====================================================
      LOGIN CHECK
-     ========================= */
+  ===================================================== */
 
   onAuthStateChanged(
     auth,
@@ -1296,16 +2142,20 @@
       }
 
 
-      currentUser = user;
+      currentUser =
+        user;
 
 
       emailElement.textContent =
-        user.email || "Logged in";
+        user.email ||
+        "Logged in";
 
 
       try {
 
-        await loadUserData(user);
+        await loadUserData(
+          user
+        );
 
       } catch (error) {
 
@@ -1313,6 +2163,7 @@
           "Loading user data failed:",
           error
         );
+
 
         alert(
           "Unable to load your account data."
@@ -1324,6 +2175,7 @@
   );
 
 </script>
+
 
 </body>
 </html>
