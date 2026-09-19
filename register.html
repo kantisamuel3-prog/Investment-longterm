@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#168ff0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#168ff0"
+  >
+
   <title>Novarise - Register</title>
 
   <style>
@@ -40,14 +50,26 @@
       position: relative;
 
       background:
-        radial-gradient(circle at 8% 8%, rgba(39,154,245,.11), transparent 25%),
-        radial-gradient(circle at 92% 88%, rgba(168,217,45,.10), transparent 22%),
-        linear-gradient(135deg, #f9fcff 0%, #edf7ff 52%, #f8fbff 100%);
+        radial-gradient(
+          circle at 8% 8%,
+          rgba(39,154,245,.11),
+          transparent 25%
+        ),
+        radial-gradient(
+          circle at 92% 88%,
+          rgba(168,217,45,.10),
+          transparent 22%
+        ),
+        linear-gradient(
+          135deg,
+          #f9fcff 0%,
+          #edf7ff 52%,
+          #f8fbff 100%
+        );
 
       color: var(--text);
     }
 
-    /* Decorative background only; nothing is displayed beside the card. */
     body::before,
     body::after {
       content: "";
@@ -62,7 +84,12 @@
       left: -230px;
       top: -220px;
       border-radius: 50%;
-      background: linear-gradient(145deg, rgba(22,143,240,.68), rgba(22,143,240,.05));
+      background:
+        linear-gradient(
+          145deg,
+          rgba(22,143,240,.68),
+          rgba(22,143,240,.05)
+        );
       opacity: .72;
     }
 
@@ -72,7 +99,12 @@
       right: -175px;
       bottom: -95px;
       border-radius: 50% 50% 0 0;
-      background: linear-gradient(160deg, rgba(22,143,240,.65), rgba(22,143,240,.04));
+      background:
+        linear-gradient(
+          160deg,
+          rgba(22,143,240,.65),
+          rgba(22,143,240,.04)
+        );
     }
 
     .bg-dots {
@@ -82,7 +114,11 @@
       width: 70px;
       height: 70px;
       opacity: .30;
-      background-image: radial-gradient(#68b9f4 1.8px, transparent 1.8px);
+      background-image:
+        radial-gradient(
+          #68b9f4 1.8px,
+          transparent 1.8px
+        );
       background-size: 16px 16px;
       z-index: 0;
       pointer-events: none;
@@ -126,7 +162,12 @@
       width: 135px;
       height: 135px;
       border-radius: 50%;
-      background: linear-gradient(135deg, rgba(22,143,240,.11), rgba(168,217,45,.08));
+      background:
+        linear-gradient(
+          135deg,
+          rgba(22,143,240,.11),
+          rgba(168,217,45,.08)
+        );
       pointer-events: none;
     }
 
@@ -135,7 +176,6 @@
       z-index: 2;
     }
 
-    /* Logo */
     .logo {
       text-align: center;
       margin-bottom: 4px;
@@ -172,10 +212,14 @@
       height: 4px;
       margin: 0 auto 13px;
       border-radius: 99px;
-      background: linear-gradient(90deg, var(--blue), var(--green));
+      background:
+        linear-gradient(
+          90deg,
+          var(--blue),
+          var(--green)
+        );
     }
 
-    /* Title */
     h1 {
       text-align: center;
       color: #123f70;
@@ -195,7 +239,6 @@
       color: #4d7295;
     }
 
-    /* Message */
     .message {
       display: none;
       margin-bottom: 13px;
@@ -220,7 +263,6 @@
       color: #28733e;
     }
 
-    /* Form */
     .input-group {
       margin-bottom: 13px;
     }
@@ -237,7 +279,6 @@
       position: relative;
     }
 
-    /* Phone field */
     .phone-input {
       width: 100%;
       height: 48px;
@@ -252,7 +293,9 @@
     .phone-input:focus-within {
       border-color: #65b8f5;
       background: #fff;
-      box-shadow: 0 0 0 4px rgba(22,143,240,.08);
+      box-shadow:
+        0 0 0 4px
+        rgba(22,143,240,.08);
     }
 
     .phone-icon,
@@ -307,7 +350,6 @@
       box-shadow: none;
     }
 
-    /* Password */
     .password-input {
       width: 100%;
       height: 48px;
@@ -324,7 +366,9 @@
     .password-input:focus {
       border-color: #65b8f5;
       background: #fff;
-      box-shadow: 0 0 0 4px rgba(22,143,240,.08);
+      box-shadow:
+        0 0 0 4px
+        rgba(22,143,240,.08);
     }
 
     .password-input::placeholder,
@@ -340,7 +384,6 @@
       pointer-events: none;
     }
 
-    /* Show/hide password */
     .eye-button {
       position: absolute;
       right: 9px;
@@ -367,7 +410,6 @@
       height: 19px;
     }
 
-    /* Main button */
     .register-btn {
       width: 100%;
       height: 49px;
@@ -389,7 +431,8 @@
       cursor: pointer;
 
       box-shadow:
-        0 10px 20px rgba(25,122,226,.19);
+        0 10px 20px
+        rgba(25,122,226,.19);
 
       transition:
         transform .18s ease,
@@ -399,7 +442,9 @@
 
     .register-btn:hover:not(:disabled) {
       transform: translateY(-1px);
-      box-shadow: 0 13px 23px rgba(25,122,226,.23);
+      box-shadow:
+        0 13px 23px
+        rgba(25,122,226,.23);
     }
 
     .register-btn:active:not(:disabled) {
@@ -417,7 +462,6 @@
       vertical-align: -1px;
     }
 
-    /* Divider */
     .or-line {
       display: flex;
       align-items: center;
@@ -435,7 +479,6 @@
       background: #e4eef7;
     }
 
-    /* Login link */
     .login a {
       height: 44px;
       display: flex;
@@ -457,7 +500,6 @@
       transform: translateY(-1px);
     }
 
-    /* Small note */
     .card-note {
       text-align: center;
       color: #9aafc2;
@@ -466,7 +508,6 @@
       letter-spacing: .15px;
     }
 
-    /* Success screen */
     .success-screen {
       display: none;
       text-align: center;
@@ -508,6 +549,7 @@
       align-items: center;
       justify-content: center;
       border-radius: 12px;
+
       background:
         linear-gradient(
           100deg,
@@ -515,18 +557,21 @@
           #1673e7 58%,
           #1d5ddd 100%
         );
+
       color: #fff;
       text-decoration: none;
       font-size: 15px;
       font-weight: 700;
-      box-shadow: 0 10px 20px rgba(25,122,226,.18);
+
+      box-shadow:
+        0 10px 20px
+        rgba(25,122,226,.18);
     }
 
     .continue-login-btn:hover {
       transform: translateY(-1px);
     }
 
-    /* Responsive */
     @media (max-width: 520px) {
       body {
         padding: 12px;
@@ -632,7 +677,9 @@
         <div class="subtitle">
           Create your Novarise account<br>
           Join today and start
-          <strong>building, investing, and growing together.</strong>
+          <strong>
+            building, investing, and growing together.
+          </strong>
         </div>
 
         <div
@@ -653,14 +700,19 @@
 
             <div class="phone-input">
 
-              <span class="phone-icon" aria-hidden="true">
+              <span
+                class="phone-icon"
+                aria-hidden="true"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   stroke-width="2"
                 >
-                  <path d="M6.6 3.5h2.2l1.1 4-1.8 1.5a15.5 15.5 0 0 0 6.9 6.9l1.5-1.8 4 1.1v2.2c0 1-.8 1.9-1.8 1.9C11.1 19.2 4.8 12.9 4.7 5.3c0-1 .8-1.8 1.9-1.8z"/>
+                  <path
+                    d="M6.6 3.5h2.2l1.1 4-1.8 1.5a15.5 15.5 0 0 0 6.9 6.9l1.5-1.8 4 1.1v2.2c0 1-.8 1.9-1.8 1.9C11.1 19.2 4.8 12.9 4.7 5.3c0-1 .8-1.8 1.9-1.8z"
+                  />
                 </svg>
               </span>
 
@@ -693,8 +745,10 @@
 
             <div class="field-wrap">
 
-              <span class="lock-icon" aria-hidden="true">
-
+              <span
+                class="lock-icon"
+                aria-hidden="true"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -708,9 +762,10 @@
                     height="10"
                     rx="2"
                   />
-                  <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+                  <path
+                    d="M8 10V7a4 4 0 0 1 8 0v3"
+                  />
                 </svg>
-
               </span>
 
               <input
@@ -735,8 +790,14 @@
                   stroke="currentColor"
                   stroke-width="2"
                 >
-                  <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/>
-                  <circle cx="12" cy="12" r="2.5"/>
+                  <path
+                    d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"
+                  />
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="2.5"
+                  />
                 </svg>
               </button>
 
@@ -754,8 +815,10 @@
 
             <div class="field-wrap">
 
-              <span class="lock-icon" aria-hidden="true">
-
+              <span
+                class="lock-icon"
+                aria-hidden="true"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -769,9 +832,10 @@
                     height="10"
                     rx="2"
                   />
-                  <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+                  <path
+                    d="M8 10V7a4 4 0 0 1 8 0v3"
+                  />
                 </svg>
-
               </span>
 
               <input
@@ -796,8 +860,14 @@
                   stroke="currentColor"
                   stroke-width="2"
                 >
-                  <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/>
-                  <circle cx="12" cy="12" r="2.5"/>
+                  <path
+                    d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"
+                  />
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="2.5"
+                  />
                 </svg>
               </button>
 
@@ -806,7 +876,7 @@
           </div>
 
 
-          <!-- CREATE ACCOUNT -->
+          <!-- REGISTER BUTTON -->
           <button
             type="submit"
             id="registerButton"
@@ -819,7 +889,6 @@
         </form>
 
 
-        <!-- LOGIN -->
         <div class="or-line">
           <span>or</span>
         </div>
@@ -869,6 +938,7 @@
       </div>
 
     </div>
+
   </div>
 
 
@@ -880,26 +950,36 @@
 
     import {
       initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    }
+    from
+      "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
     import {
       getAuth,
       createUserWithEmailAndPassword,
       updateProfile,
       deleteUser
-    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    }
+    from
+      "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
     import {
       getFirestore,
       doc,
       setDoc,
+      collection,
+      query,
+      where,
+      getDocs,
       serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+    }
+    from
+      "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-    /* =========================
+    /* =========================================
        FIREBASE CONFIG
-       ========================= */
+       ========================================= */
 
     const firebaseConfig = {
 
@@ -910,7 +990,8 @@
         "investpro-2dafb.firebaseapp.com",
 
       projectId:
-        "investpro-2dafb",
+        "investpro-2dafb.firebaseapp.com"
+        .replace(".firebaseapp.com", ""),
 
       storageBucket:
         "investpro-2dafb.firebasestorage.app",
@@ -923,15 +1004,18 @@
 
       measurementId:
         "G-0L77SFTC4F"
+
     };
 
 
-    /* =========================
+    /* =========================================
        INITIALIZE FIREBASE
-       ========================= */
+       ========================================= */
 
     const app =
-      initializeApp(firebaseConfig);
+      initializeApp(
+        firebaseConfig
+      );
 
     const auth =
       getAuth(app);
@@ -940,35 +1024,80 @@
       getFirestore(app);
 
 
-    /* =========================
+    /* =========================================
        ELEMENTS
-       ========================= */
+       ========================================= */
 
     const phoneInput =
-      document.getElementById("phone");
+      document.getElementById(
+        "phone"
+      );
 
     const passwordInput =
-      document.getElementById("password");
+      document.getElementById(
+        "password"
+      );
 
     const confirmPasswordInput =
-      document.getElementById("confirmPassword");
+      document.getElementById(
+        "confirmPassword"
+      );
 
     const registerButton =
-      document.getElementById("registerButton");
+      document.getElementById(
+        "registerButton"
+      );
 
     const messageBox =
-      document.getElementById("message");
+      document.getElementById(
+        "message"
+      );
 
     const togglePassword =
-      document.getElementById("togglePassword");
+      document.getElementById(
+        "togglePassword"
+      );
 
     const toggleConfirmPassword =
-      document.getElementById("toggleConfirmPassword");
+      document.getElementById(
+        "toggleConfirmPassword"
+      );
 
 
-    /* =========================
+    /* =========================================
+       GET REFERRAL CODE FROM URL
+       ========================================= */
+
+    const urlParams =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const referralFromUrl =
+      (
+        urlParams.get("ref") ||
+        urlParams.get("referral") ||
+        urlParams.get("code") ||
+        ""
+      )
+      .trim()
+      .toUpperCase();
+
+
+    /*
+     * Example:
+     *
+     * register.html?ref=NOVA-12345678
+     *
+     * The code above will become:
+     *
+     * referralFromUrl = NOVA-12345678
+     */
+
+
+    /* =========================================
        SHOW / HIDE PASSWORD
-       ========================= */
+       ========================================= */
 
     togglePassword.addEventListener(
       "click",
@@ -978,11 +1107,15 @@
           passwordInput.type === "text";
 
         passwordInput.type =
-          showing ? "password" : "text";
+          showing
+            ? "password"
+            : "text";
 
         this.setAttribute(
           "aria-label",
-          showing ? "Show password" : "Hide password"
+          showing
+            ? "Show password"
+            : "Hide password"
         );
 
       }
@@ -997,25 +1130,32 @@
           confirmPasswordInput.type === "text";
 
         confirmPasswordInput.type =
-          showing ? "password" : "text";
+          showing
+            ? "password"
+            : "text";
 
         this.setAttribute(
           "aria-label",
-          showing ? "Show password" : "Hide password"
+          showing
+            ? "Show password"
+            : "Hide password"
         );
 
       }
     );
 
 
-    /* =========================
+    /* =========================================
        NORMALIZE PHONE
-       ========================= */
+       ========================================= */
 
     function normalizePhone(phone) {
 
       phone =
-        phone.replace(/\D/g, "");
+        phone.replace(
+          /\D/g,
+          ""
+        );
 
       if (
         /^9\d{9}$/.test(phone)
@@ -1030,14 +1170,18 @@
     }
 
 
-    /* =========================
-       PHONE → FIREBASE EMAIL
-       ========================= */
+    /* =========================================
+       FIREBASE EMAIL
+       ========================================= */
 
-    function phoneToFirebaseEmail(phone) {
+    function phoneToFirebaseEmail(
+      phone
+    ) {
 
       const normalizedPhone =
-        normalizePhone(phone);
+        normalizePhone(
+          phone
+        );
 
       if (!normalizedPhone) {
 
@@ -1045,15 +1189,41 @@
 
       }
 
-      return normalizedPhone +
-        "@novarise.local";
+      return (
+        normalizedPhone +
+        "@novarise.local"
+      );
 
     }
 
 
-    /* =========================
+    /* =========================================
+       CREATE REFERRAL CODE
+       ========================================= */
+
+    function createReferralCode(
+      uid
+    ) {
+
+      /*
+       * Example:
+       *
+       * NOVA-A1B2C3D4
+       */
+
+      return (
+        "NOVA-" +
+        uid
+          .substring(0, 8)
+          .toUpperCase()
+      );
+
+    }
+
+
+    /* =========================================
        SHOW MESSAGE
-       ========================= */
+       ========================================= */
 
     function showMessage(
       message,
@@ -1064,14 +1234,15 @@
         message;
 
       messageBox.className =
-        "message " + type;
+        "message " +
+        type;
 
     }
 
 
-    /* =========================
+    /* =========================================
        CLEAR MESSAGE
-       ========================= */
+       ========================================= */
 
     function clearMessage() {
 
@@ -1084,22 +1255,20 @@
     }
 
 
-    /* =========================
+    /* =========================================
        PHONE INPUT
-       ========================= */
+       ========================================= */
 
     phoneInput.addEventListener(
       "input",
       function () {
 
-        /* Numbers only */
         this.value =
           this.value.replace(
             /\D/g,
             ""
           );
 
-        /* Maximum 10 digits */
         if (
           this.value.length > 10
         ) {
@@ -1112,7 +1281,6 @@
 
         }
 
-        /* First digit must be 9 */
         if (
           this.value.length > 0 &&
           this.value.charAt(0) !== "9"
@@ -1136,17 +1304,103 @@
     );
 
 
-    /* =========================
+    /* =========================================
+       FIND REFERRER
+       ========================================= */
+
+    async function findUserByReferralCode(
+      referralCode
+    ) {
+
+      /*
+       * If there is no referral code,
+       * there is no referrer.
+       */
+
+      if (!referralCode) {
+
+        return null;
+
+      }
+
+
+      try {
+
+        const usersRef =
+          collection(
+            db,
+            "users"
+          );
+
+
+        const q =
+          query(
+            usersRef,
+            where(
+              "referralCode",
+              "==",
+              referralCode
+            )
+          );
+
+
+        const snapshot =
+          await getDocs(
+            q
+          );
+
+
+        if (
+          snapshot.empty
+        ) {
+
+          return null;
+
+        }
+
+
+        const referrerDoc =
+          snapshot.docs[0];
+
+
+        return {
+
+          uid:
+            referrerDoc.id,
+
+          data:
+            referrerDoc.data()
+
+        };
+
+      } catch (error) {
+
+        console.error(
+          "Referral lookup error:",
+          error
+        );
+
+        return null;
+
+      }
+
+    }
+
+
+    /* =========================================
        REGISTER
-       ========================= */
+       ========================================= */
 
     document
-      .getElementById("registerForm")
+      .getElementById(
+        "registerForm"
+      )
       .addEventListener(
         "submit",
         async function (event) {
 
           event.preventDefault();
+
 
           const phone =
             phoneInput.value.trim();
@@ -1157,12 +1411,13 @@
           const confirmPassword =
             confirmPasswordInput.value;
 
+
           clearMessage();
 
 
-          /* =====================
+          /* ===============================
              VALIDATE PHONE
-             ===================== */
+             =============================== */
 
           if (
             !/^9\d{9}$/.test(phone)
@@ -1180,12 +1435,11 @@
           }
 
 
-          /* =====================
-             NORMALIZE PHONE
-             ===================== */
-
           const normalizedPhone =
-            normalizePhone(phone);
+            normalizePhone(
+              phone
+            );
+
 
           if (!normalizedPhone) {
 
@@ -1199,9 +1453,9 @@
           }
 
 
-          /* =====================
+          /* ===============================
              PASSWORD
-             ===================== */
+             =============================== */
 
           if (
             password.length < 6
@@ -1219,12 +1473,13 @@
           }
 
 
-          /* =====================
+          /* ===============================
              CONFIRM PASSWORD
-             ===================== */
+             =============================== */
 
           if (
-            password !== confirmPassword
+            password !==
+            confirmPassword
           ) {
 
             showMessage(
@@ -1239,14 +1494,15 @@
           }
 
 
-          /* =====================
+          /* ===============================
              FIREBASE EMAIL
-             ===================== */
+             =============================== */
 
           const firebaseEmail =
             phoneToFirebaseEmail(
               phone
             );
+
 
           if (!firebaseEmail) {
 
@@ -1260,9 +1516,9 @@
           }
 
 
-          /* =====================
+          /* ===============================
              DISABLE BUTTON
-             ===================== */
+             =============================== */
 
           registerButton.disabled =
             true;
@@ -1271,14 +1527,15 @@
             "Creating account...";
 
 
-          let user = null;
+          let user =
+            null;
 
 
           try {
 
-            /* ====================
-               CREATE FIREBASE USER
-               ==================== */
+            /* ==========================
+               CREATE AUTH ACCOUNT
+               ========================== */
 
             const userCredential =
               await createUserWithEmailAndPassword(
@@ -1287,13 +1544,14 @@
                 password
               );
 
+
             user =
               userCredential.user;
 
 
-            /* ====================
-               SAVE PHONE IN PROFILE
-               ==================== */
+            /* ==========================
+               UPDATE PROFILE
+               ========================== */
 
             await updateProfile(
               user,
@@ -1304,9 +1562,111 @@
             );
 
 
-            /* ====================
-               SAVE FIRESTORE USER
-               ==================== */
+            /* ==========================
+               MY REFERRAL CODE
+               ========================== */
+
+            const myReferralCode =
+              createReferralCode(
+                user.uid
+              );
+
+
+            /* ==========================
+               REFERRER
+               ========================== */
+
+            let referredBy =
+              null;
+
+            let referredByCode =
+              null;
+
+
+            /*
+             * IMPORTANT:
+             *
+             * If the URL contains:
+             *
+             * ?ref=NOVA-XXXXXXXX
+             *
+             * we find the owner of
+             * that referral code.
+             */
+
+            if (
+              referralFromUrl
+            ) {
+
+              const referrer =
+                await findUserByReferralCode(
+                  referralFromUrl
+                );
+
+
+              if (
+                referrer &&
+                referrer.uid !== user.uid
+              ) {
+
+                referredBy =
+                  referrer.uid;
+
+                referredByCode =
+                  referralFromUrl;
+
+              }
+
+            }
+
+
+            /* ==========================
+               SAVE USER DOCUMENT
+               ========================== */
+
+            const userData = {
+
+              uid:
+                user.uid,
+
+              phone:
+                normalizedPhone,
+
+              balance:
+                0,
+
+              referralCode:
+                myReferralCode,
+
+              referredBy:
+                referredBy,
+
+              referredByCode:
+                referredByCode,
+
+              totalCommission:
+                0,
+
+              commission:
+                0,
+
+              teamSize:
+                0,
+
+              level1Count:
+                0,
+
+              level2Count:
+                0,
+
+              level3Count:
+                0,
+
+              createdAt:
+                serverTimestamp()
+
+            };
+
 
             await setDoc(
               doc(
@@ -1314,30 +1674,26 @@
                 "users",
                 user.uid
               ),
-              {
-                phone:
-                  normalizedPhone,
-
-                balance:
-                  0,
-
-                createdAt:
-                  serverTimestamp()
-              }
+              userData
             );
 
 
-            /* ====================
+            /* ==========================
                SUCCESS
-               ==================== */
+               ========================== */
 
             document
-              .getElementById("registerSection")
+              .getElementById(
+                "registerSection"
+              )
               .style.display =
                 "none";
 
+
             document
-              .getElementById("successScreen")
+              .getElementById(
+                "successScreen"
+              )
               .style.display =
                 "block";
 
@@ -1350,9 +1706,9 @@
             );
 
 
-            /* ====================
+            /* ==========================
                ROLLBACK AUTH
-               ==================== */
+               ========================== */
 
             if (user) {
 
@@ -1362,7 +1718,9 @@
                   user
                 );
 
-              } catch (deleteError) {
+              } catch (
+                deleteError
+              ) {
 
                 console.error(
                   "Rollback error:",
@@ -1374,9 +1732,9 @@
             }
 
 
-            /* ====================
-               FIREBASE ERRORS
-               ==================== */
+            /* ==========================
+               ERROR MESSAGES
+               ========================== */
 
             if (
               error.code ===
@@ -1422,7 +1780,7 @@
             ) {
 
               showMessage(
-                "Account registration was blocked by Firestore permissions. Please check your Firestore Rules.",
+                "Registration was blocked by Firestore permissions. Please check your Firestore Rules.",
                 "error"
               );
 
@@ -1438,9 +1796,9 @@
             }
 
 
-            /* ====================
+            /* ==========================
                ENABLE BUTTON
-               ==================== */
+               ========================== */
 
             registerButton.disabled =
               false;
