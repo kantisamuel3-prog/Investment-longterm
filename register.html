@@ -17,19 +17,14 @@
 
   <title>Novarise - Register</title>
 
-
   <style>
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
     }
-
 
     :root {
       --blue: #168ff0;
@@ -40,30 +35,20 @@
       --border: #dcecff;
     }
 
-
     html,
     body {
       width: 100%;
       min-height: 100%;
     }
 
-
     body {
-
       min-height: 100vh;
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
       padding: 18px;
-
       overflow-x: hidden;
-
       overflow-y: auto;
-
       position: relative;
 
       background:
@@ -84,36 +69,22 @@
           #f8fbff 100%
         );
 
-      color:
-        var(--text);
-
+      color: var(--text);
     }
-
 
     body::before,
     body::after {
-
       content: "";
-
       position: fixed;
-
       pointer-events: none;
-
       z-index: 0;
-
     }
 
-
     body::before {
-
       width: 410px;
-
       height: 410px;
-
       left: -230px;
-
       top: -220px;
-
       border-radius: 50%;
 
       background:
@@ -124,22 +95,14 @@
         );
 
       opacity: .72;
-
     }
 
-
     body::after {
-
       width: 480px;
-
       height: 190px;
-
       right: -175px;
-
       bottom: -95px;
-
-      border-radius:
-        50% 50% 0 0;
+      border-radius: 50% 50% 0 0;
 
       background:
         linear-gradient(
@@ -147,22 +110,14 @@
           rgba(22,143,240,.65),
           rgba(22,143,240,.04)
         );
-
     }
 
-
     .bg-dots {
-
       position: fixed;
-
       right: 5%;
-
       top: 8%;
-
       width: 70px;
-
       height: 70px;
-
       opacity: .30;
 
       background-image:
@@ -172,91 +127,49 @@
         );
 
       background-size: 16px 16px;
-
       z-index: 0;
-
       pointer-events: none;
-
     }
 
-
     .card {
-
-      width:
-        min(455px, 100%);
-
-      background:
-        rgba(255,255,255,.97);
-
-      border:
-        1px solid
-        rgba(210,232,250,.95);
-
+      width: min(455px, 100%);
+      background: rgba(255,255,255,.97);
+      border: 1px solid rgba(210,232,250,.95);
       border-radius: 24px;
-
-      padding:
-        24px 34px 23px;
-
+      padding: 24px 34px 23px;
       position: relative;
-
       overflow: hidden;
-
       z-index: 1;
 
       box-shadow:
-        0 24px 55px
-        rgba(37,105,157,.13),
-        0 7px 20px
-        rgba(37,105,157,.06);
-
+        0 24px 55px rgba(37,105,157,.13),
+        0 7px 20px rgba(37,105,157,.06);
     }
-
 
     .card::before {
-
       content: "";
-
       position: absolute;
-
       width: 135px;
-
       height: 135px;
-
       right: -76px;
-
       bottom: -76px;
-
       border-radius: 50%;
-
-      border:
-        10px solid
-        rgba(22,143,240,.10);
+      border: 10px solid rgba(22,143,240,.10);
 
       box-shadow:
-        0 0 0 10px
-        rgba(168,217,45,.08),
-        0 0 0 20px
-        rgba(22,143,240,.05);
+        0 0 0 10px rgba(168,217,45,.08),
+        0 0 0 20px rgba(22,143,240,.05);
 
       pointer-events: none;
-
     }
 
-
     .card::after {
-
       content: "";
-
       position: absolute;
-
       left: -55px;
-
       top: -75px;
-
       width: 135px;
-
       height: 135px;
-
       border-radius: 50%;
 
       background:
@@ -267,84 +180,48 @@
         );
 
       pointer-events: none;
-
     }
-
 
     .content {
-
       position: relative;
-
       z-index: 2;
-
     }
-
 
     .logo {
-
       text-align: center;
-
       margin-bottom: 4px;
-
     }
-
 
     .logo img {
-
       width: 175px;
-
       max-width: 72%;
-
       height: auto;
-
       display: block;
-
-      margin:
-        0 auto 5px;
-
+      margin: 0 auto 5px;
     }
-
 
     .brand-tagline {
-
       text-align: center;
-
       color: #6f8ca8;
-
       font-size: 10px;
-
       letter-spacing: 2px;
-
       font-weight: 700;
-
       text-transform: uppercase;
-
       margin-bottom: 8px;
-
     }
-
 
     .brand-tagline .blue {
-      color:
-        var(--blue);
+      color: var(--blue);
     }
-
 
     .brand-tagline .green {
-      color:
-        var(--green);
+      color: var(--green);
     }
 
-
     .divider-accent {
-
       width: 84px;
-
       height: 4px;
-
-      margin:
-        0 auto 13px;
-
+      margin: 0 auto 13px;
       border-radius: 99px;
 
       background:
@@ -353,454 +230,238 @@
           var(--blue),
           var(--green)
         );
-
     }
-
 
     h1 {
-
       text-align: center;
-
       color: #123f70;
-
       font-size: 23px;
-
       margin-bottom: 6px;
-
     }
-
 
     .subtitle {
-
       text-align: center;
-
       color: var(--muted);
-
       font-size: 13px;
-
       line-height: 1.48;
-
       margin-bottom: 16px;
-
     }
-
 
     .subtitle strong {
-
       color: #4d7295;
-
     }
-
 
     .message {
-
       display: none;
-
       margin-bottom: 13px;
-
       padding: 10px 12px;
-
       border-radius: 10px;
-
       text-align: center;
-
       font-size: 12.5px;
-
       line-height: 1.4;
-
     }
-
 
     .message.error {
-
       display: block;
-
       background: #fff0f0;
-
-      border:
-        1px solid #ffd6d6;
-
+      border: 1px solid #ffd6d6;
       color: #a33333;
-
     }
-
 
     .message.success {
-
       display: block;
-
       background: #effcf3;
-
-      border:
-        1px solid #d3f4dc;
-
+      border: 1px solid #d3f4dc;
       color: #28733e;
-
     }
-
 
     .input-group {
-
       margin-bottom: 13px;
-
     }
-
 
     label {
-
       display: block;
-
       color: #164e80;
-
       font-size: 13px;
-
       font-weight: 700;
-
       margin-bottom: 6px;
-
     }
-
 
     .field-wrap {
-
       position: relative;
-
     }
-
 
     .phone-input {
-
       width: 100%;
-
       height: 48px;
-
       display: flex;
-
       align-items: center;
-
-      border:
-        1px solid var(--border);
-
+      border: 1px solid var(--border);
       border-radius: 12px;
-
       background: #fbfdff;
-
       transition: .2s ease;
-
     }
-
 
     .phone-input:focus-within {
-
       border-color: #65b8f5;
-
       background: #fff;
-
-      box-shadow:
-        0 0 0 4px
-        rgba(22,143,240,.08);
-
+      box-shadow: 0 0 0 4px rgba(22,143,240,.08);
     }
-
 
     .phone-icon,
     .lock-icon,
     .referral-icon {
-
       color: #2293e9;
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
     }
-
 
     .phone-icon {
-
       margin-left: 13px;
-
     }
-
 
     .phone-icon svg,
     .lock-icon svg,
     .referral-icon svg {
-
       width: 17px;
-
       height: 17px;
-
     }
-
 
     .country-code {
-
       height: 26px;
-
       display: flex;
-
       align-items: center;
-
       color: #164a78;
-
       font-size: 14px;
-
       font-weight: 700;
-
       padding: 0 10px;
-
       margin-left: 5px;
-
-      border-right:
-        1px solid #dce8f2;
-
+      border-right: 1px solid #dce8f2;
       white-space: nowrap;
-
     }
-
 
     .phone-input input {
-
       flex: 1;
-
       min-width: 0;
-
       width: 100%;
-
       height: 100%;
-
       padding: 0 12px;
-
       border: 0;
-
       outline: none;
-
       box-shadow: none;
-
       border-radius: 0;
-
       font-size: 14px;
-
       background: transparent;
-
       color: #173e61;
-
     }
-
 
     .phone-input input:focus {
-
       border: 0;
-
       outline: none;
-
       box-shadow: none;
-
     }
-
 
     .normal-input {
-
       width: 100%;
-
       height: 48px;
-
-      padding:
-        0 13px 0 42px;
-
-      border:
-        1px solid var(--border);
-
+      padding: 0 13px 0 42px;
+      border: 1px solid var(--border);
       border-radius: 12px;
-
       outline: none;
-
       font-size: 14px;
-
       background: #fbfdff;
-
       color: #173e61;
-
       transition: .2s ease;
-
     }
-
 
     .normal-input:focus {
-
       border-color: #65b8f5;
-
       background: #fff;
-
-      box-shadow:
-        0 0 0 4px
-        rgba(22,143,240,.08);
-
+      box-shadow: 0 0 0 4px rgba(22,143,240,.08);
     }
-
 
     .normal-input::placeholder {
-
       color: #9aadc0;
-
     }
-
 
     .referral-icon {
-
       position: absolute;
-
       left: 13px;
-
       top: 50%;
-
-      transform:
-        translateY(-50%);
-
+      transform: translateY(-50%);
       pointer-events: none;
-
     }
-
 
     .referral-hint {
-
       color: #8ba2b7;
-
       font-size: 10.5px;
-
       margin-top: 5px;
-
       line-height: 1.35;
-
     }
-
 
     .password-input {
-
       width: 100%;
-
       height: 48px;
-
-      padding:
-        0 44px 0 42px;
-
-      border:
-        1px solid var(--border);
-
+      padding: 0 44px 0 42px;
+      border: 1px solid var(--border);
       border-radius: 12px;
-
       outline: none;
-
       font-size: 14px;
-
       background: #fbfdff;
-
       color: #173e61;
-
       transition: .2s ease;
-
     }
-
 
     .password-input:focus {
-
       border-color: #65b8f5;
-
       background: #fff;
-
-      box-shadow:
-        0 0 0 4px
-        rgba(22,143,240,.08);
-
+      box-shadow: 0 0 0 4px rgba(22,143,240,.08);
     }
-
 
     .password-input::placeholder {
-
       color: #9aadc0;
-
     }
-
 
     .lock-icon {
-
       position: absolute;
-
       left: 13px;
-
       top: 50%;
-
-      transform:
-        translateY(-50%);
-
+      transform: translateY(-50%);
       pointer-events: none;
-
     }
-
 
     .eye-button {
-
       position: absolute;
-
       right: 9px;
-
       top: 50%;
-
-      transform:
-        translateY(-50%);
-
+      transform: translateY(-50%);
       width: 32px;
-
       height: 32px;
-
       border: 0;
-
       background: transparent;
-
       color: #7d94aa;
-
       cursor: pointer;
-
       border-radius: 50%;
-
       display: grid;
-
       place-items: center;
-
     }
-
 
     .eye-button:hover {
-
       background: #edf7ff;
-
       color: var(--blue);
-
     }
-
 
     .eye-button svg {
-
       width: 19px;
-
       height: 19px;
-
     }
 
-
     .register-btn {
-
       width: 100%;
-
       height: 49px;
-
       margin-top: 2px;
-
       border: 0;
-
       border-radius: 12px;
 
       background:
@@ -812,233 +473,125 @@
         );
 
       color: #fff;
-
       font-size: 15px;
-
       font-weight: 700;
-
       cursor: pointer;
 
       box-shadow:
-        0 10px 20px
-        rgba(25,122,226,.19);
+        0 10px 20px rgba(25,122,226,.19);
 
       transition:
         transform .18s ease,
         box-shadow .18s ease,
         opacity .18s ease;
-
     }
-
 
     .register-btn:hover:not(:disabled) {
-
-      transform:
-        translateY(-1px);
-
-      box-shadow:
-        0 13px 23px
-        rgba(25,122,226,.23);
-
+      transform: translateY(-1px);
+      box-shadow: 0 13px 23px rgba(25,122,226,.23);
     }
-
 
     .register-btn:active:not(:disabled) {
-
-      transform:
-        translateY(0);
-
+      transform: translateY(0);
     }
-
 
     .register-btn:disabled {
-
       opacity: .62;
-
       cursor: not-allowed;
-
     }
-
 
     .button-arrow {
-
       margin-left: 7px;
-
       font-size: 18px;
-
       vertical-align: -1px;
-
     }
-
 
     .or-line {
-
       display: flex;
-
       align-items: center;
-
       gap: 9px;
-
-      margin:
-        13px 0 11px;
-
+      margin: 13px 0 11px;
       color: #9ab0c5;
-
       font-size: 11px;
-
     }
-
 
     .or-line::before,
     .or-line::after {
-
       content: "";
-
       height: 1px;
-
       flex: 1;
-
       background: #e4eef7;
-
     }
-
 
     .login a {
-
       height: 44px;
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
-      border:
-        1px solid #9fd2fb;
-
+      border: 1px solid #9fd2fb;
       border-radius: 11px;
-
       color: #1578d8;
-
       text-decoration: none;
-
       font-weight: 700;
-
       font-size: 14px;
-
       background: #fbfdff;
-
       transition: .18s ease;
-
     }
-
 
     .login a:hover {
-
       background: #eff8ff;
-
       border-color: #72bdf4;
-
-      transform:
-        translateY(-1px);
-
+      transform: translateY(-1px);
     }
-
 
     .card-note {
-
       text-align: center;
-
       color: #9aafc2;
-
       font-size: 10.5px;
-
       margin-top: 11px;
-
       letter-spacing: .15px;
-
     }
-
 
     .success-screen {
-
       display: none;
-
       text-align: center;
-
-      padding:
-        8px 0 3px;
-
+      padding: 8px 0 3px;
     }
-
 
     .success-icon {
-
       width: 72px;
-
       height: 72px;
-
-      margin:
-        0 auto 15px;
-
+      margin: 0 auto 15px;
       border-radius: 50%;
-
       background: #eafaf0;
-
       color: #16a34a;
-
-      border:
-        1px solid #cfeeda;
-
+      border: 1px solid #cfeeda;
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
       font-size: 38px;
-
       font-weight: 700;
-
     }
-
 
     .success-screen h2 {
-
       color: #166534;
-
       font-size: 23px;
-
       margin-bottom: 8px;
-
     }
-
 
     .success-screen p {
-
       color: #64748b;
-
       line-height: 1.55;
-
       font-size: 13px;
-
       margin-bottom: 18px;
-
     }
 
-
     .continue-login-btn {
-
       width: 100%;
-
       height: 46px;
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
       border-radius: 12px;
 
       background:
@@ -1050,27 +603,17 @@
         );
 
       color: #fff;
-
       text-decoration: none;
-
       font-size: 15px;
-
       font-weight: 700;
 
       box-shadow:
-        0 10px 20px
-        rgba(25,122,226,.18);
-
+        0 10px 20px rgba(25,122,226,.18);
     }
-
 
     .continue-login-btn:hover {
-
-      transform:
-        translateY(-1px);
-
+      transform: translateY(-1px);
     }
-
 
     @media (max-width: 520px) {
 
@@ -1078,140 +621,88 @@
         padding: 12px;
       }
 
-
       .card {
-
-        padding:
-          21px 20px 22px;
-
+        padding: 21px 20px 22px;
         border-radius: 20px;
-
       }
-
 
       .logo img {
         width: 160px;
       }
 
-
       h1 {
         font-size: 21px;
       }
 
-
       .subtitle {
         font-size: 12.5px;
       }
-
     }
 
-
-    @media (max-height: 820px)
-      and (min-width: 521px) {
+    @media (max-height: 820px) and (min-width: 521px) {
 
       body {
-
         padding-top: 10px;
-
         padding-bottom: 10px;
-
       }
-
 
       .card {
-
         padding-top: 17px;
-
         padding-bottom: 17px;
-
       }
-
 
       .logo img {
-
         width: 150px;
-
       }
-
 
       .brand-tagline {
-
         margin-bottom: 5px;
-
       }
-
 
       .divider-accent {
-
         margin-bottom: 9px;
-
       }
-
 
       .subtitle {
-
         margin-bottom: 10px;
-
       }
-
 
       .input-group {
-
         margin-bottom: 9px;
-
       }
-
 
       .referral-hint {
-
         margin-top: 3px;
-
       }
-
 
       .or-line {
-
-        margin:
-          9px 0 8px;
-
+        margin: 9px 0 8px;
       }
-
 
       .login a {
-
         height: 40px;
-
       }
-
 
       .card-note {
-
         margin-top: 8px;
-
       }
-
     }
 
   </style>
 
 </head>
 
-
 <body>
 
-
   <div class="bg-dots"></div>
-
 
   <div class="card">
 
     <div class="content">
 
-
       <!-- REGISTER -->
 
       <div id="registerSection">
-
 
         <div class="logo">
 
@@ -1221,7 +712,6 @@
           >
 
         </div>
-
 
         <div class="brand-tagline">
 
@@ -1243,14 +733,11 @@
 
         </div>
 
-
         <div class="divider-accent"></div>
-
 
         <h1>
           Create Account
         </h1>
-
 
         <div class="subtitle">
 
@@ -1263,7 +750,6 @@
 
         </div>
 
-
         <div
           id="message"
           class="message"
@@ -1271,10 +757,7 @@
           aria-live="polite"
         ></div>
 
-
-
         <form id="registerForm">
-
 
           <!-- PHONE -->
 
@@ -1283,7 +766,6 @@
             <label for="phone">
               Phone Number
             </label>
-
 
             <div class="phone-input">
 
@@ -1307,11 +789,9 @@
 
               </span>
 
-
               <span class="country-code">
                 +63
               </span>
-
 
               <input
                 type="tel"
@@ -1328,8 +808,6 @@
 
           </div>
 
-
-
           <!-- REFERRAL -->
 
           <div class="input-group">
@@ -1337,7 +815,6 @@
             <label for="referralCode">
               Referral Code
             </label>
-
 
             <div class="field-wrap">
 
@@ -1375,7 +852,6 @@
 
               </span>
 
-
               <input
                 type="text"
                 id="referralCode"
@@ -1389,7 +865,6 @@
 
             </div>
 
-
             <div
               class="referral-hint"
               id="referralHint"
@@ -1399,8 +874,6 @@
 
           </div>
 
-
-
           <!-- PASSWORD -->
 
           <div class="input-group">
@@ -1408,7 +881,6 @@
             <label for="password">
               Password
             </label>
-
 
             <div class="field-wrap">
 
@@ -1440,7 +912,6 @@
 
               </span>
 
-
               <input
                 type="password"
                 id="password"
@@ -1450,7 +921,6 @@
                 autocomplete="new-password"
                 required
               >
-
 
               <button
                 type="button"
@@ -1484,8 +954,6 @@
 
           </div>
 
-
-
           <!-- CONFIRM PASSWORD -->
 
           <div class="input-group">
@@ -1493,7 +961,6 @@
             <label for="confirmPassword">
               Confirm Password
             </label>
-
 
             <div class="field-wrap">
 
@@ -1525,7 +992,6 @@
 
               </span>
 
-
               <input
                 type="password"
                 id="confirmPassword"
@@ -1535,7 +1001,6 @@
                 autocomplete="new-password"
                 required
               >
-
 
               <button
                 type="button"
@@ -1569,8 +1034,6 @@
 
           </div>
 
-
-
           <!-- REGISTER -->
 
           <button
@@ -1587,15 +1050,11 @@
 
           </button>
 
-
         </form>
-
-
 
         <div class="or-line">
           <span>or</span>
         </div>
-
 
         <div class="login">
 
@@ -1605,7 +1064,6 @@
 
         </div>
 
-
         <div class="card-note">
 
           Secure registration •
@@ -1614,10 +1072,7 @@
 
         </div>
 
-
       </div>
-
-
 
       <!-- SUCCESS -->
 
@@ -1630,17 +1085,14 @@
           ✓
         </div>
 
-
         <h2>
           Account Registered!
         </h2>
-
 
         <p>
           Your Novarise account has been
           created successfully.
         </p>
-
 
         <a
           href="login.html"
@@ -1651,24 +1103,19 @@
 
       </div>
 
-
     </div>
 
   </div>
 
-
-
   <!-- FIREBASE -->
 
   <script type="module">
-
 
     import {
       initializeApp
     }
     from
       "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-
 
     import {
       getAuth,
@@ -1678,7 +1125,6 @@
     from
       "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-
     import {
       getFirestore,
       doc,
@@ -1687,11 +1133,11 @@
       query,
       where,
       getDocs,
+      getDoc,
       serverTimestamp
     }
     from
       "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
 
 
     /* =========================================
@@ -1724,7 +1170,6 @@
     };
 
 
-
     const app =
       initializeApp(
         firebaseConfig
@@ -1739,64 +1184,36 @@
       getFirestore(app);
 
 
-
     /* =========================================
        ELEMENTS
        ========================================= */
 
     const phoneInput =
-      document.getElementById(
-        "phone"
-      );
-
+      document.getElementById("phone");
 
     const referralCodeInput =
-      document.getElementById(
-        "referralCode"
-      );
-
+      document.getElementById("referralCode");
 
     const referralHint =
-      document.getElementById(
-        "referralHint"
-      );
-
+      document.getElementById("referralHint");
 
     const passwordInput =
-      document.getElementById(
-        "password"
-      );
-
+      document.getElementById("password");
 
     const confirmPasswordInput =
-      document.getElementById(
-        "confirmPassword"
-      );
-
+      document.getElementById("confirmPassword");
 
     const registerButton =
-      document.getElementById(
-        "registerButton"
-      );
-
+      document.getElementById("registerButton");
 
     const messageBox =
-      document.getElementById(
-        "message"
-      );
-
+      document.getElementById("message");
 
     const togglePassword =
-      document.getElementById(
-        "togglePassword"
-      );
-
+      document.getElementById("togglePassword");
 
     const toggleConfirmPassword =
-      document.getElementById(
-        "toggleConfirmPassword"
-      );
-
+      document.getElementById("toggleConfirmPassword");
 
 
     /* =========================================
@@ -1832,7 +1249,6 @@
         "#168ff0";
 
     }
-
 
 
     /* =========================================
@@ -1885,55 +1301,34 @@
     );
 
 
-
     /* =========================================
        PHONE
        ========================================= */
 
-    function normalizePhone(
-      phone
-    ) {
+    function normalizePhone(phone) {
 
       phone =
-        phone.replace(
-          /\D/g,
-          ""
-        );
+        phone.replace(/\D/g, "");
 
-
-      if (
-        /^9\d{9}$/.test(
-          phone
-        )
-      ) {
+      if (/^9\d{9}$/.test(phone)) {
 
         return "63" + phone;
 
       }
-
 
       return "";
 
     }
 
 
-
-    function phoneToFirebaseEmail(
-      phone
-    ) {
+    function phoneToFirebaseEmail(phone) {
 
       const normalizedPhone =
-        normalizePhone(
-          phone
-        );
-
+        normalizePhone(phone);
 
       if (!normalizedPhone) {
-
         return "";
-
       }
-
 
       return (
         normalizedPhone +
@@ -1943,27 +1338,20 @@
     }
 
 
-
     /* =========================================
        CREATE REFERRAL CODE
        ========================================= */
 
-    function createReferralCode(
-      uid
-    ) {
+    function createReferralCode(uid) {
 
       return (
         "NOVA-" +
         uid
-          .substring(
-            0,
-            8
-          )
+          .substring(0, 8)
           .toUpperCase()
       );
 
     }
-
 
 
     /* =========================================
@@ -1979,8 +1367,7 @@
         message;
 
       messageBox.className =
-        "message " +
-        type;
+        "message " + type;
 
     }
 
@@ -1994,7 +1381,6 @@
         "message";
 
     }
-
 
 
     /* =========================================
@@ -2011,7 +1397,6 @@
             ""
           );
 
-
         if (
           this.value.length > 10
         ) {
@@ -2023,7 +1408,6 @@
             );
 
         }
-
 
         if (
           this.value.length > 0 &&
@@ -2042,12 +1426,10 @@
 
         }
 
-
         clearMessage();
 
       }
     );
-
 
 
     /* =========================================
@@ -2061,10 +1443,7 @@
         this.value =
           this.value
             .toUpperCase()
-            .replace(
-              /\s/g,
-              ""
-            );
+            .replace(/\s/g, "");
 
         clearMessage();
 
@@ -2072,39 +1451,39 @@
     );
 
 
-
     /* =========================================
        FIND REFERRER
        ========================================= */
 
-    async function findUserByReferralCode(
-      code
-    ) {
+    async function findUserByReferralCode(code) {
 
       const cleanCode =
-        String(
-          code || ""
-        )
-        .trim()
-        .toUpperCase();
-
+        String(code || "")
+          .trim()
+          .toUpperCase();
 
       if (!cleanCode) {
-
         return null;
-
       }
 
+
+      /*
+       * MAIN COLLECTION
+       *
+       * IMPORTANT:
+       * Firestore collection is "Users"
+       * with capital U.
+       */
 
       const usersRef =
         collection(
           db,
-          "users"
+          "Users"
         );
 
 
       /*
-       * Try referralCode first.
+       * 1. referralCode
        */
 
       const referralQuery =
@@ -2139,9 +1518,8 @@
       }
 
 
-
       /*
-       * Try invitationCode.
+       * 2. invitationCode
        */
 
       const invitationQuery =
@@ -2176,9 +1554,8 @@
       }
 
 
-
       /*
-       * Try inviteCode.
+       * 3. inviteCode
        */
 
       const inviteQuery =
@@ -2213,10 +1590,69 @@
       }
 
 
+      /*
+       * 4. FALLBACK FOR OLD USERS
+       *
+       * Old user documents may not have
+       * referralCode yet.
+       *
+       * Their automatic code is:
+       *
+       * NOVA + first 8 characters of UID
+       *
+       * We inspect the Users documents only
+       * as a compatibility fallback.
+       */
+
+      try {
+
+        const allUsersSnapshot =
+          await getDocs(
+            usersRef
+          );
+
+
+        for (
+          const item of
+          allUsersSnapshot.docs
+        ) {
+
+          const data =
+            item.data() || {};
+
+          const generatedCode =
+            createReferralCode(
+              item.id
+            );
+
+
+          if (
+            generatedCode ===
+            cleanCode
+          ) {
+
+            return {
+              uid: item.id,
+              data: data
+            };
+
+          }
+
+        }
+
+      } catch (fallbackError) {
+
+        console.warn(
+          "Referral fallback lookup failed:",
+          fallbackError
+        );
+
+      }
+
+
       return null;
 
     }
-
 
 
     /* =========================================
@@ -2224,9 +1660,7 @@
        ========================================= */
 
     document
-      .getElementById(
-        "registerForm"
-      )
+      .getElementById("registerForm")
       .addEventListener(
         "submit",
         async function (event) {
@@ -2255,15 +1689,12 @@
           clearMessage();
 
 
-
           /* ===================================
              PHONE VALIDATION
              =================================== */
 
           if (
-            !/^9\d{9}$/.test(
-              phone
-            )
+            !/^9\d{9}$/.test(phone)
           ) {
 
             showMessage(
@@ -2276,7 +1707,6 @@
             return;
 
           }
-
 
 
           /* ===================================
@@ -2297,7 +1727,6 @@
             return;
 
           }
-
 
 
           /* ===================================
@@ -2321,17 +1750,12 @@
           }
 
 
-
           const normalizedPhone =
-            normalizePhone(
-              phone
-            );
+            normalizePhone(phone);
 
 
           const firebaseEmail =
-            phoneToFirebaseEmail(
-              phone
-            );
+            phoneToFirebaseEmail(phone);
 
 
           if (
@@ -2349,14 +1773,12 @@
           }
 
 
-
           registerButton.disabled =
             true;
 
 
           registerButton.innerHTML =
             "Checking referral...";
-
 
 
           try {
@@ -2385,24 +1807,19 @@
                   "error"
                 );
 
-
                 registerButton.disabled =
                   false;
-
 
                 registerButton.innerHTML =
                   'Create Account <span class="button-arrow">→</span>';
 
-
                 referralCodeInput.focus();
-
 
                 return;
 
               }
 
             }
-
 
 
             /* =================================
@@ -2425,7 +1842,6 @@
               userCredential.user;
 
 
-
             /* =================================
                UPDATE PROFILE
                ================================= */
@@ -2439,7 +1855,6 @@
             );
 
 
-
             /* =================================
                OWN REFERRAL CODE
                ================================= */
@@ -2450,14 +1865,12 @@
               );
 
 
-
             /* =================================
                REFERRER DATA
                ================================= */
 
             let referredBy =
               null;
-
 
             let referredByCode =
               null;
@@ -2475,7 +1888,6 @@
                 referralCode;
 
             }
-
 
 
             /* =================================
@@ -2520,7 +1932,6 @@
             };
 
 
-
             /* =================================
                FIRESTORE
                ================================= */
@@ -2529,15 +1940,19 @@
               "Saving account...";
 
 
+            /*
+             * IMPORTANT:
+             * Capital "Users"
+             */
+
             await setDoc(
               doc(
                 db,
-                "users",
+                "Users",
                 user.uid
               ),
               userData
             );
-
 
 
             /* =================================
@@ -2582,7 +1997,6 @@
 
             }
 
-
             else if (
               error.code ===
               "auth/weak-password"
@@ -2593,7 +2007,6 @@
 
             }
 
-
             else if (
               error.code ===
               "auth/invalid-email"
@@ -2603,7 +2016,6 @@
                 "Invalid phone number.";
 
             }
-
 
             else if (
               error.code ===
@@ -2617,7 +2029,6 @@
 
             }
 
-
             else if (
               error.code ===
               "failed-precondition"
@@ -2628,10 +2039,10 @@
 
             }
 
-
             else if (
               error.message &&
-              error.message.toLowerCase()
+              error.message
+                .toLowerCase()
                 .includes("permission")
             ) {
 
@@ -2659,9 +2070,7 @@
         }
       );
 
-
   </script>
-
 
 </body>
 
