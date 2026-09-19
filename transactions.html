@@ -18,27 +18,39 @@
 
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    html,
+    html {
+      width: 100%;
+      min-width: 0;
+      overflow-x: hidden;
+    }
+
     body {
       width: 100%;
-      min-height: 100%;
-    }
-
-    body {
-      margin: 0;
+      min-width: 0;
       min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
       background:
         linear-gradient(
           135deg,
           #f3f7ff 0%,
           #eef4ff 100%
         );
+
       color: #14213d;
+
       overflow-x: hidden;
     }
+
 
     /* =========================
        HEADER
@@ -46,72 +58,107 @@
 
     header {
       width: 100%;
+      max-width: 100%;
+      min-width: 0;
+
       background:
         linear-gradient(
           135deg,
           #101827,
           #172554
         );
+
       color: white;
-      padding: 18px 5%;
+
+      padding: 16px 5%;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 15px;
+
+      gap: 12px;
+
       box-shadow:
         0 4px 18px
         rgba(0,0,0,0.15);
     }
 
+
     .logo {
+      min-width: 0;
+
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 23px;
+
+      gap: 9px;
+
+      font-size: 22px;
       font-weight: bold;
+
       white-space: nowrap;
     }
+
 
     .logo-icon {
       width: 38px;
       height: 38px;
-      flex-shrink: 0;
+
+      flex: 0 0 38px;
+
       border-radius: 11px;
+
       background:
         linear-gradient(
           135deg,
           #2563eb,
           #60a5fa
         );
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 21px;
     }
 
+
     .header-buttons {
+      min-width: 0;
+
       display: flex;
       align-items: center;
-      gap: 10px;
+
+      gap: 8px;
+
       flex-shrink: 0;
     }
 
+
     button {
       border: 0;
-      padding: 11px 18px;
+
+      padding: 10px 15px;
+
       border-radius: 9px;
+
       cursor: pointer;
+
       font-weight: bold;
+
       font-size: 14px;
+
+      white-space: nowrap;
+
       transition:
         transform .2s ease,
-        background .2s ease,
-        opacity .2s ease;
+        background .2s ease;
     }
+
 
     button:hover {
       transform: translateY(-1px);
     }
+
 
     #homeButton {
       background:
@@ -120,8 +167,10 @@
           #2563eb,
           #3b82f6
         );
+
       color: white;
     }
+
 
     #homeButton:hover {
       background:
@@ -132,14 +181,17 @@
         );
     }
 
+
     #logoutButton {
       background: #ef4444;
       color: white;
     }
 
+
     #logoutButton:hover {
       background: #dc2626;
     }
+
 
     /* =========================
        MAIN
@@ -148,26 +200,42 @@
     main {
       width: 100%;
       max-width: 950px;
-      margin: 35px auto;
-      padding: 0 20px;
+
+      margin:
+        32px auto;
+
+      padding:
+        0 20px;
     }
+
 
     .page-title {
-      margin-bottom: 25px;
+      width: 100%;
+
+      margin-bottom: 22px;
     }
 
+
     .page-title h2 {
-      margin: 0 0 8px;
+      margin:
+        0 0 8px;
+
       font-size: 32px;
+
       line-height: 1.2;
+
       color: #14213d;
     }
 
+
     #userEmail {
       color: #64748b;
+
       font-size: 15px;
-      word-break: break-word;
+
+      overflow-wrap: anywhere;
     }
+
 
     /* =========================
        CARD
@@ -175,323 +243,629 @@
 
     .card {
       width: 100%;
-      background: rgba(255,255,255,0.97);
+      min-width: 0;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.97
+        );
+
       border-radius: 20px;
+
       padding: 28px;
+
       box-shadow:
         0 8px 30px
-        rgba(37,99,235,0.08);
+        rgba(
+          37,
+          99,
+          235,
+          0.08
+        );
+
       border:
         1px solid
-        rgba(148,163,184,0.18);
+        rgba(
+          148,
+          163,
+          184,
+          0.18
+        );
     }
 
+
     .card-header {
+      width: 100%;
+      min-width: 0;
+
       display: flex;
       align-items: center;
+
       gap: 14px;
+
       margin-bottom: 20px;
     }
+
 
     .transaction-icon {
       width: 55px;
       height: 55px;
-      flex-shrink: 0;
+
+      flex: 0 0 55px;
+
       border-radius: 16px;
+
       background:
         linear-gradient(
           135deg,
           #2563eb,
           #6366f1
         );
+
       color: white;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 26px;
+
       box-shadow:
         0 7px 18px
-        rgba(37,99,235,0.22);
+        rgba(
+          37,
+          99,
+          235,
+          0.22
+        );
     }
 
+
+    .card-header > div:last-child {
+      min-width: 0;
+    }
+
+
     .card-header h3 {
-      margin: 0 0 5px;
+      margin:
+        0 0 5px;
+
       font-size: 21px;
+
       line-height: 1.25;
     }
 
+
     .card-header p {
       margin: 0;
+
       color: #64748b;
+
       font-size: 14px;
+
       line-height: 1.45;
     }
 
+
     /* =========================
-       TRANSACTION
+       TRANSACTIONS
        ========================= */
+
+    #transactions {
+      width: 100%;
+      min-width: 0;
+    }
+
 
     .transaction {
       width: 100%;
+      min-width: 0;
+
       display: flex;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
+
       align-items: center;
-      gap: 20px;
-      padding: 18px 0;
+
+      gap: 15px;
+
+      padding:
+        17px 0;
+
       border-bottom:
         1px solid #e5e7eb;
     }
+
 
     .transaction:last-child {
       border-bottom: 0;
     }
 
+
     .transaction-left {
       min-width: 0;
+
+      flex: 1 1 auto;
+
       display: flex;
+
       align-items: center;
-      gap: 14px;
+
+      gap: 12px;
     }
+
 
     .transaction-type-icon {
       width: 46px;
       height: 46px;
-      flex-shrink: 0;
+
+      flex: 0 0 46px;
+
       border-radius: 13px;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 20px;
     }
+
 
     .deposit-icon {
       background: #dcfce7;
       color: #16a34a;
     }
 
+
     .withdraw-icon {
       background: #fef3c7;
       color: #d97706;
     }
+
 
     .investment-icon {
       background: #dbeafe;
       color: #2563eb;
     }
 
+
     .transaction-info {
       min-width: 0;
+
+      flex: 1 1 auto;
     }
+
 
     .transaction-info strong {
       display: block;
+
       font-size: 16px;
+
       margin-bottom: 5px;
+
       line-height: 1.25;
+
+      overflow-wrap: anywhere;
     }
+
 
     .transaction-date {
       color: #64748b;
+
       font-size: 13px;
+
       line-height: 1.35;
-      word-break: break-word;
+
+      overflow-wrap: anywhere;
     }
 
+
     .transaction-amount {
-      flex-shrink: 0;
+      flex: 0 0 auto;
+
       font-size: 17px;
+
       font-weight: bold;
+
       white-space: nowrap;
+
+      text-align: right;
     }
+
 
     .deposit-amount {
       color: #16a34a;
     }
 
+
     .withdraw-amount {
       color: #dc2626;
     }
 
+
     .investment-amount {
       color: #2563eb;
     }
+
 
     /* =========================
        MESSAGE
        ========================= */
 
     .message {
+      width: 100%;
+
       text-align: center;
-      padding: 45px 20px;
+
+      padding:
+        45px 20px;
+
       color: #64748b;
     }
 
+
     .message-icon {
       font-size: 45px;
+
       margin-bottom: 12px;
     }
 
+
     .message h3 {
-      margin: 0 0 8px;
+      margin:
+        0 0 8px;
+
       color: #334155;
+
       font-size: 19px;
     }
 
+
     .message p {
       margin: 0;
+
       line-height: 1.5;
+
       font-size: 14px;
     }
 
+
     /* =========================
-       MOBILE
+       TABLET / MOBILE
        ========================= */
 
     @media (max-width: 600px) {
 
       header {
-        padding: 14px;
-        gap: 10px;
+        padding:
+          13px 12px;
+
+        gap: 8px;
       }
 
+
       .logo {
-        font-size: 19px;
+        font-size: 18px;
+
         gap: 7px;
+
+        flex: 1 1 auto;
+
+        min-width: 0;
       }
+
 
       .logo-icon {
         width: 34px;
         height: 34px;
+
+        flex-basis: 34px;
+
         border-radius: 10px;
+
         font-size: 18px;
       }
 
+
       .header-buttons {
-        gap: 6px;
+        gap: 5px;
       }
+
 
       .header-buttons button {
-        padding: 9px 10px;
-        font-size: 12px;
+        padding:
+          9px 9px;
+
+        font-size: 11px;
       }
+
 
       main {
-        margin: 25px auto;
-        padding: 0 14px;
+        width: 100%;
+
+        margin:
+          23px auto;
+
+        padding:
+          0 12px;
       }
+
 
       .page-title {
-        margin-bottom: 20px;
+        margin-bottom: 18px;
       }
 
+
       .page-title h2 {
-        font-size: 27px;
+        font-size: 26px;
       }
+
 
       #userEmail {
         font-size: 13px;
       }
 
+
       .card {
-        padding: 20px;
-        border-radius: 18px;
+        padding:
+          18px;
+
+        border-radius: 17px;
       }
+
 
       .card-header {
+        gap: 10px;
+
+        margin-bottom: 14px;
+
         align-items: flex-start;
-        gap: 11px;
-        margin-bottom: 15px;
       }
+
 
       .transaction-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
-        font-size: 23px;
+        width: 47px;
+        height: 47px;
+
+        flex-basis: 47px;
+
+        border-radius: 13px;
+
+        font-size: 22px;
       }
+
 
       .card-header h3 {
-        font-size: 18px;
+        font-size: 17px;
       }
+
 
       .card-header p {
-        font-size: 13px;
-      }
-
-      .transaction {
-        align-items: flex-start;
-        gap: 10px;
-        padding: 16px 0;
-      }
-
-      .transaction-left {
-        gap: 10px;
-      }
-
-      .transaction-type-icon {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        font-size: 18px;
-      }
-
-      .transaction-info strong {
-        font-size: 14px;
-      }
-
-      .transaction-date {
         font-size: 12px;
       }
 
-      .transaction-amount {
-        font-size: 14px;
+
+      .transaction {
+        gap: 8px;
+
+        padding:
+          15px 0;
       }
 
+
+      .transaction-left {
+        gap: 9px;
+      }
+
+
+      .transaction-type-icon {
+        width: 40px;
+        height: 40px;
+
+        flex-basis: 40px;
+
+        border-radius: 11px;
+
+        font-size: 17px;
+      }
+
+
+      .transaction-info strong {
+        font-size: 14px;
+
+        margin-bottom: 4px;
+      }
+
+
+      .transaction-date {
+        font-size: 11px;
+      }
+
+
+      .transaction-amount {
+        font-size: 13px;
+      }
+
+
       .message {
-        padding: 35px 10px;
+        padding:
+          32px 8px;
+      }
+
+
+      .message-icon {
+        font-size: 40px;
+      }
+
+
+      .message h3 {
+        font-size: 17px;
+      }
+
+
+      .message p {
+        font-size: 13px;
       }
 
     }
 
+
     /* =========================
-       VERY SMALL PHONES
+       SMALL PHONES
        ========================= */
 
     @media (max-width: 380px) {
 
       header {
-        padding: 12px;
+        padding:
+          11px 9px;
       }
 
+
       .logo {
-        font-size: 17px;
+        font-size: 16px;
       }
+
 
       .logo-icon {
         width: 31px;
         height: 31px;
+
+        flex-basis: 31px;
+
         font-size: 16px;
       }
 
+
+      .header-buttons {
+        gap: 4px;
+      }
+
+
       .header-buttons button {
-        padding: 8px 8px;
+        padding:
+          8px 7px;
+
+        font-size: 10px;
+      }
+
+
+      main {
+        padding:
+          0 9px;
+      }
+
+
+      .page-title h2 {
+        font-size: 24px;
+      }
+
+
+      .card {
+        padding:
+          15px;
+      }
+
+
+      .card-header {
+        gap: 8px;
+      }
+
+
+      .transaction-icon {
+        width: 43px;
+        height: 43px;
+
+        flex-basis: 43px;
+
+        font-size: 20px;
+      }
+
+
+      .card-header h3 {
+        font-size: 16px;
+      }
+
+
+      .card-header p {
         font-size: 11px;
       }
 
-      main {
-        padding: 0 10px;
-      }
-
-      .card {
-        padding: 16px;
-      }
 
       .transaction {
+        gap: 5px;
+      }
+
+
+      .transaction-left {
         gap: 7px;
       }
 
-      .transaction-amount {
+
+      .transaction-type-icon {
+        width: 37px;
+        height: 37px;
+
+        flex-basis: 37px;
+
+        font-size: 16px;
+      }
+
+
+      .transaction-info strong {
         font-size: 13px;
+      }
+
+
+      .transaction-date {
+        font-size: 10px;
+      }
+
+
+      .transaction-amount {
+        font-size: 12px;
+      }
+
+    }
+
+
+    /* =========================
+       EXTRA SMALL PHONES
+       ========================= */
+
+    @media (max-width: 330px) {
+
+      .logo {
+        font-size: 14px;
+      }
+
+
+      .header-buttons button {
+        padding:
+          7px 6px;
+
+        font-size: 9px;
+      }
+
+
+      main {
+        padding:
+          0 7px;
+      }
+
+
+      .card {
+        padding:
+          13px;
+      }
+
+
+      .transaction-amount {
+        font-size: 11px;
       }
 
     }
@@ -687,7 +1061,9 @@
        ========================= */
 
     const app =
-      initializeApp(firebaseConfig);
+      initializeApp(
+        firebaseConfig
+      );
 
 
     const auth =
@@ -818,9 +1194,7 @@
 
     async function loadTransactions(user) {
 
-
       try {
-
 
         const userRef =
           doc(
@@ -831,7 +1205,9 @@
 
 
         const snapshot =
-          await getDoc(userRef);
+          await getDoc(
+            userRef
+          );
 
 
         if (!snapshot.exists()) {
@@ -878,10 +1254,8 @@
           [...transactions].reverse();
 
 
-
         sortedTransactions.forEach(
           transaction => {
-
 
             const type =
               transaction.type ||
@@ -905,7 +1279,6 @@
               );
 
 
-
             /* =====================
                TRANSACTION CONTAINER
                ===================== */
@@ -920,7 +1293,6 @@
               "transaction";
 
 
-
             /* =====================
                LEFT SIDE
                ===================== */
@@ -933,7 +1305,6 @@
 
             left.className =
               "transaction-left";
-
 
 
             /* ICON */
@@ -953,7 +1324,6 @@
               details.icon;
 
 
-
             /* INFO */
 
             const info =
@@ -966,7 +1336,6 @@
               "transaction-info";
 
 
-
             const title =
               document.createElement(
                 "strong"
@@ -975,7 +1344,6 @@
 
             title.textContent =
               type;
-
 
 
             const dateElement =
@@ -990,7 +1358,6 @@
 
             dateElement.textContent =
               date;
-
 
 
             info.appendChild(
@@ -1013,7 +1380,6 @@
             );
 
 
-
             /* =====================
                RIGHT SIDE
                ===================== */
@@ -1034,7 +1400,6 @@
               formatMoney(
                 amount
               );
-
 
 
             /* =====================
@@ -1060,7 +1425,6 @@
 
 
       } catch (error) {
-
 
         console.error(
           "Transaction loading error:",
@@ -1150,11 +1514,11 @@
       "click",
       async () => {
 
-
         try {
 
-
-          await signOut(auth);
+          await signOut(
+            auth
+          );
 
 
           window.location.href =
@@ -1162,7 +1526,6 @@
 
 
         } catch (error) {
-
 
           console.error(
             "Logout error:",
@@ -1188,7 +1551,6 @@
     onAuthStateChanged(
       auth,
       async user => {
-
 
         if (!user) {
 
