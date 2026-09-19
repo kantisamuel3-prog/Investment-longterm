@@ -20,6 +20,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .login-box {
@@ -58,14 +59,79 @@ label {
   font-weight: bold;
 }
 
-input {
+/* =========================
+   PHONE INPUT
+   ========================= */
+
+.phone-input {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  margin-bottom: 18px;
+  background: white;
+  transition: 0.2s ease;
+}
+
+.phone-input:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.country-code {
+  color: #111827;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0 12px;
+  border-right: 1px solid #e5e7eb;
+  line-height: 25px;
+  white-space: nowrap;
+}
+
+.phone-input input {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  padding: 14px;
+  border: 0;
+  outline: none;
+  font-size: 16px;
+  background: transparent;
+  color: #111827;
+}
+
+.phone-input input:focus {
+  box-shadow: none;
+}
+
+.phone-input input::placeholder {
+  color: #9ca3af;
+}
+
+/* =========================
+   PASSWORD
+   ========================= */
+
+.password-input {
   width: 100%;
   padding: 14px;
   border: 1px solid #d1d5db;
   border-radius: 9px;
   margin-bottom: 18px;
   font-size: 16px;
+  outline: none;
 }
+
+.password-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+/* =========================
+   LOGIN BUTTON
+   ========================= */
 
 .login-btn {
   width: 100%;
@@ -77,6 +143,11 @@ input {
   font-size: 17px;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.login-btn:hover:not(:disabled) {
+  background: #1d4ed8;
 }
 
 .login-btn:disabled {
@@ -84,13 +155,9 @@ input {
   cursor: not-allowed;
 }
 
-.back {
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-  color: #2563eb;
-  text-decoration: none;
-}
+/* =========================
+   REGISTER
+   ========================= */
 
 .register {
   text-align: center;
@@ -103,6 +170,14 @@ input {
   font-weight: bold;
 }
 
+.register a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   MESSAGE
+   ========================= */
+
 .message {
   display: none;
   margin-bottom: 18px;
@@ -110,15 +185,16 @@ input {
   border-radius: 8px;
   text-align: center;
   font-size: 14px;
+  line-height: 1.5;
 }
 
-.error {
+.message.error {
   display: block;
   background: #fee2e2;
   color: #991b1b;
 }
 
-.success {
+.message.success {
   display: block;
   background: #dcfce7;
   color: #166534;
@@ -132,36 +208,65 @@ input {
 
   <!-- NOVARISE LOGO -->
   <div class="logo">
-    <img src="novarise-logo.png.avif" alt="Novarise Logo">
+    <img
+      src="novarise-logo.png.avif"
+      alt="Novarise Logo"
+    >
   </div>
+
 
   <div class="subtitle">
     Login to your account
   </div>
 
+
   <div id="message" class="message"></div>
 
-  <form onsubmit="login(event)">
 
-    <label>Phone Number</label>
+  <form id="loginForm">
 
-    <input
-      id="phone"
-      type="tel"
-      placeholder="Enter your phone number"
-      autocomplete="tel"
-      required
-    >
+    <!-- PHONE NUMBER -->
 
-    <label>Password</label>
+    <label for="phone">
+      Phone Number
+    </label>
+
+    <div class="phone-input">
+
+      <span class="country-code">
+        +63
+      </span>
+
+      <input
+        id="phone"
+        type="tel"
+        placeholder="9123456789"
+        autocomplete="tel"
+        inputmode="numeric"
+        maxlength="11"
+        required
+      >
+
+    </div>
+
+
+    <!-- PASSWORD -->
+
+    <label for="password">
+      Password
+    </label>
 
     <input
       id="password"
+      class="password-input"
       type="password"
       placeholder="Enter your password"
       autocomplete="current-password"
       required
     >
+
+
+    <!-- LOGIN BUTTON -->
 
     <button
       id="loginBtn"
@@ -173,160 +278,356 @@ input {
 
   </form>
 
+
+  <!-- CREATE ACCOUNT -->
+
   <div class="register">
-    <a href="register.html">Create Account</a>
+    <a href="register.html">
+      Create Account
+    </a>
   </div>
 
 </div>
+
+
+<!-- FIREBASE -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
 <script>
 
+/* =========================
+   FIREBASE CONFIG
+   ========================= */
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
-  authDomain: "investpro-2dafb.firebaseapp.com",
-  projectId: "investpro-2dafb",
-  storageBucket: "investpro-2dafb.firebasestorage.app",
-  messagingSenderId: "135092039764",
-  appId: "1:135092039764:web:c4c71eef0c904346a77dc1",
-  measurementId: "G-0L77SFTC4F"
+
+  apiKey:
+    "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+
+  authDomain:
+    "investpro-2dafb.firebaseapp.com",
+
+  projectId:
+    "investpro-2dafb",
+
+  storageBucket:
+    "investpro-2dafb.firebasestorage.app",
+
+  messagingSenderId:
+    "135092039764",
+
+  appId:
+    "1:135092039764:web:c4c71eef0c904346a77dc1",
+
+  measurementId:
+    "G-0L77SFTC4F"
+
 };
 
-firebase.initializeApp(firebaseConfig);
 
-console.log("Firebase Project:", firebaseConfig.projectId);
-console.log("Firebase Auth Domain:", firebaseConfig.authDomain);
-console.log("Firebase API Key:", firebaseConfig.apiKey);
+/* =========================
+   INITIALIZE FIREBASE
+   ========================= */
+
+firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 
 
-// Convert Philippine phone number
-// 09171234567
-// +639171234567
-// 639171234567
-// into a consistent format
+/* =========================
+   NORMALIZE PHONE NUMBER
+   ========================= */
+
 function normalizePhone(phone) {
 
-  phone = phone.trim();
+  // Remove spaces, dashes, parentheses
+  phone = phone.replace(/\D/g, "");
 
-  // Remove spaces, dashes and parentheses
-  phone = phone.replace(/[\s\-()]/g, "");
 
-  // 0917xxxxxxxx -> 63917xxxxxxxx
-  if (phone.startsWith("09")) {
-    phone = "63" + phone.substring(1);
+  /*
+    9123456789
+    ↓
+    639123456789
+  */
+
+  if (
+    phone.length === 10 &&
+    phone.startsWith("9")
+  ) {
+
+    return "63" + phone;
+
   }
 
-  // +63917xxxxxxxx -> 63917xxxxxxxx
-  if (phone.startsWith("+63")) {
-    phone = phone.substring(1);
+
+  /*
+    09123456789
+    ↓
+    639123456789
+  */
+
+  if (
+    phone.length === 11 &&
+    phone.startsWith("09")
+  ) {
+
+    return "63" + phone.substring(1);
+
   }
+
+
+  /*
+    639123456789
+    ↓
+    639123456789
+  */
+
+  if (
+    phone.length === 12 &&
+    phone.startsWith("639")
+  ) {
+
+    return phone;
+
+  }
+
 
   return phone;
 }
 
 
-// Convert phone number into the
-// internal Firebase email identifier
+/* =========================
+   PHONE → FIREBASE EMAIL
+   ========================= */
+
 function phoneToFirebaseEmail(phone) {
 
-  const normalized = normalizePhone(phone);
+  const normalized =
+    normalizePhone(phone);
 
-  return normalized + "@novarise.local";
+  return normalized +
+    "@novarise.local";
 }
 
+
+/* =========================
+   SHOW MESSAGE
+   ========================= */
 
 function showMessage(message, type) {
 
-  const box = document.getElementById("message");
+  const box =
+    document.getElementById("message");
 
-  box.textContent = message;
+  box.textContent =
+    message;
 
-  box.className = "message " + type;
+  box.className =
+    "message " + type;
 }
 
 
-function login(event) {
+/* =========================
+   PHONE INPUT
+   ========================= */
 
-  event.preventDefault();
+document
+  .getElementById("phone")
+  .addEventListener(
+    "input",
+    function() {
 
-  const phone = document.getElementById("phone").value;
-  const password = document.getElementById("password").value;
-  const loginBtn = document.getElementById("loginBtn");
+      // Numbers only
+      this.value =
+        this.value.replace(/\D/g, "");
 
-  if (!phone || !password) {
-    showMessage(
-      "Please enter your phone number and password.",
-      "error"
-    );
-    return;
-  }
 
-  const normalizedPhone = normalizePhone(phone);
+      /*
+        Allow:
 
-  // Basic Philippine number validation
-  if (!/^639\d{9}$/.test(normalizedPhone)) {
+        9123456789
+        OR
+        09123456789
+      */
 
-    showMessage(
-      "Please enter a valid Philippine phone number.",
-      "error"
-    );
+      if (this.value.length > 11) {
 
-    return;
-  }
-
-  const firebaseEmail = phoneToFirebaseEmail(phone);
-
-  loginBtn.disabled = true;
-  loginBtn.textContent = "Logging in...";
-
-  auth.signInWithEmailAndPassword(firebaseEmail, password)
-
-    .then(() => {
-
-      window.location.href = "dashboard.html";
-
-    })
-
-    .catch((error) => {
-
-      console.error("Firebase error code:", error.code);
-      console.error("Firebase error message:", error.message);
-
-      alert(
-        "Firebase Error:\n\n" +
-        error.code +
-        "\n\n" +
-        error.message
-      );
-
-      let message = "Login failed.";
-
-      if (
-        error.code === "auth/invalid-credential" ||
-        error.code === "auth/wrong-password" ||
-        error.code === "auth/user-not-found"
-      ) {
-
-        message = "Incorrect phone number or password.";
-
-      } else if (error.code === "auth/too-many-requests") {
-
-        message = "Too many login attempts. Please try again later.";
+        this.value =
+          this.value.substring(0, 11);
 
       }
 
-      showMessage(message, "error");
+    }
+  );
 
-      loginBtn.disabled = false;
-      loginBtn.textContent = "Login";
 
-    });
+/* =========================
+   LOGIN
+   ========================= */
 
-}
+document
+  .getElementById("loginForm")
+  .addEventListener(
+    "submit",
+    function(event) {
+
+      event.preventDefault();
+
+
+      const phone =
+        document
+          .getElementById("phone")
+          .value
+          .trim();
+
+
+      const password =
+        document
+          .getElementById("password")
+          .value;
+
+
+      const loginBtn =
+        document.getElementById("loginBtn");
+
+
+      /* =====================
+         CHECK EMPTY
+         ===================== */
+
+      if (!phone || !password) {
+
+        showMessage(
+          "Please enter your phone number and password.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* =====================
+         NORMALIZE PHONE
+         ===================== */
+
+      const normalizedPhone =
+        normalizePhone(phone);
+
+
+      /* =====================
+         VALIDATE PHONE
+         ===================== */
+
+      if (
+        !/^639\d{9}$/.test(
+          normalizedPhone
+        )
+      ) {
+
+        showMessage(
+          "Please enter a valid Philippine mobile number, for example 9123456789.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* =====================
+         FIREBASE EMAIL
+         ===================== */
+
+      const firebaseEmail =
+        phoneToFirebaseEmail(phone);
+
+
+      /* =====================
+         DISABLE BUTTON
+         ===================== */
+
+      loginBtn.disabled = true;
+
+      loginBtn.textContent =
+        "Logging in...";
+
+
+      /* =====================
+         FIREBASE LOGIN
+         ===================== */
+
+      auth
+        .signInWithEmailAndPassword(
+          firebaseEmail,
+          password
+        )
+
+        .then(() => {
+
+          window.location.href =
+            "dashboard.html";
+
+        })
+
+        .catch((error) => {
+
+          console.error(
+            "Firebase login error:",
+            error
+          );
+
+
+          let message =
+            "Login failed. Please check your phone number and password.";
+
+
+          if (
+            error.code ===
+              "auth/invalid-credential" ||
+
+            error.code ===
+              "auth/wrong-password" ||
+
+            error.code ===
+              "auth/user-not-found"
+          ) {
+
+            message =
+              "Incorrect phone number or password.";
+
+          }
+
+
+          else if (
+            error.code ===
+            "auth/too-many-requests"
+          ) {
+
+            message =
+              "Too many login attempts. Please try again later.";
+
+          }
+
+
+          showMessage(
+            message,
+            "error"
+          );
+
+
+          loginBtn.disabled =
+            false;
+
+          loginBtn.textContent =
+            "Login";
+
+        });
+
+    }
+  );
 
 </script>
 
