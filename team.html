@@ -16,20 +16,14 @@
 
     * {
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
     }
-
 
     html {
-      width: 100%;
-      min-height: 100%;
+      scroll-behavior: smooth;
     }
-
 
     body {
       margin: 0;
-
-      min-height: 100vh;
 
       font-family:
         Arial,
@@ -42,15 +36,13 @@
           #eef4ff
         );
 
-      color:
-        #14213d;
+      color: #14213d;
 
-      padding-bottom:
-        92px;
+      /* Same space as dashboard */
+      padding-bottom: 92px;
 
       overflow-x: hidden;
     }
-
 
 
     /* =====================================================
@@ -76,15 +68,13 @@
       justify-content:
         space-between;
 
-      align-items:
-        center;
+      align-items: center;
 
       box-shadow:
         0 4px 18px
         rgba(0,0,0,0.15);
 
-      position:
-        relative;
+      position: relative;
 
       z-index: 10;
 
@@ -95,31 +85,23 @@
 
       display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      gap:
-        10px;
+      gap: 10px;
 
-      font-size:
-        23px;
+      font-size: 23px;
 
-      font-weight:
-        bold;
+      font-weight: bold;
 
     }
 
 
     .logo-icon {
 
-      width:
-        38px;
+      width: 38px;
+      height: 38px;
 
-      height:
-        38px;
-
-      border-radius:
-        11px;
+      border-radius: 11px;
 
       background:
         linear-gradient(
@@ -130,14 +112,11 @@
 
       display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      justify-content:
-        center;
+      justify-content: center;
 
-      font-size:
-        21px;
+      font-size: 21px;
 
     }
 
@@ -149,11 +128,9 @@
 
     main {
 
-      width:
-        100%;
+      width: 100%;
 
-      max-width:
-        900px;
+      max-width: 900px;
 
       margin:
         28px auto;
@@ -166,8 +143,7 @@
 
     .page-title {
 
-      margin-bottom:
-        22px;
+      margin-bottom: 22px;
 
     }
 
@@ -177,25 +153,20 @@
       margin:
         0 0 7px;
 
-      font-size:
-        30px;
+      font-size: 30px;
 
-      color:
-        #14213d;
+      color: #14213d;
 
     }
 
 
     .page-title p {
 
-      margin:
-        0;
+      margin: 0;
 
-      color:
-        #64748b;
+      color: #64748b;
 
-      font-size:
-        14px;
+      font-size: 14px;
 
     }
 
@@ -207,11 +178,9 @@
 
     .invite-card {
 
-      position:
-        relative;
+      position: relative;
 
-      overflow:
-        hidden;
+      overflow: hidden;
 
       background:
         linear-gradient(
@@ -220,47 +189,34 @@
           #172554
         );
 
-      border-radius:
-        24px;
+      border-radius: 24px;
 
-      padding:
-        25px;
+      padding: 25px;
 
-      color:
-        white;
+      color: white;
 
       box-shadow:
         0 12px 35px
         rgba(15,23,42,0.18);
 
-      margin-bottom:
-        20px;
+      margin-bottom: 20px;
 
     }
 
 
     .invite-card::before {
 
-      content:
-        "";
+      content: "";
 
-      position:
-        absolute;
+      position: absolute;
 
-      width:
-        230px;
+      width: 230px;
+      height: 230px;
 
-      height:
-        230px;
+      border-radius: 50%;
 
-      border-radius:
-        50%;
-
-      right:
-        -100px;
-
-      top:
-        -120px;
+      right: -100px;
+      top: -120px;
 
       background:
         rgba(96,165,250,0.13);
@@ -270,26 +226,17 @@
 
     .invite-card::after {
 
-      content:
-        "";
+      content: "";
 
-      position:
-        absolute;
+      position: absolute;
 
-      width:
-        180px;
+      width: 180px;
+      height: 180px;
 
-      height:
-        180px;
+      border-radius: 50%;
 
-      border-radius:
-        50%;
-
-      left:
-        -100px;
-
-      bottom:
-        -120px;
+      left: -100px;
+      bottom: -120px;
 
       background:
         rgba(37,99,235,0.12);
@@ -299,31 +246,24 @@
 
     .invite-content {
 
-      position:
-        relative;
+      position: relative;
 
-      z-index:
-        2;
+      z-index: 2;
 
     }
 
 
     .invite-label {
 
-      color:
-        #93c5fd;
+      color: #93c5fd;
 
-      font-size:
-        13px;
+      font-size: 13px;
 
-      font-weight:
-        bold;
+      font-weight: bold;
 
-      letter-spacing:
-        1.8px;
+      letter-spacing: 1.8px;
 
-      margin-bottom:
-        10px;
+      margin-bottom: 10px;
 
     }
 
@@ -333,25 +273,20 @@
       margin:
         0 0 17px;
 
-      font-size:
-        24px;
+      font-size: 24px;
 
     }
 
 
     .code-box {
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      justify-content:
-        space-between;
+      justify-content: space-between;
 
-      gap:
-        12px;
+      gap: 12px;
 
       background:
         rgba(255,255,255,0.09);
@@ -360,111 +295,87 @@
         1px solid
         rgba(255,255,255,0.15);
 
-      border-radius:
-        15px;
+      border-radius: 15px;
 
       padding:
         15px 17px;
 
-      margin-bottom:
-        15px;
+      margin-bottom: 15px;
 
     }
 
 
     #referralCode {
 
-      font-size:
-        23px;
+      font-size: 23px;
 
-      font-weight:
-        bold;
+      font-weight: bold;
 
-      letter-spacing:
-        3px;
+      letter-spacing: 3px;
 
-      word-break:
-        break-all;
+      word-break: break-all;
 
-      color:
-        white;
+      color: white;
 
     }
 
 
     .copy-small {
 
-      flex-shrink:
-        0;
+      flex-shrink: 0;
 
-      border:
-        0;
+      border: 0;
 
       background:
         rgba(255,255,255,0.13);
 
-      color:
-        white;
+      color: white;
 
-      width:
-        43px;
+      width: 43px;
+      height: 43px;
 
-      height:
-        43px;
+      border-radius: 12px;
 
-      border-radius:
-        12px;
+      cursor: pointer;
 
-      cursor:
-        pointer;
-
-      font-size:
-        19px;
+      font-size: 19px;
 
     }
 
 
     .copy-small:active {
 
-      transform:
-        scale(0.95);
+      transform: scale(0.95);
 
     }
 
 
     .invite-buttons {
 
-      display:
-        grid;
+      display: grid;
 
       grid-template-columns:
         1fr 1fr;
 
-      gap:
-        12px;
+      gap: 12px;
 
     }
 
 
     .invite-button {
 
-      border:
-        0;
+      border: 0;
 
       padding:
         14px 12px;
 
-      border-radius:
-        13px;
+      border-radius: 13px;
 
-      cursor:
-        pointer;
+      cursor: pointer;
 
-      font-size:
-        14px;
+      font-size: 14px;
 
-      font-weight:
-        bold;
+      font-weight: bold;
 
       transition:
         0.2s ease;
@@ -474,8 +385,7 @@
 
     .invite-button:active {
 
-      transform:
-        scale(0.98);
+      transform: scale(0.98);
 
     }
 
@@ -489,8 +399,7 @@
         1px solid
         rgba(255,255,255,0.20);
 
-      color:
-        white;
+      color: white;
 
     }
 
@@ -504,8 +413,7 @@
           #3b82f6
         );
 
-      color:
-        white;
+      color: white;
 
       box-shadow:
         0 7px 18px
@@ -521,17 +429,14 @@
 
     .stats {
 
-      display:
-        grid;
+      display: grid;
 
       grid-template-columns:
         1fr 1fr;
 
-      gap:
-        16px;
+      gap: 16px;
 
-      margin-bottom:
-        20px;
+      margin-bottom: 20px;
 
     }
 
@@ -545,14 +450,12 @@
         1px solid
         rgba(148,163,184,0.18);
 
-      border-radius:
-        20px;
+      border-radius: 20px;
 
       padding:
         23px 18px;
 
-      text-align:
-        center;
+      text-align: center;
 
       box-shadow:
         0 8px 25px
@@ -563,29 +466,21 @@
 
     .stat-icon {
 
-      width:
-        48px;
-
-      height:
-        48px;
+      width: 48px;
+      height: 48px;
 
       margin:
         0 auto 12px;
 
-      border-radius:
-        14px;
+      border-radius: 14px;
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      justify-content:
-        center;
+      justify-content: center;
 
-      font-size:
-        22px;
+      font-size: 22px;
 
       background:
         #eff6ff;
@@ -598,37 +493,28 @@
 
     .stat-value {
 
-      font-size:
-        27px;
+      font-size: 27px;
 
-      font-weight:
-        bold;
+      font-weight: bold;
 
-      color:
-        #14213d;
+      color: #14213d;
 
-      margin-bottom:
-        6px;
+      margin-bottom: 6px;
 
     }
 
 
     .stat-label {
 
-      font-size:
-        13px;
+      font-size: 13px;
 
-      color:
-        #64748b;
+      color: #64748b;
 
-      font-weight:
-        bold;
+      font-weight: bold;
 
-      text-transform:
-        uppercase;
+      text-transform: uppercase;
 
-      letter-spacing:
-        0.5px;
+      letter-spacing: 0.5px;
 
     }
 
@@ -647,49 +533,38 @@
         1px solid
         rgba(148,163,184,0.18);
 
-      border-radius:
-        20px;
+      border-radius: 20px;
 
-      padding:
-        24px;
+      padding: 24px;
 
       box-shadow:
         0 8px 25px
         rgba(37,99,235,0.07);
 
-      margin-bottom:
-        20px;
+      margin-bottom: 20px;
 
     }
 
 
     .section-heading {
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      gap:
-        12px;
+      gap: 12px;
 
-      margin-bottom:
-        18px;
+      margin-bottom: 18px;
 
     }
 
 
     .section-icon {
 
-      width:
-        44px;
+      width: 44px;
+      height: 44px;
 
-      height:
-        44px;
-
-      border-radius:
-        13px;
+      border-radius: 13px;
 
       background:
         #eff6ff;
@@ -697,28 +572,22 @@
       color:
         #2563eb;
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      justify-content:
-        center;
+      justify-content: center;
 
-      font-size:
-        21px;
+      font-size: 21px;
 
     }
 
 
     .section-heading h2 {
 
-      margin:
-        0;
+      margin: 0;
 
-      font-size:
-        20px;
+      font-size: 20px;
 
     }
 
@@ -728,42 +597,33 @@
       margin:
         4px 0 0;
 
-      color:
-        #64748b;
+      color: #64748b;
 
-      font-size:
-        13px;
+      font-size: 13px;
 
     }
 
 
     .level-list {
 
-      display:
-        grid;
+      display: grid;
 
-      gap:
-        10px;
+      gap: 10px;
 
     }
 
 
     .level {
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      justify-content:
-        space-between;
+      justify-content: space-between;
 
-      padding:
-        15px;
+      padding: 15px;
 
-      border-radius:
-        14px;
+      border-radius: 14px;
 
       background:
         #f8fafc;
@@ -777,28 +637,21 @@
 
     .level-left {
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      gap:
-        12px;
+      gap: 12px;
 
     }
 
 
     .level-number {
 
-      width:
-        38px;
+      width: 38px;
+      height: 38px;
 
-      height:
-        38px;
-
-      border-radius:
-        11px;
+      border-radius: 11px;
 
       background:
         #dbeafe;
@@ -806,56 +659,44 @@
       color:
         #1d4ed8;
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        center;
+      align-items: center;
 
-      justify-content:
-        center;
+      justify-content: center;
 
-      font-weight:
-        bold;
+      font-weight: bold;
 
-      font-size:
-        13px;
+      font-size: 13px;
 
     }
 
 
     .level-name {
 
-      font-weight:
-        bold;
+      font-weight: bold;
 
-      color:
-        #14213d;
+      color: #14213d;
 
     }
 
 
     .level-description {
 
-      font-size:
-        12px;
+      font-size: 12px;
 
-      color:
-        #64748b;
+      color: #64748b;
 
-      margin-top:
-        3px;
+      margin-top: 3px;
 
     }
 
 
     .level-count {
 
-      font-weight:
-        bold;
+      font-weight: bold;
 
-      color:
-        #2563eb;
+      color: #2563eb;
 
     }
 
@@ -864,25 +705,18 @@
     /* =====================================================
        BOTTOM NAVIGATION
 
-       SAME SIZE AS dashboard.html
+       EXACTLY MATCHING DASHBOARD
     ===================================================== */
 
     .bottom-nav {
 
-      position:
-        fixed;
+      position: fixed;
 
-      left:
-        0;
+      left: 0;
+      right: 0;
+      bottom: 0;
 
-      right:
-        0;
-
-      bottom:
-        0;
-
-      height:
-        78px;
+      height: 78px;
 
       background:
         rgba(255,253,246,0.97);
@@ -894,17 +728,14 @@
         0 -5px 20px
         rgba(15,23,42,0.08);
 
-      display:
-        flex;
+      display: flex;
 
-      align-items:
-        stretch;
+      align-items: stretch;
 
       justify-content:
         space-around;
 
-      z-index:
-        99999;
+      z-index: 99999;
 
       padding-bottom:
         env(safe-area-inset-bottom);
@@ -920,38 +751,27 @@
 
     .nav-item {
 
-      flex:
-        1;
+      flex: 1;
 
-      max-width:
-        150px;
+      max-width: 150px;
 
-      display:
-        flex;
+      display: flex;
 
-      flex-direction:
-        column;
+      flex-direction: column;
 
-      align-items:
-        center;
+      align-items: center;
 
-      justify-content:
-        center;
+      justify-content: center;
 
-      gap:
-        4px;
+      gap: 4px;
 
-      text-decoration:
-        none;
+      text-decoration: none;
 
-      color:
-        #777;
+      color: #777;
 
-      font-size:
-        13px;
+      font-size: 13px;
 
-      font-weight:
-        500;
+      font-weight: 500;
 
       transition:
         0.2s ease;
@@ -964,26 +784,18 @@
 
     .nav-item svg {
 
-      width:
-        27px;
+      width: 27px;
+      height: 27px;
 
-      height:
-        27px;
+      stroke: #777;
 
-      stroke:
-        #777;
+      stroke-width: 1.8;
 
-      stroke-width:
-        1.8;
+      fill: none;
 
-      fill:
-        none;
+      stroke-linecap: round;
 
-      stroke-linecap:
-        round;
-
-      stroke-linejoin:
-        round;
+      stroke-linejoin: round;
 
       transition:
         0.2s ease;
@@ -993,19 +805,16 @@
 
     .nav-item.active {
 
-      color:
-        #2563eb;
+      color: #2563eb;
 
-      font-weight:
-        600;
+      font-weight: 600;
 
     }
 
 
     .nav-item.active svg {
 
-      stroke:
-        #2563eb;
+      stroke: #2563eb;
 
       transform:
         translateY(-1px);
@@ -1028,14 +837,11 @@
 
     .toast {
 
-      position:
-        fixed;
+      position: fixed;
 
-      left:
-        50%;
+      left: 50%;
 
-      bottom:
-        90px;
+      bottom: 105px;
 
       transform:
         translateX(-50%)
@@ -1044,40 +850,32 @@
       background:
         #14213d;
 
-      color:
-        white;
+      color: white;
 
       padding:
         12px 18px;
 
-      border-radius:
-        12px;
+      border-radius: 12px;
 
-      font-size:
-        13px;
+      font-size: 13px;
 
-      opacity:
-        0;
+      opacity: 0;
 
-      pointer-events:
-        none;
+      pointer-events: none;
 
       transition:
         0.25s ease;
 
-      z-index:
-        2000;
+      z-index: 2000;
 
-      white-space:
-        nowrap;
+      white-space: nowrap;
 
     }
 
 
     .toast.show {
 
-      opacity:
-        1;
+      opacity: 1;
 
       transform:
         translateX(-50%)
@@ -1088,10 +886,18 @@
 
 
     /* =====================================================
-       RESPONSIVE
+       MOBILE
     ===================================================== */
 
     @media (max-width: 600px) {
+
+      body {
+
+        padding-bottom:
+          88px;
+
+      }
+
 
       header {
 
@@ -1103,25 +909,19 @@
 
       .logo {
 
-        font-size:
-          20px;
+        font-size: 20px;
 
-        gap:
-          8px;
+        gap: 8px;
 
       }
 
 
       .logo-icon {
 
-        width:
-          35px;
+        width: 35px;
+        height: 35px;
 
-        height:
-          35px;
-
-        font-size:
-          19px;
+        font-size: 19px;
 
       }
 
@@ -1139,8 +939,7 @@
 
       .page-title h1 {
 
-        font-size:
-          27px;
+        font-size: 27px;
 
       }
 
@@ -1158,19 +957,16 @@
 
       .invite-title {
 
-        font-size:
-          22px;
+        font-size: 22px;
 
       }
 
 
       #referralCode {
 
-        font-size:
-          20px;
+        font-size: 20px;
 
-        letter-spacing:
-          2px;
+        letter-spacing: 2px;
 
       }
 
@@ -1185,8 +981,7 @@
 
       .stats {
 
-        gap:
-          12px;
+        gap: 12px;
 
       }
 
@@ -1201,8 +996,7 @@
 
       .stat-value {
 
-        font-size:
-          23px;
+        font-size: 23px;
 
       }
 
@@ -1215,33 +1009,26 @@
       }
 
 
-      /*
-       * SAME AS dashboard.html
-       */
+      /* Same mobile nav size as dashboard */
 
       .bottom-nav {
 
-        height:
-          76px;
+        height: 76px;
 
       }
 
 
       .nav-item {
 
-        font-size:
-          12px;
+        font-size: 12px;
 
       }
 
 
       .nav-item svg {
 
-        width:
-          26px;
-
-        height:
-          26px;
+        width: 26px;
+        height: 26px;
 
       }
 
@@ -1268,27 +1055,22 @@
 
       #referralCode {
 
-        font-size:
-          18px;
+        font-size: 18px;
 
       }
 
 
       .nav-item {
 
-        font-size:
-          11px;
+        font-size: 11px;
 
       }
 
 
       .nav-item svg {
 
-        width:
-          24px;
-
-        height:
-          24px;
+        width: 24px;
+        height: 24px;
 
       }
 
@@ -1300,7 +1082,6 @@
 
 
 <body>
-
 
 
 <!-- =====================================================
@@ -1345,7 +1126,7 @@
 
 
   <!-- ===================================================
-       INVITATION CARD
+       INVITATION
   ==================================================== -->
 
   <div class="invite-card">
@@ -1497,8 +1278,6 @@
     <div class="level-list">
 
 
-      <!-- LEVEL 1 -->
-
       <div class="level">
 
         <div class="level-left">
@@ -1535,8 +1314,6 @@
 
 
 
-      <!-- LEVEL 2 -->
-
       <div class="level">
 
         <div class="level-left">
@@ -1572,8 +1349,6 @@
       </div>
 
 
-
-      <!-- LEVEL 3 -->
 
       <div class="level">
 
@@ -1621,8 +1396,6 @@
 
 <!-- =====================================================
      BOTTOM NAVIGATION
-
-     SAME DESIGN/SIZE AS dashboard.html
 ===================================================== -->
 
 <nav class="bottom-nav">
@@ -1663,8 +1436,14 @@
 
   <!-- PRODUCT -->
 
+  <!-- IMPORTANT:
+       This goes back to dashboard
+       and automatically scrolls to
+       the Product section.
+  -->
+
   <a
-    href="products.html"
+    href="dashboard.html#products"
     class="nav-item"
     id="productNav"
   >
@@ -1702,7 +1481,7 @@
 
 
 
-  <!-- TEAM - ACTIVE -->
+  <!-- TEAM -->
 
   <a
     href="team.html"
@@ -1921,24 +1700,20 @@
 
 
   /* =====================================================
-     MONEY FORMAT
+     MONEY
   ===================================================== */
 
   function formatMoney(amount) {
 
     return "₱" +
-      Number(
-        amount || 0
-      ).toLocaleString(
-        "en-PH",
-        {
-          minimumFractionDigits:
-            2,
-
-          maximumFractionDigits:
-            2
-        }
-      );
+      Number(amount || 0)
+        .toLocaleString(
+          "en-PH",
+          {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }
+        );
 
   }
 
@@ -1952,7 +1727,6 @@
 
     toast.textContent =
       message;
-
 
     toast.classList.add(
       "show"
@@ -1989,11 +1763,9 @@
         text
       );
 
-
       showToast(
         message
       );
-
 
     } catch (error) {
 
@@ -2049,10 +1821,7 @@
     return (
       "NOVA-" +
       uid
-        .substring(
-          0,
-          8
-        )
+        .substring(0, 8)
         .toUpperCase()
     );
 
@@ -2185,7 +1954,7 @@
 
 
       /* ================================================
-         sponsorId FALLBACK
+         sponsorId fallback
       ================================================= */
 
       if (
@@ -2422,6 +2191,18 @@
       commissionElement.textContent =
         "₱0.00";
 
+
+      level1Element.textContent =
+        "0";
+
+
+      level2Element.textContent =
+        "0";
+
+
+      level3Element.textContent =
+        "0";
+
     }
 
   }
@@ -2526,16 +2307,28 @@
             .textContent;
 
 
-        const link =
-          window.location.origin +
-          "/register.html?ref=" +
-          encodeURIComponent(
-            code
+        /*
+         * Correct absolute URL.
+         *
+         * This avoids a relative
+         * path problem.
+         */
+
+        const registerPage =
+          new URL(
+            "register.html",
+            window.location.href
           );
 
 
+        registerPage.searchParams.set(
+          "ref",
+          code
+        );
+
+
         copyText(
-          link,
+          registerPage.href,
           "Invitation link copied"
         );
 
