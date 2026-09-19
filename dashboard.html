@@ -14,263 +14,617 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #222;
+      background: linear-gradient(135deg, #f3f7ff, #eef4ff);
+      color: #14213d;
     }
 
+    /* =========================
+       HEADER
+       ========================= */
+
     header {
-      background: #111827;
+      background: linear-gradient(135deg, #101827, #172554);
       color: white;
-      padding: 18px 20px;
+      padding: 18px 5%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 15px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.15);
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 22px;
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
     }
 
     #logoutButton {
       border: 0;
-      background: #dc2626;
+      background: #ef4444;
       color: white;
-      padding: 10px 16px;
-      border-radius: 8px;
+      padding: 11px 18px;
+      border-radius: 9px;
       cursor: pointer;
       font-weight: bold;
+      font-size: 14px;
     }
 
+    #logoutButton:hover {
+      background: #dc2626;
+    }
+
+    /* =========================
+       MAIN
+       ========================= */
+
     main {
-      max-width: 1000px;
-      margin: 25px auto;
-      padding: 0 15px;
+      max-width: 1250px;
+      margin: 35px auto;
+      padding: 0 22px;
     }
 
     .welcome {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+    }
+
+    .welcome h2 {
+      margin: 0 0 8px;
+      font-size: 32px;
+    }
+
+    #userEmail {
+      color: #64748b;
+      font-size: 15px;
+    }
+
+    /* =========================
+       TOP DASHBOARD
+       ========================= */
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+      gap: 22px;
+      margin-bottom: 25px;
     }
 
     .card {
-      background: white;
-      border-radius: 14px;
-      padding: 22px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.96);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 8px 30px rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(148,163,184,0.18);
+    }
+
+    /* =========================
+       BALANCE CARD
+       ========================= */
+
+    .balance-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .balance-card::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      right: -100px;
+      bottom: -150px;
+      background: rgba(37,99,235,0.06);
+    }
+
+    .balance-title {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .balance-icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 27px;
+    }
+
+    .balance-title h3 {
+      margin: 0;
+      font-size: 20px;
     }
 
     .balance {
-      font-size: 34px;
+      font-size: 42px;
       font-weight: bold;
-      margin: 12px 0 20px;
+      margin: 20px 0;
+      letter-spacing: -1px;
     }
 
     .buttons {
       display: flex;
-      gap: 12px;
+      gap: 13px;
       flex-wrap: wrap;
     }
 
     button {
       border: 0;
-      padding: 12px 18px;
-      border-radius: 8px;
+      padding: 13px 22px;
+      border-radius: 10px;
       cursor: pointer;
       font-weight: bold;
       font-size: 15px;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
     }
 
     #depositButton {
-      background: #16a34a;
+      background: linear-gradient(135deg, #16a34a, #22c55e);
       color: white;
     }
 
     #withdrawButton {
-      background: #f59e0b;
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
       color: white;
+    }
+
+    /* =========================
+       TRANSACTION CARD
+       ========================= */
+
+    .transaction-card {
+      background: linear-gradient(145deg, #f8fbff, #edf5ff);
+      border: 1px solid #bfdbfe;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .transaction-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .transaction-icon {
+      width: 58px;
+      height: 58px;
+      flex-shrink: 0;
+      border-radius: 17px;
+      background: linear-gradient(135deg, #2563eb, #6366f1);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 27px;
+      box-shadow: 0 7px 18px rgba(37,99,235,0.25);
+    }
+
+    .transaction-heading h3 {
+      margin: 2px 0 8px;
+      font-size: 20px;
+    }
+
+    .transaction-heading p {
+      margin: 0;
+      color: #64748b;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    #transactionButton {
+      width: 100%;
+      margin-top: 25px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      font-size: 16px;
+      padding: 15px;
+      box-shadow: 0 7px 18px rgba(37,99,235,0.20);
+    }
+
+    #transactionButton:hover {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    }
+
+    /* =========================
+       INVESTMENT PRODUCTS
+       ========================= */
+
+    .products-card {
+      padding: 28px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .section-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 13px;
+      background: #eff6ff;
+      color: #2563eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .section-title h3 {
+      margin: 0;
+      font-size: 22px;
     }
 
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
     }
 
     .product {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 18px;
+      border: 1px solid #dbe3ef;
+      border-radius: 16px;
+      padding: 22px;
+      background: white;
+      transition: 0.2s ease;
+    }
+
+    .product:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(15,23,42,0.08);
+    }
+
+    .product-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+      margin-bottom: 15px;
+    }
+
+    .starter-icon {
+      background: #dcfce7;
+    }
+
+    .growth-icon {
+      background: #dbeafe;
+    }
+
+    .premium-icon {
+      background: #f3e8ff;
     }
 
     .product h3 {
-      margin-top: 0;
+      margin: 0 0 12px;
+      font-size: 18px;
+    }
+
+    .product p {
+      color: #64748b;
+      line-height: 1.5;
+      margin: 9px 0;
+    }
+
+    .product strong {
+      color: #14213d;
     }
 
     .buyButton {
-      background: #2563eb;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
       color: white;
       width: 100%;
-    }
-
-    .transaction {
-      padding: 12px 0;
-      border-bottom: 1px solid #eee;
-    }
-
-    .transaction:last-child {
-      border-bottom: 0;
-    }
-
-    .positive {
-      color: #16a34a;
-      font-weight: bold;
-    }
-
-    .negative {
-      color: #dc2626;
-      font-weight: bold;
-    }
-
-    .status {
-      color: #666;
-      font-size: 14px;
+      margin-top: 12px;
     }
 
     /* =========================
-       TRANSACTION HISTORY
+       RESPONSIVE
        ========================= */
 
-    .transaction-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
+    @media (max-width: 850px) {
+
+      .top-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .products {
+        grid-template-columns: 1fr;
+      }
+
+      .balance {
+        font-size: 35px;
+      }
+
     }
 
-    .transaction-header h3 {
-      margin: 0 0 6px;
+    @media (max-width: 500px) {
+
+      header {
+        padding: 15px;
+      }
+
+      main {
+        margin: 25px auto;
+        padding: 0 14px;
+      }
+
+      .card {
+        padding: 21px;
+      }
+
+      .welcome h2 {
+        font-size: 27px;
+      }
+
+      .balance {
+        font-size: 31px;
+      }
+
     }
 
-    .transaction-header p {
-      margin: 0;
-    }
-
-    #transactionToggle {
-      background: #2563eb;
-      color: white;
-      white-space: nowrap;
-    }
-
-    #transactionToggle:hover {
-      background: #1d4ed8;
-    }
-
-    .transactions-hidden {
-      display: none;
-    }
-
-    #transactions {
-      margin-top: 20px;
-    }
   </style>
 </head>
 
 <body>
 
 <header>
-  <h1>InvestPro</h1>
-  <button id="logoutButton">Logout</button>
+
+  <div class="logo">
+    <div class="logo-icon">📈</div>
+    InvestPro
+  </div>
+
+  <button id="logoutButton">
+    Logout
+  </button>
+
 </header>
+
 
 <main>
 
+  <!-- =========================
+       WELCOME
+       ========================= -->
+
   <div class="welcome">
+
     <h2>Dashboard</h2>
-    <div id="userEmail">Checking account...</div>
-  </div>
 
-  <div class="card">
-    <h3>Your Balance</h3>
-
-    <div class="balance" id="balance">
-      ₱0.00
+    <div id="userEmail">
+      Checking account...
     </div>
 
-    <div class="buttons">
-      <button id="depositButton">Deposit</button>
-      <button id="withdrawButton">Withdraw</button>
-    </div>
   </div>
 
-  <div class="card">
-    <h3>Investment Products</h3>
+
+  <!-- =========================
+       BALANCE + TRANSACTIONS
+       ========================= -->
+
+  <div class="top-grid">
+
+
+    <!-- BALANCE -->
+
+    <div class="card balance-card">
+
+      <div class="balance-title">
+
+        <div class="balance-icon">
+          💳
+        </div>
+
+        <h3>Your Balance</h3>
+
+      </div>
+
+
+      <div class="balance" id="balance">
+        ₱0.00
+      </div>
+
+
+      <div class="buttons">
+
+        <button id="depositButton">
+          ↓ Deposit
+        </button>
+
+        <button id="withdrawButton">
+          ↑ Withdraw
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- TRANSACTION HISTORY -->
+
+    <div class="card transaction-card">
+
+      <div>
+
+        <div class="transaction-heading">
+
+          <div class="transaction-icon">
+            📄
+          </div>
+
+          <div>
+
+            <h3>
+              Transaction History
+            </h3>
+
+            <p>
+              View your deposit, withdrawal
+              and investment transactions.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <button id="transactionButton">
+          👁 View Transactions →
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       INVESTMENT PRODUCTS
+       ========================= -->
+
+  <div class="card products-card">
+
+    <div class="section-title">
+
+      <div class="section-icon">
+        📊
+      </div>
+
+      <h3>
+        Investment Products
+      </h3>
+
+    </div>
+
 
     <div class="products">
 
-      <div class="product">
-        <h3>Starter Investment</h3>
-        <p>Minimum: ₱500</p>
-        <p>Long-term investment product.</p>
-        <button class="buyButton" data-price="500">
-          Invest ₱500
-        </button>
-      </div>
+
+      <!-- STARTER -->
 
       <div class="product">
-        <h3>Growth Investment</h3>
-        <p>Minimum: ₱1,000</p>
-        <p>Long-term growth product.</p>
-        <button class="buyButton" data-price="1000">
-          Invest ₱1,000
-        </button>
-      </div>
 
-      <div class="product">
-        <h3>Premium Investment</h3>
-        <p>Minimum: ₱5,000</p>
-        <p>Premium long-term investment product.</p>
-        <button class="buyButton" data-price="5000">
-          Invest ₱5,000
-        </button>
-      </div>
+        <div class="product-icon starter-icon">
+          🌱
+        </div>
 
-    </div>
-  </div>
+        <h3>
+          Starter Investment
+        </h3>
 
-  <!-- =========================
-       TRANSACTION HISTORY
-       ========================= -->
-
-  <div class="card transaction-card">
-
-    <div class="transaction-header">
-
-      <div>
-        <h3>Transaction History</h3>
-
-        <p class="status">
-          Your transaction history is hidden.
+        <p>
+          Minimum:
+          <strong>₱500</strong>
         </p>
+
+        <p>
+          Long-term investment product.
+        </p>
+
+        <button
+          class="buyButton"
+          data-price="500"
+        >
+          Invest ₱500 →
+        </button>
+
       </div>
 
-      <button id="transactionToggle">
-        View Transactions
-      </button>
 
-    </div>
+      <!-- GROWTH -->
 
-    <div id="transactions" class="transactions-hidden">
-      <div class="status">
-        Loading transactions...
+      <div class="product">
+
+        <div class="product-icon growth-icon">
+          📈
+        </div>
+
+        <h3>
+          Growth Investment
+        </h3>
+
+        <p>
+          Minimum:
+          <strong>₱1,000</strong>
+        </p>
+
+        <p>
+          Long-term growth product.
+        </p>
+
+        <button
+          class="buyButton"
+          data-price="1000"
+        >
+          Invest ₱1,000 →
+        </button>
+
       </div>
+
+
+      <!-- PREMIUM -->
+
+      <div class="product">
+
+        <div class="product-icon premium-icon">
+          💎
+        </div>
+
+        <h3>
+          Premium Investment
+        </h3>
+
+        <p>
+          Minimum:
+          <strong>₱5,000</strong>
+        </p>
+
+        <p>
+          Premium long-term investment product.
+        </p>
+
+        <button
+          class="buyButton"
+          data-price="5000"
+        >
+          Invest ₱5,000 →
+        </button>
+
+      </div>
+
+
     </div>
 
   </div>
 
 </main>
+
 
 <script type="module">
 
@@ -299,17 +653,23 @@
 
   const firebaseConfig = {
 
-    apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+    apiKey:
+      "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
 
-    authDomain: "investpro-2dafb.firebaseapp.com",
+    authDomain:
+      "investpro-2dafb.firebaseapp.com",
 
-    projectId: "investpro-2dafb",
+    projectId:
+      "investpro-2dafb",
 
-    storageBucket: "investpro-2dafb.firebasestorage.app",
+    storageBucket:
+      "investpro-2dafb.firebasestorage.app",
 
-    messagingSenderId: "135092039764",
+    messagingSenderId:
+      "135092039764",
 
-    appId: "1:135092039764:web:c4c71eef0c904346a77dc1"
+    appId:
+      "1:135092039764:web:c4c71eef0c904346a77dc1"
 
   };
 
@@ -318,11 +678,14 @@
      FIREBASE START
      ========================= */
 
-  const app = initializeApp(firebaseConfig);
+  const app =
+    initializeApp(firebaseConfig);
 
-  const auth = getAuth(app);
+  const auth =
+    getAuth(app);
 
-  const db = getFirestore(app);
+  const db =
+    getFirestore(app);
 
 
   let currentUser = null;
@@ -338,9 +701,6 @@
   const emailElement =
     document.getElementById("userEmail");
 
-  const transactionsElement =
-    document.getElementById("transactions");
-
   const depositButton =
     document.getElementById("depositButton");
 
@@ -350,46 +710,8 @@
   const logoutButton =
     document.getElementById("logoutButton");
 
-  const transactionToggle =
-    document.getElementById("transactionToggle");
-
-
-  /* =========================
-     TRANSACTION VISIBILITY
-     ========================= */
-
-  let transactionsVisible = false;
-
-
-  transactionToggle.addEventListener(
-    "click",
-    () => {
-
-      transactionsVisible =
-        !transactionsVisible;
-
-      if (transactionsVisible) {
-
-        transactionsElement.classList.remove(
-          "transactions-hidden"
-        );
-
-        transactionToggle.textContent =
-          "Hide Transactions";
-
-      } else {
-
-        transactionsElement.classList.add(
-          "transactions-hidden"
-        );
-
-        transactionToggle.textContent =
-          "View Transactions";
-
-      }
-
-    }
-  );
+  const transactionButton =
+    document.getElementById("transactionButton");
 
 
   /* =========================
@@ -398,13 +720,14 @@
 
   function formatMoney(amount) {
 
-    return "₱" + Number(amount || 0).toLocaleString(
-      "en-PH",
-      {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }
-    );
+    return "₱" +
+      Number(amount || 0).toLocaleString(
+        "en-PH",
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      );
 
   }
 
@@ -438,7 +761,6 @@
       await setDoc(userRef, {
 
         balance: 0,
-
         transactions: []
 
       });
@@ -446,78 +768,14 @@
       showBalance(0);
 
       return;
-
     }
 
-    const data = snapshot.data();
+    const data =
+      snapshot.data();
 
-    showBalance(data.balance || 0);
-
-    loadTransactions(
-      data.transactions || []
+    showBalance(
+      data.balance || 0
     );
-
-  }
-
-
-  /* =========================
-     TRANSACTIONS
-     ========================= */
-
-  function loadTransactions(list) {
-
-    transactionsElement.innerHTML = "";
-
-    if (!list || list.length === 0) {
-
-      transactionsElement.innerHTML =
-        '<div class="status">No transactions yet.</div>';
-
-      return;
-
-    }
-
-    const sorted =
-      [...list].reverse();
-
-    sorted.forEach(transaction => {
-
-      const div =
-        document.createElement("div");
-
-      div.className = "transaction";
-
-      const type =
-        transaction.type || "Transaction";
-
-      const amount =
-        Number(transaction.amount || 0);
-
-      const date =
-        transaction.date || "";
-
-      const positive =
-        type === "Deposit";
-
-      div.innerHTML = `
-
-        <div>
-          <strong>${type}</strong>
-        </div>
-
-        <div class="${positive ? "positive" : "negative"}">
-          ${positive ? "+" : "-"}${formatMoney(amount)}
-        </div>
-
-        <div class="status">
-          ${date}
-        </div>
-
-      `;
-
-      transactionsElement.appendChild(div);
-
-    });
 
   }
 
@@ -531,7 +789,6 @@
     if (!currentUser) {
 
       alert("Please login first.");
-
       return;
 
     }
@@ -544,18 +801,26 @@
     const amount =
       Number(input);
 
-    if (!Number.isFinite(amount) || amount <= 0) {
+    if (
+      !Number.isFinite(amount) ||
+      amount <= 0
+    ) {
 
       alert("Please enter a valid amount.");
-
       return;
 
     }
 
+
     try {
 
       const userRef =
-        doc(db, "users", currentUser.uid);
+        doc(
+          db,
+          "users",
+          currentUser.uid
+        );
+
 
       await runTransaction(
         db,
@@ -580,15 +845,20 @@
               ? data.transactions
               : [];
 
+
           transactions.push({
 
             type: "Deposit",
 
             amount: amount,
 
-            date: new Date().toLocaleString("en-PH")
+            date:
+              new Date().toLocaleString(
+                "en-PH"
+              )
 
           });
+
 
           transaction.set(
             userRef,
@@ -596,19 +866,22 @@
               balance: newBalance,
               transactions: transactions
             },
-            { merge: true }
+            {
+              merge: true
+            }
           );
 
-          showBalance(newBalance);
 
-          loadTransactions(transactions);
+          showBalance(newBalance);
 
         }
       );
 
+
       alert(
         "Deposit added successfully."
       );
+
 
     } catch (error) {
 
@@ -635,7 +908,6 @@
     if (!currentUser) {
 
       alert("Please login first.");
-
       return;
 
     }
@@ -648,18 +920,27 @@
     const amount =
       Number(input);
 
-    if (!Number.isFinite(amount) || amount <= 0) {
+
+    if (
+      !Number.isFinite(amount) ||
+      amount <= 0
+    ) {
 
       alert("Please enter a valid amount.");
-
       return;
 
     }
 
+
     try {
 
       const userRef =
-        doc(db, "users", currentUser.uid);
+        doc(
+          db,
+          "users",
+          currentUser.uid
+        );
+
 
       await runTransaction(
         db,
@@ -667,6 +948,7 @@
 
           const snapshot =
             await transaction.get(userRef);
+
 
           if (!snapshot.exists()) {
 
@@ -676,11 +958,13 @@
 
           }
 
+
           const data =
             snapshot.data();
 
           const oldBalance =
             Number(data.balance || 0);
+
 
           if (amount > oldBalance) {
 
@@ -690,13 +974,16 @@
 
           }
 
+
           const newBalance =
             oldBalance - amount;
+
 
           const transactions =
             Array.isArray(data.transactions)
               ? data.transactions
               : [];
+
 
           transactions.push({
 
@@ -704,9 +991,13 @@
 
             amount: amount,
 
-            date: new Date().toLocaleString("en-PH")
+            date:
+              new Date().toLocaleString(
+                "en-PH"
+              )
 
           });
+
 
           transaction.set(
             userRef,
@@ -714,19 +1005,22 @@
               balance: newBalance,
               transactions: transactions
             },
-            { merge: true }
+            {
+              merge: true
+            }
           );
 
-          showBalance(newBalance);
 
-          loadTransactions(transactions);
+          showBalance(newBalance);
 
         }
       );
 
+
       alert(
         "Withdrawal recorded successfully."
       );
+
 
     } catch (error) {
 
@@ -734,6 +1028,7 @@
         "Withdraw error:",
         error
       );
+
 
       if (
         error.message ===
@@ -766,15 +1061,20 @@
     if (!currentUser) {
 
       alert("Please login first.");
-
       return;
 
     }
 
+
     try {
 
       const userRef =
-        doc(db, "users", currentUser.uid);
+        doc(
+          db,
+          "users",
+          currentUser.uid
+        );
+
 
       await runTransaction(
         db,
@@ -782,6 +1082,7 @@
 
           const snapshot =
             await transaction.get(userRef);
+
 
           if (!snapshot.exists()) {
 
@@ -791,11 +1092,13 @@
 
           }
 
+
           const data =
             snapshot.data();
 
           const oldBalance =
             Number(data.balance || 0);
+
 
           if (oldBalance < price) {
 
@@ -805,13 +1108,16 @@
 
           }
 
+
           const newBalance =
             oldBalance - price;
+
 
           const transactions =
             Array.isArray(data.transactions)
               ? data.transactions
               : [];
+
 
           transactions.push({
 
@@ -819,9 +1125,13 @@
 
             amount: price,
 
-            date: new Date().toLocaleString("en-PH")
+            date:
+              new Date().toLocaleString(
+                "en-PH"
+              )
 
           });
+
 
           transaction.set(
             userRef,
@@ -829,19 +1139,22 @@
               balance: newBalance,
               transactions: transactions
             },
-            { merge: true }
+            {
+              merge: true
+            }
           );
 
-          showBalance(newBalance);
 
-          loadTransactions(transactions);
+          showBalance(newBalance);
 
         }
       );
 
+
       alert(
         "Investment recorded successfully."
       );
+
 
     } catch (error) {
 
@@ -849,6 +1162,7 @@
         "Investment error:",
         error
       );
+
 
       if (
         error.message ===
@@ -885,6 +1199,7 @@
       window.location.href =
         "index.html";
 
+
     } catch (error) {
 
       console.error(
@@ -910,16 +1225,22 @@
     deposit
   );
 
+
   withdrawButton.addEventListener(
     "click",
     withdraw
   );
+
 
   logoutButton.addEventListener(
     "click",
     logout
   );
 
+
+  /* =========================
+     INVESTMENT BUTTONS
+     ========================= */
 
   document
     .querySelectorAll(".buyButton")
@@ -943,6 +1264,21 @@
 
 
   /* =========================
+     VIEW TRANSACTIONS
+     ========================= */
+
+  transactionButton.addEventListener(
+    "click",
+    () => {
+
+      window.location.href =
+        "transactions.html";
+
+    }
+  );
+
+
+  /* =========================
      LOGIN CHECK
      ========================= */
 
@@ -959,10 +1295,13 @@
 
       }
 
+
       currentUser = user;
+
 
       emailElement.textContent =
         user.email || "Logged in";
+
 
       try {
 
