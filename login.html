@@ -1,16 +1,4 @@
-from pathlib import Path
-
-source = Path("/mnt/data/Pasted text(2).txt").read_text(encoding="utf-8")
-
-# Preserve the existing Firebase configuration and authentication logic,
-# while replacing the presentation layer with a more polished Novarise design.
-start = source.index('<!DOCTYPE html>')
-firebase_start = source.index('<!-- =========================\n     FIREBASE')
-firebase_block = source[firebase_start:]
-
-# Keep everything from the Firebase comment onward, but fix the closing structure
-# by using the original script block as-is.
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
