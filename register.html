@@ -7,72 +7,213 @@
   <title>Novarise - Register</title>
 
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
       font-family: Arial, sans-serif;
+    }
+
+    body {
       background: #f3f6fb;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
     .card {
-      background: white;
-      width: 90%;
-      max-width: 400px;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 430px;
+      background: #ffffff;
+      padding: 35px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+    }
+
+    /* LOGO */
+    .logo {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .logo img {
+      width: 220px;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
     }
 
     h1 {
       text-align: center;
       color: #1e293b;
-      margin-bottom: 25px;
+      font-size: 30px;
+      margin-top: 10px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      color: #334155;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    .input-group {
+      margin-bottom: 17px;
     }
 
     input {
       width: 100%;
-      box-sizing: border-box;
-      padding: 13px;
-      margin: 8px 0;
+      padding: 14px;
       border: 1px solid #cbd5e1;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 16px;
+      outline: none;
+      transition: 0.2s;
     }
 
-    button {
+    input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    }
+
+    input::placeholder {
+      color: #94a3b8;
+    }
+
+    .register-btn {
       width: 100%;
-      padding: 13px;
-      margin-top: 12px;
+      padding: 14px;
+      margin-top: 5px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       background: #2563eb;
       color: white;
-      font-size: 16px;
+      font-size: 17px;
+      font-weight: bold;
       cursor: pointer;
+      transition: 0.2s;
     }
 
-    button:disabled {
-      background: #94a3b8;
+    .register-btn:hover:not(:disabled) {
+      background: #1d4ed8;
+    }
+
+    .register-btn:disabled {
+      background: #93c5fd;
       cursor: not-allowed;
     }
 
+    /* MESSAGE */
+    .message {
+      display: none;
+      margin-top: 18px;
+      padding: 13px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .message.error {
+      display: block;
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .message.success {
+      display: block;
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* SUCCESS SCREEN */
+    .success-screen {
+      display: none;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 75px;
+      height: 75px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: #dcfce7;
+      color: #16a34a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: bold;
+    }
+
+    .success-screen h2 {
+      color: #166534;
+      font-size: 25px;
+      margin-bottom: 12px;
+    }
+
+    .success-screen p {
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .login-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .login-btn:hover {
+      background: #1d4ed8;
+    }
+
+    /* LOGIN LINK */
     .login {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 22px;
+      color: #64748b;
+      font-size: 14px;
     }
 
-    a {
+    .login a {
       color: #2563eb;
       text-decoration: none;
+      font-weight: bold;
     }
 
-    #message {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
+    .login a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 30px 22px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
     }
   </style>
 </head>
@@ -81,75 +222,134 @@
 
   <div class="card">
 
-    <h1>Create Account</h1>
+    <!-- REGISTER FORM -->
+    <div id="registerSection">
 
-    <form id="registerForm">
+      <div class="logo">
+        <img
+          src="novarise-logo.png.avif"
+          alt="Novarise Logo"
+        >
+      </div>
 
-      <input
-        type="tel"
-        id="phone"
-        placeholder="Phone Number"
-        autocomplete="tel"
-        required
+      <h1>Create Account</h1>
+
+      <div class="subtitle">
+        Create your Novarise account
+      </div>
+
+      <form id="registerForm">
+
+        <div class="input-group">
+          <label for="phone">Phone Number</label>
+
+          <input
+            type="tel"
+            id="phone"
+            placeholder="09XXXXXXXXX"
+            autocomplete="tel"
+            required
+          >
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            minlength="6"
+            autocomplete="new-password"
+            required
+          >
+        </div>
+
+        <div class="input-group">
+          <label for="confirmPassword">Confirm Password</label>
+
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm your password"
+            minlength="6"
+            autocomplete="new-password"
+            required
+          >
+        </div>
+
+        <button
+          type="submit"
+          id="registerButton"
+          class="register-btn"
+        >
+          Create Account
+        </button>
+
+      </form>
+
+      <div id="message" class="message"></div>
+
+      <div class="login">
+        Already have an account?
+        <a href="login.html">Login</a>
+      </div>
+
+    </div>
+
+
+    <!-- SUCCESS SCREEN -->
+    <div id="successScreen" class="success-screen">
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h2>Account Registered!</h2>
+
+      <p>
+        Your Novarise account has been
+        created successfully.
+      </p>
+
+      <a
+        href="login.html"
+        class="login-btn"
       >
+        Continue to Login
+      </a>
 
-      <input
-        type="password"
-        id="password"
-        placeholder="Password"
-        minlength="6"
-        autocomplete="new-password"
-        required
-      >
-
-      <input
-        type="password"
-        id="confirmPassword"
-        placeholder="Confirm Password"
-        minlength="6"
-        autocomplete="new-password"
-        required
-      >
-
-      <button
-        type="submit"
-        id="registerButton"
-      >
-        Create Account
-      </button>
-
-    </form>
-
-    <div id="message"></div>
-
-    <div class="login">
-      Already have an account?
-      <a href="login.html">Login</a>
     </div>
 
   </div>
 
 
-  <!-- Firebase -->
+  <!-- FIREBASE -->
   <script type="module">
 
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
     import {
       getAuth,
       createUserWithEmailAndPassword,
-      updateProfile
+      updateProfile,
+      deleteUser
     } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
     import {
       getFirestore,
       doc,
-      setDoc
+      setDoc,
+      serverTimestamp
     } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-    // Firebase configuration
+    // ==========================================
+    // FIREBASE CONFIGURATION
+    // ==========================================
+
     const firebaseConfig = {
       apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
       authDomain: "investpro-2dafb.firebaseapp.com",
@@ -161,14 +361,21 @@
     };
 
 
-    // Initialize Firebase
+    // ==========================================
+    // INITIALIZE FIREBASE
+    // ==========================================
+
     const app = initializeApp(firebaseConfig);
 
     const auth = getAuth(app);
+
     const db = getFirestore(app);
 
 
-    // Normalize Philippine phone number
+    // ==========================================
+    // NORMALIZE PHILIPPINE PHONE NUMBER
+    // ==========================================
+
     function normalizePhone(phone) {
 
       phone = phone.trim();
@@ -176,12 +383,18 @@
       // Remove spaces, dashes and parentheses
       phone = phone.replace(/[\s\-()]/g, "");
 
-      // 09171234567 -> 639171234567
+      // 09171234567
+      // becomes
+      // 639171234567
+
       if (phone.startsWith("09")) {
         phone = "63" + phone.substring(1);
       }
 
-      // +639171234567 -> 639171234567
+      // +639171234567
+      // becomes
+      // 639171234567
+
       if (phone.startsWith("+63")) {
         phone = phone.substring(1);
       }
@@ -190,169 +403,303 @@
     }
 
 
-    // Convert phone number to internal Firebase email
+    // ==========================================
+    // PHONE → FIREBASE EMAIL
+    // ==========================================
+
     function phoneToFirebaseEmail(phone) {
 
-      const normalizedPhone = normalizePhone(phone);
+      const normalizedPhone =
+        normalizePhone(phone);
 
-      return normalizedPhone + "@novarise.local";
+      return normalizedPhone +
+        "@novarise.local";
     }
 
 
-    // Registration
+    // ==========================================
+    // SHOW ERROR MESSAGE
+    // ==========================================
+
+    function showError(message) {
+
+      const messageBox =
+        document.getElementById("message");
+
+      messageBox.className =
+        "message error";
+
+      messageBox.textContent =
+        message;
+    }
+
+
+    // ==========================================
+    // REGISTER
+    // ==========================================
+
     document
       .getElementById("registerForm")
-      .addEventListener("submit", async function(e) {
+      .addEventListener(
+        "submit",
+        async function(event) {
 
-        e.preventDefault();
-
-
-        const phone =
-          document.getElementById("phone").value;
-
-        const password =
-          document.getElementById("password").value;
-
-        const confirmPassword =
-          document.getElementById("confirmPassword").value;
-
-        const button =
-          document.getElementById("registerButton");
-
-        const message =
-          document.getElementById("message");
+          event.preventDefault();
 
 
-        // Normalize phone
-        const normalizedPhone =
-          normalizePhone(phone);
+          const phone =
+            document.getElementById("phone").value;
+
+          const password =
+            document.getElementById("password").value;
+
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+          const button =
+            document.getElementById("registerButton");
 
 
-        // Validate Philippine phone number
-        if (!/^639\d{9}$/.test(normalizedPhone)) {
+          // ======================================
+          // NORMALIZE PHONE
+          // ======================================
 
-          message.style.color = "red";
-
-          message.textContent =
-            "Please enter a valid Philippine phone number.";
-
-          return;
-        }
+          const normalizedPhone =
+            normalizePhone(phone);
 
 
-        // Check password
-        if (password !== confirmPassword) {
+          // ======================================
+          // VALIDATE PHONE
+          // ======================================
 
-          message.style.color = "red";
+          if (!/^639\d{9}$/.test(normalizedPhone)) {
 
-          message.textContent =
-            "Passwords do not match.";
+            showError(
+              "Please enter a valid Philippine phone number."
+            );
 
-          return;
-        }
-
-
-        // Firebase requires an email-style identifier
-        const firebaseEmail =
-          phoneToFirebaseEmail(phone);
+            return;
+          }
 
 
-        button.disabled = true;
-        button.textContent =
-          "Creating account...";
+          // ======================================
+          // VALIDATE PASSWORD
+          // ======================================
+
+          if (password.length < 6) {
+
+            showError(
+              "Password must be at least 6 characters."
+            );
+
+            return;
+          }
 
 
-        try {
+          // ======================================
+          // CONFIRM PASSWORD
+          // ======================================
 
-          // Create Firebase Authentication account
-          // using phone as the internal identifier.
-          // NO SMS and NO OTP are used.
-          const userCredential =
-            await createUserWithEmailAndPassword(
-              auth,
-              firebaseEmail,
-              password
+          if (password !== confirmPassword) {
+
+            showError(
+              "Passwords do not match."
+            );
+
+            return;
+          }
+
+
+          // ======================================
+          // FIREBASE EMAIL
+          // ======================================
+
+          const firebaseEmail =
+            phoneToFirebaseEmail(phone);
+
+
+          // ======================================
+          // DISABLE BUTTON
+          // ======================================
+
+          button.disabled = true;
+
+          button.textContent =
+            "Creating account...";
+
+
+          let user = null;
+
+
+          try {
+
+            // ====================================
+            // CREATE FIREBASE AUTH ACCOUNT
+            // ====================================
+
+            const userCredential =
+              await createUserWithEmailAndPassword(
+                auth,
+                firebaseEmail,
+                password
+              );
+
+
+            user =
+              userCredential.user;
+
+
+            // ====================================
+            // SAVE PHONE AS DISPLAY NAME
+            // ====================================
+
+            await updateProfile(user, {
+              displayName: normalizedPhone
+            });
+
+
+            // ====================================
+            // SAVE USER TO FIRESTORE
+            // ====================================
+            //
+            // IMPORTANT:
+            // Collection is "users"
+            // NOT "Users"
+            //
+            // This MUST match the Firestore Rules.
+            // ====================================
+
+            await setDoc(
+              doc(db, "users", user.uid),
+              {
+                phone: normalizedPhone,
+                balance: 0,
+                createdAt: serverTimestamp()
+              }
             );
 
 
-          const user =
-            userCredential.user;
+            // ====================================
+            // SUCCESS
+            // ====================================
+
+            document
+              .getElementById("registerSection")
+              .style.display = "none";
+
+            document
+              .getElementById("successScreen")
+              .style.display = "block";
 
 
-          // Save phone as display name
-          await updateProfile(user, {
-            displayName: normalizedPhone
-          });
+          } catch (error) {
+
+            console.error(
+              "Registration error:",
+              error
+            );
 
 
-          // Save user information to Firestore
-          await setDoc(
-            doc(db, "Users", user.uid),
-            {
-              phone: normalizedPhone,
-              balance: 0,
-              createdAt: new Date()
+            // ====================================
+            // ROLLBACK AUTH ACCOUNT
+            // ====================================
+            //
+            // If Firebase Auth succeeded but
+            // Firestore failed, delete the newly
+            // created Auth account so the user
+            // isn't stuck as partially registered.
+            // ====================================
+
+            if (user) {
+
+              try {
+
+                await deleteUser(user);
+
+              } catch (deleteError) {
+
+                console.error(
+                  "Rollback error:",
+                  deleteError
+                );
+
+              }
+
             }
-          );
 
 
-          message.style.color = "green";
+            // ====================================
+            // FIREBASE ERROR HANDLING
+            // ====================================
 
-          message.textContent =
-            "Account created successfully!";
+            if (
+              error.code ===
+              "auth/email-already-in-use"
+            ) {
+
+              showError(
+                "This phone number is already registered."
+              );
+
+            }
+
+            else if (
+              error.code ===
+              "auth/weak-password"
+            ) {
+
+              showError(
+                "Password must be at least 6 characters."
+              );
+
+            }
+
+            else if (
+              error.code ===
+              "auth/invalid-email"
+            ) {
+
+              showError(
+                "Invalid phone number."
+              );
+
+            }
+
+            else if (
+              error.code ===
+              "permission-denied" ||
+              error.code ===
+              "firestore/permission-denied"
+            ) {
+
+              showError(
+                "Account registration was blocked by Firestore permissions. Please check your Firestore Rules."
+              );
+
+            }
+
+            else {
+
+              showError(
+                "Registration failed. Please try again."
+              );
+
+            }
 
 
-          // Go to login page
-          setTimeout(() => {
+            // ====================================
+            // RESET BUTTON
+            // ====================================
 
-            window.location.href =
-              "login.html";
+            button.disabled = false;
 
-          }, 1500);
-
-
-        } catch (error) {
-
-          console.error(error);
-
-          message.style.color = "red";
-
-
-          if (
-            error.code ===
-            "auth/email-already-in-use"
-          ) {
-
-            message.textContent =
-              "This phone number is already registered.";
+            button.textContent =
+              "Create Account";
 
           }
 
-          else if (
-            error.code ===
-            "auth/weak-password"
-          ) {
-
-            message.textContent =
-              "Password must be at least 6 characters.";
-
-          }
-
-          else {
-
-            message.textContent =
-              error.message;
-
-          }
-
-
-          button.disabled = false;
-
-          button.textContent =
-            "Create Account";
         }
-
-      });
+      );
 
   </script>
 
