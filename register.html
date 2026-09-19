@@ -519,7 +519,9 @@
 
 
     .phone-icon {
+
       margin-left: 13px;
+
     }
 
 
@@ -641,7 +643,9 @@
 
 
     .normal-input::placeholder {
+
       color: #9aadc0;
+
     }
 
 
@@ -715,7 +719,9 @@
 
 
     .password-input::placeholder {
+
       color: #9aadc0;
+
     }
 
 
@@ -838,7 +844,10 @@
 
 
     .register-btn:active:not(:disabled) {
-      transform: translateY(0);
+
+      transform:
+        translateY(0);
+
     }
 
 
@@ -1056,7 +1065,10 @@
 
 
     .continue-login-btn:hover {
-      transform: translateY(-1px);
+
+      transform:
+        translateY(-1px);
+
     }
 
 
@@ -1116,48 +1128,66 @@
 
 
       .logo img {
+
         width: 150px;
+
       }
 
 
       .brand-tagline {
+
         margin-bottom: 5px;
+
       }
 
 
       .divider-accent {
+
         margin-bottom: 9px;
+
       }
 
 
       .subtitle {
+
         margin-bottom: 10px;
+
       }
 
 
       .input-group {
+
         margin-bottom: 9px;
+
       }
 
 
       .referral-hint {
+
         margin-top: 3px;
+
       }
 
 
       .or-line {
+
         margin:
           9px 0 8px;
+
       }
 
 
       .login a {
+
         height: 40px;
+
       }
 
 
       .card-note {
+
         margin-top: 8px;
+
       }
 
     }
@@ -1177,6 +1207,8 @@
 
     <div class="content">
 
+
+      <!-- REGISTER -->
 
       <div id="registerSection">
 
@@ -1240,8 +1272,11 @@
         ></div>
 
 
+
         <form id="registerForm">
 
+
+          <!-- PHONE -->
 
           <div class="input-group">
 
@@ -1294,6 +1329,8 @@
           </div>
 
 
+
+          <!-- REFERRAL -->
 
           <div class="input-group">
 
@@ -1363,6 +1400,8 @@
           </div>
 
 
+
+          <!-- PASSWORD -->
 
           <div class="input-group">
 
@@ -1447,6 +1486,8 @@
 
 
 
+          <!-- CONFIRM PASSWORD -->
+
           <div class="input-group">
 
             <label for="confirmPassword">
@@ -1530,6 +1571,8 @@
 
 
 
+          <!-- REGISTER -->
+
           <button
             type="submit"
             id="registerButton"
@@ -1576,6 +1619,8 @@
 
 
 
+      <!-- SUCCESS -->
+
       <div
         id="successScreen"
         class="success-screen"
@@ -1613,6 +1658,8 @@
 
 
 
+  <!-- FIREBASE -->
+
   <script type="module">
 
 
@@ -1626,8 +1673,7 @@
     import {
       getAuth,
       createUserWithEmailAndPassword,
-      updateProfile,
-      deleteUser
+      updateProfile
     }
     from
       "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
@@ -1678,10 +1724,6 @@
     };
 
 
-
-    /* =========================================
-       INITIALIZE
-       ========================================= */
 
     const app =
       initializeApp(
@@ -1758,7 +1800,7 @@
 
 
     /* =========================================
-       REFERRAL CODE FROM URL
+       URL REFERRAL CODE
        ========================================= */
 
     const urlParams =
@@ -1778,17 +1820,13 @@
       .toUpperCase();
 
 
-    if (
-      referralFromUrl
-    ) {
+    if (referralFromUrl) {
 
       referralCodeInput.value =
         referralFromUrl;
 
-
       referralHint.textContent =
         "Invitation code detected from your referral link.";
-
 
       referralHint.style.color =
         "#168ff0";
@@ -1808,12 +1846,10 @@
         const showing =
           passwordInput.type === "text";
 
-
         passwordInput.type =
           showing
             ? "password"
             : "text";
-
 
         this.setAttribute(
           "aria-label",
@@ -1833,12 +1869,10 @@
         const showing =
           confirmPasswordInput.type === "text";
 
-
         confirmPasswordInput.type =
           showing
             ? "password"
             : "text";
-
 
         this.setAttribute(
           "aria-label",
@@ -1856,7 +1890,9 @@
        PHONE
        ========================================= */
 
-    function normalizePhone(phone) {
+    function normalizePhone(
+      phone
+    ) {
 
       phone =
         phone.replace(
@@ -1866,7 +1902,9 @@
 
 
       if (
-        /^9\d{9}$/.test(phone)
+        /^9\d{9}$/.test(
+          phone
+        )
       ) {
 
         return "63" + phone;
@@ -1879,7 +1917,10 @@
     }
 
 
-    function phoneToFirebaseEmail(phone) {
+
+    function phoneToFirebaseEmail(
+      phone
+    ) {
 
       const normalizedPhone =
         normalizePhone(
@@ -1904,15 +1945,20 @@
 
 
     /* =========================================
-       REFERRAL CODE
+       CREATE REFERRAL CODE
        ========================================= */
 
-    function createReferralCode(uid) {
+    function createReferralCode(
+      uid
+    ) {
 
       return (
         "NOVA-" +
         uid
-          .substring(0, 8)
+          .substring(
+            0,
+            8
+          )
           .toUpperCase()
       );
 
@@ -1932,7 +1978,6 @@
       messageBox.textContent =
         message;
 
-
       messageBox.className =
         "message " +
         type;
@@ -1944,7 +1989,6 @@
 
       messageBox.textContent =
         "";
-
 
       messageBox.className =
         "message";
@@ -1989,12 +2033,10 @@
           this.value =
             this.value.substring(1);
 
-
           showMessage(
             "Phone number must start with 9.",
             "error"
           );
-
 
           return;
 
@@ -2033,20 +2075,15 @@
 
     /* =========================================
        FIND REFERRER
-       
-       IMPORTANT:
-       Searches BOTH:
-       referralCode
-       invitationCode
        ========================================= */
 
     async function findUserByReferralCode(
-      referralCode
+      code
     ) {
 
       const cleanCode =
         String(
-          referralCode || ""
+          code || ""
         )
         .trim()
         .toUpperCase();
@@ -2066,113 +2103,114 @@
         );
 
 
+      /*
+       * Try referralCode first.
+       */
 
-      /* -----------------------------------------
-         TRY referralCode
-         ----------------------------------------- */
-
-      try {
-
-        const referralQuery =
-          query(
-            usersRef,
-            where(
-              "referralCode",
-              "==",
-              cleanCode
-            )
-          );
-
-
-        const snapshot =
-          await getDocs(
-            referralQuery
-          );
-
-
-        if (
-          !snapshot.empty
-        ) {
-
-          const firstDoc =
-            snapshot.docs[0];
-
-
-          return {
-
-            uid:
-              firstDoc.id,
-
-            data:
-              firstDoc.data()
-
-          };
-
-        }
-
-      } catch (error) {
-
-        console.warn(
-          "referralCode search failed:",
-          error
+      const referralQuery =
+        query(
+          usersRef,
+          where(
+            "referralCode",
+            "==",
+            cleanCode
+          )
         );
+
+
+      const referralSnapshot =
+        await getDocs(
+          referralQuery
+        );
+
+
+      if (
+        !referralSnapshot.empty
+      ) {
+
+        const item =
+          referralSnapshot.docs[0];
+
+        return {
+          uid: item.id,
+          data: item.data()
+        };
 
       }
 
 
 
-      /* -----------------------------------------
-         TRY invitationCode
-         ----------------------------------------- */
+      /*
+       * Try invitationCode.
+       */
 
-      try {
-
-        const invitationQuery =
-          query(
-            usersRef,
-            where(
-              "invitationCode",
-              "==",
-              cleanCode
-            )
-          );
-
-
-        const snapshot =
-          await getDocs(
-            invitationQuery
-          );
-
-
-        if (
-          !snapshot.empty
-        ) {
-
-          const firstDoc =
-            snapshot.docs[0];
-
-
-          return {
-
-            uid:
-              firstDoc.id,
-
-            data:
-              firstDoc.data()
-
-          };
-
-        }
-
-      } catch (error) {
-
-        console.warn(
-          "invitationCode search failed:",
-          error
+      const invitationQuery =
+        query(
+          usersRef,
+          where(
+            "invitationCode",
+            "==",
+            cleanCode
+          )
         );
+
+
+      const invitationSnapshot =
+        await getDocs(
+          invitationQuery
+        );
+
+
+      if (
+        !invitationSnapshot.empty
+      ) {
+
+        const item =
+          invitationSnapshot.docs[0];
+
+        return {
+          uid: item.id,
+          data: item.data()
+        };
 
       }
 
+
+
+      /*
+       * Try inviteCode.
+       */
+
+      const inviteQuery =
+        query(
+          usersRef,
+          where(
+            "inviteCode",
+            "==",
+            cleanCode
+          )
+        );
+
+
+      const inviteSnapshot =
+        await getDocs(
+          inviteQuery
+        );
+
+
+      if (
+        !inviteSnapshot.empty
+      ) {
+
+        const item =
+          inviteSnapshot.docs[0];
+
+        return {
+          uid: item.id,
+          data: item.data()
+        };
+
+      }
 
 
       return null;
@@ -2182,7 +2220,7 @@
 
 
     /* =========================================
-       REGISTER
+       REGISTER FORM
        ========================================= */
 
     document
@@ -2219,7 +2257,7 @@
 
 
           /* ===================================
-             VALIDATE PHONE
+             PHONE VALIDATION
              =================================== */
 
           if (
@@ -2233,9 +2271,7 @@
               "error"
             );
 
-
             phoneInput.focus();
-
 
             return;
 
@@ -2244,7 +2280,7 @@
 
 
           /* ===================================
-             VALIDATE PASSWORD
+             PASSWORD
              =================================== */
 
           if (
@@ -2256,9 +2292,7 @@
               "error"
             );
 
-
             passwordInput.focus();
-
 
             return;
 
@@ -2280,19 +2314,13 @@
               "error"
             );
 
-
             confirmPasswordInput.focus();
-
 
             return;
 
           }
 
 
-
-          /* ===================================
-             NORMALIZE PHONE
-             =================================== */
 
           const normalizedPhone =
             normalizePhone(
@@ -2300,47 +2328,27 @@
             );
 
 
-          if (!normalizedPhone) {
-
-            showMessage(
-              "Invalid phone number.",
-              "error"
-            );
-
-
-            return;
-
-          }
-
-
-
-          /* ===================================
-             FIREBASE EMAIL
-             =================================== */
-
           const firebaseEmail =
             phoneToFirebaseEmail(
               phone
             );
 
 
-          if (!firebaseEmail) {
+          if (
+            !normalizedPhone ||
+            !firebaseEmail
+          ) {
 
             showMessage(
               "Invalid phone number.",
               "error"
             );
 
-
             return;
 
           }
 
 
-
-          /* ===================================
-             DISABLE BUTTON
-             =================================== */
 
           registerButton.disabled =
             true;
@@ -2351,25 +2359,18 @@
 
 
 
-          let user =
-            null;
-
-
-          let referrer =
-            null;
-
-
-
           try {
 
 
             /* =================================
-               CHECK REFERRAL
+               FIND REFERRER
                ================================= */
 
-            if (
-              referralCode
-            ) {
+            let referrer =
+              null;
+
+
+            if (referralCode) {
 
               referrer =
                 await findUserByReferralCode(
@@ -2377,9 +2378,7 @@
                 );
 
 
-              if (
-                !referrer
-              ) {
+              if (!referrer) {
 
                 showMessage(
                   "Referral code not found. Please check the code and try again.",
@@ -2402,14 +2401,6 @@
 
               }
 
-
-              referralHint.textContent =
-                "Valid referral code ✓";
-
-
-              referralHint.style.color =
-                "#16a34a";
-
             }
 
 
@@ -2430,7 +2421,7 @@
               );
 
 
-            user =
+            const user =
               userCredential.user;
 
 
@@ -2450,7 +2441,7 @@
 
 
             /* =================================
-               CREATE OWN CODE
+               OWN REFERRAL CODE
                ================================= */
 
             const myReferralCode =
@@ -2461,7 +2452,7 @@
 
 
             /* =================================
-               REFERRAL DATA
+               REFERRER DATA
                ================================= */
 
             let referredBy =
@@ -2479,7 +2470,6 @@
 
               referredBy =
                 referrer.uid;
-
 
               referredByCode =
                 referralCode;
@@ -2509,6 +2499,9 @@
               invitationCode:
                 myReferralCode,
 
+              inviteCode:
+                myReferralCode,
+
               referredBy:
                 referredBy,
 
@@ -2521,9 +2514,6 @@
               commission:
                 0,
 
-              teamSize:
-                0,
-
               createdAt:
                 serverTimestamp()
 
@@ -2532,7 +2522,7 @@
 
 
             /* =================================
-               SAVE USER
+               FIRESTORE
                ================================= */
 
             registerButton.innerHTML =
@@ -2570,7 +2560,6 @@
                 "block";
 
 
-
           } catch (error) {
 
             console.error(
@@ -2579,99 +2568,83 @@
             );
 
 
+            let errorMessage =
+              "Registration failed. Please try again.";
 
-            /* =================================
-               ROLLBACK AUTH
-               ================================= */
-
-            if (user) {
-
-              try {
-
-                await deleteUser(
-                  user
-                );
-
-              } catch (
-                deleteError
-              ) {
-
-                console.error(
-                  "Rollback error:",
-                  deleteError
-                );
-
-              }
-
-            }
-
-
-
-            /* =================================
-               ERROR HANDLING
-               ================================= */
 
             if (
               error.code ===
               "auth/email-already-in-use"
             ) {
 
-              showMessage(
-                "This phone number is already registered.",
-                "error"
-              );
+              errorMessage =
+                "This phone number is already registered.";
 
             }
+
 
             else if (
               error.code ===
               "auth/weak-password"
             ) {
 
-              showMessage(
-                "Password must be at least 6 characters.",
-                "error"
-              );
+              errorMessage =
+                "Password must be at least 6 characters.";
 
             }
+
 
             else if (
               error.code ===
               "auth/invalid-email"
             ) {
 
-              showMessage(
-                "Invalid phone number.",
-                "error"
-              );
+              errorMessage =
+                "Invalid phone number.";
 
             }
+
 
             else if (
               error.code ===
-              "permission-denied"
+              "permission-denied" ||
+              error.code ===
+              "firestore/permission-denied"
             ) {
 
-              showMessage(
-                "Firestore permission denied. Your Firestore Rules need to allow a signed-in user to create their own users document.",
-                "error"
-              );
+              errorMessage =
+                "Firestore permission denied. Please check your Firestore Rules.";
 
             }
 
-            else {
 
-              showMessage(
-                "Registration failed: " +
-                (
-                  error.message ||
-                  "Please try again."
-                ),
-                "error"
-              );
+            else if (
+              error.code ===
+              "failed-precondition"
+            ) {
+
+              errorMessage =
+                "Firestore needs an index for this query. Please check the Firebase console.";
 
             }
 
+
+            else if (
+              error.message &&
+              error.message.toLowerCase()
+                .includes("permission")
+            ) {
+
+              errorMessage =
+                "Firestore permission denied. Please check your Firestore Rules.";
+
+            }
+
+
+            showMessage(
+              errorMessage,
+              "error"
+            );
 
 
             registerButton.disabled =
