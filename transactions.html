@@ -5,10 +5,14 @@
 
   <meta charset="UTF-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <title>Transaction History - InvestPro</title>
+  <meta name="theme-color" content="#101827">
 
+  <title>Novarise - Transaction History</title>
 
   <style>
 
@@ -16,462 +20,328 @@
       box-sizing: border-box;
     }
 
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+    }
 
     body {
-
       margin: 0;
-
-      font-family: Arial, sans-serif;
-
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
       background:
         linear-gradient(
           135deg,
-          #f3f7ff,
-          #eef4ff
+          #f3f7ff 0%,
+          #eef4ff 100%
         );
-
       color: #14213d;
-
+      overflow-x: hidden;
     }
-
 
     /* =========================
        HEADER
        ========================= */
 
     header {
-
+      width: 100%;
       background:
         linear-gradient(
           135deg,
           #101827,
           #172554
         );
-
       color: white;
-
       padding: 18px 5%;
-
       display: flex;
-
       justify-content: space-between;
-
       align-items: center;
-
+      gap: 15px;
       box-shadow:
         0 4px 18px
         rgba(0,0,0,0.15);
-
     }
-
 
     .logo {
-
       display: flex;
-
       align-items: center;
-
       gap: 10px;
-
       font-size: 23px;
-
       font-weight: bold;
-
+      white-space: nowrap;
     }
 
-
     .logo-icon {
-
       width: 38px;
-
       height: 38px;
-
+      flex-shrink: 0;
       border-radius: 11px;
-
       background:
         linear-gradient(
           135deg,
           #2563eb,
           #60a5fa
         );
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
       font-size: 21px;
-
     }
-
 
     .header-buttons {
-
       display: flex;
-
+      align-items: center;
       gap: 10px;
-
+      flex-shrink: 0;
     }
-
 
     button {
-
       border: 0;
-
       padding: 11px 18px;
-
       border-radius: 9px;
-
       cursor: pointer;
-
       font-weight: bold;
-
       font-size: 14px;
-
-      transition: 0.2s ease;
-
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        opacity .2s ease;
     }
-
 
     button:hover {
-
       transform: translateY(-1px);
-
     }
 
-
     #homeButton {
-
       background:
         linear-gradient(
           135deg,
           #2563eb,
           #3b82f6
         );
-
       color: white;
-
     }
 
+    #homeButton:hover {
+      background:
+        linear-gradient(
+          135deg,
+          #1d4ed8,
+          #2563eb
+        );
+    }
 
     #logoutButton {
-
       background: #ef4444;
-
       color: white;
-
     }
-
 
     #logoutButton:hover {
-
       background: #dc2626;
-
     }
-
 
     /* =========================
        MAIN
        ========================= */
 
     main {
-
+      width: 100%;
       max-width: 950px;
-
       margin: 35px auto;
-
       padding: 0 20px;
-
     }
-
 
     .page-title {
-
       margin-bottom: 25px;
-
     }
-
 
     .page-title h2 {
-
       margin: 0 0 8px;
-
       font-size: 32px;
-
+      line-height: 1.2;
+      color: #14213d;
     }
-
 
     #userEmail {
-
       color: #64748b;
-
       font-size: 15px;
-
+      word-break: break-word;
     }
 
-
     /* =========================
-       TRANSACTION CARD
+       CARD
        ========================= */
 
     .card {
-
-      background: white;
-
+      width: 100%;
+      background: rgba(255,255,255,0.97);
       border-radius: 20px;
-
       padding: 28px;
-
       box-shadow:
         0 8px 30px
         rgba(37,99,235,0.08);
-
       border:
         1px solid
         rgba(148,163,184,0.18);
-
     }
-
 
     .card-header {
-
       display: flex;
-
       align-items: center;
-
       gap: 14px;
-
       margin-bottom: 20px;
-
     }
 
-
     .transaction-icon {
-
       width: 55px;
-
       height: 55px;
-
+      flex-shrink: 0;
       border-radius: 16px;
-
       background:
         linear-gradient(
           135deg,
           #2563eb,
           #6366f1
         );
-
       color: white;
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
       font-size: 26px;
-
       box-shadow:
         0 7px 18px
         rgba(37,99,235,0.22);
-
     }
-
 
     .card-header h3 {
-
       margin: 0 0 5px;
-
       font-size: 21px;
-
+      line-height: 1.25;
     }
-
 
     .card-header p {
-
       margin: 0;
-
       color: #64748b;
-
       font-size: 14px;
-
+      line-height: 1.45;
     }
 
-
     /* =========================
-       TRANSACTION ITEM
+       TRANSACTION
        ========================= */
 
     .transaction {
-
+      width: 100%;
       display: flex;
-
       justify-content: space-between;
-
       align-items: center;
-
       gap: 20px;
-
       padding: 18px 0;
-
       border-bottom:
         1px solid #e5e7eb;
-
     }
-
 
     .transaction:last-child {
-
       border-bottom: 0;
-
     }
-
 
     .transaction-left {
-
+      min-width: 0;
       display: flex;
-
       align-items: center;
-
       gap: 14px;
-
     }
-
 
     .transaction-type-icon {
-
       width: 46px;
-
       height: 46px;
-
-      border-radius: 13px;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      font-size: 20px;
-
       flex-shrink: 0;
-
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
     }
-
 
     .deposit-icon {
-
       background: #dcfce7;
-
+      color: #16a34a;
     }
-
 
     .withdraw-icon {
-
       background: #fef3c7;
-
+      color: #d97706;
     }
-
 
     .investment-icon {
-
       background: #dbeafe;
-
+      color: #2563eb;
     }
 
+    .transaction-info {
+      min-width: 0;
+    }
 
     .transaction-info strong {
-
       display: block;
-
       font-size: 16px;
-
       margin-bottom: 5px;
-
+      line-height: 1.25;
     }
-
 
     .transaction-date {
-
       color: #64748b;
-
       font-size: 13px;
-
+      line-height: 1.35;
+      word-break: break-word;
     }
-
 
     .transaction-amount {
-
+      flex-shrink: 0;
       font-size: 17px;
-
       font-weight: bold;
-
       white-space: nowrap;
-
     }
-
 
     .deposit-amount {
-
       color: #16a34a;
-
     }
-
 
     .withdraw-amount {
-
       color: #dc2626;
-
     }
-
 
     .investment-amount {
-
       color: #2563eb;
-
     }
 
-
     /* =========================
-       EMPTY / LOADING
+       MESSAGE
        ========================= */
 
     .message {
-
       text-align: center;
-
       padding: 45px 20px;
-
       color: #64748b;
-
     }
-
 
     .message-icon {
-
       font-size: 45px;
-
       margin-bottom: 12px;
-
     }
-
 
     .message h3 {
-
       margin: 0 0 8px;
-
       color: #334155;
-
+      font-size: 19px;
     }
-
 
     .message p {
-
       margin: 0;
-
+      line-height: 1.5;
+      font-size: 14px;
     }
-
 
     /* =========================
        MOBILE
@@ -480,62 +350,148 @@
     @media (max-width: 600px) {
 
       header {
-
-        padding: 15px;
-
+        padding: 14px;
+        gap: 10px;
       }
 
+      .logo {
+        font-size: 19px;
+        gap: 7px;
+      }
+
+      .logo-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        font-size: 18px;
+      }
 
       .header-buttons {
-
         gap: 6px;
-
       }
-
 
       .header-buttons button {
-
-        padding: 9px 11px;
-
+        padding: 9px 10px;
         font-size: 12px;
-
       }
-
 
       main {
-
         margin: 25px auto;
-
         padding: 0 14px;
-
       }
 
-
-      .card {
-
-        padding: 20px;
-
+      .page-title {
+        margin-bottom: 20px;
       }
-
 
       .page-title h2 {
-
         font-size: 27px;
-
       }
 
+      #userEmail {
+        font-size: 13px;
+      }
+
+      .card {
+        padding: 20px;
+        border-radius: 18px;
+      }
+
+      .card-header {
+        align-items: flex-start;
+        gap: 11px;
+        margin-bottom: 15px;
+      }
+
+      .transaction-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        font-size: 23px;
+      }
+
+      .card-header h3 {
+        font-size: 18px;
+      }
+
+      .card-header p {
+        font-size: 13px;
+      }
 
       .transaction {
-
         align-items: flex-start;
-
+        gap: 10px;
+        padding: 16px 0;
       }
 
+      .transaction-left {
+        gap: 10px;
+      }
+
+      .transaction-type-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        font-size: 18px;
+      }
+
+      .transaction-info strong {
+        font-size: 14px;
+      }
+
+      .transaction-date {
+        font-size: 12px;
+      }
 
       .transaction-amount {
+        font-size: 14px;
+      }
 
-        font-size: 15px;
+      .message {
+        padding: 35px 10px;
+      }
 
+    }
+
+    /* =========================
+       VERY SMALL PHONES
+       ========================= */
+
+    @media (max-width: 380px) {
+
+      header {
+        padding: 12px;
+      }
+
+      .logo {
+        font-size: 17px;
+      }
+
+      .logo-icon {
+        width: 31px;
+        height: 31px;
+        font-size: 16px;
+      }
+
+      .header-buttons button {
+        padding: 8px 8px;
+        font-size: 11px;
+      }
+
+      main {
+        padding: 0 10px;
+      }
+
+      .card {
+        padding: 16px;
+      }
+
+      .transaction {
+        gap: 7px;
+      }
+
+      .transaction-amount {
+        font-size: 13px;
       }
 
     }
@@ -554,14 +510,13 @@
 
   <header>
 
-
     <div class="logo">
 
       <div class="logo-icon">
         📈
       </div>
 
-      InvestPro
+      Novarise
 
     </div>
 
@@ -578,7 +533,6 @@
       </button>
 
     </div>
-
 
   </header>
 
@@ -952,6 +906,10 @@
 
 
 
+            /* =====================
+               TRANSACTION CONTAINER
+               ===================== */
+
             const transactionDiv =
               document.createElement(
                 "div"
@@ -963,7 +921,9 @@
 
 
 
-            /* LEFT SIDE */
+            /* =====================
+               LEFT SIDE
+               ===================== */
 
             const left =
               document.createElement(
@@ -975,6 +935,8 @@
               "transaction-left";
 
 
+
+            /* ICON */
 
             const icon =
               document.createElement(
@@ -991,6 +953,8 @@
               details.icon;
 
 
+
+            /* INFO */
 
             const info =
               document.createElement(
@@ -1050,7 +1014,9 @@
 
 
 
-            /* RIGHT SIDE */
+            /* =====================
+               RIGHT SIDE
+               ===================== */
 
             const amountElement =
               document.createElement(
@@ -1065,9 +1031,15 @@
 
             amountElement.textContent =
               details.sign +
-              formatMoney(amount);
+              formatMoney(
+                amount
+              );
 
 
+
+            /* =====================
+               ADD TO PAGE
+               ===================== */
 
             transactionDiv.appendChild(
               left
@@ -1105,7 +1077,7 @@
             </div>
 
             <h3>
-              Unable to load transactions
+              Unable to load account data
             </h3>
 
             <p>
