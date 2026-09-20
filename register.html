@@ -1770,7 +1770,7 @@
 
               if (!referrer) {
 
-                await deleteUser(user);
+                await deleteUser(User);
 
                 showMessage(
                   "Referral code not found. Please check the code and try again.",
@@ -1798,7 +1798,7 @@
                 referrer.uid === User.uid
               ) {
 
-                await deleteUser(user);
+                await deleteUser(User);
 
                 showMessage(
                   "You cannot use your own referral code.",
@@ -2025,7 +2025,7 @@
 
               try {
 
-                await deleteUser(user);
+                await deleteUser(User);
 
               } catch (cleanupError) {
 
