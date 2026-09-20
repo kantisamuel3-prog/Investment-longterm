@@ -37,8 +37,7 @@ body{
 ===================================================== */
 
 header{
-  background:
-    linear-gradient(135deg,#0b2852,#0d4f91);
+  background:linear-gradient(135deg,#0b2852,#0d4f91);
   color:white;
   padding:18px 5%;
   display:flex;
@@ -61,8 +60,7 @@ header{
   width:38px;
   height:38px;
   border-radius:12px;
-  background:
-    linear-gradient(135deg,#21c87a,#2b9cff);
+  background:linear-gradient(135deg,#21c87a,#2b9cff);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -141,8 +139,7 @@ main{
 .balance-card{
   position:relative;
   overflow:hidden;
-  background:
-    linear-gradient(135deg,#073d7b,#075fae 55%,#0877bd);
+  background:linear-gradient(135deg,#073d7b,#075fae 55%,#0877bd);
   color:white;
   box-shadow:0 13px 35px rgba(8,83,145,.25);
 }
@@ -243,8 +240,7 @@ button:hover{
 ===================================================== */
 
 .transaction-card{
-  background:
-    linear-gradient(145deg,#ffffff,#edf7ff);
+  background:linear-gradient(145deg,#ffffff,#edf7ff);
   border:1px solid #cce4f8;
   display:flex;
   flex-direction:column;
@@ -303,7 +299,7 @@ button:hover{
   padding:28px;
   scroll-margin-top:20px;
   background:rgba(255,255,255,.82);
-  backdrop-filter:blur(6px);
+  backdrop-filter:blur(5px);
 }
 
 .products-heading{
@@ -359,11 +355,12 @@ button:hover{
 
 /* =====================================================
    PRODUCT GRID
+   TWO PRODUCTS PER ROW
 ===================================================== */
 
 .products{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:18px;
 }
 
@@ -375,30 +372,28 @@ button:hover{
 .product{
   position:relative;
   overflow:hidden;
-  min-width:0;
   border:1px solid #d8ebf8;
-  border-radius:20px;
-  padding:17px;
-  background:
-    linear-gradient(150deg,#ffffff,#f9fcff);
-  box-shadow:0 7px 22px rgba(20,90,145,.08);
-  transition:.2s ease;
+  border-radius:22px;
+  padding:20px;
+  background:linear-gradient(150deg,#ffffff,#f8fcff);
+  box-shadow:0 8px 24px rgba(20,90,145,.08);
+  transition:.22s ease;
 }
 
 .product:hover{
   transform:translateY(-3px);
-  box-shadow:0 13px 28px rgba(20,90,145,.13);
+  box-shadow:0 15px 32px rgba(20,90,145,.14);
 }
 
 .product::after{
   content:"";
   position:absolute;
-  width:105px;
-  height:105px;
+  width:150px;
+  height:150px;
   border-radius:50%;
-  right:-40px;
-  top:18px;
-  background:rgba(90,190,235,.08);
+  right:-55px;
+  top:-40px;
+  background:rgba(90,190,235,.06);
   pointer-events:none;
 }
 
@@ -410,9 +405,9 @@ button:hover{
 .product-top{
   display:flex;
   justify-content:space-between;
-  align-items:flex-start;
-  gap:8px;
-  margin-bottom:12px;
+  align-items:center;
+  gap:10px;
+  margin-bottom:13px;
   position:relative;
   z-index:2;
 }
@@ -420,11 +415,11 @@ button:hover{
 .product-badge{
   display:inline-flex;
   align-items:center;
-  gap:4px;
+  gap:5px;
   color:white;
   border-radius:30px;
-  padding:6px 10px;
-  font-size:10px;
+  padding:7px 11px;
+  font-size:11px;
   font-weight:bold;
   white-space:nowrap;
 }
@@ -451,40 +446,53 @@ button:hover{
 
 
 /* =====================================================
-   PRODUCT ICON
+   PROFESSIONAL PRODUCT SVG LOGOS
 ===================================================== */
 
 .product-icon{
-  width:50px;
-  height:50px;
-  border-radius:50%;
+  width:58px;
+  height:58px;
+  border-radius:18px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:25px;
   flex-shrink:0;
-  border:4px solid rgba(255,255,255,.9);
-  box-shadow:0 5px 14px rgba(15,100,160,.08);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 7px 18px rgba(15,100,160,.10);
+}
+
+.product-icon svg{
+  width:32px;
+  height:32px;
+  stroke-width:1.8;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
 .icon-green{
-  background:linear-gradient(145deg,#dcfff0,#c6f7df);
+  background:linear-gradient(145deg,#e7fff3,#d0f7e2);
+  color:#0ba66a;
 }
 
 .icon-blue{
-  background:linear-gradient(145deg,#e4f5ff,#cdeaff);
+  background:linear-gradient(145deg,#e9f6ff,#d3ebff);
+  color:#087bd8;
 }
 
 .icon-purple{
-  background:linear-gradient(145deg,#f1e9ff,#dfd0ff);
+  background:linear-gradient(145deg,#f2eaff,#e2d5ff);
+  color:#6b35d1;
 }
 
 .icon-cyan{
-  background:linear-gradient(145deg,#dcfbff,#c5f2f6);
+  background:linear-gradient(145deg,#e3fcff,#cef2f6);
+  color:#078fa8;
 }
 
 .icon-dark{
-  background:linear-gradient(145deg,#e2effc,#cddff2);
+  background:linear-gradient(145deg,#e9f2fb,#d7e5f3);
+  color:#164f89;
 }
 
 
@@ -493,52 +501,41 @@ button:hover{
 ===================================================== */
 
 .product h3{
-  margin:0 0 6px;
-  font-size:17px;
+  margin:0 0 7px;
+  font-size:19px;
   line-height:1.25;
   color:#103a70;
 }
 
 .product-description{
+  min-height:45px;
   color:#507397;
-  line-height:1.4;
-  margin:0 0 13px;
+  line-height:1.45;
+  margin:0 0 15px;
   font-size:12px;
-
-  display:-webkit-box;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:2;
-  overflow:hidden;
-
-  min-height:34px;
 }
 
 
 /* =====================================================
-   PRODUCT INFORMATION
+   PRODUCT INFORMATION BOX
 ===================================================== */
 
 .product-info{
   display:grid;
   grid-template-columns:1fr 1fr;
-
-  background:
-    linear-gradient(145deg,#eff9ff,#e7f5ff);
-
+  background:linear-gradient(145deg,#eff9ff,#e7f5ff);
   border:1px solid #d9eefb;
-  border-radius:13px;
+  border-radius:14px;
   overflow:hidden;
-
-  margin-bottom:12px;
+  margin-bottom:14px;
 }
 
 .info-item{
   min-width:0;
-  padding:10px 8px;
-
+  padding:11px 10px;
   display:flex;
   align-items:center;
-  gap:7px;
+  gap:8px;
 }
 
 .info-item:nth-child(1),
@@ -552,17 +549,15 @@ button:hover{
 }
 
 .info-icon{
-  width:25px;
-  height:25px;
-  border-radius:7px;
-
+  width:27px;
+  height:27px;
+  border-radius:8px;
   display:flex;
   align-items:center;
   justify-content:center;
-
   background:white;
   color:#0875d1;
-  font-size:13px;
+  font-size:14px;
   flex-shrink:0;
 }
 
@@ -572,7 +567,7 @@ button:hover{
 
 .info-label{
   display:block;
-  font-size:8px;
+  font-size:9px;
   color:#65809d;
   margin-bottom:2px;
   white-space:nowrap;
@@ -580,7 +575,7 @@ button:hover{
 
 .info-value{
   display:block;
-  font-size:11px;
+  font-size:13px;
   font-weight:bold;
   color:#103d73;
   white-space:nowrap;
@@ -590,36 +585,28 @@ button:hover{
 
 
 /* =====================================================
-   INVEST BUTTON
+   INVEST BUTTONS
 ===================================================== */
 
 .buyButton{
   width:100%;
   border-radius:30px;
-  padding:11px 9px;
-
+  padding:13px 10px;
   color:white;
-  font-size:12px;
-  font-weight:bold;
-
-  box-shadow:0 7px 17px rgba(20,100,170,.15);
-
+  font-size:13px;
+  box-shadow:0 7px 17px rgba(20,100,170,.16);
   position:relative;
   overflow:hidden;
 }
 
 .buyButton::after{
   content:"›";
-
   position:absolute;
-  right:14px;
-
-  font-size:20px;
+  right:15px;
+  font-size:21px;
   line-height:12px;
-
   top:50%;
   transform:translateY(-50%);
-
   opacity:.8;
 }
 
@@ -893,7 +880,8 @@ button:hover{
 
 
 /* =====================================================
-   TABLET
+   TABLET / MOBILE
+   TWO PRODUCTS PER ROW
 ===================================================== */
 
 @media(max-width:850px){
@@ -903,64 +891,61 @@ button:hover{
   }
 
   .products{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:12px;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:13px;
   }
 
   .product{
-    padding:12px;
-    border-radius:17px;
+    padding:15px;
+    border-radius:18px;
   }
 
   .product-top{
-    margin-bottom:9px;
+    margin-bottom:10px;
   }
 
   .product-badge{
-    padding:5px 7px;
-    font-size:8px;
+    padding:6px 8px;
+    font-size:9px;
   }
 
   .product-icon{
-    width:40px;
-    height:40px;
-    font-size:20px;
-    border-width:3px;
+    width:46px;
+    height:46px;
+    border-radius:14px;
+  }
+
+  .product-icon svg{
+    width:26px;
+    height:26px;
   }
 
   .product h3{
-    font-size:12px;
-    line-height:1.25;
-    margin-bottom:5px;
+    font-size:15px;
+    margin-bottom:6px;
   }
 
   .product-description{
-    font-size:9px;
-    line-height:1.35;
-    min-height:25px;
-    margin-bottom:9px;
-
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:2;
-    overflow:hidden;
+    min-height:42px;
+    font-size:10px;
+    line-height:1.4;
+    margin-bottom:10px;
   }
 
   .product-info{
-    border-radius:10px;
-    margin-bottom:9px;
+    border-radius:11px;
   }
 
   .info-item{
-    padding:7px 5px;
-    gap:4px;
+    padding:8px 6px;
+    gap:5px;
   }
 
   .info-icon{
-    width:20px;
-    height:20px;
+    width:22px;
+    height:22px;
     border-radius:6px;
-    font-size:10px;
+    font-size:11px;
   }
 
   .info-label{
@@ -968,18 +953,17 @@ button:hover{
   }
 
   .info-value{
-    font-size:9px;
+    font-size:10px;
   }
 
   .buyButton{
-    padding:9px 5px;
-    font-size:9px;
-    border-radius:20px;
+    padding:10px 6px;
+    font-size:10px;
   }
 
   .buyButton::after{
-    right:8px;
-    font-size:16px;
+    right:9px;
+    font-size:17px;
   }
 
   .balance{
@@ -1070,11 +1054,6 @@ button:hover{
     font-size:13px;
   }
 
-
-  /* =========================================
-     PRODUCT SECTION
-  ========================================= */
-
   .products-card{
     padding:14px;
   }
@@ -1085,7 +1064,7 @@ button:hover{
   }
 
   .section-title{
-    gap:9px;
+    gap:10px;
   }
 
   .section-title h3{
@@ -1094,7 +1073,6 @@ button:hover{
 
   .section-subtitle{
     font-size:10px;
-    margin-top:3px;
   }
 
   .section-icon{
@@ -1107,109 +1085,89 @@ button:hover{
     display:none;
   }
 
-
-  /* 3 PRODUCTS PER ROW */
+  /*
+     IMPORTANT:
+     2 PRODUCTS PER ROW ON PHONE
+  */
 
   .products{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:9px;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
   }
 
-
-  /* PRODUCT CARD */
-
   .product{
-    padding:9px;
-    border-radius:14px;
+    min-width:0;
+    padding:12px;
+    border-radius:16px;
   }
 
   .product-top{
-    margin-bottom:7px;
-    gap:3px;
+    margin-bottom:10px;
   }
 
   .product-badge{
-    font-size:7px;
-    padding:4px 5px;
-    gap:2px;
+    font-size:8px;
+    padding:5px 7px;
   }
 
   .product-icon{
-    width:31px;
-    height:31px;
-    font-size:15px;
-    border-width:2px;
+    width:42px;
+    height:42px;
+    border-radius:13px;
+  }
+
+  .product-icon svg{
+    width:24px;
+    height:24px;
   }
 
   .product h3{
-    font-size:10.5px;
+    font-size:14px;
     line-height:1.25;
-    margin-bottom:4px;
+    margin-bottom:6px;
   }
-
-
-  /* MAXIMUM 2 LINES */
 
   .product-description{
-    font-size:8px;
-    line-height:1.35;
-
-    min-height:22px;
-    max-height:22px;
-
-    margin-bottom:7px;
-
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:2;
-    overflow:hidden;
+    font-size:9px;
+    line-height:1.4;
+    min-height:39px;
+    margin-bottom:9px;
   }
 
-
-  /* PRODUCT INFO */
-
   .product-info{
-    border-radius:9px;
-    margin-bottom:7px;
+    border-radius:11px;
+    margin-bottom:10px;
   }
 
   .info-item{
-    padding:6px 4px;
-    gap:3px;
-    min-width:0;
+    padding:7px 5px;
+    gap:4px;
   }
 
   .info-icon{
-    display:none;
+    width:20px;
+    height:20px;
+    font-size:10px;
+    border-radius:6px;
   }
 
   .info-label{
     font-size:6.5px;
-    line-height:1.1;
-    margin-bottom:2px;
   }
 
   .info-value{
-    font-size:8px;
-    line-height:1.15;
+    font-size:9px;
   }
 
-
-  /* INVEST BUTTON */
-
   .buyButton{
-    padding:8px 2px;
-    font-size:8px;
-    line-height:1.1;
-    min-height:31px;
+    padding:10px 4px;
+    font-size:9px;
+    border-radius:20px;
   }
 
   .buyButton::after{
     display:none;
   }
-
-
-  /* NAVIGATION */
 
   .bottom-nav{
     height:76px;
@@ -1227,61 +1185,62 @@ button:hover{
 
 
 /* =====================================================
-   SMALL PHONES
+   SMALL PHONE
 ===================================================== */
 
 @media(max-width:390px){
 
-  .products-card{
-    padding:11px;
-  }
-
   .products{
-    gap:7px;
+    gap:8px;
   }
 
   .product{
-    padding:7px;
-    border-radius:12px;
+    padding:10px;
   }
 
   .product-badge{
-    font-size:6.5px;
-    padding:3px 4px;
+    font-size:7px;
+    padding:4px 6px;
   }
 
   .product-icon{
-    width:28px;
-    height:28px;
-    font-size:14px;
+    width:38px;
+    height:38px;
+  }
+
+  .product-icon svg{
+    width:22px;
+    height:22px;
   }
 
   .product h3{
-    font-size:9.5px;
+    font-size:12px;
   }
 
   .product-description{
-    font-size:7px;
-    min-height:20px;
-    max-height:20px;
+    font-size:8px;
+    min-height:37px;
   }
 
   .info-item{
-    padding:5px 3px;
+    padding:6px 4px;
+  }
+
+  .info-icon{
+    display:none;
   }
 
   .info-label{
-    font-size:5.8px;
+    font-size:6px;
   }
 
   .info-value{
-    font-size:7.5px;
+    font-size:8px;
   }
 
   .buyButton{
-    font-size:7.5px;
-    padding:7px 1px;
-    min-height:29px;
+    font-size:8px;
+    padding:9px 2px;
   }
 
   .nav-item{
@@ -1291,6 +1250,43 @@ button:hover{
   .nav-item svg{
     width:24px;
     height:24px;
+  }
+}
+
+
+/* =====================================================
+   VERY SMALL PHONE
+===================================================== */
+
+@media(max-width:340px){
+
+  .products{
+    gap:6px;
+  }
+
+  .product{
+    padding:8px;
+  }
+
+  .product h3{
+    font-size:11px;
+  }
+
+  .product-description{
+    font-size:7px;
+  }
+
+  .info-label{
+    font-size:5.5px;
+  }
+
+  .info-value{
+    font-size:7px;
+  }
+
+  .buyButton{
+    font-size:7px;
+    padding:8px 2px;
   }
 }
 
@@ -1319,7 +1315,6 @@ button:hover{
 </header>
 
 
-
 <!-- =====================================================
      MAIN
 ===================================================== -->
@@ -1339,8 +1334,9 @@ button:hover{
   </div>
 
 
-
-  <!-- BALANCE + TRANSACTIONS -->
+  <!-- =================================================
+       BALANCE + TRANSACTIONS
+  ================================================== -->
 
   <div class="top-grid">
 
@@ -1380,7 +1376,6 @@ button:hover{
     </div>
 
 
-
     <div class="card transaction-card">
 
       <div>
@@ -1415,7 +1410,6 @@ button:hover{
     </div>
 
   </div>
-
 
 
   <!-- =================================================
@@ -1456,25 +1450,39 @@ button:hover{
     </div>
 
 
-
     <div class="products">
 
 
-      <!-- PRODUCT 1 -->
+      <!-- =================================================
+           PRODUCT 1 - ₱300
+      ================================================== -->
 
       <div class="product">
 
         <div class="product-top">
 
           <div class="product-badge badge-green">
-            🌱 Starter
+            Starter
           </div>
 
           <div class="product-icon icon-green">
-            🌱
+
+            <svg viewBox="0 0 32 32">
+
+              <path d="M16 27V13"/>
+
+              <path d="M16 18C11 18 7 15 7 10c5 0 9 3 9 8"/>
+
+              <path d="M16 15c1-5 5-8 10-8 0 5-4 9-10 9"/>
+
+              <path d="M16 23c-3-1-5-3-6-6"/>
+
+            </svg>
+
           </div>
 
         </div>
+
 
         <h3>
           Starter Investment
@@ -1483,6 +1491,7 @@ button:hover{
         <p class="product-description">
           Build your foundation with an entry-level investment plan.
         </p>
+
 
         <div class="product-info">
 
@@ -1584,22 +1593,34 @@ button:hover{
       </div>
 
 
-
-      <!-- PRODUCT 2 -->
+      <!-- =================================================
+           PRODUCT 2 - ₱700
+      ================================================== -->
 
       <div class="product">
 
         <div class="product-top">
 
           <div class="product-badge badge-blue">
-            ⭐ Popular
+            Popular
           </div>
 
           <div class="product-icon icon-blue">
-            📈
+
+            <svg viewBox="0 0 32 32">
+
+              <path d="M5 24L11 17L16 20L26 8"/>
+
+              <path d="M20 8h6v6"/>
+
+              <path d="M5 27h22"/>
+
+            </svg>
+
           </div>
 
         </div>
+
 
         <h3>
           Growth Investment
@@ -1608,6 +1629,7 @@ button:hover{
         <p class="product-description">
           A larger capital option for users looking for a higher example return.
         </p>
+
 
         <div class="product-info">
 
@@ -1709,30 +1731,44 @@ button:hover{
       </div>
 
 
-
-      <!-- PRODUCT 3 -->
+      <!-- =================================================
+           PRODUCT 3 - ₱1,000
+           ELITE
+      ================================================== -->
 
       <div class="product">
 
         <div class="product-top">
 
-          <div class="product-badge badge-purple">
-            👑 Premium
+          <div class="product-badge badge-cyan">
+            Elite
           </div>
 
-          <div class="product-icon icon-purple">
-            💎
+          <div class="product-icon icon-cyan">
+
+            <!-- SHIELD / STAR - NOT DIAMOND -->
+
+            <svg viewBox="0 0 32 32">
+
+              <path d="M16 4l9 4v7c0 6-4 10-9 13-5-3-9-7-9-13V8l9-4z"/>
+
+              <path d="M16 9l1.8 3.6 4 .6-2.9 2.8.7 4-3.6-1.9-3.6 1.9.7-4-2.9-2.8 4-.6L16 9z"/>
+
+            </svg>
+
           </div>
 
         </div>
 
+
         <h3>
-          Premium Investment
+          Elite Investment
         </h3>
 
         <p class="product-description">
-          Designed for a larger starting capital with an extended product cycle.
+          A higher-capital option designed for the next level of the product lineup.
         </p>
+
 
         <div class="product-info">
 
@@ -1823,9 +1859,9 @@ button:hover{
 
 
         <button
-          class="buyButton buy-purple"
+          class="buyButton buy-cyan"
           data-price="1000"
-          data-name="Premium Investment"
+          data-name="Elite Investment"
           data-daily="180"
         >
           Invest ₱1,000
@@ -1834,30 +1870,48 @@ button:hover{
       </div>
 
 
-
-      <!-- PRODUCT 4 -->
+      <!-- =================================================
+           PRODUCT 4 - ₱1,500
+           PREMIUM + DIAMOND
+      ================================================== -->
 
       <div class="product">
 
         <div class="product-top">
 
-          <div class="product-badge badge-cyan">
-            💎 Elite
+          <div class="product-badge badge-purple">
+            Premium
           </div>
 
-          <div class="product-icon icon-cyan">
-            💎
+          <div class="product-icon icon-purple">
+
+            <!-- DIAMOND - PREMIUM ₱1,500 -->
+
+            <svg viewBox="0 0 32 32">
+
+              <path d="M7 8h18l3 6-12 13L4 14l3-6z"/>
+
+              <path d="M4 14h24"/>
+
+              <path d="M11 8l5 6 5-6"/>
+
+              <path d="M9 14l7 13 7-13"/>
+
+            </svg>
+
           </div>
 
         </div>
 
+
         <h3>
-          Elite Investment
+          Premium Investment
         </h3>
 
         <p class="product-description">
-          A higher-capital plan with a larger illustrative daily figure.
+          A premium capital option with a larger illustrative daily figure.
         </p>
+
 
         <div class="product-info">
 
@@ -1948,9 +2002,9 @@ button:hover{
 
 
         <button
-          class="buyButton buy-cyan"
+          class="buyButton buy-purple"
           data-price="1500"
-          data-name="Elite Investment"
+          data-name="Premium Investment"
           data-daily="270"
         >
           Invest ₱1,500
@@ -1959,30 +2013,49 @@ button:hover{
       </div>
 
 
-
-      <!-- PRODUCT 5 -->
+      <!-- =================================================
+           PRODUCT 5 - ₱2,500
+      ================================================== -->
 
       <div class="product">
 
         <div class="product-top">
 
           <div class="product-badge badge-green">
-            🍃 Vision
+            Vision
           </div>
 
           <div class="product-icon icon-green">
-            🌿
+
+            <svg viewBox="0 0 32 32">
+
+              <path d="M16 27V13"/>
+
+              <path d="M16 18C11 18 8 15 8 11c4 0 8 2 8 7"/>
+
+              <path d="M16 16c1-5 5-8 10-8 0 5-4 9-10 9"/>
+
+              <path d="M16 22c4-1 7-4 8-8"/>
+
+              <path d="M16 27H9"/>
+
+              <path d="M16 27h7"/>
+
+            </svg>
+
           </div>
 
         </div>
+
 
         <h3>
           Vision Investment
         </h3>
 
         <p class="product-description">
-          A larger-capital option for the next level of your product lineup.
+          A larger-capital option for the next level of the product lineup.
         </p>
+
 
         <div class="product-info">
 
@@ -2084,22 +2157,40 @@ button:hover{
       </div>
 
 
-
-      <!-- PRODUCT 6 -->
+      <!-- =================================================
+           PRODUCT 6 - ₱5,000
+      ================================================== -->
 
       <div class="product">
 
         <div class="product-top">
 
           <div class="product-badge badge-dark">
-            ∞ Legacy
+            Legacy
           </div>
 
           <div class="product-icon icon-dark">
-            🌳
+
+            <svg viewBox="0 0 32 32">
+
+              <path d="M16 27V15"/>
+
+              <path d="M16 17C12 14 8 13 6 9c5-1 9 2 10 6"/>
+
+              <path d="M16 16c2-5 6-7 11-7-1 5-5 8-11 8"/>
+
+              <path d="M16 22c-3-2-5-4-6-7"/>
+
+              <path d="M16 22c3-2 5-4 6-7"/>
+
+              <path d="M11 27h10"/>
+
+            </svg>
+
           </div>
 
         </div>
+
 
         <h3>
           Legacy Investment
@@ -2108,6 +2199,7 @@ button:hover{
         <p class="product-description">
           The highest-capital option in this example product lineup.
         </p>
+
 
         <div class="product-info">
 
@@ -2208,13 +2300,11 @@ button:hover{
 
       </div>
 
-
     </div>
 
   </div>
 
 </main>
-
 
 
 <!-- =====================================================
@@ -2270,6 +2360,7 @@ button:hover{
           </strong>
 
         </div>
+
 
         <div class="summary-box return">
 
@@ -2348,7 +2439,6 @@ button:hover{
   </div>
 
 </div>
-
 
 
 <!-- =====================================================
@@ -2439,7 +2529,6 @@ button:hover{
   </a>
 
 </nav>
-
 
 
 <!-- =====================================================
