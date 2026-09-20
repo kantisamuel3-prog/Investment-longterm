@@ -302,8 +302,8 @@ button:hover{
 .products-card{
   padding:28px;
   scroll-margin-top:20px;
-  background:rgba(255,255,255,.75);
-  backdrop-filter:blur(5px);
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(6px);
 }
 
 .products-heading{
@@ -375,18 +375,19 @@ button:hover{
 .product{
   position:relative;
   overflow:hidden;
+  min-width:0;
   border:1px solid #d8ebf8;
-  border-radius:22px;
-  padding:18px;
+  border-radius:20px;
+  padding:17px;
   background:
-    linear-gradient(150deg,#ffffff,#fbfdff);
-  box-shadow:0 8px 24px rgba(20,90,145,.08);
-  transition:.22s ease;
+    linear-gradient(150deg,#ffffff,#f9fcff);
+  box-shadow:0 7px 22px rgba(20,90,145,.08);
+  transition:.2s ease;
 }
 
 .product:hover{
-  transform:translateY(-4px);
-  box-shadow:0 15px 32px rgba(20,90,145,.14);
+  transform:translateY(-3px);
+  box-shadow:0 13px 28px rgba(20,90,145,.13);
 }
 
 .product::after{
@@ -395,8 +396,8 @@ button:hover{
   width:105px;
   height:105px;
   border-radius:50%;
-  right:-35px;
-  top:15px;
+  right:-40px;
+  top:18px;
   background:rgba(90,190,235,.08);
   pointer-events:none;
 }
@@ -410,7 +411,7 @@ button:hover{
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
-  gap:7px;
+  gap:8px;
   margin-bottom:12px;
   position:relative;
   z-index:2;
@@ -419,11 +420,11 @@ button:hover{
 .product-badge{
   display:inline-flex;
   align-items:center;
-  gap:5px;
+  gap:4px;
   color:white;
   border-radius:30px;
-  padding:7px 11px;
-  font-size:11px;
+  padding:6px 10px;
+  font-size:10px;
   font-weight:bold;
   white-space:nowrap;
 }
@@ -448,17 +449,22 @@ button:hover{
   background:linear-gradient(135deg,#124e8d,#063a70);
 }
 
+
+/* =====================================================
+   PRODUCT ICON
+===================================================== */
+
 .product-icon{
-  width:56px;
-  height:56px;
+  width:50px;
+  height:50px;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:28px;
+  font-size:25px;
   flex-shrink:0;
-  border:5px solid rgba(255,255,255,.8);
-  box-shadow:0 5px 15px rgba(15,100,160,.08);
+  border:4px solid rgba(255,255,255,.9);
+  box-shadow:0 5px 14px rgba(15,100,160,.08);
 }
 
 .icon-green{
@@ -487,41 +493,52 @@ button:hover{
 ===================================================== */
 
 .product h3{
-  margin:0 0 7px;
-  font-size:18px;
-  line-height:1.2;
+  margin:0 0 6px;
+  font-size:17px;
+  line-height:1.25;
   color:#103a70;
 }
 
 .product-description{
-  min-height:42px;
   color:#507397;
-  line-height:1.45;
-  margin:0 0 14px;
+  line-height:1.4;
+  margin:0 0 13px;
   font-size:12px;
+
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+
+  min-height:34px;
 }
 
 
 /* =====================================================
-   PRODUCT INFORMATION BOX
+   PRODUCT INFORMATION
 ===================================================== */
 
 .product-info{
   display:grid;
   grid-template-columns:1fr 1fr;
-  background:linear-gradient(145deg,#eff9ff,#e7f5ff);
+
+  background:
+    linear-gradient(145deg,#eff9ff,#e7f5ff);
+
   border:1px solid #d9eefb;
-  border-radius:14px;
+  border-radius:13px;
   overflow:hidden;
-  margin-bottom:13px;
+
+  margin-bottom:12px;
 }
 
 .info-item{
   min-width:0;
-  padding:11px 9px;
+  padding:10px 8px;
+
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:7px;
 }
 
 .info-item:nth-child(1),
@@ -535,15 +552,17 @@ button:hover{
 }
 
 .info-icon{
-  width:27px;
-  height:27px;
-  border-radius:8px;
+  width:25px;
+  height:25px;
+  border-radius:7px;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   background:white;
   color:#0875d1;
-  font-size:14px;
+  font-size:13px;
   flex-shrink:0;
 }
 
@@ -553,7 +572,7 @@ button:hover{
 
 .info-label{
   display:block;
-  font-size:9px;
+  font-size:8px;
   color:#65809d;
   margin-bottom:2px;
   white-space:nowrap;
@@ -561,7 +580,7 @@ button:hover{
 
 .info-value{
   display:block;
-  font-size:12px;
+  font-size:11px;
   font-weight:bold;
   color:#103d73;
   white-space:nowrap;
@@ -571,28 +590,36 @@ button:hover{
 
 
 /* =====================================================
-   INVEST BUTTONS
+   INVEST BUTTON
 ===================================================== */
 
 .buyButton{
   width:100%;
   border-radius:30px;
-  padding:12px 10px;
+  padding:11px 9px;
+
   color:white;
-  font-size:13px;
-  box-shadow:0 7px 17px rgba(20,100,170,.16);
+  font-size:12px;
+  font-weight:bold;
+
+  box-shadow:0 7px 17px rgba(20,100,170,.15);
+
   position:relative;
   overflow:hidden;
 }
 
 .buyButton::after{
   content:"›";
+
   position:absolute;
-  right:15px;
-  font-size:21px;
+  right:14px;
+
+  font-size:20px;
   line-height:12px;
+
   top:50%;
   transform:translateY(-50%);
+
   opacity:.8;
 }
 
@@ -866,7 +893,7 @@ button:hover{
 
 
 /* =====================================================
-   RESPONSIVE
+   TABLET
 ===================================================== */
 
 @media(max-width:850px){
@@ -877,16 +904,16 @@ button:hover{
 
   .products{
     grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:10px;
+    gap:12px;
   }
 
   .product{
-    padding:11px;
+    padding:12px;
     border-radius:17px;
   }
 
   .product-top{
-    margin-bottom:8px;
+    margin-bottom:9px;
   }
 
   .product-badge{
@@ -895,26 +922,33 @@ button:hover{
   }
 
   .product-icon{
-    width:38px;
-    height:38px;
-    font-size:19px;
+    width:40px;
+    height:40px;
+    font-size:20px;
     border-width:3px;
   }
 
   .product h3{
     font-size:12px;
+    line-height:1.25;
     margin-bottom:5px;
   }
 
   .product-description{
-    min-height:39px;
     font-size:9px;
     line-height:1.35;
-    margin-bottom:8px;
+    min-height:25px;
+    margin-bottom:9px;
+
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
   }
 
   .product-info{
     border-radius:10px;
+    margin-bottom:9px;
   }
 
   .info-item{
@@ -953,6 +987,10 @@ button:hover{
   }
 }
 
+
+/* =====================================================
+   PHONE
+===================================================== */
 
 @media(max-width:600px){
 
@@ -1032,13 +1070,22 @@ button:hover{
     font-size:13px;
   }
 
+
+  /* =========================================
+     PRODUCT SECTION
+  ========================================= */
+
   .products-card{
     padding:14px;
   }
 
   .products-heading{
     display:block;
-    margin-bottom:16px;
+    margin-bottom:17px;
+  }
+
+  .section-title{
+    gap:9px;
   }
 
   .section-title h3{
@@ -1047,6 +1094,7 @@ button:hover{
 
   .section-subtitle{
     font-size:10px;
+    margin-top:3px;
   }
 
   .section-icon{
@@ -1059,61 +1107,109 @@ button:hover{
     display:none;
   }
 
+
+  /* 3 PRODUCTS PER ROW */
+
   .products{
     grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:8px;
+    gap:9px;
   }
 
+
+  /* PRODUCT CARD */
+
   .product{
-    min-width:0;
     padding:9px;
     border-radius:14px;
   }
 
+  .product-top{
+    margin-bottom:7px;
+    gap:3px;
+  }
+
   .product-badge{
     font-size:7px;
-    padding:4px 6px;
+    padding:4px 5px;
+    gap:2px;
   }
 
   .product-icon{
-    width:32px;
-    height:32px;
-    font-size:16px;
+    width:31px;
+    height:31px;
+    font-size:15px;
+    border-width:2px;
   }
 
   .product h3{
-    font-size:11px;
+    font-size:10.5px;
+    line-height:1.25;
+    margin-bottom:4px;
   }
+
+
+  /* MAXIMUM 2 LINES */
 
   .product-description{
     font-size:8px;
-    min-height:36px;
+    line-height:1.35;
+
+    min-height:22px;
+    max-height:22px;
+
+    margin-bottom:7px;
+
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+  }
+
+
+  /* PRODUCT INFO */
+
+  .product-info{
+    border-radius:9px;
+    margin-bottom:7px;
   }
 
   .info-item{
     padding:6px 4px;
-  }
-
-  .info-label{
-    font-size:6.5px;
-  }
-
-  .info-value{
-    font-size:8px;
+    gap:3px;
+    min-width:0;
   }
 
   .info-icon{
     display:none;
   }
 
-  .buyButton{
-    padding:8px 3px;
+  .info-label{
+    font-size:6.5px;
+    line-height:1.1;
+    margin-bottom:2px;
+  }
+
+  .info-value{
     font-size:8px;
+    line-height:1.15;
+  }
+
+
+  /* INVEST BUTTON */
+
+  .buyButton{
+    padding:8px 2px;
+    font-size:8px;
+    line-height:1.1;
+    min-height:31px;
   }
 
   .buyButton::after{
     display:none;
   }
+
+
+  /* NAVIGATION */
 
   .bottom-nav{
     height:76px;
@@ -1130,51 +1226,62 @@ button:hover{
 }
 
 
-@media(max-width:360px){
+/* =====================================================
+   SMALL PHONES
+===================================================== */
 
-  .logo{
-    font-size:18px;
-  }
-
-  #logoutButton{
-    padding:8px 10px;
-  }
-
-  .balance{
-    font-size:28px;
-  }
+@media(max-width:390px){
 
   .products-card{
-    padding:10px;
+    padding:11px;
   }
 
   .products{
-    gap:6px;
+    gap:7px;
   }
 
   .product{
     padding:7px;
+    border-radius:12px;
+  }
+
+  .product-badge{
+    font-size:6.5px;
+    padding:3px 4px;
+  }
+
+  .product-icon{
+    width:28px;
+    height:28px;
+    font-size:14px;
   }
 
   .product h3{
-    font-size:10px;
+    font-size:9.5px;
   }
 
   .product-description{
     font-size:7px;
+    min-height:20px;
+    max-height:20px;
   }
 
-  .info-value{
-    font-size:7px;
+  .info-item{
+    padding:5px 3px;
   }
 
   .info-label{
-    font-size:6px;
+    font-size:5.8px;
+  }
+
+  .info-value{
+    font-size:7.5px;
   }
 
   .buyButton{
-    font-size:7px;
-    padding:7px 2px;
+    font-size:7.5px;
+    padding:7px 1px;
+    min-height:29px;
   }
 
   .nav-item{
@@ -1220,11 +1327,15 @@ button:hover{
 <main id="home">
 
   <div class="welcome">
-    <h2>Dashboard</h2>
+
+    <h2>
+      Dashboard
+    </h2>
 
     <div id="userEmail">
       Checking account...
     </div>
+
   </div>
 
 
@@ -1325,6 +1436,7 @@ button:hover{
         </div>
 
         <div>
+
           <h3>
             Investment Products
           </h3>
@@ -1332,6 +1444,7 @@ button:hover{
           <p class="section-subtitle">
             Choose a plan that fits your investment goals.
           </p>
+
         </div>
 
       </div>
@@ -1347,9 +1460,7 @@ button:hover{
     <div class="products">
 
 
-      <!-- =================================================
-           PRODUCT 1
-      ================================================== -->
+      <!-- PRODUCT 1 -->
 
       <div class="product">
 
@@ -1376,38 +1487,90 @@ button:hover{
         <div class="product-info">
 
           <div class="info-item">
-            <div class="info-icon">💰</div>
-            <div class="info-text">
-              <span class="info-label">Invest Amount</span>
-              <span class="info-value">₱300</span>
+
+            <div class="info-icon">
+              💰
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Invest Amount
+              </span>
+
+              <span class="info-value">
+                ₱300
+              </span>
+
+            </div>
+
           </div>
 
-          <div class="info-item">
-            <div class="info-icon">📅</div>
-            <div class="info-text">
-              <span class="info-label">Daily Return*</span>
-              <span class="info-value">₱50</span>
-            </div>
-          </div>
 
           <div class="info-item">
-            <div class="info-icon">🔄</div>
-            <div class="info-text">
-              <span class="info-label">Cycle</span>
-              <span class="info-value">30 Days</span>
+
+            <div class="info-icon">
+              📅
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Daily Figure*
+              </span>
+
+              <span class="info-value">
+                ₱50
+              </span>
+
+            </div>
+
           </div>
 
+
           <div class="info-item">
-            <div class="info-icon">📈</div>
-            <div class="info-text">
-              <span class="info-label">Illustrative Total</span>
-              <span class="info-value">₱1,500</span>
+
+            <div class="info-icon">
+              🔄
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Cycle
+              </span>
+
+              <span class="info-value">
+                30 Days
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <div class="info-icon">
+              📈
+            </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Illustrative Total
+              </span>
+
+              <span class="info-value">
+                ₱1,500
+              </span>
+
+            </div>
+
           </div>
 
         </div>
+
 
         <button
           class="buyButton buy-green"
@@ -1422,9 +1585,7 @@ button:hover{
 
 
 
-      <!-- =================================================
-           PRODUCT 2
-      ================================================== -->
+      <!-- PRODUCT 2 -->
 
       <div class="product">
 
@@ -1451,38 +1612,90 @@ button:hover{
         <div class="product-info">
 
           <div class="info-item">
-            <div class="info-icon">💰</div>
-            <div class="info-text">
-              <span class="info-label">Invest Amount</span>
-              <span class="info-value">₱700</span>
+
+            <div class="info-icon">
+              💰
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Invest Amount
+              </span>
+
+              <span class="info-value">
+                ₱700
+              </span>
+
+            </div>
+
           </div>
 
-          <div class="info-item">
-            <div class="info-icon">📅</div>
-            <div class="info-text">
-              <span class="info-label">Daily Return*</span>
-              <span class="info-value">₱120</span>
-            </div>
-          </div>
 
           <div class="info-item">
-            <div class="info-icon">🔄</div>
-            <div class="info-text">
-              <span class="info-label">Cycle</span>
-              <span class="info-value">30 Days</span>
+
+            <div class="info-icon">
+              📅
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Daily Figure*
+              </span>
+
+              <span class="info-value">
+                ₱120
+              </span>
+
+            </div>
+
           </div>
 
+
           <div class="info-item">
-            <div class="info-icon">📈</div>
-            <div class="info-text">
-              <span class="info-label">Illustrative Total</span>
-              <span class="info-value">₱3,600</span>
+
+            <div class="info-icon">
+              🔄
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Cycle
+              </span>
+
+              <span class="info-value">
+                30 Days
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <div class="info-icon">
+              📈
+            </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Illustrative Total
+              </span>
+
+              <span class="info-value">
+                ₱3,600
+              </span>
+
+            </div>
+
           </div>
 
         </div>
+
 
         <button
           class="buyButton buy-blue"
@@ -1497,9 +1710,7 @@ button:hover{
 
 
 
-      <!-- =================================================
-           PRODUCT 3
-      ================================================== -->
+      <!-- PRODUCT 3 -->
 
       <div class="product">
 
@@ -1526,38 +1737,90 @@ button:hover{
         <div class="product-info">
 
           <div class="info-item">
-            <div class="info-icon">💰</div>
-            <div class="info-text">
-              <span class="info-label">Invest Amount</span>
-              <span class="info-value">₱1,000</span>
+
+            <div class="info-icon">
+              💰
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Invest Amount
+              </span>
+
+              <span class="info-value">
+                ₱1,000
+              </span>
+
+            </div>
+
           </div>
 
-          <div class="info-item">
-            <div class="info-icon">📅</div>
-            <div class="info-text">
-              <span class="info-label">Daily Return*</span>
-              <span class="info-value">₱180</span>
-            </div>
-          </div>
 
           <div class="info-item">
-            <div class="info-icon">🔄</div>
-            <div class="info-text">
-              <span class="info-label">Cycle</span>
-              <span class="info-value">30 Days</span>
+
+            <div class="info-icon">
+              📅
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Daily Figure*
+              </span>
+
+              <span class="info-value">
+                ₱180
+              </span>
+
+            </div>
+
           </div>
 
+
           <div class="info-item">
-            <div class="info-icon">📈</div>
-            <div class="info-text">
-              <span class="info-label">Illustrative Total</span>
-              <span class="info-value">₱5,400</span>
+
+            <div class="info-icon">
+              🔄
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Cycle
+              </span>
+
+              <span class="info-value">
+                30 Days
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <div class="info-icon">
+              📈
+            </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Illustrative Total
+              </span>
+
+              <span class="info-value">
+                ₱5,400
+              </span>
+
+            </div>
+
           </div>
 
         </div>
+
 
         <button
           class="buyButton buy-purple"
@@ -1572,9 +1835,7 @@ button:hover{
 
 
 
-      <!-- =================================================
-           PRODUCT 4
-      ================================================== -->
+      <!-- PRODUCT 4 -->
 
       <div class="product">
 
@@ -1601,38 +1862,90 @@ button:hover{
         <div class="product-info">
 
           <div class="info-item">
-            <div class="info-icon">💰</div>
-            <div class="info-text">
-              <span class="info-label">Invest Amount</span>
-              <span class="info-value">₱1,500</span>
+
+            <div class="info-icon">
+              💰
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Invest Amount
+              </span>
+
+              <span class="info-value">
+                ₱1,500
+              </span>
+
+            </div>
+
           </div>
 
-          <div class="info-item">
-            <div class="info-icon">📅</div>
-            <div class="info-text">
-              <span class="info-label">Daily Return*</span>
-              <span class="info-value">₱270</span>
-            </div>
-          </div>
 
           <div class="info-item">
-            <div class="info-icon">🔄</div>
-            <div class="info-text">
-              <span class="info-label">Cycle</span>
-              <span class="info-value">30 Days</span>
+
+            <div class="info-icon">
+              📅
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Daily Figure*
+              </span>
+
+              <span class="info-value">
+                ₱270
+              </span>
+
+            </div>
+
           </div>
 
+
           <div class="info-item">
-            <div class="info-icon">📈</div>
-            <div class="info-text">
-              <span class="info-label">Illustrative Total</span>
-              <span class="info-value">₱8,100</span>
+
+            <div class="info-icon">
+              🔄
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Cycle
+              </span>
+
+              <span class="info-value">
+                30 Days
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <div class="info-icon">
+              📈
+            </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Illustrative Total
+              </span>
+
+              <span class="info-value">
+                ₱8,100
+              </span>
+
+            </div>
+
           </div>
 
         </div>
+
 
         <button
           class="buyButton buy-cyan"
@@ -1647,9 +1960,7 @@ button:hover{
 
 
 
-      <!-- =================================================
-           PRODUCT 5
-      ================================================== -->
+      <!-- PRODUCT 5 -->
 
       <div class="product">
 
@@ -1676,38 +1987,90 @@ button:hover{
         <div class="product-info">
 
           <div class="info-item">
-            <div class="info-icon">💰</div>
-            <div class="info-text">
-              <span class="info-label">Invest Amount</span>
-              <span class="info-value">₱2,500</span>
+
+            <div class="info-icon">
+              💰
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Invest Amount
+              </span>
+
+              <span class="info-value">
+                ₱2,500
+              </span>
+
+            </div>
+
           </div>
 
-          <div class="info-item">
-            <div class="info-icon">📅</div>
-            <div class="info-text">
-              <span class="info-label">Daily Return*</span>
-              <span class="info-value">₱450</span>
-            </div>
-          </div>
 
           <div class="info-item">
-            <div class="info-icon">🔄</div>
-            <div class="info-text">
-              <span class="info-label">Cycle</span>
-              <span class="info-value">30 Days</span>
+
+            <div class="info-icon">
+              📅
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Daily Figure*
+              </span>
+
+              <span class="info-value">
+                ₱450
+              </span>
+
+            </div>
+
           </div>
 
+
           <div class="info-item">
-            <div class="info-icon">📈</div>
-            <div class="info-text">
-              <span class="info-label">Illustrative Total</span>
-              <span class="info-value">₱13,500</span>
+
+            <div class="info-icon">
+              🔄
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Cycle
+              </span>
+
+              <span class="info-value">
+                30 Days
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <div class="info-icon">
+              📈
+            </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Illustrative Total
+              </span>
+
+              <span class="info-value">
+                ₱13,500
+              </span>
+
+            </div>
+
           </div>
 
         </div>
+
 
         <button
           class="buyButton buy-green"
@@ -1722,9 +2085,7 @@ button:hover{
 
 
 
-      <!-- =================================================
-           PRODUCT 6
-      ================================================== -->
+      <!-- PRODUCT 6 -->
 
       <div class="product">
 
@@ -1751,38 +2112,90 @@ button:hover{
         <div class="product-info">
 
           <div class="info-item">
-            <div class="info-icon">💰</div>
-            <div class="info-text">
-              <span class="info-label">Invest Amount</span>
-              <span class="info-value">₱5,000</span>
+
+            <div class="info-icon">
+              💰
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Invest Amount
+              </span>
+
+              <span class="info-value">
+                ₱5,000
+              </span>
+
+            </div>
+
           </div>
 
-          <div class="info-item">
-            <div class="info-icon">📅</div>
-            <div class="info-text">
-              <span class="info-label">Daily Return*</span>
-              <span class="info-value">₱900</span>
-            </div>
-          </div>
 
           <div class="info-item">
-            <div class="info-icon">🔄</div>
-            <div class="info-text">
-              <span class="info-label">Cycle</span>
-              <span class="info-value">30 Days</span>
+
+            <div class="info-icon">
+              📅
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Daily Figure*
+              </span>
+
+              <span class="info-value">
+                ₱900
+              </span>
+
+            </div>
+
           </div>
 
+
           <div class="info-item">
-            <div class="info-icon">📈</div>
-            <div class="info-text">
-              <span class="info-label">Illustrative Total</span>
-              <span class="info-value">₱27,000</span>
+
+            <div class="info-icon">
+              🔄
             </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Cycle
+              </span>
+
+              <span class="info-value">
+                30 Days
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <div class="info-icon">
+              📈
+            </div>
+
+            <div class="info-text">
+
+              <span class="info-label">
+                Illustrative Total
+              </span>
+
+              <span class="info-value">
+                ₱27,000
+              </span>
+
+            </div>
+
           </div>
 
         </div>
+
 
         <button
           class="buyButton buy-dark"
@@ -1794,6 +2207,7 @@ button:hover{
         </button>
 
       </div>
+
 
     </div>
 
@@ -2056,6 +2470,10 @@ import {
 "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
 const firebaseConfig = {
 
   apiKey:
@@ -2115,7 +2533,7 @@ const transactionButton =
 
 
 /* =====================================================
-   MODAL
+   MODAL ELEMENTS
 ===================================================== */
 
 const investModal =
@@ -2146,7 +2564,7 @@ let selectedInvestment = null;
 
 
 /* =====================================================
-   MONEY
+   MONEY FORMAT
 ===================================================== */
 
 function formatMoney(amount){
@@ -2164,7 +2582,7 @@ function formatMoney(amount){
 
 
 /* =====================================================
-   BALANCE
+   SHOW BALANCE
 ===================================================== */
 
 function showBalance(amount){
@@ -2469,7 +2887,7 @@ async function withdraw(){
 
 
 /* =====================================================
-   OPEN MODAL
+   OPEN INVESTMENT MODAL
 ===================================================== */
 
 function openInvestmentModal(
@@ -2505,7 +2923,7 @@ function openInvestmentModal(
 
 
 /* =====================================================
-   CLOSE MODAL
+   CLOSE INVESTMENT MODAL
 ===================================================== */
 
 function closeInvestmentModal(){
