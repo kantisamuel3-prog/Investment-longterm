@@ -276,19 +276,20 @@ button:hover{
 
 
 /* =====================================================
-   PRODUCTS
+   PRODUCTS SECTION
 ===================================================== */
 
 .products-card{
   padding:26px;
   scroll-margin-top:20px;
+  overflow:hidden;
 }
 
 .section-title{
   display:flex;
   align-items:center;
   gap:12px;
-  margin-bottom:20px;
+  margin-bottom:22px;
 }
 
 .section-icon{
@@ -301,11 +302,22 @@ button:hover{
   align-items:center;
   justify-content:center;
   font-size:22px;
+  box-shadow:0 5px 14px rgba(37,99,235,.08);
+}
+
+.section-title-text{
+  flex:1;
 }
 
 .section-title h3{
   margin:0;
   font-size:22px;
+}
+
+.section-title p{
+  margin:4px 0 0;
+  color:#94a3b8;
+  font-size:12px;
 }
 
 
@@ -316,22 +328,26 @@ button:hover{
 .products{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:14px;
+  gap:15px;
 }
+
+
+/* =====================================================
+   PRODUCT CARD
+===================================================== */
 
 .product{
   position:relative;
-  border:1px solid #dbe3ef;
-  border-radius:17px;
+  min-width:0;
+  border:1px solid #e2e8f0;
+  border-radius:18px;
   padding:17px;
-  background:white;
-  transition:.22s ease;
+  background:#ffffff;
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    border-color .22s ease;
   overflow:hidden;
-}
-
-.product:hover{
-  transform:translateY(-3px);
-  box-shadow:0 10px 24px rgba(15,23,42,.09);
 }
 
 .product::before{
@@ -340,93 +356,250 @@ button:hover{
   top:0;
   left:0;
   right:0;
-  height:3px;
-  background:linear-gradient(90deg,#2563eb,#60a5fa);
+  height:4px;
+  background:
+    linear-gradient(
+      90deg,
+      #2563eb,
+      #60a5fa
+    );
+}
+
+.product::after{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  right:-48px;
+  top:-48px;
+  border-radius:50%;
+  background:rgba(37,99,235,.035);
+  pointer-events:none;
+}
+
+.product:hover{
+  transform:translateY(-4px);
+  border-color:#bfdbfe;
+  box-shadow:
+    0 15px 32px rgba(37,99,235,.12);
+}
+
+
+/* Product top */
+
+.product-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:7px;
+  margin-bottom:11px;
 }
 
 .product-icon{
   width:42px;
   height:42px;
-  border-radius:12px;
+  border-radius:13px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:20px;
-  margin-bottom:12px;
+  font-size:19px;
+  flex-shrink:0;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.7);
 }
 
 .starter-icon{
-  background:#ecfdf5;
+  background:
+    linear-gradient(135deg,#dcfce7,#ecfdf5);
 }
 
 .growth-icon{
-  background:#eff6ff;
+  background:
+    linear-gradient(135deg,#dbeafe,#eff6ff);
 }
 
 .premium-icon{
-  background:#f5f3ff;
+  background:
+    linear-gradient(135deg,#ede9fe,#f5f3ff);
 }
 
+
+/* Badge */
+
+.plan-badge{
+  padding:5px 7px;
+  border-radius:999px;
+  background:#f1f5f9;
+  color:#64748b;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.4px;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+.product:nth-child(2) .plan-badge,
+.product:nth-child(3) .plan-badge{
+  background:#eff6ff;
+  color:#2563eb;
+}
+
+.product:nth-child(4) .plan-badge,
+.product:nth-child(5) .plan-badge{
+  background:#f5f3ff;
+  color:#7c3aed;
+}
+
+.product:nth-child(6) .plan-badge{
+  background:#fff7ed;
+  color:#ea580c;
+}
+
+
+/* Product name */
+
 .product h3{
-  margin:0 0 11px;
-  font-size:16px;
+  margin:0 0 5px;
+  color:#14213d;
+  font-size:15px;
   line-height:1.25;
 }
 
-.product p{
-  color:#64748b;
-  line-height:1.35;
-  margin:6px 0;
-  font-size:13px;
+
+/* Investment */
+
+.investment-label{
+  display:block;
+  color:#94a3b8;
+  font-size:9px;
+  margin-bottom:2px;
 }
 
-.product strong{
-  color:#14213d;
+.investment-amount{
+  display:block;
+  color:#2563eb;
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:-.4px;
 }
+
+
+/* Divider */
+
+.product-divider{
+  height:1px;
+  background:#eef2f7;
+  margin:12px 0;
+}
+
+
+/* Daily Return */
 
 .daily-return{
-  margin-top:11px;
-  padding:9px 10px;
-  border-radius:10px;
-  background:#f8fafc;
-  border:1px solid #edf2f7;
+  margin-top:0;
+  padding:10px;
+  border-radius:12px;
+  background:
+    linear-gradient(
+      135deg,
+      #f8fbff,
+      #f0f7ff
+    );
+  border:1px solid #e1efff;
 }
 
 .daily-label{
   display:block;
   color:#64748b;
-  font-size:11px;
+  font-size:9px;
   margin-bottom:3px;
+  line-height:1.25;
 }
 
 .daily-value{
   display:block;
-  color:#16a34a;
-  font-size:17px;
+  color:#0f9f61;
+  font-size:15px;
+  font-weight:900;
+}
+
+
+/* Cycle */
+
+.cycle{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:9px;
+  color:#64748b;
+  font-size:10px;
+}
+
+.cycle span:last-child{
+  color:#334155;
   font-weight:700;
 }
 
-.cycle{
-  margin-top:7px;
-  color:#94a3b8;
-  font-size:11px;
-}
+
+/* Invest button */
 
 .buyButton{
   width:100%;
   margin-top:12px;
-  padding:11px 10px;
-  border-radius:9px;
+  padding:11px 8px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.2);
   background:
-    linear-gradient(135deg,#2563eb,#1d4ed8);
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
   color:white;
-  font-size:13px;
-  box-shadow:0 5px 13px rgba(37,99,235,.16);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.15px;
+  box-shadow:
+    0 7px 16px rgba(37,99,235,.20);
+  position:relative;
+  overflow:hidden;
+}
+
+.buyButton::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:60%;
+  height:100%;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.20),
+      transparent
+    );
+  transition:.35s ease;
+}
+
+.buyButton:hover::after{
+  left:120%;
 }
 
 .buyButton:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 10px 21px rgba(37,99,235,.28);
   background:
-    linear-gradient(135deg,#1d4ed8,#1e40af);
+    linear-gradient(
+      135deg,
+      #1d4ed8,
+      #1e40af
+    );
+}
+
+.buyButton:active{
+  transform:scale(.97);
 }
 
 
@@ -437,9 +610,9 @@ button:hover{
 .modal-overlay{
   position:fixed;
   inset:0;
-  background:rgba(15,23,42,.55);
-  backdrop-filter:blur(5px);
-  -webkit-backdrop-filter:blur(5px);
+  background:rgba(15,23,42,.58);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
   display:none;
   align-items:center;
   justify-content:center;
@@ -454,9 +627,10 @@ button:hover{
 .invest-modal{
   width:min(430px,100%);
   background:white;
-  border-radius:22px;
+  border-radius:23px;
   overflow:hidden;
-  box-shadow:0 25px 70px rgba(15,23,42,.25);
+  box-shadow:
+    0 25px 70px rgba(15,23,42,.28);
   animation:modalIn .18s ease-out;
 }
 
@@ -472,21 +646,40 @@ button:hover{
 }
 
 .modal-top{
-  padding:20px 20px 17px;
+  padding:21px 20px 19px;
   background:
-    linear-gradient(135deg,#101827,#172554);
+    linear-gradient(
+      135deg,
+      #101827,
+      #172554
+    );
   color:white;
+  position:relative;
+  overflow:hidden;
+}
+
+.modal-top::after{
+  content:"";
+  position:absolute;
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  right:-60px;
+  top:-80px;
+  background:rgba(96,165,250,.10);
 }
 
 .modal-top-row{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  position:relative;
+  z-index:2;
 }
 
 .modal-top h3{
   margin:0;
-  font-size:20px;
+  font-size:19px;
 }
 
 .close-modal{
@@ -494,15 +687,25 @@ button:hover{
   height:34px;
   padding:0;
   border-radius:50%;
-  background:rgba(255,255,255,.1);
+  background:rgba(255,255,255,.10);
   color:white;
   font-size:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.close-modal:hover{
+  background:rgba(255,255,255,.18);
+  transform:none;
 }
 
 .modal-product-name{
   margin-top:8px;
   color:#bfdbfe;
   font-size:13px;
+  position:relative;
+  z-index:2;
 }
 
 .modal-body{
@@ -513,7 +716,7 @@ button:hover{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
 
 .summary-box{
@@ -526,14 +729,19 @@ button:hover{
 .summary-box span{
   display:block;
   color:#64748b;
-  font-size:11px;
+  font-size:10px;
   margin-bottom:5px;
 }
 
 .summary-box strong{
   display:block;
   color:#14213d;
-  font-size:18px;
+  font-size:17px;
+}
+
+.summary-box.return{
+  background:#f0fdf4;
+  border-color:#dcfce7;
 }
 
 .summary-box.return strong{
@@ -542,7 +750,7 @@ button:hover{
 
 .cycle-box{
   border-radius:13px;
-  padding:14px;
+  padding:13px;
   background:#f8fbff;
   border:1px solid #dbeafe;
   margin-bottom:14px;
@@ -562,31 +770,34 @@ button:hover{
   color:#64748b;
   margin-top:5px;
   line-height:1.4;
+  font-size:10px;
 }
 
 .projected{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:12px;
   padding:13px 0;
   border-top:1px solid #eef2f7;
   border-bottom:1px solid #eef2f7;
-  margin-bottom:14px;
+  margin-bottom:13px;
 }
 
 .projected span{
   color:#64748b;
-  font-size:13px;
+  font-size:12px;
 }
 
 .projected strong{
   color:#14213d;
   font-size:17px;
+  white-space:nowrap;
 }
 
 .demo-note{
-  font-size:11px;
-  line-height:1.45;
+  font-size:10px;
+  line-height:1.5;
   color:#94a3b8;
   margin:0 0 15px;
 }
@@ -594,9 +805,24 @@ button:hover{
 .confirm-invest{
   width:100%;
   background:
-    linear-gradient(135deg,#2563eb,#1d4ed8);
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
   color:white;
   padding:13px;
+  box-shadow:
+    0 7px 16px rgba(37,99,235,.20);
+}
+
+.confirm-invest:hover{
+  background:
+    linear-gradient(
+      135deg,
+      #1d4ed8,
+      #1e40af
+    );
 }
 
 .cancel-invest{
@@ -607,10 +833,14 @@ button:hover{
   padding:11px;
 }
 
+.cancel-invest:hover{
+  background:#e2e8f0;
+}
+
 
 /* =====================================================
    BOTTOM NAVIGATION
-   IMPORTANT: SAME STRUCTURE/DESIGN
+   IMPORTANT: PRESERVED
 ===================================================== */
 
 .bottom-nav{
@@ -684,57 +914,77 @@ button:hover{
   }
 
   /*
-     IMPORTANT:
-     2 products per row on smaller screens
+     3 PRODUCTS PER ROW
+     PRESERVED FOR MOBILE
   */
 
   .products{
-    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-columns:
+      repeat(3,minmax(0,1fr));
     gap:10px;
   }
 
   .product{
-    padding:14px;
+    padding:13px 10px 11px;
+    border-radius:15px;
   }
 
-  .product-icon{
-    width:38px;
-    height:38px;
-    font-size:18px;
-    margin-bottom:9px;
-  }
-
-  .product h3{
-    font-size:14px;
+  .product-top{
     margin-bottom:8px;
   }
 
-  .product p{
-    font-size:11px;
-    margin:4px 0;
+  .product-icon{
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    font-size:16px;
+  }
+
+  .plan-badge{
+    font-size:7px;
+    padding:4px 5px;
+  }
+
+  .product h3{
+    font-size:12px;
+    margin-bottom:4px;
+  }
+
+  .investment-label{
+    font-size:7px;
+  }
+
+  .investment-amount{
+    font-size:15px;
+  }
+
+  .product-divider{
+    margin:9px 0;
   }
 
   .daily-return{
-    margin-top:8px;
-    padding:7px 8px;
+    padding:7px;
+    border-radius:9px;
   }
 
   .daily-label{
-    font-size:10px;
+    font-size:7px;
   }
 
   .daily-value{
-    font-size:14px;
-  }
-
-  .cycle{
     font-size:10px;
   }
 
+  .cycle{
+    font-size:8px;
+    margin-top:7px;
+  }
+
   .buyButton{
-    margin-top:9px;
-    padding:10px 7px;
-    font-size:11px;
+    margin-top:8px;
+    padding:8px 4px;
+    font-size:8px;
+    border-radius:8px;
   }
 
   .balance{
@@ -829,27 +1079,102 @@ button:hover{
     margin-bottom:15px;
   }
 
-  .section-title h3{
+  .section-icon{
+    width:39px;
+    height:39px;
     font-size:19px;
   }
 
-  .section-icon{
-    width:40px;
-    height:40px;
+  .section-title h3{
+    font-size:18px;
   }
 
+  .section-title p{
+    font-size:10px;
+  }
+
+  /*
+     KEEP 3 COLUMNS ON PHONE
+  */
+
   .products{
-    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-columns:
+      repeat(3,minmax(0,1fr));
+    gap:8px;
   }
 
   .product{
     min-width:0;
-    padding:13px;
-    border-radius:14px;
+    padding:11px 8px 9px;
+    border-radius:13px;
+  }
+
+  .product-icon{
+    width:31px;
+    height:31px;
+    border-radius:9px;
+    font-size:14px;
+    margin-bottom:7px;
+  }
+
+  .plan-badge{
+    display:none;
   }
 
   .product h3{
+    font-size:10px;
+    line-height:1.25;
+    margin-bottom:4px;
+  }
+
+  .investment-label{
+    font-size:6.5px;
+  }
+
+  .investment-amount{
     font-size:13px;
+    letter-spacing:-.2px;
+  }
+
+  .product-divider{
+    margin:7px 0;
+  }
+
+  .daily-return{
+    padding:6px 4px;
+    border-radius:7px;
+  }
+
+  .daily-label{
+    font-size:6px;
+    margin-bottom:2px;
+  }
+
+  .daily-value{
+    font-size:8.5px;
+  }
+
+  .cycle{
+    font-size:7px;
+    margin-top:6px;
+  }
+
+  .cycle span:first-child{
+    display:none;
+  }
+
+  .cycle span:last-child{
+    width:100%;
+    text-align:center;
+  }
+
+  .buyButton{
+    margin-top:7px;
+    padding:7px 2px;
+    font-size:7.5px;
+    border-radius:7px;
+    box-shadow:
+      0 4px 9px rgba(37,99,235,.18);
   }
 
   .bottom-nav{
@@ -882,28 +1207,38 @@ button:hover{
   }
 
   .products-card{
-    padding:12px;
-  }
-
-  .product{
     padding:11px;
   }
 
-  .product h3{
+  .products{
+    gap:6px;
+  }
+
+  .product{
+    padding:9px 6px 8px;
+  }
+
+  .product-icon{
+    width:28px;
+    height:28px;
     font-size:12px;
   }
 
-  .product p{
-    font-size:10px;
+  .product h3{
+    font-size:9px;
+  }
+
+  .investment-amount{
+    font-size:12px;
   }
 
   .daily-value{
-    font-size:13px;
+    font-size:8px;
   }
 
   .buyButton{
-    font-size:10px;
-    padding:9px 5px;
+    font-size:7px;
+    padding:7px 2px;
   }
 
   .nav-item{
@@ -1062,9 +1397,17 @@ button:hover{
         📊
       </div>
 
-      <h3>
-        Investment Products
-      </h3>
+      <div class="section-title-text">
+
+        <h3>
+          Investment Products
+        </h3>
+
+        <p>
+          Select a plan that fits your investment amount
+        </p>
+
+      </div>
 
     </div>
 
@@ -1077,20 +1420,34 @@ button:hover{
 
       <div class="product">
 
-        <div class="product-icon starter-icon">
-          🌱
+        <div class="product-top">
+
+          <div class="product-icon starter-icon">
+            🌱
+          </div>
+
+          <span class="plan-badge">
+            Basic
+          </span>
+
         </div>
 
         <h3>
           Starter Plan
         </h3>
 
-        <p>
-          Investment:
-          <strong>₱300</strong>
-        </p>
+        <span class="investment-label">
+          Investment Amount
+        </span>
+
+        <span class="investment-amount">
+          ₱300
+        </span>
+
+        <div class="product-divider"></div>
 
         <div class="daily-return">
+
           <span class="daily-label">
             Illustrative Daily Return
           </span>
@@ -1098,10 +1455,12 @@ button:hover{
           <span class="daily-value">
             ₱50 / day
           </span>
+
         </div>
 
         <div class="cycle">
-          Cycle • 30 days
+          <span>Cycle</span>
+          <span>30 Days</span>
         </div>
 
         <button
@@ -1110,7 +1469,7 @@ button:hover{
           data-name="Starter Plan"
           data-daily="50"
         >
-          Invest ₱300
+          Invest Now →
         </button>
 
       </div>
@@ -1121,20 +1480,34 @@ button:hover{
 
       <div class="product">
 
-        <div class="product-icon growth-icon">
-          📈
+        <div class="product-top">
+
+          <div class="product-icon growth-icon">
+            📈
+          </div>
+
+          <span class="plan-badge">
+            Popular
+          </span>
+
         </div>
 
         <h3>
           Growth Plan
         </h3>
 
-        <p>
-          Investment:
-          <strong>₱700</strong>
-        </p>
+        <span class="investment-label">
+          Investment Amount
+        </span>
+
+        <span class="investment-amount">
+          ₱700
+        </span>
+
+        <div class="product-divider"></div>
 
         <div class="daily-return">
+
           <span class="daily-label">
             Illustrative Daily Return
           </span>
@@ -1142,10 +1515,12 @@ button:hover{
           <span class="daily-value">
             ₱120 / day
           </span>
+
         </div>
 
         <div class="cycle">
-          Cycle • 30 days
+          <span>Cycle</span>
+          <span>30 Days</span>
         </div>
 
         <button
@@ -1154,7 +1529,7 @@ button:hover{
           data-name="Growth Plan"
           data-daily="120"
         >
-          Invest ₱700
+          Invest Now →
         </button>
 
       </div>
@@ -1165,20 +1540,34 @@ button:hover{
 
       <div class="product">
 
-        <div class="product-icon growth-icon">
-          🚀
+        <div class="product-top">
+
+          <div class="product-icon growth-icon">
+            🚀
+          </div>
+
+          <span class="plan-badge">
+            Growth
+          </span>
+
         </div>
 
         <h3>
           Advance Plan
         </h3>
 
-        <p>
-          Investment:
-          <strong>₱1,000</strong>
-        </p>
+        <span class="investment-label">
+          Investment Amount
+        </span>
+
+        <span class="investment-amount">
+          ₱1,000
+        </span>
+
+        <div class="product-divider"></div>
 
         <div class="daily-return">
+
           <span class="daily-label">
             Illustrative Daily Return
           </span>
@@ -1186,10 +1575,12 @@ button:hover{
           <span class="daily-value">
             ₱180 / day
           </span>
+
         </div>
 
         <div class="cycle">
-          Cycle • 30 days
+          <span>Cycle</span>
+          <span>30 Days</span>
         </div>
 
         <button
@@ -1198,7 +1589,7 @@ button:hover{
           data-name="Advance Plan"
           data-daily="180"
         >
-          Invest ₱1,000
+          Invest Now →
         </button>
 
       </div>
@@ -1209,20 +1600,34 @@ button:hover{
 
       <div class="product">
 
-        <div class="product-icon premium-icon">
-          💎
+        <div class="product-top">
+
+          <div class="product-icon premium-icon">
+            💎
+          </div>
+
+          <span class="plan-badge">
+            Premium
+          </span>
+
         </div>
 
         <h3>
           Premium Plan
         </h3>
 
-        <p>
-          Investment:
-          <strong>₱1,500</strong>
-        </p>
+        <span class="investment-label">
+          Investment Amount
+        </span>
+
+        <span class="investment-amount">
+          ₱1,500
+        </span>
+
+        <div class="product-divider"></div>
 
         <div class="daily-return">
+
           <span class="daily-label">
             Illustrative Daily Return
           </span>
@@ -1230,10 +1635,12 @@ button:hover{
           <span class="daily-value">
             ₱270 / day
           </span>
+
         </div>
 
         <div class="cycle">
-          Cycle • 30 days
+          <span>Cycle</span>
+          <span>30 Days</span>
         </div>
 
         <button
@@ -1242,7 +1649,7 @@ button:hover{
           data-name="Premium Plan"
           data-daily="270"
         >
-          Invest ₱1,500
+          Invest Now →
         </button>
 
       </div>
@@ -1253,20 +1660,34 @@ button:hover{
 
       <div class="product">
 
-        <div class="product-icon premium-icon">
-          ⭐
+        <div class="product-top">
+
+          <div class="product-icon premium-icon">
+            ⭐
+          </div>
+
+          <span class="plan-badge">
+            Advanced
+          </span>
+
         </div>
 
         <h3>
           Elite Plan
         </h3>
 
-        <p>
-          Investment:
-          <strong>₱2,500</strong>
-        </p>
+        <span class="investment-label">
+          Investment Amount
+        </span>
+
+        <span class="investment-amount">
+          ₱2,500
+        </span>
+
+        <div class="product-divider"></div>
 
         <div class="daily-return">
+
           <span class="daily-label">
             Illustrative Daily Return
           </span>
@@ -1274,10 +1695,12 @@ button:hover{
           <span class="daily-value">
             ₱450 / day
           </span>
+
         </div>
 
         <div class="cycle">
-          Cycle • 30 days
+          <span>Cycle</span>
+          <span>30 Days</span>
         </div>
 
         <button
@@ -1286,7 +1709,7 @@ button:hover{
           data-name="Elite Plan"
           data-daily="450"
         >
-          Invest ₱2,500
+          Invest Now →
         </button>
 
       </div>
@@ -1297,20 +1720,34 @@ button:hover{
 
       <div class="product">
 
-        <div class="product-icon premium-icon">
-          👑
+        <div class="product-top">
+
+          <div class="product-icon premium-icon">
+            👑
+          </div>
+
+          <span class="plan-badge">
+            Executive
+          </span>
+
         </div>
 
         <h3>
           Executive Plan
         </h3>
 
-        <p>
-          Investment:
-          <strong>₱5,000</strong>
-        </p>
+        <span class="investment-label">
+          Investment Amount
+        </span>
+
+        <span class="investment-amount">
+          ₱5,000
+        </span>
+
+        <div class="product-divider"></div>
 
         <div class="daily-return">
+
           <span class="daily-label">
             Illustrative Daily Return
           </span>
@@ -1318,10 +1755,12 @@ button:hover{
           <span class="daily-value">
             ₱900 / day
           </span>
+
         </div>
 
         <div class="cycle">
-          Cycle • 30 days
+          <span>Cycle</span>
+          <span>30 Days</span>
         </div>
 
         <button
@@ -1330,7 +1769,7 @@ button:hover{
           data-name="Executive Plan"
           data-daily="900"
         >
-          Invest ₱5,000
+          Invest Now →
         </button>
 
       </div>
