@@ -1,880 +1,922 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Novarise Dashboard</title>
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #f3f7ff, #eef4ff);
-      color: #14213d;
-
-      /* Space for bottom navigation */
-      padding-bottom: 92px;
-    }
-
-
-    /* =====================================================
-       HEADER
-    ===================================================== */
-
-    header {
-      background: linear-gradient(
-        135deg,
-        #101827,
-        #172554
-      );
-
-      color: white;
-
-      padding: 18px 5%;
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      box-shadow:
-        0 4px 18px rgba(0,0,0,0.15);
-
-      position: relative;
-      z-index: 10;
-    }
-
-
-    .logo {
-      display: flex;
-      align-items: center;
-
-      gap: 10px;
-
-      font-size: 23px;
-      font-weight: bold;
-    }
-
-
-    .logo-icon {
-      width: 38px;
-      height: 38px;
-
-      border-radius: 11px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #2563eb,
-          #60a5fa
-        );
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 21px;
-    }
-
-
-    #logoutButton {
-      border: 0;
-
-      background: #ef4444;
-
-      color: white;
-
-      padding: 11px 18px;
-
-      border-radius: 9px;
-
-      cursor: pointer;
-
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-
-    #logoutButton:hover {
-      background: #dc2626;
-    }
-
-
-    /* =====================================================
-       MAIN
-    ===================================================== */
-
-    main {
-      max-width: 1250px;
-
-      margin: 35px auto;
-
-      padding: 0 22px;
-    }
-
-
-    .welcome {
-      margin-bottom: 25px;
-    }
-
-
-    .welcome h2 {
-      margin: 0 0 8px;
-
-      font-size: 32px;
-    }
-
-
-    #userEmail {
-      color: #64748b;
-
-      font-size: 15px;
-
-      word-break: break-word;
-    }
-
-
-    /* =====================================================
-       TOP DASHBOARD
-    ===================================================== */
-
-    .top-grid {
-      display: grid;
-
-      grid-template-columns:
-        minmax(0, 2fr)
-        minmax(320px, 1fr);
-
-      gap: 22px;
-
-      margin-bottom: 25px;
-    }
-
-
-    .card {
-      background: rgba(255,255,255,0.96);
-
-      border-radius: 20px;
-
-      padding: 28px;
-
-      box-shadow:
-        0 8px 30px rgba(37,99,235,0.08);
-
-      border:
-        1px solid rgba(148,163,184,0.18);
-    }
-
-
-    /* =====================================================
-       BALANCE
-    ===================================================== */
-
-    .balance-card {
-      position: relative;
-
-      overflow: hidden;
-    }
-
-
-    .balance-card::after {
-      content: "";
-
-      position: absolute;
-
-      width: 260px;
-      height: 260px;
-
-      border-radius: 50%;
-
-      right: -100px;
-      bottom: -150px;
-
-      background:
-        rgba(37,99,235,0.06);
-
-      pointer-events: none;
-    }
-
-
-    .balance-title {
-      display: flex;
-
-      align-items: center;
-
-      gap: 13px;
-    }
-
-
-    .balance-icon {
-      width: 55px;
-      height: 55px;
-
-      border-radius: 16px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #dbeafe,
-          #eff6ff
-        );
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 27px;
-
-      flex-shrink: 0;
-    }
-
-
-    .balance-title h3 {
-      margin: 0;
-
-      font-size: 20px;
-    }
-
-
-    .balance {
-      font-size: 42px;
-
-      font-weight: bold;
-
-      margin: 20px 0;
-
-      letter-spacing: -1px;
-
-      overflow-wrap: anywhere;
-    }
-
-
-    .buttons {
-      display: flex;
-
-      gap: 13px;
-
-      flex-wrap: wrap;
-    }
-
-
-    button {
-      border: 0;
-
-      padding: 13px 22px;
-
-      border-radius: 10px;
-
-      cursor: pointer;
-
-      font-weight: bold;
-
-      font-size: 15px;
-
-      transition: 0.2s ease;
-    }
-
-
-    button:hover {
-      transform: translateY(-1px);
-    }
-
-
-    #depositButton {
-      background:
-        linear-gradient(
-          135deg,
-          #16a34a,
-          #22c55e
-        );
-
-      color: white;
-    }
-
-
-    #withdrawButton {
-      background:
-        linear-gradient(
-          135deg,
-          #f59e0b,
-          #fbbf24
-        );
-
-      color: white;
-    }
-
-
-    /* =====================================================
-       TRANSACTION CARD
-    ===================================================== */
-
-    .transaction-card {
-      background:
-        linear-gradient(
-          145deg,
-          #f8fbff,
-          #edf5ff
-        );
-
-      border:
-        1px solid #bfdbfe;
-
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: space-between;
-    }
-
-
-    .transaction-heading {
-      display: flex;
-
-      align-items: flex-start;
-
-      gap: 15px;
-    }
-
-
-    .transaction-icon {
-      width: 58px;
-      height: 58px;
-
-      flex-shrink: 0;
-
-      border-radius: 17px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #2563eb,
-          #6366f1
-        );
-
-      color: white;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 27px;
-
-      box-shadow:
-        0 7px 18px
-        rgba(37,99,235,0.25);
-    }
-
-
-    .transaction-heading h3 {
-      margin: 2px 0 8px;
-
-      font-size: 20px;
-    }
-
-
-    .transaction-heading p {
-      margin: 0;
-
-      color: #64748b;
-
-      line-height: 1.5;
-
-      font-size: 14px;
-    }
-
-
-    #transactionButton {
-      width: 100%;
-
-      margin-top: 25px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #2563eb,
-          #1d4ed8
-        );
-
-      color: white;
-
-      font-size: 16px;
-
-      padding: 15px;
-
-      box-shadow:
-        0 7px 18px
-        rgba(37,99,235,0.20);
-    }
-
-
-    #transactionButton:hover {
-      background:
-        linear-gradient(
-          135deg,
-          #1d4ed8,
-          #1e40af
-        );
-    }
-
-
-    /* =====================================================
-       INVESTMENT PRODUCTS
-    ===================================================== */
-
-    .products-card {
-      padding: 28px;
-
-      scroll-margin-top: 20px;
-    }
-
-
-    .section-title {
-      display: flex;
-
-      align-items: center;
-
-      gap: 12px;
-
-      margin-bottom: 22px;
-    }
-
-
-    .section-icon {
-      width: 45px;
-      height: 45px;
-
-      border-radius: 13px;
-
-      background: #eff6ff;
-
-      color: #2563eb;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 22px;
-    }
-
-
-    .section-title h3 {
-      margin: 0;
-
-      font-size: 22px;
-    }
-
-
-    .products {
-      display: grid;
-
-      grid-template-columns:
-        repeat(3, 1fr);
-
-      gap: 18px;
-    }
-
-
-    .product {
-      border:
-        1px solid #dbe3ef;
-
-      border-radius: 16px;
-
-      padding: 22px;
-
-      background: white;
-
-      transition: 0.2s ease;
-    }
-
-
-    .product:hover {
-      transform: translateY(-3px);
-
-      box-shadow:
-        0 8px 22px
-        rgba(15,23,42,0.08);
-    }
-
-
-    .product-icon {
-      width: 48px;
-      height: 48px;
-
-      border-radius: 14px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 23px;
-
-      margin-bottom: 15px;
-    }
-
-
-    .starter-icon {
-      background: #dcfce7;
-    }
-
-
-    .growth-icon {
-      background: #dbeafe;
-    }
-
-
-    .premium-icon {
-      background: #f3e8ff;
-    }
-
-
-    .product h3 {
-      margin: 0 0 12px;
-
-      font-size: 18px;
-    }
-
-
-    .product p {
-      color: #64748b;
-
-      line-height: 1.5;
-
-      margin: 9px 0;
-    }
-
-
-    .product strong {
-      color: #14213d;
-    }
-
-
-    .buyButton {
-      background:
-        linear-gradient(
-          135deg,
-          #2563eb,
-          #1d4ed8
-        );
-
-      color: white;
-
-      width: 100%;
-
-      margin-top: 12px;
-    }
-
-
-    /* =====================================================
-       BOTTOM NAVIGATION
-    ===================================================== */
-
-    .bottom-nav {
-      position: fixed;
-
-      left: 0;
-      right: 0;
-      bottom: 0;
-
-      height: 78px;
-
-      background:
-        rgba(255,253,246,0.97);
-
-      border-top:
-        1px solid #e7e2d7;
-
-      box-shadow:
-        0 -5px 20px
-        rgba(15,23,42,0.08);
-
-      display: flex;
-
-      align-items: stretch;
-
-      justify-content: space-around;
-
-      z-index: 99999;
-
-      padding-bottom:
-        env(safe-area-inset-bottom);
-
-      backdrop-filter: blur(12px);
-
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-
-    .nav-item {
-      flex: 1;
-
-      max-width: 150px;
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      justify-content: center;
-
-      gap: 4px;
-
-      text-decoration: none;
-
-      color: #777;
-
-      font-size: 13px;
-
-      font-weight: 500;
-
-      transition: 0.2s ease;
-
-      -webkit-tap-highlight-color:
-        transparent;
-    }
-
-
-    .nav-item svg {
-      width: 27px;
-      height: 27px;
-
-      stroke: #777;
-
-      stroke-width: 1.8;
-
-      fill: none;
-
-      stroke-linecap: round;
-      stroke-linejoin: round;
-
-      transition: 0.2s ease;
-    }
-
-
-    .nav-item.active {
-      color: #2563eb;
-
-      font-weight: 600;
-    }
-
-
-    .nav-item.active svg {
-      stroke: #2563eb;
-
-      transform: translateY(-1px);
-    }
-
-
-    .nav-item:active {
-      transform: scale(0.94);
-    }
-
-
-    /* =====================================================
-       RESPONSIVE
-    ===================================================== */
-
-    @media (max-width: 850px) {
-
-      .top-grid {
-        grid-template-columns: 1fr;
-      }
-
-
-      .products {
-        grid-template-columns: 1fr;
-      }
-
-
-      .balance {
-        font-size: 35px;
-      }
-
-    }
-
-
-    @media (max-width: 600px) {
-
-      body {
-        padding-bottom: 88px;
-      }
-
-
-      header {
-        padding: 14px 15px;
-      }
-
-
-      .logo {
-        font-size: 20px;
-
-        gap: 8px;
-      }
-
-
-      .logo-icon {
-        width: 35px;
-        height: 35px;
-
-        font-size: 19px;
-      }
-
-
-      #logoutButton {
-        padding: 9px 13px;
-
-        font-size: 13px;
-      }
-
-
-      main {
-        margin: 25px auto;
-
-        padding: 0 14px;
-      }
-
-
-      .welcome {
-        margin-bottom: 20px;
-      }
-
-
-      .welcome h2 {
-        font-size: 27px;
-      }
-
-
-      .card {
-        padding: 20px;
-
-        border-radius: 17px;
-      }
-
-
-      .balance {
-        font-size: 31px;
-
-        margin: 18px 0;
-      }
-
-
-      .buttons {
-        gap: 9px;
-      }
-
-
-      .buttons button {
-        flex: 1;
-
-        min-width: 120px;
-
-        padding:
-          12px 10px;
-
-        font-size: 14px;
-      }
-
-
-      .transaction-heading {
-        gap: 11px;
-      }
-
-
-      .transaction-icon {
-        width: 50px;
-        height: 50px;
-
-        font-size: 23px;
-      }
-
-
-      .transaction-heading h3 {
-        font-size: 18px;
-      }
-
-
-      .transaction-heading p {
-        font-size: 13px;
-      }
-
-
-      .products-card {
-        padding: 20px;
-      }
-
-
-      .section-title h3 {
-        font-size: 20px;
-      }
-
-
-      .product {
-        padding: 19px;
-      }
-
-
-      .bottom-nav {
-        height: 76px;
-      }
-
-
-      .nav-item {
-        font-size: 12px;
-      }
-
-
-      .nav-item svg {
-        width: 26px;
-        height: 26px;
-      }
-
-    }
-
-
-    @media (max-width: 360px) {
-
-      .logo {
-        font-size: 18px;
-      }
-
-
-      #logoutButton {
-        padding: 8px 10px;
-      }
-
-
-      .balance {
-        font-size: 28px;
-      }
-
-
-      .nav-item {
-        font-size: 11px;
-      }
-
-
-      .nav-item svg {
-        width: 24px;
-        height: 24px;
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Novarise Dashboard</title>
+
+<style>
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:
+    linear-gradient(135deg,#f5f8ff,#eef4ff);
+  color:#14213d;
+  padding-bottom:92px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header{
+  background:
+    linear-gradient(135deg,#101827,#172554);
+  color:white;
+  padding:18px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 4px 18px rgba(0,0,0,.15);
+  position:relative;
+  z-index:10;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:23px;
+  font-weight:bold;
+}
+
+.logo-icon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:
+    linear-gradient(135deg,#2563eb,#60a5fa);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
+}
+
+#logoutButton{
+  border:0;
+  background:#ef4444;
+  color:white;
+  padding:11px 18px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:14px;
+}
+
+#logoutButton:hover{
+  background:#dc2626;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main{
+  max-width:1250px;
+  margin:35px auto;
+  padding:0 22px;
+}
+
+.welcome{
+  margin-bottom:25px;
+}
+
+.welcome h2{
+  margin:0 0 8px;
+  font-size:32px;
+}
+
+#userEmail{
+  color:#64748b;
+  font-size:15px;
+  word-break:break-word;
+}
+
+
+/* =====================================================
+   TOP GRID
+===================================================== */
+
+.top-grid{
+  display:grid;
+  grid-template-columns:
+    minmax(0,2fr)
+    minmax(320px,1fr);
+  gap:22px;
+  margin-bottom:25px;
+}
+
+.card{
+  background:rgba(255,255,255,.96);
+  border-radius:20px;
+  padding:28px;
+  box-shadow:0 8px 30px rgba(37,99,235,.08);
+  border:1px solid rgba(148,163,184,.18);
+}
+
+
+/* =====================================================
+   BALANCE
+===================================================== */
+
+.balance-card{
+  position:relative;
+  overflow:hidden;
+}
+
+.balance-card::after{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  right:-100px;
+  bottom:-150px;
+  background:rgba(37,99,235,.06);
+  pointer-events:none;
+}
+
+.balance-title{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.balance-icon{
+  width:55px;
+  height:55px;
+  border-radius:16px;
+  background:
+    linear-gradient(135deg,#dbeafe,#eff6ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:27px;
+  flex-shrink:0;
+}
+
+.balance-title h3{
+  margin:0;
+  font-size:20px;
+}
+
+.balance{
+  font-size:42px;
+  font-weight:bold;
+  margin:20px 0;
+  letter-spacing:-1px;
+  overflow-wrap:anywhere;
+}
+
+.buttons{
+  display:flex;
+  gap:13px;
+  flex-wrap:wrap;
+}
+
+button{
+  border:0;
+  padding:13px 22px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:15px;
+  transition:.2s ease;
+}
+
+button:hover{
+  transform:translateY(-1px);
+}
+
+#depositButton{
+  background:
+    linear-gradient(135deg,#16a34a,#22c55e);
+  color:white;
+}
+
+#withdrawButton{
+  background:
+    linear-gradient(135deg,#f59e0b,#fbbf24);
+  color:white;
+}
+
+
+/* =====================================================
+   TRANSACTION
+===================================================== */
+
+.transaction-card{
+  background:
+    linear-gradient(145deg,#f8fbff,#edf5ff);
+  border:1px solid #bfdbfe;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.transaction-heading{
+  display:flex;
+  align-items:flex-start;
+  gap:15px;
+}
+
+.transaction-icon{
+  width:58px;
+  height:58px;
+  flex-shrink:0;
+  border-radius:17px;
+  background:
+    linear-gradient(135deg,#2563eb,#6366f1);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:27px;
+  box-shadow:0 7px 18px rgba(37,99,235,.25);
+}
+
+.transaction-heading h3{
+  margin:2px 0 8px;
+  font-size:20px;
+}
+
+.transaction-heading p{
+  margin:0;
+  color:#64748b;
+  line-height:1.5;
+  font-size:14px;
+}
+
+#transactionButton{
+  width:100%;
+  margin-top:25px;
+  background:
+    linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white;
+  font-size:16px;
+  padding:15px;
+  box-shadow:0 7px 18px rgba(37,99,235,.20);
+}
+
+
+/* =====================================================
+   PRODUCTS
+===================================================== */
+
+.products-card{
+  padding:26px;
+  scroll-margin-top:20px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.section-icon{
+  width:45px;
+  height:45px;
+  border-radius:13px;
+  background:#eff6ff;
+  color:#2563eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+}
+
+.section-title h3{
+  margin:0;
+  font-size:22px;
+}
+
+
+/* =====================================================
+   PRODUCT GRID
+===================================================== */
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.product{
+  position:relative;
+  border:1px solid #dbe3ef;
+  border-radius:17px;
+  padding:17px;
+  background:white;
+  transition:.22s ease;
+  overflow:hidden;
+}
+
+.product:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 24px rgba(15,23,42,.09);
+}
+
+.product::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:3px;
+  background:linear-gradient(90deg,#2563eb,#60a5fa);
+}
+
+.product-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  margin-bottom:12px;
+}
+
+.starter-icon{
+  background:#ecfdf5;
+}
+
+.growth-icon{
+  background:#eff6ff;
+}
+
+.premium-icon{
+  background:#f5f3ff;
+}
+
+.product h3{
+  margin:0 0 11px;
+  font-size:16px;
+  line-height:1.25;
+}
+
+.product p{
+  color:#64748b;
+  line-height:1.35;
+  margin:6px 0;
+  font-size:13px;
+}
+
+.product strong{
+  color:#14213d;
+}
+
+.daily-return{
+  margin-top:11px;
+  padding:9px 10px;
+  border-radius:10px;
+  background:#f8fafc;
+  border:1px solid #edf2f7;
+}
+
+.daily-label{
+  display:block;
+  color:#64748b;
+  font-size:11px;
+  margin-bottom:3px;
+}
+
+.daily-value{
+  display:block;
+  color:#16a34a;
+  font-size:17px;
+  font-weight:700;
+}
+
+.cycle{
+  margin-top:7px;
+  color:#94a3b8;
+  font-size:11px;
+}
+
+.buyButton{
+  width:100%;
+  margin-top:12px;
+  padding:11px 10px;
+  border-radius:9px;
+  background:
+    linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white;
+  font-size:13px;
+  box-shadow:0 5px 13px rgba(37,99,235,.16);
+}
+
+.buyButton:hover{
+  background:
+    linear-gradient(135deg,#1d4ed8,#1e40af);
+}
+
+
+/* =====================================================
+   INVESTMENT MODAL
+===================================================== */
+
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.55);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:100000;
+}
+
+.modal-overlay.show{
+  display:flex;
+}
+
+.invest-modal{
+  width:min(430px,100%);
+  background:white;
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 25px 70px rgba(15,23,42,.25);
+  animation:modalIn .18s ease-out;
+}
+
+@keyframes modalIn{
+  from{
+    opacity:0;
+    transform:translateY(12px) scale(.98);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+.modal-top{
+  padding:20px 20px 17px;
+  background:
+    linear-gradient(135deg,#101827,#172554);
+  color:white;
+}
+
+.modal-top-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.modal-top h3{
+  margin:0;
+  font-size:20px;
+}
+
+.close-modal{
+  width:34px;
+  height:34px;
+  padding:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.1);
+  color:white;
+  font-size:20px;
+}
+
+.modal-product-name{
+  margin-top:8px;
+  color:#bfdbfe;
+  font-size:13px;
+}
+
+.modal-body{
+  padding:20px;
+}
+
+.invest-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.summary-box{
+  border:1px solid #e2e8f0;
+  border-radius:13px;
+  padding:13px;
+  background:#f8fafc;
+}
+
+.summary-box span{
+  display:block;
+  color:#64748b;
+  font-size:11px;
+  margin-bottom:5px;
+}
+
+.summary-box strong{
+  display:block;
+  color:#14213d;
+  font-size:18px;
+}
+
+.summary-box.return strong{
+  color:#16a34a;
+}
+
+.cycle-box{
+  border-radius:13px;
+  padding:14px;
+  background:#f8fbff;
+  border:1px solid #dbeafe;
+  margin-bottom:14px;
+}
+
+.cycle-box .cycle-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:13px;
+  font-weight:bold;
+  color:#334155;
+}
+
+.cycle-box small{
+  display:block;
+  color:#64748b;
+  margin-top:5px;
+  line-height:1.4;
+}
+
+.projected{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px 0;
+  border-top:1px solid #eef2f7;
+  border-bottom:1px solid #eef2f7;
+  margin-bottom:14px;
+}
+
+.projected span{
+  color:#64748b;
+  font-size:13px;
+}
+
+.projected strong{
+  color:#14213d;
+  font-size:17px;
+}
+
+.demo-note{
+  font-size:11px;
+  line-height:1.45;
+  color:#94a3b8;
+  margin:0 0 15px;
+}
+
+.confirm-invest{
+  width:100%;
+  background:
+    linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white;
+  padding:13px;
+}
+
+.cancel-invest{
+  width:100%;
+  background:#f1f5f9;
+  color:#334155;
+  margin-top:8px;
+  padding:11px;
+}
+
+
+/* =====================================================
+   BOTTOM NAVIGATION
+   IMPORTANT: SAME STRUCTURE/DESIGN
+===================================================== */
+
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:78px;
+  background:rgba(255,253,246,.97);
+  border-top:1px solid #e7e2d7;
+  box-shadow:0 -5px 20px rgba(15,23,42,.08);
+  display:flex;
+  align-items:stretch;
+  justify-content:space-around;
+  z-index:99999;
+  padding-bottom:env(safe-area-inset-bottom);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+
+.nav-item{
+  flex:1;
+  max-width:150px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  text-decoration:none;
+  color:#777;
+  font-size:13px;
+  font-weight:500;
+  transition:.2s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.nav-item svg{
+  width:27px;
+  height:27px;
+  stroke:#777;
+  stroke-width:1.8;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  transition:.2s ease;
+}
+
+.nav-item.active{
+  color:#2563eb;
+  font-weight:600;
+}
+
+.nav-item.active svg{
+  stroke:#2563eb;
+  transform:translateY(-1px);
+}
+
+.nav-item:active{
+  transform:scale(.94);
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:850px){
+
+  .top-grid{
+    grid-template-columns:1fr;
+  }
+
+  /*
+     IMPORTANT:
+     2 products per row on smaller screens
+  */
+
+  .products{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+  }
+
+  .product{
+    padding:14px;
+  }
+
+  .product-icon{
+    width:38px;
+    height:38px;
+    font-size:18px;
+    margin-bottom:9px;
+  }
+
+  .product h3{
+    font-size:14px;
+    margin-bottom:8px;
+  }
+
+  .product p{
+    font-size:11px;
+    margin:4px 0;
+  }
+
+  .daily-return{
+    margin-top:8px;
+    padding:7px 8px;
+  }
+
+  .daily-label{
+    font-size:10px;
+  }
+
+  .daily-value{
+    font-size:14px;
+  }
+
+  .cycle{
+    font-size:10px;
+  }
+
+  .buyButton{
+    margin-top:9px;
+    padding:10px 7px;
+    font-size:11px;
+  }
+
+  .balance{
+    font-size:35px;
+  }
+}
+
+
+@media(max-width:600px){
+
+  body{
+    padding-bottom:88px;
+  }
+
+  header{
+    padding:14px 15px;
+  }
+
+  .logo{
+    font-size:20px;
+    gap:8px;
+  }
+
+  .logo-icon{
+    width:35px;
+    height:35px;
+    font-size:19px;
+  }
+
+  #logoutButton{
+    padding:9px 13px;
+    font-size:13px;
+  }
+
+  main{
+    margin:25px auto;
+    padding:0 10px;
+  }
+
+  .welcome{
+    margin-bottom:20px;
+  }
+
+  .welcome h2{
+    font-size:27px;
+  }
+
+  .card{
+    padding:18px;
+    border-radius:17px;
+  }
+
+  .balance{
+    font-size:31px;
+    margin:18px 0;
+  }
+
+  .buttons{
+    gap:9px;
+  }
+
+  .buttons button{
+    flex:1;
+    min-width:120px;
+    padding:12px 10px;
+    font-size:14px;
+  }
+
+  .transaction-heading{
+    gap:11px;
+  }
+
+  .transaction-icon{
+    width:50px;
+    height:50px;
+    font-size:23px;
+  }
+
+  .transaction-heading h3{
+    font-size:18px;
+  }
+
+  .transaction-heading p{
+    font-size:13px;
+  }
+
+  .products-card{
+    padding:15px;
+  }
+
+  .section-title{
+    margin-bottom:15px;
+  }
+
+  .section-title h3{
+    font-size:19px;
+  }
+
+  .section-icon{
+    width:40px;
+    height:40px;
+  }
+
+  .products{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .product{
+    min-width:0;
+    padding:13px;
+    border-radius:14px;
+  }
+
+  .product h3{
+    font-size:13px;
+  }
+
+  .bottom-nav{
+    height:76px;
+  }
+
+  .nav-item{
+    font-size:12px;
+  }
+
+  .nav-item svg{
+    width:26px;
+    height:26px;
+  }
+}
+
+
+@media(max-width:360px){
+
+  .logo{
+    font-size:18px;
+  }
+
+  #logoutButton{
+    padding:8px 10px;
+  }
+
+  .balance{
+    font-size:28px;
+  }
+
+  .products-card{
+    padding:12px;
+  }
+
+  .product{
+    padding:11px;
+  }
+
+  .product h3{
+    font-size:12px;
+  }
+
+  .product p{
+    font-size:10px;
+  }
+
+  .daily-value{
+    font-size:13px;
+  }
+
+  .buyButton{
+    font-size:10px;
+    padding:9px 5px;
+  }
+
+  .nav-item{
+    font-size:11px;
+  }
+
+  .nav-item svg{
+    width:24px;
+    height:24px;
+  }
+}
+
+</style>
 </head>
 
 
@@ -897,7 +939,6 @@
 
   </div>
 
-
   <button id="logoutButton">
     Logout
   </button>
@@ -912,8 +953,6 @@
 
 <main id="home">
 
-
-  <!-- WELCOME -->
 
   <div class="welcome">
 
@@ -934,8 +973,6 @@
   <div class="top-grid">
 
 
-    <!-- BALANCE -->
-
     <div class="card balance-card">
 
       <div class="balance-title">
@@ -950,7 +987,6 @@
 
       </div>
 
-
       <div
         class="balance"
         id="balance"
@@ -958,13 +994,11 @@
         ₱0.00
       </div>
 
-
       <div class="buttons">
 
         <button id="depositButton">
           ↓ Deposit
         </button>
-
 
         <button id="withdrawButton">
           ↑ Withdraw
@@ -976,8 +1010,6 @@
 
 
 
-    <!-- TRANSACTION HISTORY -->
-
     <div class="card transaction-card">
 
       <div>
@@ -988,13 +1020,11 @@
             📄
           </div>
 
-
           <div>
 
             <h3>
               Transaction History
             </h3>
-
 
             <p>
               View your deposit, withdrawal
@@ -1004,7 +1034,6 @@
           </div>
 
         </div>
-
 
         <button id="transactionButton">
           👁 View Transactions →
@@ -1033,7 +1062,6 @@
         📊
       </div>
 
-
       <h3>
         Investment Products
       </h3>
@@ -1045,7 +1073,7 @@
     <div class="products">
 
 
-      <!-- STARTER -->
+      <!-- 300 -->
 
       <div class="product">
 
@@ -1053,35 +1081,43 @@
           🌱
         </div>
 
-
         <h3>
-          Starter Investment
+          Starter Plan
         </h3>
 
-
         <p>
-          Minimum:
-          <strong>₱500</strong>
+          Investment:
+          <strong>₱300</strong>
         </p>
 
+        <div class="daily-return">
+          <span class="daily-label">
+            Illustrative Daily Return
+          </span>
 
-        <p>
-          Long-term investment product.
-        </p>
+          <span class="daily-value">
+            ₱50 / day
+          </span>
+        </div>
 
+        <div class="cycle">
+          Cycle • 30 days
+        </div>
 
         <button
           class="buyButton"
-          data-price="500"
+          data-price="300"
+          data-name="Starter Plan"
+          data-daily="50"
         >
-          Invest ₱500 →
+          Invest ₱300
         </button>
 
       </div>
 
 
 
-      <!-- GROWTH -->
+      <!-- 700 -->
 
       <div class="product">
 
@@ -1089,35 +1125,87 @@
           📈
         </div>
 
-
         <h3>
-          Growth Investment
+          Growth Plan
         </h3>
 
-
         <p>
-          Minimum:
-          <strong>₱1,000</strong>
+          Investment:
+          <strong>₱700</strong>
         </p>
 
+        <div class="daily-return">
+          <span class="daily-label">
+            Illustrative Daily Return
+          </span>
 
-        <p>
-          Long-term growth product.
-        </p>
+          <span class="daily-value">
+            ₱120 / day
+          </span>
+        </div>
 
+        <div class="cycle">
+          Cycle • 30 days
+        </div>
 
         <button
           class="buyButton"
-          data-price="1000"
+          data-price="700"
+          data-name="Growth Plan"
+          data-daily="120"
         >
-          Invest ₱1,000 →
+          Invest ₱700
         </button>
 
       </div>
 
 
 
-      <!-- PREMIUM -->
+      <!-- 1000 -->
+
+      <div class="product">
+
+        <div class="product-icon growth-icon">
+          🚀
+        </div>
+
+        <h3>
+          Advance Plan
+        </h3>
+
+        <p>
+          Investment:
+          <strong>₱1,000</strong>
+        </p>
+
+        <div class="daily-return">
+          <span class="daily-label">
+            Illustrative Daily Return
+          </span>
+
+          <span class="daily-value">
+            ₱180 / day
+          </span>
+        </div>
+
+        <div class="cycle">
+          Cycle • 30 days
+        </div>
+
+        <button
+          class="buyButton"
+          data-price="1000"
+          data-name="Advance Plan"
+          data-daily="180"
+        >
+          Invest ₱1,000
+        </button>
+
+      </div>
+
+
+
+      <!-- 1500 -->
 
       <div class="product">
 
@@ -1125,28 +1213,124 @@
           💎
         </div>
 
-
         <h3>
-          Premium Investment
+          Premium Plan
         </h3>
 
+        <p>
+          Investment:
+          <strong>₱1,500</strong>
+        </p>
+
+        <div class="daily-return">
+          <span class="daily-label">
+            Illustrative Daily Return
+          </span>
+
+          <span class="daily-value">
+            ₱270 / day
+          </span>
+        </div>
+
+        <div class="cycle">
+          Cycle • 30 days
+        </div>
+
+        <button
+          class="buyButton"
+          data-price="1500"
+          data-name="Premium Plan"
+          data-daily="270"
+        >
+          Invest ₱1,500
+        </button>
+
+      </div>
+
+
+
+      <!-- 2500 -->
+
+      <div class="product">
+
+        <div class="product-icon premium-icon">
+          ⭐
+        </div>
+
+        <h3>
+          Elite Plan
+        </h3>
 
         <p>
-          Minimum:
+          Investment:
+          <strong>₱2,500</strong>
+        </p>
+
+        <div class="daily-return">
+          <span class="daily-label">
+            Illustrative Daily Return
+          </span>
+
+          <span class="daily-value">
+            ₱450 / day
+          </span>
+        </div>
+
+        <div class="cycle">
+          Cycle • 30 days
+        </div>
+
+        <button
+          class="buyButton"
+          data-price="2500"
+          data-name="Elite Plan"
+          data-daily="450"
+        >
+          Invest ₱2,500
+        </button>
+
+      </div>
+
+
+
+      <!-- 5000 -->
+
+      <div class="product">
+
+        <div class="product-icon premium-icon">
+          👑
+        </div>
+
+        <h3>
+          Executive Plan
+        </h3>
+
+        <p>
+          Investment:
           <strong>₱5,000</strong>
         </p>
 
+        <div class="daily-return">
+          <span class="daily-label">
+            Illustrative Daily Return
+          </span>
 
-        <p>
-          Premium long-term investment product.
-        </p>
+          <span class="daily-value">
+            ₱900 / day
+          </span>
+        </div>
 
+        <div class="cycle">
+          Cycle • 30 days
+        </div>
 
         <button
           class="buyButton"
           data-price="5000"
+          data-name="Executive Plan"
+          data-daily="900"
         >
-          Invest ₱5,000 →
+          Invest ₱5,000
         </button>
 
       </div>
@@ -1160,13 +1344,148 @@
 
 
 <!-- =====================================================
+     INVESTMENT MODAL
+===================================================== -->
+
+<div
+  class="modal-overlay"
+  id="investModal"
+>
+
+  <div class="invest-modal">
+
+    <div class="modal-top">
+
+      <div class="modal-top-row">
+
+        <h3>
+          Investment Details
+        </h3>
+
+        <button
+          class="close-modal"
+          id="closeModal"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div
+        class="modal-product-name"
+        id="modalProductName"
+      >
+        Investment Plan
+      </div>
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <div class="invest-summary">
+
+        <div class="summary-box">
+
+          <span>
+            Investment
+          </span>
+
+          <strong id="modalPrice">
+            ₱0
+          </strong>
+
+        </div>
+
+
+        <div class="summary-box return">
+
+          <span>
+            Daily Return*
+          </span>
+
+          <strong id="modalDaily">
+            ₱0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="cycle-box">
+
+        <div class="cycle-title">
+
+          <span>
+            Cycle Count
+          </span>
+
+          <span>
+            30 Days
+          </span>
+
+        </div>
+
+        <small>
+          The cycle shown here is an example
+          for the product display.
+        </small>
+
+      </div>
+
+
+      <div class="projected">
+
+        <span>
+          Illustrative 30-Day Return
+        </span>
+
+        <strong id="modalProjected">
+          ₱0
+        </strong>
+
+      </div>
+
+
+      <p class="demo-note">
+        *Daily return figures shown here are illustrative
+        figures for the product interface. They should only
+        be presented as actual or guaranteed returns when
+        they are genuinely supported by your investment
+        product terms and applicable requirements.
+      </p>
+
+
+      <button
+        class="confirm-invest"
+        id="confirmInvest"
+      >
+        Confirm Investment
+      </button>
+
+
+      <button
+        class="cancel-invest"
+        id="cancelInvest"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
      BOTTOM NAVIGATION
 ===================================================== -->
 
 <nav class="bottom-nav">
 
-
-  <!-- HOME -->
 
   <a
     href="#home"
@@ -1176,20 +1495,11 @@
 
     <svg viewBox="0 0 24 24">
 
-      <path
-        d="M3 10.5L12 3l9 7.5"
-      />
-
-      <path
-        d="M5 9.5V21h14V9.5"
-      />
-
-      <path
-        d="M9 21v-6h6v6"
-      />
+      <path d="M3 10.5L12 3l9 7.5"/>
+      <path d="M5 9.5V21h14V9.5"/>
+      <path d="M9 21v-6h6v6"/>
 
     </svg>
-
 
     <span>
       Home
@@ -1199,8 +1509,6 @@
 
 
 
-  <!-- PRODUCT -->
-
   <a
     href="#products"
     class="nav-item"
@@ -1209,14 +1517,8 @@
 
     <svg viewBox="0 0 24 24">
 
-      <path
-        d="M4 7h16"
-      />
-
-      <path
-        d="M6 7l1-3h10l1 3"
-      />
-
+      <path d="M4 7h16"/>
+      <path d="M6 7l1-3h10l1 3"/>
       <rect
         x="4"
         y="7"
@@ -1224,13 +1526,9 @@
         height="13"
         rx="2"
       />
-
-      <path
-        d="M9 12h6"
-      />
+      <path d="M9 12h6"/>
 
     </svg>
-
 
     <span>
       Product
@@ -1240,8 +1538,6 @@
 
 
 
-  <!-- TEAM -->
-
   <a
     href="team.html"
     class="nav-item"
@@ -1249,28 +1545,12 @@
 
     <svg viewBox="0 0 24 24">
 
-      <circle
-        cx="9"
-        cy="8"
-        r="3"
-      />
-
-      <circle
-        cx="17"
-        cy="9"
-        r="2.5"
-      />
-
-      <path
-        d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"
-      />
-
-      <path
-        d="M15 14c3.2 0 6 2.2 6 5"
-      />
+      <circle cx="9" cy="8" r="3"/>
+      <circle cx="17" cy="9" r="2.5"/>
+      <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+      <path d="M15 14c3.2 0 6 2.2 6 5"/>
 
     </svg>
-
 
     <span>
       Team
@@ -1280,8 +1560,6 @@
 
 
 
-  <!-- MY -->
-
   <a
     href="my.html"
     class="nav-item"
@@ -1289,18 +1567,10 @@
 
     <svg viewBox="0 0 24 24">
 
-      <circle
-        cx="12"
-        cy="8"
-        r="4"
-      />
-
-      <path
-        d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"
-      />
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
 
     </svg>
-
 
     <span>
       My
@@ -1318,864 +1588,895 @@
 
 <script type="module">
 
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-  import {
-    initializeApp
-  } from
-    "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-
-  import {
-    getAuth,
-    onAuthStateChanged,
-    signOut
-  } from
-    "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
-
-  import {
-    getFirestore,
-    doc,
-    getDoc,
-    setDoc,
-    runTransaction
-  } from
-    "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  runTransaction
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
 
-  /* =====================================================
-     FIREBASE CONFIG
-  ===================================================== */
+const firebaseConfig = {
 
-  const firebaseConfig = {
+  apiKey:
+    "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
 
-    apiKey:
-      "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+  authDomain:
+    "investpro-2dafb.firebaseapp.com",
 
-    authDomain:
-      "investpro-2dafb.firebaseapp.com",
+  projectId:
+    "investpro-2dafb",
 
-    projectId:
-      "investpro-2dafb",
+  storageBucket:
+    "investpro-2dafb.firebasestorage.app",
 
-    storageBucket:
-      "investpro-2dafb.firebasestorage.app",
+  messagingSenderId:
+    "135092039764",
 
-    messagingSenderId:
-      "135092039764",
+  appId:
+    "1:135092039764:web:c4c71eef0c904346a77dc1"
 
-    appId:
-      "1:135092039764:web:c4c71eef0c904346a77dc1"
-
-  };
-
+};
 
 
-  /* =====================================================
-     FIREBASE START
-  ===================================================== */
+const app =
+  initializeApp(firebaseConfig);
 
-  const app =
-    initializeApp(firebaseConfig);
+const auth =
+  getAuth(app);
 
+const db =
+  getFirestore(app);
 
-  const auth =
-    getAuth(app);
-
-
-  const db =
-    getFirestore(app);
+let currentUser = null;
 
 
-  let currentUser = null;
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const balanceElement =
+  document.getElementById("balance");
+
+const emailElement =
+  document.getElementById("userEmail");
+
+const depositButton =
+  document.getElementById("depositButton");
+
+const withdrawButton =
+  document.getElementById("withdrawButton");
+
+const logoutButton =
+  document.getElementById("logoutButton");
+
+const transactionButton =
+  document.getElementById("transactionButton");
 
 
+/* =====================================================
+   MODAL ELEMENTS
+===================================================== */
 
-  /* =====================================================
-     ELEMENTS
-  ===================================================== */
+const investModal =
+  document.getElementById("investModal");
 
-  const balanceElement =
-    document.getElementById("balance");
+const closeModal =
+  document.getElementById("closeModal");
 
+const cancelInvest =
+  document.getElementById("cancelInvest");
 
-  const emailElement =
-    document.getElementById("userEmail");
+const confirmInvest =
+  document.getElementById("confirmInvest");
 
+const modalProductName =
+  document.getElementById("modalProductName");
 
-  const depositButton =
-    document.getElementById("depositButton");
+const modalPrice =
+  document.getElementById("modalPrice");
 
+const modalDaily =
+  document.getElementById("modalDaily");
 
-  const withdrawButton =
-    document.getElementById("withdrawButton");
-
-
-  const logoutButton =
-    document.getElementById("logoutButton");
-
-
-  const transactionButton =
-    document.getElementById("transactionButton");
+const modalProjected =
+  document.getElementById("modalProjected");
 
 
+let selectedInvestment = null;
 
-  /* =====================================================
-     MONEY FORMAT
-  ===================================================== */
 
-  function formatMoney(amount) {
+/* =====================================================
+   MONEY FORMAT
+===================================================== */
 
-    return "₱" +
-      Number(amount || 0).toLocaleString(
-        "en-PH",
-        {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }
-      );
+function formatMoney(amount){
+
+  return "₱" +
+    Number(amount || 0).toLocaleString(
+      "en-PH",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
+}
+
+
+/* =====================================================
+   SHOW BALANCE
+===================================================== */
+
+function showBalance(amount){
+
+  balanceElement.textContent =
+    formatMoney(amount);
+
+}
+
+
+/* =====================================================
+   LOAD USER
+===================================================== */
+
+async function loadUserData(user){
+
+  const userRef =
+    doc(
+      db,
+      "Users",
+      user.uid
+    );
+
+  const snapshot =
+    await getDoc(userRef);
+
+  if(!snapshot.exists()){
+
+    await setDoc(
+      userRef,
+      {
+        balance:0,
+        transactions:[]
+      }
+    );
+
+    showBalance(0);
+
+    return;
 
   }
 
+  const data =
+    snapshot.data();
+
+  showBalance(
+    data.balance || 0
+  );
+
+}
 
 
-  /* =====================================================
-     SHOW BALANCE
-  ===================================================== */
+/* =====================================================
+   DEPOSIT
+===================================================== */
 
-  function showBalance(amount) {
+async function deposit(){
 
-    balanceElement.textContent =
-      formatMoney(amount);
+  if(!currentUser){
+
+    alert("Please login first.");
+
+    return;
 
   }
 
+  const input =
+    prompt("Enter deposit amount:");
 
+  if(input === null) return;
 
-  /* =====================================================
-     LOAD USER
-  ===================================================== */
+  const amount =
+    Number(input);
 
-  async function loadUserData(user) {
+  if(
+    !Number.isFinite(amount) ||
+    amount <= 0
+  ){
+
+    alert("Please enter a valid amount.");
+
+    return;
+
+  }
+
+  try{
 
     const userRef =
       doc(
         db,
         "Users",
-        user.uid
+        currentUser.uid
       );
 
+    await runTransaction(
+      db,
+      async transaction => {
 
-    const snapshot =
-      await getDoc(userRef);
+        const snapshot =
+          await transaction.get(
+            userRef
+          );
 
+        const data =
+          snapshot.exists()
+            ? snapshot.data()
+            : {};
 
-    if (!snapshot.exists()) {
+        const oldBalance =
+          Number(
+            data.balance || 0
+          );
 
-      await setDoc(
-        userRef,
-        {
-          balance: 0,
-          transactions: []
-        }
-      );
+        const newBalance =
+          oldBalance + amount;
 
+        const transactions =
+          Array.isArray(data.transactions)
+            ? data.transactions
+            : [];
 
-      showBalance(0);
+        transactions.push({
 
-      return;
+          type:"Deposit",
 
-    }
+          amount:amount,
 
+          date:
+            new Date().toLocaleString(
+              "en-PH"
+            )
 
-    const data =
-      snapshot.data();
+        });
 
+        transaction.set(
+          userRef,
+          {
+            balance:newBalance,
+            transactions:transactions
+          },
+          {
+            merge:true
+          }
+        );
 
-    showBalance(
-      data.balance || 0
+        showBalance(newBalance);
+
+      }
+    );
+
+    alert(
+      "Deposit added successfully."
+    );
+
+  }catch(error){
+
+    console.error(
+      "Deposit error:",
+      error
+    );
+
+    alert(
+      "Deposit failed. Please try again."
     );
 
   }
 
+}
 
 
-  /* =====================================================
-     DEPOSIT
-  ===================================================== */
+/* =====================================================
+   WITHDRAW
+===================================================== */
 
-  async function deposit() {
+async function withdraw(){
 
-    if (!currentUser) {
+  if(!currentUser){
 
-      alert(
-        "Please login first."
-      );
+    alert("Please login first.");
 
-      return;
+    return;
 
-    }
+  }
 
+  const input =
+    prompt("Enter withdrawal amount:");
 
-    const input =
-      prompt(
-        "Enter deposit amount:"
-      );
+  if(input === null) return;
 
+  const amount =
+    Number(input);
 
-    if (input === null) return;
+  if(
+    !Number.isFinite(amount) ||
+    amount <= 0
+  ){
 
+    alert(
+      "Please enter a valid amount."
+    );
 
-    const amount =
-      Number(input);
+    return;
 
+  }
 
-    if (
-      !Number.isFinite(amount) ||
-      amount <= 0
-    ) {
+  try{
 
-      alert(
-        "Please enter a valid amount."
-      );
-
-      return;
-
-    }
-
-
-    try {
-
-      const userRef =
-        doc(
-          db,
-          "Users",
-          currentUser.uid
-        );
-
-
-      await runTransaction(
+    const userRef =
+      doc(
         db,
-        async transaction => {
+        "Users",
+        currentUser.uid
+      );
 
-          const snapshot =
-            await transaction.get(
-              userRef
-            );
+    await runTransaction(
+      db,
+      async transaction => {
 
-
-          const data =
-            snapshot.exists()
-              ? snapshot.data()
-              : {};
-
-
-          const oldBalance =
-            Number(
-              data.balance || 0
-            );
-
-
-          const newBalance =
-            oldBalance + amount;
-
-
-          const transactions =
-            Array.isArray(
-              data.transactions
-            )
-              ? data.transactions
-              : [];
-
-
-          transactions.push({
-
-            type: "Deposit",
-
-            amount: amount,
-
-            date:
-              new Date().toLocaleString(
-                "en-PH"
-              )
-
-          });
-
-
-          transaction.set(
-            userRef,
-            {
-              balance:
-                newBalance,
-
-              transactions:
-                transactions
-            },
-            {
-              merge: true
-            }
+        const snapshot =
+          await transaction.get(
+            userRef
           );
 
+        if(!snapshot.exists()){
 
-          showBalance(
-            newBalance
+          throw new Error(
+            "User account not found."
           );
 
         }
-      );
 
+        const data =
+          snapshot.data();
+
+        const oldBalance =
+          Number(
+            data.balance || 0
+          );
+
+        if(amount > oldBalance){
+
+          throw new Error(
+            "Insufficient balance."
+          );
+
+        }
+
+        const newBalance =
+          oldBalance - amount;
+
+        const transactions =
+          Array.isArray(data.transactions)
+            ? data.transactions
+            : [];
+
+        transactions.push({
+
+          type:"Withdraw",
+
+          amount:amount,
+
+          date:
+            new Date().toLocaleString(
+              "en-PH"
+            )
+
+        });
+
+        transaction.set(
+          userRef,
+          {
+            balance:newBalance,
+            transactions:transactions
+          },
+          {
+            merge:true
+          }
+        );
+
+        showBalance(newBalance);
+
+      }
+    );
+
+    alert(
+      "Withdrawal recorded successfully."
+    );
+
+  }catch(error){
+
+    console.error(
+      "Withdraw error:",
+      error
+    );
+
+    if(
+      error.message ===
+      "Insufficient balance."
+    ){
 
       alert(
-        "Deposit added successfully."
+        "Insufficient balance."
       );
 
-
-    } catch (error) {
-
-      console.error(
-        "Deposit error:",
-        error
-      );
-
+    }else{
 
       alert(
-        "Deposit failed. Please try again."
+        "Withdrawal failed. Please try again."
       );
 
     }
 
   }
 
+}
 
 
-  /* =====================================================
-     WITHDRAW
-  ===================================================== */
+/* =====================================================
+   OPEN INVESTMENT MODAL
+===================================================== */
 
-  async function withdraw() {
+function openInvestmentModal(
+  price,
+  name,
+  daily
+){
 
-    if (!currentUser) {
+  selectedInvestment = {
+    price,
+    name,
+    daily
+  };
 
-      alert(
-        "Please login first."
-      );
+  modalProductName.textContent =
+    name;
 
-      return;
+  modalPrice.textContent =
+    formatMoney(price);
 
-    }
+  modalDaily.textContent =
+    formatMoney(daily) + " / day";
 
+  const projected =
+    daily * 30;
 
-    const input =
-      prompt(
-        "Enter withdrawal amount:"
-      );
+  modalProjected.textContent =
+    formatMoney(projected);
 
+  investModal.classList.add("show");
 
-    if (input === null) return;
-
-
-    const amount =
-      Number(input);
-
-
-    if (
-      !Number.isFinite(amount) ||
-      amount <= 0
-    ) {
-
-      alert(
-        "Please enter a valid amount."
-      );
-
-      return;
-
-    }
+}
 
 
-    try {
+/* =====================================================
+   CLOSE INVESTMENT MODAL
+===================================================== */
 
-      const userRef =
-        doc(
-          db,
-          "Users",
-          currentUser.uid
-        );
+function closeInvestmentModal(){
+
+  investModal.classList.remove(
+    "show"
+  );
+
+  selectedInvestment = null;
+
+}
 
 
-      await runTransaction(
+/* =====================================================
+   BUY PRODUCT
+===================================================== */
+
+async function buyProduct(
+  price,
+  name,
+  daily
+){
+
+  if(!currentUser){
+
+    alert("Please login first.");
+
+    return;
+
+  }
+
+  try{
+
+    const userRef =
+      doc(
         db,
-        async transaction => {
+        "Users",
+        currentUser.uid
+      );
 
-          const snapshot =
-            await transaction.get(
-              userRef
-            );
+    await runTransaction(
+      db,
+      async transaction => {
 
-
-          if (!snapshot.exists()) {
-
-            throw new Error(
-              "User account not found."
-            );
-
-          }
-
-
-          const data =
-            snapshot.data();
-
-
-          const oldBalance =
-            Number(
-              data.balance || 0
-            );
-
-
-          if (amount > oldBalance) {
-
-            throw new Error(
-              "Insufficient balance."
-            );
-
-          }
-
-
-          const newBalance =
-            oldBalance - amount;
-
-
-          const transactions =
-            Array.isArray(
-              data.transactions
-            )
-              ? data.transactions
-              : [];
-
-
-          transactions.push({
-
-            type: "Withdraw",
-
-            amount: amount,
-
-            date:
-              new Date().toLocaleString(
-                "en-PH"
-              )
-
-          });
-
-
-          transaction.set(
-            userRef,
-            {
-              balance:
-                newBalance,
-
-              transactions:
-                transactions
-            },
-            {
-              merge: true
-            }
+        const snapshot =
+          await transaction.get(
+            userRef
           );
 
+        if(!snapshot.exists()){
 
-          showBalance(
-            newBalance
+          throw new Error(
+            "User account not found."
           );
 
         }
-      );
 
+        const data =
+          snapshot.data();
 
-      alert(
-        "Withdrawal recorded successfully."
-      );
+        const oldBalance =
+          Number(
+            data.balance || 0
+          );
 
+        if(oldBalance < price){
 
-    } catch (error) {
+          throw new Error(
+            "Insufficient balance."
+          );
 
-      console.error(
-        "Withdraw error:",
-        error
-      );
+        }
 
+        const newBalance =
+          oldBalance - price;
 
-      if (
-        error.message ===
-        "Insufficient balance."
-      ) {
+        const transactions =
+          Array.isArray(data.transactions)
+            ? data.transactions
+            : [];
 
-        alert(
-          "Insufficient balance."
+        transactions.push({
+
+          type:"Investment",
+
+          amount:price,
+
+          product:name,
+
+          dailyReturn:daily,
+
+          cycleDays:30,
+
+          date:
+            new Date().toLocaleString(
+              "en-PH"
+            )
+
+        });
+
+        transaction.set(
+          userRef,
+          {
+            balance:newBalance,
+            transactions:transactions
+          },
+          {
+            merge:true
+          }
         );
 
-      } else {
+        showBalance(newBalance);
 
-        alert(
-          "Withdrawal failed. Please try again."
+      }
+    );
+
+    closeInvestmentModal();
+
+    alert(
+      "Investment recorded successfully."
+    );
+
+  }catch(error){
+
+    console.error(
+      "Investment error:",
+      error
+    );
+
+    if(
+      error.message ===
+      "Insufficient balance."
+    ){
+
+      alert(
+        "Insufficient balance for this investment."
+      );
+
+    }else{
+
+      alert(
+        "Investment failed. Please try again."
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout(){
+
+  try{
+
+    await signOut(auth);
+
+    window.location.href =
+      "index.html";
+
+  }catch(error){
+
+    console.error(
+      "Logout error:",
+      error
+    );
+
+    alert(
+      "Logout failed. Please try again."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   BUTTON EVENTS
+===================================================== */
+
+depositButton.addEventListener(
+  "click",
+  deposit
+);
+
+withdrawButton.addEventListener(
+  "click",
+  withdraw
+);
+
+logoutButton.addEventListener(
+  "click",
+  logout
+);
+
+
+/* =====================================================
+   INVESTMENT BUTTONS
+===================================================== */
+
+document
+  .querySelectorAll(".buyButton")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        const price =
+          Number(
+            button.dataset.price
+          );
+
+        const name =
+          button.dataset.name;
+
+        const daily =
+          Number(
+            button.dataset.daily
+          );
+
+        openInvestmentModal(
+          price,
+          name,
+          daily
         );
 
       }
+    );
+
+  });
+
+
+/* =====================================================
+   MODAL EVENTS
+===================================================== */
+
+closeModal.addEventListener(
+  "click",
+  closeInvestmentModal
+);
+
+cancelInvest.addEventListener(
+  "click",
+  closeInvestmentModal
+);
+
+investModal.addEventListener(
+  "click",
+  event => {
+
+    if(
+      event.target ===
+      investModal
+    ){
+
+      closeInvestmentModal();
 
     }
 
   }
+);
 
 
+confirmInvest.addEventListener(
+  "click",
+  () => {
 
-  /* =====================================================
-     BUY PRODUCT
-  ===================================================== */
-
-  async function buyProduct(price) {
-
-    if (!currentUser) {
-
-      alert(
-        "Please login first."
-      );
+    if(!selectedInvestment){
 
       return;
 
     }
 
-
-    try {
-
-      const userRef =
-        doc(
-          db,
-          "Users",
-          currentUser.uid
-        );
-
-
-      await runTransaction(
-        db,
-        async transaction => {
-
-          const snapshot =
-            await transaction.get(
-              userRef
-            );
-
-
-          if (!snapshot.exists()) {
-
-            throw new Error(
-              "User account not found."
-            );
-
-          }
-
-
-          const data =
-            snapshot.data();
-
-
-          const oldBalance =
-            Number(
-              data.balance || 0
-            );
-
-
-          if (oldBalance < price) {
-
-            throw new Error(
-              "Insufficient balance."
-            );
-
-          }
-
-
-          const newBalance =
-            oldBalance - price;
-
-
-          const transactions =
-            Array.isArray(
-              data.transactions
-            )
-              ? data.transactions
-              : [];
-
-
-          transactions.push({
-
-            type: "Investment",
-
-            amount: price,
-
-            date:
-              new Date().toLocaleString(
-                "en-PH"
-              )
-
-          });
-
-
-          transaction.set(
-            userRef,
-            {
-              balance:
-                newBalance,
-
-              transactions:
-                transactions
-            },
-            {
-              merge: true
-            }
-          );
-
-
-          showBalance(
-            newBalance
-          );
-
-        }
-      );
-
-
-      alert(
-        "Investment recorded successfully."
-      );
-
-
-    } catch (error) {
-
-      console.error(
-        "Investment error:",
-        error
-      );
-
-
-      if (
-        error.message ===
-        "Insufficient balance."
-      ) {
-
-        alert(
-          "Insufficient balance for this investment."
-        );
-
-      } else {
-
-        alert(
-          "Investment failed. Please try again."
-        );
-
-      }
-
-    }
+    buyProduct(
+      selectedInvestment.price,
+      selectedInvestment.name,
+      selectedInvestment.daily
+    );
 
   }
+);
 
 
+/* =====================================================
+   VIEW TRANSACTIONS
+===================================================== */
 
-  /* =====================================================
-     LOGOUT
-  ===================================================== */
+transactionButton.addEventListener(
+  "click",
+  () => {
 
-  async function logout() {
+    window.location.href =
+      "transactions.html";
 
-    try {
+  }
+);
 
-      await signOut(auth);
 
+/* =====================================================
+   BOTTOM NAV ACTIVE STATE
+   PRESERVED
+===================================================== */
+
+const homeNav =
+  document.getElementById(
+    "homeNav"
+  );
+
+const productNav =
+  document.getElementById(
+    "productNav"
+  );
+
+
+homeNav.addEventListener(
+  "click",
+  () => {
+
+    homeNav.classList.add(
+      "active"
+    );
+
+    productNav.classList.remove(
+      "active"
+    );
+
+  }
+);
+
+
+productNav.addEventListener(
+  "click",
+  () => {
+
+    productNav.classList.add(
+      "active"
+    );
+
+    homeNav.classList.remove(
+      "active"
+    );
+
+  }
+);
+
+
+/* =====================================================
+   LOGIN CHECK
+===================================================== */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    if(!user){
 
       window.location.href =
-        "index.html";
+        "login.html";
 
+      return;
 
-    } catch (error) {
+    }
+
+    currentUser =
+      user;
+
+    emailElement.textContent =
+      user.email ||
+      "Logged in";
+
+    try{
+
+      await loadUserData(
+        user
+      );
+
+    }catch(error){
 
       console.error(
-        "Logout error:",
+        "Loading user data failed:",
         error
       );
 
-
       alert(
-        "Logout failed. Please try again."
+        "Unable to load your account data."
       );
 
     }
 
   }
-
-
-
-  /* =====================================================
-     BUTTON EVENTS
-  ===================================================== */
-
-  depositButton.addEventListener(
-    "click",
-    deposit
-  );
-
-
-  withdrawButton.addEventListener(
-    "click",
-    withdraw
-  );
-
-
-  logoutButton.addEventListener(
-    "click",
-    logout
-  );
-
-
-
-  /* =====================================================
-     INVESTMENT BUTTONS
-  ===================================================== */
-
-  document
-    .querySelectorAll(".buyButton")
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const price =
-            Number(
-              button.dataset.price
-            );
-
-
-          buyProduct(price);
-
-        }
-      );
-
-    });
-
-
-
-  /* =====================================================
-     VIEW TRANSACTIONS
-  ===================================================== */
-
-  transactionButton.addEventListener(
-    "click",
-    () => {
-
-      window.location.href =
-        "transactions.html";
-
-    }
-  );
-
-
-
-  /* =====================================================
-     BOTTOM NAV ACTIVE STATE
-  ===================================================== */
-
-  const homeNav =
-    document.getElementById(
-      "homeNav"
-    );
-
-
-  const productNav =
-    document.getElementById(
-      "productNav"
-    );
-
-
-  homeNav.addEventListener(
-    "click",
-    () => {
-
-      homeNav.classList.add(
-        "active"
-      );
-
-      productNav.classList.remove(
-        "active"
-      );
-
-    }
-  );
-
-
-  productNav.addEventListener(
-    "click",
-    () => {
-
-      productNav.classList.add(
-        "active"
-      );
-
-      homeNav.classList.remove(
-        "active"
-      );
-
-    }
-  );
-
-
-
-  /* =====================================================
-     LOGIN CHECK
-  ===================================================== */
-
-  onAuthStateChanged(
-    auth,
-    async user => {
-
-      if (!user) {
-
-        window.location.href =
-          "login.html";
-
-        return;
-
-      }
-
-
-      currentUser =
-        user;
-
-
-      emailElement.textContent =
-        user.email ||
-        "Logged in";
-
-
-      try {
-
-        await loadUserData(
-          user
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Loading user data failed:",
-          error
-        );
-
-
-        alert(
-          "Unable to load your account data."
-        );
-
-      }
-
-    }
-  );
+);
 
 </script>
-
 
 </body>
 </html>
