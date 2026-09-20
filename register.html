@@ -1464,7 +1464,7 @@
       }
 
 
-      const usersRef =
+      const UsersRef =
         collection(
           db,
           "Users"
@@ -1477,7 +1477,7 @@
 
       const referralQuery =
         query(
-          usersRef,
+          UsersRef,
           where(
             "referralCode",
             "==",
@@ -1519,7 +1519,7 @@
 
       const invitationQuery =
         query(
-          usersRef,
+          UsersRef,
           where(
             "invitationCode",
             "==",
@@ -1561,7 +1561,7 @@
 
       const inviteQuery =
         query(
-          usersRef,
+          UsersRef,
           where(
             "inviteCode",
             "==",
