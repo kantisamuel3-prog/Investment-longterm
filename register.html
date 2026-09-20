@@ -1043,7 +1043,7 @@
                 >
 
                   <path
-                    d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"
+                    d="M2.5 12s3.5-6 9.5-6 9.5 6-9.5 6-9.5-6-9.5-6z"
                   />
 
                   <circle
@@ -1328,53 +1328,47 @@
        PASSWORD TOGGLE
        ========================================= */
 
-    togglePassword.addEventListener(
-      "click",
-      function () {
+    function setupPasswordToggle(
+      button,
+      input
+    ) {
 
-        const showing =
-          passwordInput.type === "text";
+      button.addEventListener(
+        "click",
+        function () {
+
+          const showing =
+            input.type === "text";
 
 
-        passwordInput.type =
-          showing
-            ? "password"
-            : "text";
+          input.type =
+            showing
+              ? "password"
+              : "text";
 
 
-        this.setAttribute(
-          "aria-label",
-          showing
-            ? "Show password"
-            : "Hide password"
-        );
+          this.setAttribute(
+            "aria-label",
+            showing
+              ? "Show password"
+              : "Hide password"
+          );
 
-      }
+        }
+      );
+
+    }
+
+
+    setupPasswordToggle(
+      togglePassword,
+      passwordInput
     );
 
 
-    toggleConfirmPassword.addEventListener(
-      "click",
-      function () {
-
-        const showing =
-          confirmPasswordInput.type === "text";
-
-
-        confirmPasswordInput.type =
-          showing
-            ? "password"
-            : "text";
-
-
-        this.setAttribute(
-          "aria-label",
-          showing
-            ? "Show password"
-            : "Hide password"
-        );
-
-      }
+    setupPasswordToggle(
+      toggleConfirmPassword,
+      confirmPasswordInput
     );
 
 
@@ -1382,20 +1376,27 @@
        PHONE FUNCTIONS
        ========================================= */
 
-    function normalizePhone(phone) {
+    function normalizePhone(
+      phone
+    ) {
 
-      phone =
-        phone.replace(
+      const digits =
+        String(
+          phone || ""
+        )
+        .replace(
           /\D/g,
           ""
         );
 
 
       if (
-        /^9\d{9}$/.test(phone)
+        /^9\d{9}$/.test(
+          digits
+        )
       ) {
 
-        return "63" + phone;
+        return "63" + digits;
 
       }
 
@@ -1405,7 +1406,9 @@
     }
 
 
-    function phoneToFirebaseEmail(phone) {
+    function phoneToFirebaseEmail(
+      phone
+    ) {
 
       const normalizedPhone =
         normalizePhone(
@@ -1432,7 +1435,9 @@
        REFERRAL CODE GENERATOR
        ========================================= */
 
-    function createReferralCode(uid) {
+    function createReferralCode(
+      uid
+    ) {
 
       return (
         "NOVA-" +
@@ -1474,6 +1479,22 @@
 
       messageBox.className =
         "message";
+
+    }
+
+
+    /* =========================================
+       RESET BUTTON
+       ========================================= */
+
+    function resetRegisterButton() {
+
+      registerButton.disabled =
+        false;
+
+
+      registerButton.innerHTML =
+        'Create Account <span class="button-arrow">→</span>';
 
     }
 
@@ -1551,6 +1572,14 @@
             );
 
 
+        referralHint.textContent =
+          "Optional — enter the invitation code of the person who invited you.";
+
+
+        referralHint.style.color =
+          "#8ba2b7";
+
+
         clearMessage();
 
       }
@@ -1622,7 +1651,10 @@
             item.id,
 
           data:
-            item.data()
+            item.data(),
+
+          matchedField:
+            "referralCode"
 
         };
 
@@ -1664,7 +1696,10 @@
             item.id,
 
           data:
-            item.data()
+            item.data(),
+
+          matchedField:
+            "invitationCode"
 
         };
 
@@ -1706,7 +1741,10 @@
             item.id,
 
           data:
-            item.data()
+            item.data(),
+
+          matchedField:
+            "inviteCode"
 
         };
 
@@ -1759,7 +1797,9 @@
              =================================== */
 
           if (
-            !/^9\d{9}$/.test(phone)
+            !/^9\d{9}$/.test(
+              phone
+            )
           ) {
 
             showMessage(
@@ -1853,8 +1893,12 @@
             true;
 
 
-          let User =
+          let user =
             null;
+
+
+          let authCreated =
+            false;
 
 
           try {
@@ -1868,7 +1912,7 @@
               "Creating account...";
 
 
-            const UserCredential =
+            const userCredential =
               await createUserWithEmailAndPassword(
                 auth,
                 firebaseEmail,
@@ -1881,8 +1925,12 @@
              * Firebase property is .user
              */
 
-            User =
-              UserCredential.user;
+            user =
+              userCredential.user;
+
+
+            authCreated =
+              true;
 
 
             /* =================================
@@ -1913,9 +1961,33 @@
 
               if (!referrer) {
 
-                await deleteUser(
-                  User
-                );
+                /*
+                 * Since the account has just been
+                 * created and no Firestore data has
+                 * been committed yet, it is safe
+                 * to remove this Auth account.
+                 */
+
+                try {
+
+                  await deleteUser(
+                    user
+                  );
+
+                } catch (
+                  cleanupError
+                ) {
+
+                  console.error(
+                    "Invalid referral cleanup error:",
+                    cleanupError
+                  );
+
+                }
+
+
+                authCreated =
+                  false;
 
 
                 showMessage(
@@ -1924,12 +1996,7 @@
                 );
 
 
-                registerButton.disabled =
-                  false;
-
-
-                registerButton.innerHTML =
-                  'Create Account <span class="button-arrow">→</span>';
+                resetRegisterButton();
 
 
                 referralCodeInput.focus();
@@ -1946,12 +2013,29 @@
 
               if (
                 referrer.uid ===
-                User.uid
+                user.uid
               ) {
 
-                await deleteUser(
-                  User
-                );
+                try {
+
+                  await deleteUser(
+                    user
+                  );
+
+                } catch (
+                  cleanupError
+                ) {
+
+                  console.error(
+                    "Self referral cleanup error:",
+                    cleanupError
+                  );
+
+                }
+
+
+                authCreated =
+                  false;
 
 
                 showMessage(
@@ -1960,12 +2044,7 @@
                 );
 
 
-                registerButton.disabled =
-                  false;
-
-
-                registerButton.innerHTML =
-                  'Create Account <span class="button-arrow">→</span>';
+                resetRegisterButton();
 
 
                 referralCodeInput.focus();
@@ -1983,7 +2062,7 @@
                ================================= */
 
             await updateProfile(
-              User,
+              user,
               {
                 displayName:
                   normalizedPhone
@@ -1997,7 +2076,7 @@
 
             const myReferralCode =
               createReferralCode(
-                User.uid
+                user.uid
               );
 
 
@@ -2016,7 +2095,7 @@
             if (
               referrer &&
               referrer.uid !==
-              User.uid
+              user.uid
             ) {
 
               referredBy =
@@ -2033,10 +2112,10 @@
                NEW USER DATA
                ================================= */
 
-            const UserData = {
+            const userData = {
 
               uid:
-                User.uid,
+                user.uid,
 
               phone:
                 normalizedPhone,
@@ -2096,13 +2175,13 @@
               doc(
                 db,
                 "Users",
-                User.uid
+                user.uid
               );
 
 
             batch.set(
               newUserRef,
-              UserData
+              userData
             );
 
 
@@ -2113,7 +2192,7 @@
             if (
               referrer &&
               referrer.uid !==
-              User.uid
+              user.uid
             ) {
 
               registerButton.innerHTML =
@@ -2150,6 +2229,17 @@
             await batch.commit();
 
 
+            /*
+             * Firestore registration is complete.
+             *
+             * DO NOT call deleteUser() after this
+             * point if a later UI action fails.
+             */
+
+            authCreated =
+              false;
+
+
             /* =================================
                SUCCESS
                ================================= */
@@ -2178,16 +2268,25 @@
             );
 
 
-            /* =================================
-               CLEANUP AUTH ACCOUNT
-               ================================= */
+            /*
+             * Only clean up Auth when we know
+             * Firestore registration has NOT
+             * been committed.
+             *
+             * This prevents deleting a valid
+             * Auth account after a successful
+             * Firestore write.
+             */
 
-            if (User) {
+            if (
+              authCreated &&
+              user
+            ) {
 
               try {
 
                 await deleteUser(
-                  User
+                  user
                 );
 
               } catch (
@@ -2295,12 +2394,7 @@
             );
 
 
-            registerButton.disabled =
-              false;
-
-
-            registerButton.innerHTML =
-              'Create Account <span class="button-arrow">→</span>';
+            resetRegisterButton();
 
           }
 
