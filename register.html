@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -634,6 +635,7 @@
       .subtitle {
         font-size: 12.5px;
       }
+
     }
 
     @media (max-height: 820px) and (min-width: 521px) {
@@ -690,15 +692,23 @@
 
 </head>
 
+
 <body>
 
   <div class="bg-dots"></div>
+
 
   <div class="card">
 
     <div class="content">
 
+
+      <!-- =====================================
+           REGISTER SECTION
+           ===================================== -->
+
       <div id="registerSection">
+
 
         <div class="logo">
 
@@ -709,32 +719,42 @@
 
         </div>
 
+
         <div class="brand-tagline">
 
           <span class="blue">BUILD</span>
+
           &nbsp;•&nbsp;
+
           <span class="blue">INVEST</span>
+
           &nbsp;•&nbsp;
+
           <span class="green">GROW</span>
 
         </div>
 
+
         <div class="divider-accent"></div>
+
 
         <h1>
           Create Account
         </h1>
+
 
         <div class="subtitle">
 
           Create your Novarise account<br>
 
           Join today and start
+
           <strong>
             building, investing, and growing together.
           </strong>
 
         </div>
+
 
         <div
           id="message"
@@ -743,7 +763,11 @@
           aria-live="polite"
         ></div>
 
+
         <form id="registerForm">
+
+
+          <!-- PHONE -->
 
           <div class="input-group">
 
@@ -751,7 +775,9 @@
               Phone Number
             </label>
 
+
             <div class="phone-input">
+
 
               <span
                 class="phone-icon"
@@ -773,9 +799,11 @@
 
               </span>
 
+
               <span class="country-code">
                 +63
               </span>
+
 
               <input
                 type="tel"
@@ -793,11 +821,14 @@
           </div>
 
 
+          <!-- REFERRAL CODE -->
+
           <div class="input-group">
 
             <label for="referralCode">
               Referral Code
             </label>
+
 
             <div class="field-wrap">
 
@@ -835,6 +866,7 @@
 
               </span>
 
+
               <input
                 type="text"
                 id="referralCode"
@@ -848,6 +880,7 @@
 
             </div>
 
+
             <div
               class="referral-hint"
               id="referralHint"
@@ -858,13 +891,17 @@
           </div>
 
 
+          <!-- PASSWORD -->
+
           <div class="input-group">
 
             <label for="password">
               Password
             </label>
 
+
             <div class="field-wrap">
+
 
               <span
                 class="lock-icon"
@@ -894,6 +931,7 @@
 
               </span>
 
+
               <input
                 type="password"
                 id="password"
@@ -903,6 +941,7 @@
                 autocomplete="new-password"
                 required
               >
+
 
               <button
                 type="button"
@@ -937,13 +976,17 @@
           </div>
 
 
+          <!-- CONFIRM PASSWORD -->
+
           <div class="input-group">
 
             <label for="confirmPassword">
               Confirm Password
             </label>
 
+
             <div class="field-wrap">
+
 
               <span
                 class="lock-icon"
@@ -973,6 +1016,7 @@
 
               </span>
 
+
               <input
                 type="password"
                 id="confirmPassword"
@@ -982,6 +1026,7 @@
                 autocomplete="new-password"
                 required
               >
+
 
               <button
                 type="button"
@@ -1016,6 +1061,8 @@
           </div>
 
 
+          <!-- REGISTER BUTTON -->
+
           <button
             type="submit"
             id="registerButton"
@@ -1030,12 +1077,14 @@
 
           </button>
 
+
         </form>
 
 
         <div class="or-line">
           <span>or</span>
         </div>
+
 
         <div class="login">
 
@@ -1045,6 +1094,7 @@
 
         </div>
 
+
         <div class="card-note">
 
           Secure registration •
@@ -1053,8 +1103,13 @@
 
         </div>
 
+
       </div>
 
+
+      <!-- =====================================
+           SUCCESS SCREEN
+           ===================================== -->
 
       <div
         id="successScreen"
@@ -1065,14 +1120,17 @@
           ✓
         </div>
 
+
         <h2>
           Account Registered!
         </h2>
+
 
         <p>
           Your Novarise account has been
           created successfully.
         </p>
+
 
         <a
           href="login.html"
@@ -1083,10 +1141,15 @@
 
       </div>
 
+
     </div>
 
   </div>
 
+
+  <!-- =========================================
+       FIREBASE
+       ========================================= -->
 
   <script type="module">
 
@@ -1171,35 +1234,61 @@
        ========================================= */
 
     const phoneInput =
-      document.getElementById("phone");
+      document.getElementById(
+        "phone"
+      );
+
 
     const referralCodeInput =
-      document.getElementById("referralCode");
+      document.getElementById(
+        "referralCode"
+      );
+
 
     const referralHint =
-      document.getElementById("referralHint");
+      document.getElementById(
+        "referralHint"
+      );
+
 
     const passwordInput =
-      document.getElementById("password");
+      document.getElementById(
+        "password"
+      );
+
 
     const confirmPasswordInput =
-      document.getElementById("confirmPassword");
+      document.getElementById(
+        "confirmPassword"
+      );
+
 
     const registerButton =
-      document.getElementById("registerButton");
+      document.getElementById(
+        "registerButton"
+      );
+
 
     const messageBox =
-      document.getElementById("message");
+      document.getElementById(
+        "message"
+      );
+
 
     const togglePassword =
-      document.getElementById("togglePassword");
+      document.getElementById(
+        "togglePassword"
+      );
+
 
     const toggleConfirmPassword =
-      document.getElementById("toggleConfirmPassword");
+      document.getElementById(
+        "toggleConfirmPassword"
+      );
 
 
     /* =========================================
-       URL REFERRAL CODE
+       URL REFERRAL
        ========================================= */
 
     const urlParams =
@@ -1224,8 +1313,10 @@
       referralCodeInput.value =
         referralFromUrl;
 
+
       referralHint.textContent =
         "Invitation code detected from your referral link.";
+
 
       referralHint.style.color =
         "#168ff0";
@@ -1244,10 +1335,12 @@
         const showing =
           passwordInput.type === "text";
 
+
         passwordInput.type =
           showing
             ? "password"
             : "text";
+
 
         this.setAttribute(
           "aria-label",
@@ -1267,10 +1360,12 @@
         const showing =
           confirmPasswordInput.type === "text";
 
+
         confirmPasswordInput.type =
           showing
             ? "password"
             : "text";
+
 
         this.setAttribute(
           "aria-label",
@@ -1284,16 +1379,21 @@
 
 
     /* =========================================
-       PHONE
+       PHONE FUNCTIONS
        ========================================= */
 
     function normalizePhone(phone) {
 
       phone =
-        phone.replace(/\D/g, "");
+        phone.replace(
+          /\D/g,
+          ""
+        );
 
 
-      if (/^9\d{9}$/.test(phone)) {
+      if (
+        /^9\d{9}$/.test(phone)
+      ) {
 
         return "63" + phone;
 
@@ -1308,7 +1408,9 @@
     function phoneToFirebaseEmail(phone) {
 
       const normalizedPhone =
-        normalizePhone(phone);
+        normalizePhone(
+          phone
+        );
 
 
       if (!normalizedPhone) {
@@ -1327,7 +1429,7 @@
 
 
     /* =========================================
-       CREATE REFERRAL CODE
+       REFERRAL CODE GENERATOR
        ========================================= */
 
     function createReferralCode(uid) {
@@ -1335,7 +1437,10 @@
       return (
         "NOVA-" +
         uid
-          .substring(0, 8)
+          .substring(
+            0,
+            8
+          )
           .toUpperCase()
       );
 
@@ -1354,6 +1459,7 @@
       messageBox.textContent =
         message;
 
+
       messageBox.className =
         "message " + type;
 
@@ -1364,6 +1470,7 @@
 
       messageBox.textContent =
         "";
+
 
       messageBox.className =
         "message";
@@ -1405,13 +1512,16 @@
         ) {
 
           this.value =
-            this.value.substring(1);
+            this.value.substring(
+              1
+            );
 
 
           showMessage(
             "Phone number must start with 9.",
             "error"
           );
+
 
           return;
 
@@ -1435,7 +1545,10 @@
         this.value =
           this.value
             .toUpperCase()
-            .replace(/\s/g, "");
+            .replace(
+              /\s/g,
+              ""
+            );
 
 
         clearMessage();
@@ -1448,12 +1561,16 @@
        FIND REFERRER
        ========================================= */
 
-    async function findUserByReferralCode(code) {
+    async function findUserByReferralCode(
+      code
+    ) {
 
       const cleanCode =
-        String(code || "")
-          .trim()
-          .toUpperCase();
+        String(
+          code || ""
+        )
+        .trim()
+        .toUpperCase();
 
 
       if (!cleanCode) {
@@ -1463,20 +1580,20 @@
       }
 
 
-      const UsersRef =
+      const usersRef =
         collection(
           db,
           "Users"
         );
 
 
-      /* -----------------------------------------
-         1. referralCode
-         ----------------------------------------- */
+      /* ---------------------------------------
+         CHECK referralCode
+         --------------------------------------- */
 
       const referralQuery =
         query(
-          UsersRef,
+          usersRef,
           where(
             "referralCode",
             "==",
@@ -1512,13 +1629,13 @@
       }
 
 
-      /* -----------------------------------------
-         2. invitationCode
-         ----------------------------------------- */
+      /* ---------------------------------------
+         CHECK invitationCode
+         --------------------------------------- */
 
       const invitationQuery =
         query(
-          UsersRef,
+          usersRef,
           where(
             "invitationCode",
             "==",
@@ -1554,13 +1671,13 @@
       }
 
 
-      /* -----------------------------------------
-         3. inviteCode
-         ----------------------------------------- */
+      /* ---------------------------------------
+         CHECK inviteCode
+         --------------------------------------- */
 
       const inviteQuery =
         query(
-          UsersRef,
+          usersRef,
           where(
             "inviteCode",
             "==",
@@ -1602,11 +1719,13 @@
 
 
     /* =========================================
-       REGISTER FORM
+       REGISTER
        ========================================= */
 
     document
-      .getElementById("registerForm")
+      .getElementById(
+        "registerForm"
+      )
       .addEventListener(
         "submit",
         async function (event) {
@@ -1636,7 +1755,7 @@
 
 
           /* ===================================
-             PHONE VALIDATION
+             VALIDATE PHONE
              =================================== */
 
           if (
@@ -1648,7 +1767,9 @@
               "error"
             );
 
+
             phoneInput.focus();
+
 
             return;
 
@@ -1656,7 +1777,7 @@
 
 
           /* ===================================
-             PASSWORD
+             VALIDATE PASSWORD
              =================================== */
 
           if (
@@ -1668,7 +1789,9 @@
               "error"
             );
 
+
             passwordInput.focus();
+
 
             return;
 
@@ -1689,7 +1812,9 @@
               "error"
             );
 
+
             confirmPasswordInput.focus();
+
 
             return;
 
@@ -1697,11 +1822,15 @@
 
 
           const normalizedPhone =
-            normalizePhone(phone);
+            normalizePhone(
+              phone
+            );
 
 
           const firebaseEmail =
-            phoneToFirebaseEmail(phone);
+            phoneToFirebaseEmail(
+              phone
+            );
 
 
           if (
@@ -1714,6 +1843,7 @@
               "error"
             );
 
+
             return;
 
           }
@@ -1723,13 +1853,15 @@
             true;
 
 
-          let User = null;
+          let User =
+            null;
 
 
           try {
 
+
             /* =================================
-               CREATE AUTH ACCOUNT
+               CREATE AUTH USER
                ================================= */
 
             registerButton.innerHTML =
@@ -1744,8 +1876,13 @@
               );
 
 
+            /*
+             * IMPORTANT:
+             * Firebase property is .user
+             */
+
             User =
-              UserCredential.User;
+              UserCredential.user;
 
 
             /* =================================
@@ -1756,7 +1893,9 @@
               null;
 
 
-            if (referralCode) {
+            if (
+              referralCode
+            ) {
 
               registerButton.innerHTML =
                 "Checking referral...";
@@ -1768,50 +1907,69 @@
                 );
 
 
+              /* --------------------------------
+                 INVALID REFERRAL
+                 -------------------------------- */
+
               if (!referrer) {
 
-                await deleteUser(User);
+                await deleteUser(
+                  User
+                );
+
 
                 showMessage(
                   "Referral code not found. Please check the code and try again.",
                   "error"
                 );
 
+
                 registerButton.disabled =
                   false;
+
 
                 registerButton.innerHTML =
                   'Create Account <span class="button-arrow">→</span>';
 
+
                 referralCodeInput.focus();
+
 
                 return;
 
               }
 
 
-              /* =================================
+              /* --------------------------------
                  PREVENT SELF REFERRAL
-                 ================================= */
+                 -------------------------------- */
 
               if (
-                referrer.uid === User.uid
+                referrer.uid ===
+                User.uid
               ) {
 
-                await deleteUser(User);
+                await deleteUser(
+                  User
+                );
+
 
                 showMessage(
                   "You cannot use your own referral code.",
                   "error"
                 );
 
+
                 registerButton.disabled =
                   false;
+
 
                 registerButton.innerHTML =
                   'Create Account <span class="button-arrow">→</span>';
 
+
                 referralCodeInput.focus();
+
 
                 return;
 
@@ -1821,7 +1979,7 @@
 
 
             /* =================================
-               UPDATE PROFILE
+               UPDATE FIREBASE AUTH PROFILE
                ================================= */
 
             await updateProfile(
@@ -1834,7 +1992,7 @@
 
 
             /* =================================
-               OWN REFERRAL CODE
+               CREATE MY REFERRAL CODE
                ================================= */
 
             const myReferralCode =
@@ -1844,11 +2002,12 @@
 
 
             /* =================================
-               REFERRER DATA
+               REFERRAL DATA
                ================================= */
 
             let referredBy =
               null;
+
 
             let referredByCode =
               null;
@@ -1856,11 +2015,13 @@
 
             if (
               referrer &&
-              referrer.uid !== User.uid
+              referrer.uid !==
+              User.uid
             ) {
 
               referredBy =
                 referrer.uid;
+
 
               referredByCode =
                 referralCode;
@@ -1869,7 +2030,7 @@
 
 
             /* =================================
-               USER DOCUMENT
+               NEW USER DATA
                ================================= */
 
             const UserData = {
@@ -1914,7 +2075,7 @@
 
 
             /* =================================
-               ATOMIC BATCH
+               FIRESTORE BATCH
                ================================= */
 
             registerButton.innerHTML =
@@ -1922,12 +2083,14 @@
 
 
             const batch =
-              writeBatch(db);
+              writeBatch(
+                db
+              );
 
 
-            /* ---------------------------------
-               CREATE NEW USER
-               --------------------------------- */
+            /* --------------------------------
+               CREATE USER DOCUMENT
+               -------------------------------- */
 
             const newUserRef =
               doc(
@@ -1943,13 +2106,14 @@
             );
 
 
-            /* ---------------------------------
-               UPDATE REFERRER TEAM SIZE
-               --------------------------------- */
+            /* --------------------------------
+               UPDATE REFERRER
+               -------------------------------- */
 
             if (
               referrer &&
-              referrer.uid !== User.uid
+              referrer.uid !==
+              User.uid
             ) {
 
               registerButton.innerHTML =
@@ -1975,9 +2139,9 @@
             }
 
 
-            /* ---------------------------------
-               COMMIT EVERYTHING TOGETHER
-               --------------------------------- */
+            /* =================================
+               COMMIT
+               ================================= */
 
             registerButton.innerHTML =
               "Finishing registration...";
@@ -1995,7 +2159,7 @@
                 "registerSection"
               )
               .style.display =
-                "none";
+              "none";
 
 
             document
@@ -2003,7 +2167,7 @@
                 "successScreen"
               )
               .style.display =
-                "block";
+              "block";
 
 
           } catch (error) {
@@ -2014,20 +2178,21 @@
             );
 
 
-            /*
-             * If Firebase Authentication account
-             * was created but Firestore failed,
-             * remove the Auth account so the phone
-             * number is not left as an orphan account.
-             */
+            /* =================================
+               CLEANUP AUTH ACCOUNT
+               ================================= */
 
             if (User) {
 
               try {
 
-                await deleteUser(User);
+                await deleteUser(
+                  User
+                );
 
-              } catch (cleanupError) {
+              } catch (
+                cleanupError
+              ) {
 
                 console.error(
                   "Auth cleanup error:",
@@ -2038,6 +2203,10 @@
 
             }
 
+
+            /* =================================
+               ERROR MESSAGE
+               ================================= */
 
             let errorMessage =
               "Registration failed. Please try again.";
@@ -2109,7 +2278,9 @@
               error.message &&
               error.message
                 .toLowerCase()
-                .includes("permission")
+                .includes(
+                  "permission"
+                )
             ) {
 
               errorMessage =
@@ -2141,3 +2312,4 @@
 </body>
 
 </html>
+```
