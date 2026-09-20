@@ -2225,7 +2225,7 @@
   ===================================================== */
 
   async function loadTeam(
-    user
+    User
   ) {
 
     try {
@@ -2236,7 +2236,7 @@
 
       const current =
         await getUserDocument(
-          user.uid
+          User.uid
         );
 
 
@@ -2254,7 +2254,7 @@
         currentData.invitationCode ||
         currentData.referral_code ||
         createFallbackCode(
-          user.uid
+          User.uid
         );
 
 
@@ -2286,7 +2286,7 @@
 
       const level1 =
         await getDirectReferrals(
-          user.uid
+          User.uid
         );
 
 
@@ -2373,7 +2373,7 @@
 
       referralCodeElement.textContent =
         createFallbackCode(
-          user.uid
+          User.uid
         );
 
 
@@ -2408,9 +2408,9 @@
 
   onAuthStateChanged(
     auth,
-    async user => {
+    async User => {
 
-      if (!user) {
+      if (!User) {
 
         window.location.href =
           "login.html";
@@ -2421,7 +2421,7 @@
 
 
       await loadTeam(
-        user
+        User
       );
 
     }
