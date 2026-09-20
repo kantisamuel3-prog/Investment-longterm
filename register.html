@@ -1723,7 +1723,7 @@
             true;
 
 
-          let user = null;
+          let User = null;
 
 
           try {
@@ -1736,7 +1736,7 @@
               "Creating account...";
 
 
-            const userCredential =
+            const UserCredential =
               await createUserWithEmailAndPassword(
                 auth,
                 firebaseEmail,
@@ -1744,8 +1744,8 @@
               );
 
 
-            user =
-              userCredential.user;
+            User =
+              UserCredential.User;
 
 
             /* =================================
@@ -1795,7 +1795,7 @@
                  ================================= */
 
               if (
-                referrer.uid === user.uid
+                referrer.uid === User.uid
               ) {
 
                 await deleteUser(user);
@@ -1825,7 +1825,7 @@
                ================================= */
 
             await updateProfile(
-              user,
+              User,
               {
                 displayName:
                   normalizedPhone
@@ -1839,7 +1839,7 @@
 
             const myReferralCode =
               createReferralCode(
-                user.uid
+                User.uid
               );
 
 
@@ -1856,7 +1856,7 @@
 
             if (
               referrer &&
-              referrer.uid !== user.uid
+              referrer.uid !== User.uid
             ) {
 
               referredBy =
@@ -1872,10 +1872,10 @@
                USER DOCUMENT
                ================================= */
 
-            const userData = {
+            const UserData = {
 
               uid:
-                user.uid,
+                User.uid,
 
               phone:
                 normalizedPhone,
@@ -1933,13 +1933,13 @@
               doc(
                 db,
                 "Users",
-                user.uid
+                User.uid
               );
 
 
             batch.set(
               newUserRef,
-              userData
+              UserData
             );
 
 
@@ -1949,7 +1949,7 @@
 
             if (
               referrer &&
-              referrer.uid !== user.uid
+              referrer.uid !== User.uid
             ) {
 
               registerButton.innerHTML =
@@ -2021,7 +2021,7 @@
              * number is not left as an orphan account.
              */
 
-            if (user) {
+            if (User) {
 
               try {
 
