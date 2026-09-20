@@ -1864,7 +1864,7 @@
      Dashboard uses "Users".
      We therefore use "Users" first.
      
-     Lowercase "users" remains as compatibility
+     Uppercase "Users" remains as compatibility
      with old records.
   ===================================================== */
 
@@ -1924,7 +1924,7 @@
         const oldRef =
           doc(
             db,
-            "users",
+            "Users",
             uid
           );
 
@@ -1949,7 +1949,7 @@
       } catch (error) {
 
         console.warn(
-          "users lookup error:",
+          "Users lookup error:",
           error
         );
 
@@ -1990,7 +1990,7 @@
     }
 
 
-    const usersRef =
+    const UsersRef =
       collection(
         db,
         collectionName
@@ -2030,7 +2030,7 @@
 
         const q =
           query(
-            usersRef,
+            UsersRef,
             where(
               "referredBy",
               "in",
@@ -2073,7 +2073,7 @@
 
         const q =
           query(
-            usersRef,
+            UsersRef,
             where(
               "sponsorId",
               "in",
@@ -2123,7 +2123,7 @@
      
      Reads both:
        Users
-       users
+       Users
      
      and both:
        referredBy
@@ -2169,11 +2169,11 @@
     );
 
 
-    /* users - compatibility */
+    /* Users - compatibility */
 
     const compatibility =
       await queryChildren(
-        "users",
+        "Users",
         parentIds
       );
 
