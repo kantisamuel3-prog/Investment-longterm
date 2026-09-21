@@ -818,7 +818,7 @@
       </button>
 
       <button class="action" id="bankBtn" type="button">
-        <div class="action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h10"/><path d="M7 13h6"/></svg></div>
+        <div class="action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9h18"/><path d="M4 9 12 4l8 5"/><path d="M5 9v9M9 9v9M15 9v9M19 9v9"/><path d="M3 21h18"/></svg></div>
         <span>Bank</span>
       </button>
 
@@ -848,14 +848,7 @@
         <span class="chevron">›</span>
       </button>
 
-      <button class="menu-item" id="bankMenuBtn" type="button">
-        <div class="menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h10"/><path d="M7 13h6"/></svg></div>
-        <div class="menu-text">
-          <span class="menu-title">Withdrawal Account</span>
-          <span class="menu-desc" id="bankStatus">No withdrawal account linked.</span>
-        </div>
-        <span class="chevron">›</span>
-      </button>
+
 
     </section>
 
@@ -905,40 +898,6 @@
   </a>
 </nav>
 
-<!-- Bank binding modal -->
-<div class="modal-backdrop" id="bankModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>Bind Withdrawal Account</h3>
-      <button class="close" data-close="bankModal" type="button">×</button>
-    </div>
-
-    <div class="field">
-      <label>ACCOUNT TYPE</label>
-      <select id="accountType">
-        <option value="GCash">GCash</option>
-        <option value="Maya">Maya</option>
-        <option value="Bank">Bank Account</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label>ACCOUNT NAME</label>
-      <input id="accountName" type="text" placeholder="Full name on account">
-    </div>
-
-    <div class="field">
-      <label>ACCOUNT NUMBER</label>
-      <input id="accountNumber" type="text" inputmode="numeric" placeholder="Account / mobile number">
-    </div>
-
-    <div class="modal-actions">
-      <button class="modal-btn cancel" data-close="bankModal" type="button">Cancel</button>
-      <button class="modal-btn primary" id="saveBankBtn" type="button">Save Account</button>
-    </div>
-  </div>
-</div>
-
 <!-- Recharge / Withdraw modal -->
 <div class="modal-backdrop" id="moneyModal">
   <div class="modal">
@@ -960,6 +919,36 @@
     <div class="modal-actions">
       <button class="modal-btn cancel" data-close="moneyModal" type="button">Cancel</button>
       <button class="modal-btn primary" id="confirmMoneyBtn" type="button">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bank / Withdrawal Account modal -->
+<div class="modal-backdrop" id="bankModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Bank Account</h3>
+      <button class="close" data-close="bankModal" type="button">×</button>
+    </div>
+
+    <div class="field">
+      <label>BANK NAME</label>
+      <input id="bankName" type="text" placeholder="e.g. GCash / BDO / BPI">
+    </div>
+
+    <div class="field">
+      <label>ACCOUNT NAME</label>
+      <input id="bankAccountName" type="text" placeholder="Account holder name">
+    </div>
+
+    <div class="field">
+      <label>ACCOUNT NUMBER</label>
+      <input id="bankAccountNumber" type="text" placeholder="Account number" inputmode="numeric">
+    </div>
+
+    <div class="modal-actions">
+      <button class="modal-btn cancel" data-close="bankModal" type="button">Cancel</button>
+      <button class="modal-btn primary" id="saveBankBtn" type="button">Save Bank</button>
     </div>
   </div>
 </div>
@@ -1082,46 +1071,6 @@
     $("earnings").textContent = peso(earnings);
     $("referral").textContent = peso(referral);
 
-    const bank = currentData.withdrawalAccount;
-    if(bank && bank.type && bank.number){
-      $("bankStatus").textContent =
-        bank.type + " • " + String(bank.number).slice(-4).padStart(String(bank.number).length, "•");
-    }else{
-      $("bankStatus").textContent = "No withdrawal account linked.";
-    }
-  }
-
-  async function saveBank(){
-    if(!currentUser) return;
-
-    const type = $("accountType").value;
-    const name = $("accountName").value.trim();
-    const number = $("accountNumber").value.trim();
-
-    if(!name || !number){
-      toast("Please complete the withdrawal account.");
-      return;
-    }
-
-    await setDoc(
-      doc(db, "Users", currentUser.uid),
-      {
-        withdrawalAccount: {
-          type,
-          name,
-          number,
-          updatedAt: new Date().toISOString()
-        }
-      },
-      {merge:true}
-    );
-
-    currentData.withdrawalAccount = {type,name,number};
-    $("bankStatus").textContent =
-      type + " • " + String(number).slice(-4).padStart(String(number).length, "•");
-
-    closeModal("bankModal");
-    toast("Withdrawal account saved.");
   }
 
   async function updateMoney(){
@@ -1150,16 +1099,9 @@
             throw new Error("INSUFFICIENT_BALANCE");
           }
 
-          const bank = data.withdrawalAccount;
-          if(!bank || !bank.number){
-            throw new Error("NO_BANK");
-          }
-
           transactions.push({
             type:"Withdraw",
             amount,
-            accountType:bank.type,
-            accountNumber:bank.number,
             date:new Date().toLocaleString()
           });
 
@@ -1199,28 +1141,12 @@
     }catch(err){
       if(err.message === "INSUFFICIENT_BALANCE"){
         toast("Insufficient balance.");
-      }else if(err.message === "NO_BANK"){
-        closeModal("moneyModal");
-        openModal("bankModal");
-        toast("Bind a withdrawal account first.");
       }else{
         console.error(err);
         toast("Something went wrong. Please try again.");
       }
     }
   }
-
-  $("bankBtn").addEventListener("click", () => {
-    const bank = currentData.withdrawalAccount;
-    if(bank){
-      $("accountType").value = bank.type || "GCash";
-      $("accountName").value = bank.name || "";
-      $("accountNumber").value = bank.number || "";
-    }
-    openModal("bankModal");
-  });
-
-  $("bankMenuBtn").addEventListener("click", () => $("bankBtn").click());
 
   $("withdrawBtn").addEventListener("click", () => {
     moneyMode = "withdraw";
@@ -1229,6 +1155,52 @@
     $("rechargeNote").style.display = "none";
     $("moneyAmount").value = "";
     openModal("moneyModal");
+  });
+
+  $("bankBtn").addEventListener("click", () => {
+    const account = currentData.withdrawalAccount || {};
+    $("bankName").value = account.bankName || "";
+    $("bankAccountName").value = account.accountName || "";
+    $("bankAccountNumber").value = account.accountNumber || "";
+    openModal("bankModal");
+  });
+
+  $("saveBankBtn").addEventListener("click", async () => {
+    const bankName = $("bankName").value.trim();
+    const accountName = $("bankAccountName").value.trim();
+    const accountNumber = $("bankAccountNumber").value.trim();
+
+    if(!bankName || !accountName || !accountNumber){
+      toast("Please complete your bank details.");
+      return;
+    }
+
+    if(!currentUser){
+      toast("Please login first.");
+      return;
+    }
+
+    try{
+      const withdrawalAccount = {
+        bankName,
+        accountName,
+        accountNumber,
+        updatedAt: new Date().toISOString()
+      };
+
+      await setDoc(
+        doc(db, "Users", currentUser.uid),
+        { withdrawalAccount },
+        { merge:true }
+      );
+
+      currentData.withdrawalAccount = withdrawalAccount;
+      closeModal("bankModal");
+      toast("Bank account saved.");
+    }catch(error){
+      console.error(error);
+      toast("Unable to save bank account.");
+    }
   });
 
   $("rechargeBtn").addEventListener("click", () => {
@@ -1240,7 +1212,6 @@
     openModal("moneyModal");
   });
 
-  $("saveBankBtn").addEventListener("click", saveBank);
   $("confirmMoneyBtn").addEventListener("click", updateMoney);
 
   $("editProfile").addEventListener("click", () => {
