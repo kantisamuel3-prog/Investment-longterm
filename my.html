@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Novarise — My</title>
+
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+  :root{
+    --green:#087a45;
+    --green2:#0b9b57;
+    --bg:#f2f7f4;
+    --card:#ffffff;
+    --text:#10261c;
+    --muted:#718278;
+    --line:#e5eee9;
+    --shadow:0 10px 28px rgba(18,55,38,.08);
+  }
+
+  html,body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+
+  body{padding-bottom:92px}
+
+  .app{
+    width:100%;
+    max-width:760px;
+    margin:0 auto;
+    min-height:100vh;
+  }
+
+  .top{
+    background:linear-gradient(145deg,#062d19,#0a4a29 62%,#0b5e34);
+    padding:22px 18px 78px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .top:after{
+    content:"";
+    position:absolute;
+    width:230px;
+    height:230px;
+    border-radius:50%;
+    right:-90px;
+    top:-100px;
+    background:rgba(255,255,255,.05);
+  }
+
+  .topbar{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    color:#fff;
+  }
+
+  .brand-icon{
+    width:46px;
+    height:46px;
+    border-radius:15px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(145deg,#19a45d,#087a45);
+    box-shadow:0 7px 18px rgba(0,0,0,.16);
+    font-size:24px;
+  }
+
+  .brand strong{
+    display:block;
+    font-size:20px;
+    line-height:1.05;
+  }
+
+  .brand small{
+    display:block;
+    margin-top:4px;
+    color:rgba(255,255,255,.72);
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:1.2px;
+  }
+
+  .page-title{
+    position:relative;
+    z-index:2;
+    margin:28px 0 0;
+    color:#fff;
+    font-size:28px;
+    line-height:1.1;
+    font-weight:800;
+  }
+
+  .page-subtitle{
+    position:relative;
+    z-index:2;
+    margin:8px 0 0;
+    color:rgba(255,255,255,.75);
+    font-size:13px;
+  }
+
+  .content{
+    margin:-54px 14px 0;
+    position:relative;
+    z-index:5;
+  }
+
+  .profile-card{
+    background:#fff;
+    border:1px solid rgba(226,237,231,.9);
+    border-radius:27px;
+    padding:20px;
+    box-shadow:var(--shadow);
+  }
+
+  .profile-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+
+  .avatar{
+    width:62px;
+    height:62px;
+    flex:0 0 62px;
+    border-radius:20px;
+    display:grid;
+    place-items:center;
+    color:#fff;
+    font-size:26px;
+    font-weight:800;
+    background:linear-gradient(145deg,#11aa60,#087a45);
+    box-shadow:0 7px 18px rgba(8,122,69,.18);
+  }
+
+  .profile-info{min-width:0;flex:1}
+
+  .profile-info h2{
+    margin:0;
+    font-size:18px;
+    font-weight:800;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:7px;
+    padding:5px 10px;
+    border-radius:999px;
+    background:#e9f8ef;
+    color:#087a45;
+    font-size:11px;
+    font-weight:800;
+  }
+
+  .status i{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#12a95d;
+  }
+
+  .edit-profile{
+    border:0;
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    background:#e8f7ee;
+    color:#087a45;
+    font-size:18px;
+    cursor:pointer;
+  }
+
+  .divider{height:1px;background:var(--line);margin:18px 0}
+
+  .stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .stat{
+    padding:3px 14px 8px;
+  }
+
+  .stat:nth-child(odd){border-right:1px solid var(--line)}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--line);padding-bottom:15px}
+  .stat:nth-child(n+3){padding-top:15px}
+
+  .stat-label{
+    color:#82938a;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.7px;
+    text-transform:uppercase;
+  }
+
+  .stat-value{
+    margin-top:5px;
+    font-size:19px;
+    font-weight:800;
+  }
+
+  .actions{
+    margin-top:15px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+  }
+
+  .action{
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:19px;
+    min-height:92px;
+    padding:12px 5px 10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    cursor:pointer;
+    box-shadow:0 5px 16px rgba(18,55,38,.045);
+  }
+
+  .action-icon{
+    width:43px;
+    height:43px;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+  }
+
+  .action:nth-child(1) .action-icon{background:#e4f7eb;color:#087a45}
+  .action:nth-child(2) .action-icon{background:#ffe8ea;color:#e33b4d}
+  .action:nth-child(3) .action-icon{background:#fff1dc;color:#d98700}
+  .action:nth-child(4) .action-icon{background:#e4f0fb;color:#1675b9}
+
+  .action span{
+    font-size:11px;
+    font-weight:800;
+    color:#33483d;
+  }
+
+  .menu-card{
+    margin-top:15px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+
+  .menu-item{
+    width:100%;
+    border:0;
+    background:#fff;
+    min-height:76px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:13px 17px;
+    text-align:left;
+    cursor:pointer;
+  }
+
+  .menu-item + .menu-item{border-top:1px solid var(--line)}
+
+  .menu-icon{
+    width:45px;
+    height:45px;
+    flex:0 0 45px;
+    border-radius:15px;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+    background:#e8f7ee;
+    color:#087a45;
+  }
+
+  .menu-text{flex:1;min-width:0}
+
+  .menu-title{
+    display:block;
+    font-size:14px;
+    font-weight:800;
+    color:#142c20;
+  }
+
+  .menu-desc{
+    display:block;
+    margin-top:3px;
+    color:#84938c;
+    font-size:11px;
+  }
+
+  .chevron{
+    color:#b0bdb6;
+    font-size:22px;
+  }
+
+  .logout{
+    width:100%;
+    margin-top:15px;
+    height:52px;
+    border:1px solid #f0dfe1;
+    border-radius:17px;
+    background:#fff;
+    color:#d64555;
+    font-size:14px;
+    font-weight:800;
+    cursor:pointer;
+  }
+
+  .footer-note{
+    text-align:center;
+    margin:18px 0 6px;
+    color:#9aa7a1;
+    font-size:10px;
+  }
+
+  /* Locked-style bottom navigation */
+  .bottom-nav{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    height:78px;
+    background:rgba(255,253,246,.97);
+    border-top:1px solid #e7e2d7;
+    box-shadow:0 -5px 20px rgba(15,23,42,.08);
+    display:flex;
+    align-items:stretch;
+    justify-content:space-around;
+    z-index:99999;
+    padding-bottom:env(safe-area-inset-bottom);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+  }
+
+  .nav-item{
+    flex:1;
+    max-width:150px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    text-decoration:none;
+    color:#777;
+    font-size:13px;
+    font-weight:500;
+    transition:.2s ease;
+  }
+
+  .nav-item svg{
+    width:27px;
+    height:27px;
+    stroke:#777;
+    stroke-width:1.8;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    transition:.2s ease;
+  }
+
+  .nav-item.active{
+    color:#2563eb;
+    font-weight:600;
+  }
+
+  .nav-item.active svg{
+    stroke:#2563eb;
+    transform:translateY(-1px);
+  }
+
+  .nav-item:active{transform:scale(.94)}
+
+  @media(max-width:600px){
+    .top{padding:18px 16px 76px}
+    .content{margin:-52px 12px 0}
+    .profile-card{padding:18px;border-radius:24px}
+  }
+
+  @media(max-width:390px){
+    .actions{gap:7px}
+    .action{min-height:87px}
+    .action-icon{width:39px;height:39px}
+    .action span{font-size:10px}
+    .menu-item{padding-left:14px;padding-right:14px}
+    .bottom-nav{height:76px}
+    .nav-item{font-size:12px}
+    .nav-item svg{width:26px;height:26px}
+  }
+
+  .modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(5,25,15,.48);
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:100000;
+    padding:12px;
+  }
+
+  .modal-backdrop.show{display:flex}
+
+  .modal{
+    width:min(520px,100%);
+    background:#fff;
+    border-radius:27px 27px 20px 20px;
+    padding:21px;
+    box-shadow:0 18px 60px rgba(0,0,0,.2);
+    animation:slideUp .2s ease;
+  }
+
+  @keyframes slideUp{
+    from{transform:translateY(25px);opacity:.4}
+    to{transform:translateY(0);opacity:1}
+  }
+
+  .modal-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+
+  .modal-head h3{margin:0;font-size:20px}
+
+  .close{
+    width:38px;height:38px;border:0;border-radius:12px;
+    background:#f0f5f2;color:#4d6257;font-size:20px;cursor:pointer;
+  }
+
+  .field{margin-top:14px}
+  .field label{
+    display:block;
+    margin-bottom:7px;
+    font-size:11px;
+    font-weight:800;
+    color:#63766b;
+  }
+
+  .field input,.field select{
+    width:100%;
+    height:48px;
+    border:1px solid #dce8e1;
+    border-radius:14px;
+    outline:none;
+    padding:0 14px;
+    font:inherit;
+    background:#fbfdfc;
+    color:#172b21;
+  }
+
+  .field input:focus,.field select:focus{border-color:#0b9b57}
+
+  .modal-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:18px;
+  }
+
+  .modal-btn{
+    height:48px;
+    border:0;
+    border-radius:14px;
+    font-weight:800;
+    cursor:pointer;
+  }
+
+  .modal-btn.cancel{background:#edf3ef;color:#506158}
+  .modal-btn.primary{background:linear-gradient(135deg,#0b9b57,#087a45);color:#fff}
+
+  .toast{
+    position:fixed;
+    left:50%;
+    bottom:92px;
+    transform:translateX(-50%) translateY(15px);
+    background:#10261c;
+    color:#fff;
+    padding:11px 16px;
+    border-radius:13px;
+    font-size:12px;
+    font-weight:700;
+    opacity:0;
+    pointer-events:none;
+    transition:.2s ease;
+    z-index:110000;
+    white-space:nowrap;
+  }
+
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* =========================================================
+     NOVARISE PRO VISUAL SYSTEM — presentation only
+     ========================================================= */
+  :root{
+    --brand-blue:#08a5e3;
+    --brand-blue-dark:#0877c9;
+    --brand-lime:#b4d51a;
+    --brand-navy:#0b3152;
+    --bg:#f4f9fc;
+    --card:#ffffff;
+    --text:#0b2d49;
+    --muted:#72879a;
+    --line:#e3edf4;
+    --shadow:0 14px 36px rgba(14,66,101,.09);
+  }
+
+  html,body{
+    background:
+      radial-gradient(circle at 8% 4%,rgba(8,165,227,.09),transparent 25%),
+      radial-gradient(circle at 92% 8%,rgba(180,213,26,.08),transparent 22%),
+      #f4f9fc;
+  }
+
+  .top{
+    background:
+      radial-gradient(circle at 82% 16%,rgba(180,213,26,.20),transparent 23%),
+      radial-gradient(circle at 8% 90%,rgba(8,165,227,.18),transparent 30%),
+      linear-gradient(135deg,#063454 0%,#075d8f 54%,#0786bf 100%);
+    padding:24px 18px 88px;
+    box-shadow:0 12px 30px rgba(7,83,127,.14);
+  }
+
+  .top:before{
+    content:"";
+    position:absolute;
+    width:190px;
+    height:190px;
+    right:-75px;
+    bottom:-105px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:50%;
+    box-shadow:0 0 0 28px rgba(255,255,255,.025),0 0 0 56px rgba(255,255,255,.018);
+  }
+
+  .top:after{
+    width:270px;
+    height:270px;
+    right:-120px;
+    top:-150px;
+    background:rgba(180,213,26,.09);
+  }
+
+  .brand{gap:12px}
+
+  .brand-icon{
+    width:48px;
+    height:48px;
+    border-radius:16px;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.20);
+    box-shadow:0 8px 22px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.18);
+  }
+
+  .brand-icon svg{width:30px;height:30px;display:block}
+
+  .brand strong{font-size:21px;letter-spacing:-.3px}
+  .brand small{font-size:8px;letter-spacing:1.4px;color:rgba(255,255,255,.78)}
+
+  .page-title{
+    margin-top:30px;
+    font-size:30px;
+    letter-spacing:-.7px;
+  }
+
+  .page-title:after{
+    content:"";
+    display:block;
+    width:42px;
+    height:3px;
+    margin-top:10px;
+    border-radius:99px;
+    background:linear-gradient(90deg,var(--brand-lime),rgba(180,213,26,.15));
+  }
+
+  .page-subtitle{font-size:13px;color:rgba(255,255,255,.80);margin-top:9px}
+
+  .content{margin:-60px 14px 0}
+
+  .profile-card{
+    border:1px solid rgba(214,231,242,.9);
+    border-radius:28px;
+    padding:21px;
+    box-shadow:0 18px 45px rgba(8,72,112,.11);
+    position:relative;
+    overflow:hidden;
+  }
+
+  .profile-card:before{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    right:-80px;
+    top:-80px;
+    border-radius:50%;
+    background:rgba(8,165,227,.06);
+    pointer-events:none;
+  }
+
+  .profile-row{gap:13px;position:relative;z-index:1}
+
+  .avatar{
+    width:64px;height:64px;flex-basis:64px;border-radius:21px;
+    background:linear-gradient(145deg,#0aa8e6,#0878ca);
+    box-shadow:0 9px 22px rgba(8,120,202,.22),inset 0 1px 0 rgba(255,255,255,.25);
+    font-size:25px;
+  }
+
+  .profile-info h2{font-size:18px;color:var(--brand-navy)}
+
+  .status{
+    margin-top:7px;padding:5px 10px;background:#eef9d9;color:#5b7900;
+    border:1px solid #dcebb2;font-size:10px;letter-spacing:.3px;
+  }
+  .status i{background:var(--brand-lime);box-shadow:0 0 0 3px rgba(180,213,26,.16)}
+
+  .edit-profile{
+    width:43px;height:43px;border-radius:14px;
+    background:#eef8fd;color:var(--brand-blue-dark);
+    border:1px solid #d8edf8;box-shadow:0 5px 14px rgba(8,120,202,.08);
+  }
+
+  .divider{background:#e6eef4;margin:19px 0}
+
+  .stats{position:relative;z-index:1}
+  .stat{padding-left:15px;padding-right:15px}
+  .stat:nth-child(odd){border-right:1px solid #e6eef4}
+  .stat:nth-child(-n+2){border-bottom:1px solid #e6eef4}
+  .stat-label{color:#8497a7;font-size:9px;letter-spacing:1px}
+  .stat-value{color:var(--brand-navy);font-size:19px;letter-spacing:-.2px}
+
+  .actions{
+    margin-top:14px;
+    gap:9px;
+    padding:2px;
+  }
+
+  .action{
+    min-height:98px;
+    border:1px solid #dfebf2;
+    border-radius:20px;
+    background:rgba(255,255,255,.96);
+    padding:12px 4px 11px;
+    box-shadow:0 9px 24px rgba(14,66,101,.06);
+    transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+  }
+  .action:active{transform:translateY(1px) scale(.98)}
+
+  .action-icon{
+    width:45px;height:45px;border-radius:15px;
+    border:1px solid rgba(255,255,255,.75);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.8);
+  }
+  .action-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .action:nth-child(1) .action-icon{background:#e9f8fd;color:#078dca}
+  .action:nth-child(2) .action-icon{background:#fff0f2;color:#df3c52}
+  .action:nth-child(3) .action-icon{background:#f1f8df;color:#759700}
+  .action:nth-child(4) .action-icon{background:#edf1ff;color:#5c62c9}
+  .action span{font-size:11px;color:#29465d;letter-spacing:.1px}
+
+  .menu-card{
+    margin-top:14px;
+    border:1px solid #dfebf2;
+    border-radius:23px;
+    box-shadow:0 14px 32px rgba(14,66,101,.075);
+  }
+
+  .menu-item{min-height:78px;padding:13px 17px;gap:13px}
+  .menu-item + .menu-item{border-top:1px solid #e7eef3}
+  .menu-icon{
+    width:46px;height:46px;flex-basis:46px;border-radius:15px;
+    background:#edf8fd;color:var(--brand-blue-dark);
+    border:1px solid #dceef7;
+  }
+  .menu-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .menu-item:nth-child(1) .menu-icon{background:#edf8fd;color:#078dca}
+  .menu-item:nth-child(2) .menu-icon{background:#f1f8df;color:#719300}
+  .menu-item:nth-child(3) .menu-icon{background:#eef1ff;color:#5d64c8}
+  .menu-title{font-size:14px;color:#103653}
+  .menu-desc{color:#8295a5;font-size:11px;margin-top:4px}
+  .chevron{color:#9bb0bf;font-size:23px}
+
+  .logout{
+    margin-top:14px;height:53px;border-radius:17px;
+    background:#fff;border:1px solid #f1dfe2;color:#d84a5b;
+    box-shadow:0 8px 20px rgba(100,30,40,.045);
+  }
+
+  .footer-note{margin-top:18px;color:#9aabb8;font-size:9px;letter-spacing:.8px}
+
+  .modal-backdrop{background:rgba(6,36,58,.52);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+  .modal{border:1px solid #dfeaf1;box-shadow:0 24px 70px rgba(4,45,72,.24)}
+  .modal-head h3{color:#103653}
+  .close{background:#eef6fa;color:#476276}
+  .field label{color:#6c8293;letter-spacing:.7px}
+  .field input,.field select{border-color:#dce9f1;background:#fbfdfe}
+  .field input:focus,.field select:focus{border-color:#08a5e3;box-shadow:0 0 0 3px rgba(8,165,227,.10)}
+  .modal-btn.primary{background:linear-gradient(135deg,#08a5e3,#0877c9);box-shadow:0 9px 20px rgba(8,120,202,.18)}
+  .modal-btn.cancel{background:#eef4f7}
+
+  @media(max-width:600px){
+    .top{padding:19px 16px 82px}
+    .content{margin:-57px 12px 0}
+    .profile-card{padding:19px;border-radius:25px}
+  }
+
+  @media(max-width:390px){
+    .actions{gap:6px}
+    .action{min-height:92px}
+    .action-icon{width:40px;height:40px;border-radius:14px}
+    .action-icon svg{width:20px;height:20px}
+    .action span{font-size:10px}
+    .menu-item{padding-left:14px;padding-right:14px}
+  }
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header class="top">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none">
+            <path d="M8 31.5C12.2 15.2 23.7 8.8 39.5 8.5C39.2 24.3 32.8 35.8 16.5 40" stroke="#B4D51A" stroke-width="4.2" stroke-linecap="round"/>
+            <path d="M10 38C16.2 28.8 23.5 22.2 33.5 16.5" stroke="#08A5E3" stroke-width="4.2" stroke-linecap="round"/>
+            <path d="M25.8 12.2C30.7 14.4 34.1 18.1 35.8 23" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".85"/>
+          </svg>
+        </div>
+        <div>
+          <strong>Novarise</strong>
+          <small>BUILD • INVEST • GROW</small>
+        </div>
+      </div>
+    </div>
+
+    <h1 class="page-title">My</h1>
+    <p class="page-subtitle">Manage your account, withdrawals and support.</p>
+  </header>
+
+  <main class="content">
+
+    <section class="profile-card">
+      <div class="profile-row">
+        <div class="avatar" id="avatar">M</div>
+
+        <div class="profile-info">
+          <h2 id="userName">Checking account...</h2>
+          <div class="status"><i></i> ACTIVE</div>
+        </div>
+
+        <button class="edit-profile" id="editProfile" type="button" aria-label="Edit profile">✎</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Balance</div>
+          <div class="stat-value" id="balance">₱0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Invested</div>
+          <div class="stat-value" id="invested">₱0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Earnings</div>
+          <div class="stat-value" id="earnings">₱0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Referral</div>
+          <div class="stat-value" id="referral">₱0</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="actions">
+      <button class="action" id="rechargeBtn" type="button">
+        <div class="action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h3"/></svg></div>
+        <span>Recharge</span>
+      </button>
+
+      <button class="action" id="withdrawBtn" type="button">
+        <div class="action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20V5"/><path d="m6.5 10.5 5.5-5.5 5.5 5.5"/><path d="M5 20h14"/></svg></div>
+        <span>Withdraw</span>
+      </button>
+
+      <button class="action" id="bankBtn" type="button">
+        <div class="action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h10"/><path d="M7 13h6"/></svg></div>
+        <span>Bank</span>
+      </button>
+
+      <button class="action" id="supportBtn" type="button">
+        <div class="action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7.5 10.5a4.5 4.5 0 1 1 9 0v3a4.5 4.5 0 0 1-9 0z"/><path d="M5 13.5H3.5A1.5 1.5 0 0 0 2 15v1a2 2 0 0 0 2 2h1.5"/><path d="M19 13.5h1.5A1.5 1.5 0 0 1 22 15v1a2 2 0 0 1-2 2h-1.5"/><path d="M12 19v2"/></svg></div>
+        <span>Support</span>
+      </button>
+    </section>
+
+    <section class="menu-card">
+
+      <button class="menu-item" id="groupBtn" type="button">
+        <div class="menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M15 14c3.2 0 6 2.2 6 5"/></svg></div>
+        <div class="menu-text">
+          <span class="menu-title">Official Group</span>
+          <span class="menu-desc">Join the official Novarise community.</span>
+        </div>
+        <span class="chevron">›</span>
+      </button>
+
+      <button class="menu-item" id="supportMenuBtn" type="button">
+        <div class="menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9.5 12.5 11.2 14l3.6-4"/><path d="M12 4v2"/></svg></div>
+        <div class="menu-text">
+          <span class="menu-title">Support Center</span>
+          <span class="menu-desc">Get help with your account.</span>
+        </div>
+        <span class="chevron">›</span>
+      </button>
+
+      <button class="menu-item" id="bankMenuBtn" type="button">
+        <div class="menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h10"/><path d="M7 13h6"/></svg></div>
+        <div class="menu-text">
+          <span class="menu-title">Withdrawal Account</span>
+          <span class="menu-desc" id="bankStatus">No withdrawal account linked.</span>
+        </div>
+        <span class="chevron">›</span>
+      </button>
+
+    </section>
+
+    <button class="logout" id="logoutBtn" type="button">Log Out</button>
+
+    <div class="footer-note">Novarise • BUILD • INVEST • GROW</div>
+
+  </main>
+</div>
+
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="nav-item" id="homeNav">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 10.5L12 3l9 7.5"/>
+      <path d="M5 9.5V21h14V9.5"/>
+      <path d="M9 21v-6h6v6"/>
+    </svg>
+    <span>Home</span>
+  </a>
+
+  <a href="dashboard.html#products" class="nav-item">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 7h16"/>
+      <path d="M6 7l1-3h10l1 3"/>
+      <rect x="4" y="7" width="16" height="13" rx="2"/>
+      <path d="M9 12h6"/>
+    </svg>
+    <span>Product</span>
+  </a>
+
+  <a href="team.html" class="nav-item">
+    <svg viewBox="0 0 24 24">
+      <circle cx="9" cy="8" r="3"/>
+      <circle cx="17" cy="9" r="2.5"/>
+      <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+      <path d="M15 14c3.2 0 6 2.2 6 5"/>
+    </svg>
+    <span>Team</span>
+  </a>
+
+  <a href="my.html" class="nav-item active">
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+    </svg>
+    <span>My</span>
+  </a>
+</nav>
+
+<!-- Bank binding modal -->
+<div class="modal-backdrop" id="bankModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Bind Withdrawal Account</h3>
+      <button class="close" data-close="bankModal" type="button">×</button>
+    </div>
+
+    <div class="field">
+      <label>ACCOUNT TYPE</label>
+      <select id="accountType">
+        <option value="GCash">GCash</option>
+        <option value="Maya">Maya</option>
+        <option value="Bank">Bank Account</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>ACCOUNT NAME</label>
+      <input id="accountName" type="text" placeholder="Full name on account">
+    </div>
+
+    <div class="field">
+      <label>ACCOUNT NUMBER</label>
+      <input id="accountNumber" type="text" inputmode="numeric" placeholder="Account / mobile number">
+    </div>
+
+    <div class="modal-actions">
+      <button class="modal-btn cancel" data-close="bankModal" type="button">Cancel</button>
+      <button class="modal-btn primary" id="saveBankBtn" type="button">Save Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- Recharge / Withdraw modal -->
+<div class="modal-backdrop" id="moneyModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="moneyTitle">Recharge</h3>
+      <button class="close" data-close="moneyModal" type="button">×</button>
+    </div>
+
+    <div class="field">
+      <label>AMOUNT</label>
+      <input id="moneyAmount" type="number" min="1" step="1" placeholder="Enter amount">
+    </div>
+
+    <div class="field" id="rechargeNote">
+      <label>NOTE</label>
+      <input id="rechargeReference" type="text" placeholder="Payment reference (optional)">
+    </div>
+
+    <div class="modal-actions">
+      <button class="modal-btn cancel" data-close="moneyModal" type="button">Cancel</button>
+      <button class="modal-btn primary" id="confirmMoneyBtn" type="button">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Profile modal -->
+<div class="modal-backdrop" id="profileModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Edit Profile</h3>
+      <button class="close" data-close="profileModal" type="button">×</button>
+    </div>
+
+    <div class="field">
+      <label>DISPLAY NAME</label>
+      <input id="displayName" type="text" placeholder="Your name">
+    </div>
+
+    <div class="modal-actions">
+      <button class="modal-btn cancel" data-close="profileModal" type="button">Cancel</button>
+      <button class="modal-btn primary" id="saveProfileBtn" type="button">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc,
+    runTransaction
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+    authDomain: "investpro-2dafb.firebaseapp.com",
+    projectId: "investpro-2dafb",
+    storageBucket: "investpro-2dafb.firebasestorage.app",
+    messagingSenderId: "135092039764",
+    appId: "1:135092039764:web:c4c71eef0c904346a77dc1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let currentUser = null;
+  let currentData = {};
+  let moneyMode = "recharge";
+
+  const $ = (id) => document.getElementById(id);
+
+  function peso(value){
+    return "₱" + Number(value || 0).toLocaleString("en-PH", {
+      maximumFractionDigits: 2
+    });
+  }
+
+  function toast(message){
+    const el = $("toast");
+    el.textContent = message;
+    el.classList.add("show");
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2400);
+  }
+
+  function openModal(id){
+    $(id).classList.add("show");
+  }
+
+  function closeModal(id){
+    $(id).classList.remove("show");
+  }
+
+  async function loadUser(user){
+    currentUser = user;
+
+    const ref = doc(db, "Users", user.uid);
+    const snap = await getDoc(ref);
+
+    if(!snap.exists()){
+      currentData = {
+        balance: 0,
+        transactions: [],
+        name: user.email || "Member"
+      };
+      await setDoc(ref, currentData);
+    }else{
+      currentData = snap.data() || {};
+    }
+
+    const displayName = currentData.name || currentData.displayName || user.email || "Member";
+    $("userName").textContent = displayName;
+    $("avatar").textContent = displayName.trim().charAt(0).toUpperCase() || "M";
+    $("balance").textContent = peso(currentData.balance);
+
+    let invested = 0;
+    let earnings = Number(currentData.earnings || 0);
+    let referral = Number(currentData.referral || 0);
+
+    const transactions = Array.isArray(currentData.transactions)
+      ? currentData.transactions
+      : [];
+
+    transactions.forEach(t => {
+      if(t.type === "Investment"){
+        invested += Number(t.amount || 0);
+      }
+    });
+
+    $("invested").textContent = peso(invested);
+    $("earnings").textContent = peso(earnings);
+    $("referral").textContent = peso(referral);
+
+    const bank = currentData.withdrawalAccount;
+    if(bank && bank.type && bank.number){
+      $("bankStatus").textContent =
+        bank.type + " • " + String(bank.number).slice(-4).padStart(String(bank.number).length, "•");
+    }else{
+      $("bankStatus").textContent = "No withdrawal account linked.";
+    }
+  }
+
+  async function saveBank(){
+    if(!currentUser) return;
+
+    const type = $("accountType").value;
+    const name = $("accountName").value.trim();
+    const number = $("accountNumber").value.trim();
+
+    if(!name || !number){
+      toast("Please complete the withdrawal account.");
+      return;
+    }
+
+    await setDoc(
+      doc(db, "Users", currentUser.uid),
+      {
+        withdrawalAccount: {
+          type,
+          name,
+          number,
+          updatedAt: new Date().toISOString()
+        }
+      },
+      {merge:true}
+    );
+
+    currentData.withdrawalAccount = {type,name,number};
+    $("bankStatus").textContent =
+      type + " • " + String(number).slice(-4).padStart(String(number).length, "•");
+
+    closeModal("bankModal");
+    toast("Withdrawal account saved.");
+  }
+
+  async function updateMoney(){
+    if(!currentUser) return;
+
+    const amount = Number($("moneyAmount").value);
+
+    if(!Number.isFinite(amount) || amount <= 0){
+      toast("Enter a valid amount.");
+      return;
+    }
+
+    const ref = doc(db, "Users", currentUser.uid);
+
+    try{
+      await runTransaction(db, async transaction => {
+        const snap = await transaction.get(ref);
+        const data = snap.exists() ? snap.data() : {};
+        const balance = Number(data.balance || 0);
+        const transactions = Array.isArray(data.transactions)
+          ? [...data.transactions]
+          : [];
+
+        if(moneyMode === "withdraw"){
+          if(amount > balance){
+            throw new Error("INSUFFICIENT_BALANCE");
+          }
+
+          const bank = data.withdrawalAccount;
+          if(!bank || !bank.number){
+            throw new Error("NO_BANK");
+          }
+
+          transactions.push({
+            type:"Withdraw",
+            amount,
+            accountType:bank.type,
+            accountNumber:bank.number,
+            date:new Date().toLocaleString()
+          });
+
+          transaction.set(ref,{
+            balance:balance - amount,
+            transactions
+          },{merge:true});
+
+        }else{
+          /*
+           * Recharge is recorded as a pending request rather than
+           * automatically crediting the balance.
+           */
+          transactions.push({
+            type:"Recharge Request",
+            amount,
+            reference:$("rechargeReference").value.trim(),
+            date:new Date().toLocaleString(),
+            status:"Pending"
+          });
+
+          transaction.set(ref,{transactions},{merge:true});
+        }
+      });
+
+      closeModal("moneyModal");
+      $("moneyAmount").value = "";
+      $("rechargeReference").value = "";
+      await loadUser(currentUser);
+
+      if(moneyMode === "recharge"){
+        toast("Recharge request submitted.");
+      }else{
+        toast("Withdrawal recorded.");
+      }
+
+    }catch(err){
+      if(err.message === "INSUFFICIENT_BALANCE"){
+        toast("Insufficient balance.");
+      }else if(err.message === "NO_BANK"){
+        closeModal("moneyModal");
+        openModal("bankModal");
+        toast("Bind a withdrawal account first.");
+      }else{
+        console.error(err);
+        toast("Something went wrong. Please try again.");
+      }
+    }
+  }
+
+  $("bankBtn").addEventListener("click", () => {
+    const bank = currentData.withdrawalAccount;
+    if(bank){
+      $("accountType").value = bank.type || "GCash";
+      $("accountName").value = bank.name || "";
+      $("accountNumber").value = bank.number || "";
+    }
+    openModal("bankModal");
+  });
+
+  $("bankMenuBtn").addEventListener("click", () => $("bankBtn").click());
+
+  $("withdrawBtn").addEventListener("click", () => {
+    moneyMode = "withdraw";
+    $("moneyTitle").textContent = "Withdraw";
+    $("confirmMoneyBtn").textContent = "Withdraw";
+    $("rechargeNote").style.display = "none";
+    $("moneyAmount").value = "";
+    openModal("moneyModal");
+  });
+
+  $("rechargeBtn").addEventListener("click", () => {
+    moneyMode = "recharge";
+    $("moneyTitle").textContent = "Recharge";
+    $("confirmMoneyBtn").textContent = "Submit Request";
+    $("rechargeNote").style.display = "block";
+    $("moneyAmount").value = "";
+    openModal("moneyModal");
+  });
+
+  $("saveBankBtn").addEventListener("click", saveBank);
+  $("confirmMoneyBtn").addEventListener("click", updateMoney);
+
+  $("editProfile").addEventListener("click", () => {
+    $("displayName").value = currentData.name || currentData.displayName || "";
+    openModal("profileModal");
+  });
+
+  $("saveProfileBtn").addEventListener("click", async () => {
+    if(!currentUser) return;
+
+    const name = $("displayName").value.trim();
+    if(!name){
+      toast("Enter a display name.");
+      return;
+    }
+
+    await setDoc(doc(db,"Users",currentUser.uid),{name},{merge:true});
+    currentData.name = name;
+    await loadUser(currentUser);
+    closeModal("profileModal");
+    toast("Profile updated.");
+  });
+
+  $("groupBtn").addEventListener("click", () => {
+    /*
+     * Replace this URL with your official Novarise Telegram/Facebook
+     * group when you have the final community link.
+     */
+    const OFFICIAL_GROUP_URL = "";
+    if(OFFICIAL_GROUP_URL){
+      window.open(OFFICIAL_GROUP_URL,"_blank","noopener");
+    }else{
+      toast("Official Group link is not set yet.");
+    }
+  });
+
+  $("supportBtn").addEventListener("click", () => {
+    /*
+     * Replace this URL with your official support link when ready.
+     */
+    const SUPPORT_URL = "";
+    if(SUPPORT_URL){
+      window.open(SUPPORT_URL,"_blank","noopener");
+    }else{
+      toast("Support link is not set yet.");
+    }
+  });
+
+  $("supportMenuBtn").addEventListener("click", () => $("supportBtn").click());
+
+  $("logoutBtn").addEventListener("click", async () => {
+    try{
+      await signOut(auth);
+      window.location.href = "login.html";
+    }catch(err){
+      toast("Unable to log out.");
+    }
+  });
+
+  document.querySelectorAll("[data-close]").forEach(btn => {
+    btn.addEventListener("click", () => closeModal(btn.dataset.close));
+  });
+
+  document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
+    backdrop.addEventListener("click", e => {
+      if(e.target === backdrop) backdrop.classList.remove("show");
+    });
+  });
+
+  onAuthStateChanged(auth, async user => {
+    if(!user){
+      window.location.href = "login.html";
+      return;
+    }
+
+    try{
+      await loadUser(user);
+    }catch(err){
+      console.error(err);
+      $("userName").textContent = user.email || "Member";
+      toast("Unable to load account data.");
+    }
+  });
+</script>
+
+</body>
+</html>
