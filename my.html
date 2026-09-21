@@ -412,6 +412,29 @@
     .nav-item svg{width:26px;height:26px}
   }
 
+  .gcash-box{
+    margin:2px 0 16px;
+    padding:18px 14px;
+    border:1px solid #d8eee3;
+    border-radius:18px;
+    background:linear-gradient(145deg,#f7fffb,#eefaf5);
+    text-align:center;
+  }
+  .gcash-logo{
+    width:48px;height:48px;border-radius:15px;margin:0 auto 10px;
+    display:grid;place-items:center;background:#007dfe;color:#fff;
+    font-weight:900;font-size:14px;box-shadow:0 8px 20px rgba(0,125,254,.2);
+  }
+  .gcash-box h4{margin:0;color:#10261c;font-size:16px}
+  .gcash-box p{margin:5px 0 10px;color:#718278;font-size:12px;line-height:1.45}
+  .gcash-number{font-size:21px;font-weight:900;letter-spacing:.5px;color:#007dfe}
+  .gcash-copy{margin-top:9px;border:0;background:#e4f1ff;color:#006bd6;padding:8px 12px;border-radius:10px;font-weight:800;font-size:12px;cursor:pointer}
+  .gcash-steps{margin:0 0 14px;padding:12px 14px;background:#fff;border:1px solid #e5eee9;border-radius:14px;color:#5f7167;font-size:12px;line-height:1.6}
+  .gcash-steps strong{color:#10261c}
+  .proof-label{display:block;margin:0 0 7px;font-size:11px;font-weight:800;color:#718278;letter-spacing:.6px}
+  .proof-input{width:100%;padding:11px;border:1px dashed #b9d9ca;border-radius:12px;background:#fbfffd;font-size:12px}
+  .proof-preview{display:none;margin-top:9px;width:100%;max-height:150px;object-fit:contain;border-radius:12px;border:1px solid #e5eee9;background:#fff}
+
   .modal-backdrop{
     position:fixed;
     inset:0;
@@ -739,6 +762,10 @@
     .menu-item{padding-left:14px;padding-right:14px}
   }
 
+
+.payment-status{display:flex;align-items:center;gap:10px;margin-top:14px;padding:12px 14px;border:1px solid #dbe7f5;border-radius:12px;background:#f7fbff;color:#31516f;font-size:13px;font-weight:600}
+.payment-status-dot{width:9px;height:9px;border-radius:50%;background:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.10);flex:none}
+#confirmMoneyBtn:disabled{opacity:.65;cursor:wait}
 </style>
 </head>
 
@@ -920,14 +947,35 @@
       <input id="moneyAmount" type="number" min="1" step="1" placeholder="Enter amount">
     </div>
 
-    <div class="field" id="rechargeNote">
-      <label>NOTE</label>
-      <input id="rechargeReference" type="text" placeholder="Payment reference (optional)">
+    <div id="rechargePanel" style="display:none">
+      <div class="gcash-box">
+        <div class="gcash-logo">GCash</div>
+        <h4>Secure GCash Payment</h4>
+        <p>Enter the amount above, then continue to the official GCash checkout. Your Novarise balance is credited only after the payment is confirmed successful by the payment service.</p>
+      </div>
+
+      <div class="gcash-steps">
+        <strong>How to recharge:</strong><br>
+        1. Enter the amount you want to add.<br>
+        2. Tap <strong>Pay with GCash</strong>.<br>
+        3. Complete the payment in GCash checkout.<br>
+        4. Return to Novarise and wait for the payment status to become <strong>Success</strong>.<br>
+        5. Your balance is updated only after a verified successful payment notification.
+      </div>
+
+      <div class="payment-status" id="paymentStatusBox" style="display:none">
+        <span class="payment-status-dot"></span>
+        <span id="paymentStatusText">Preparing payment…</span>
+      </div>
+    </div>
+
+    <div id="withdrawPanel" style="display:none">
+      <div class="gcash-steps">Your withdrawal will be recorded after validation. Make sure your withdrawal account is already saved in <strong>Bank</strong>.</div>
     </div>
 
     <div class="modal-actions">
       <button class="modal-btn cancel" data-close="moneyModal" type="button">Cancel</button>
-      <button class="modal-btn primary" id="confirmMoneyBtn" type="button">Continue</button>
+      <button class="modal-btn primary" id="confirmMoneyBtn" type="button">Submit Recharge</button>
     </div>
   </div>
 </div>
@@ -942,7 +990,7 @@
 
     <div class="field">
       <label>BANK NAME</label>
-      <input id="bankName" type="text" placeholder=" GCash/Maya only ">
+      <input id="bankName" type="text" placeholder="e.g. GCash / BDO / BPI">
     </div>
 
     <div class="field">
@@ -998,6 +1046,7 @@
     setDoc,
     runTransaction
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
@@ -1011,6 +1060,9 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
+  const functions = getFunctions(app, "asia-southeast1");
+  const createGcashPayment = httpsCallable(functions, "createGcashPayment");
+  const getRechargeStatus = httpsCallable(functions, "getRechargeStatus");
 
   let currentUser = null;
   let currentData = {};
@@ -1086,82 +1138,104 @@
     if(!currentUser) return;
 
     const amount = Number($("moneyAmount").value);
-
     if(!Number.isFinite(amount) || amount <= 0){
       toast("Enter a valid amount.");
       return;
     }
 
-    const ref = doc(db, "Users", currentUser.uid);
+    if(moneyMode === "recharge"){
+      const button = $("confirmMoneyBtn");
+      const statusBox = $("paymentStatusBox");
+      const statusText = $("paymentStatusText");
+      button.disabled = true;
+      button.textContent = "Preparing GCash…";
+      statusBox.style.display = "flex";
+      statusText.textContent = "Creating secure payment…";
 
+      try{
+        const result = await createGcashPayment({ amount });
+        const data = result.data || {};
+        if(!data.checkoutUrl || !data.orderId) throw new Error("Missing payment checkout information.");
+        sessionStorage.setItem("novariseRechargeOrder", data.orderId);
+        statusText.textContent = "Redirecting to GCash checkout…";
+        window.location.href = data.checkoutUrl;
+      }catch(err){
+        console.error(err);
+        statusBox.style.display = "none";
+        toast(err?.message || "GCash payment is not available yet.");
+        button.disabled = false;
+        button.textContent = "Pay with GCash";
+      }
+      return;
+    }
+
+    const ref = doc(db, "Users", currentUser.uid);
     try{
       await runTransaction(db, async transaction => {
         const snap = await transaction.get(ref);
         const data = snap.exists() ? snap.data() : {};
         const balance = Number(data.balance || 0);
-        const transactions = Array.isArray(data.transactions)
-          ? [...data.transactions]
-          : [];
-
-        if(moneyMode === "withdraw"){
-          if(amount > balance){
-            throw new Error("INSUFFICIENT_BALANCE");
-          }
-
-          transactions.push({
-            type:"Withdraw",
-            amount,
-            date:new Date().toLocaleString()
-          });
-
-          transaction.set(ref,{
-            balance:balance - amount,
-            transactions
-          },{merge:true});
-
-        }else{
-          /*
-           * Recharge is recorded as a pending request rather than
-           * automatically crediting the balance.
-           */
-          transactions.push({
-            type:"Recharge Request",
-            amount,
-            reference:$("rechargeReference").value.trim(),
-            date:new Date().toLocaleString(),
-            status:"Pending"
-          });
-
-          transaction.set(ref,{transactions},{merge:true});
-        }
+        const transactions = Array.isArray(data.transactions) ? [...data.transactions] : [];
+        if(amount > balance) throw new Error("INSUFFICIENT_BALANCE");
+        transactions.push({ type:"Withdraw", amount, date:new Date().toLocaleString() });
+        transaction.set(ref,{ balance:balance - amount, transactions },{merge:true});
       });
-
       closeModal("moneyModal");
       $("moneyAmount").value = "";
-      $("rechargeReference").value = "";
       await loadUser(currentUser);
-
-      if(moneyMode === "recharge"){
-        toast("Recharge request submitted.");
-      }else{
-        toast("Withdrawal recorded.");
-      }
-
+      toast("Withdrawal recorded.");
     }catch(err){
-      if(err.message === "INSUFFICIENT_BALANCE"){
-        toast("Insufficient balance.");
-      }else{
-        console.error(err);
-        toast("Something went wrong. Please try again.");
-      }
+      if(err.message === "INSUFFICIENT_BALANCE") toast("Insufficient balance.");
+      else { console.error(err); toast("Something went wrong. Please try again."); }
     }
+  }
+
+  async function checkReturnedRecharge(){
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get("orderId") || sessionStorage.getItem("novariseRechargeOrder");
+    if(!orderId || !currentUser) return;
+
+    sessionStorage.removeItem("novariseRechargeOrder");
+    history.replaceState({}, document.title, window.location.pathname);
+    $("moneyTitle").textContent = "GCash Payment Status";
+    $("rechargePanel").style.display = "block";
+    $("withdrawPanel").style.display = "none";
+    $("moneyAmount").style.display = "none";
+    $("confirmMoneyBtn").style.display = "none";
+    $("paymentStatusBox").style.display = "flex";
+    $("paymentStatusText").textContent = "Checking payment status…";
+    openModal("moneyModal");
+
+    for(let i=0;i<12;i++){
+      try{
+        const result = await getRechargeStatus({ orderId });
+        const status = result.data?.status;
+        if(status === "SUCCESS"){
+          $("paymentStatusText").textContent = "Payment successful. Your balance has been updated.";
+          await loadUser(currentUser);
+          toast("GCash payment successful. Balance updated.");
+          return;
+        }
+        if(status === "FAILED"){
+          $("paymentStatusText").textContent = "Payment failed or expired. No balance was added.";
+          return;
+        }
+        $("paymentStatusText").textContent = "Payment is still being confirmed…";
+      }catch(err){
+        console.error(err);
+        $("paymentStatusText").textContent = "Waiting for payment confirmation…";
+      }
+      await new Promise(resolve => setTimeout(resolve, 2500));
+    }
+    $("paymentStatusText").textContent = "Payment is still pending. You can close this window; the balance will update after successful confirmation.";
   }
 
   $("withdrawBtn").addEventListener("click", () => {
     moneyMode = "withdraw";
     $("moneyTitle").textContent = "Withdraw";
     $("confirmMoneyBtn").textContent = "Withdraw";
-    $("rechargeNote").style.display = "none";
+    $("rechargePanel").style.display = "none";
+    $("withdrawPanel").style.display = "block";
     $("moneyAmount").value = "";
     openModal("moneyModal");
   });
@@ -1214,12 +1288,19 @@
 
   $("rechargeBtn").addEventListener("click", () => {
     moneyMode = "recharge";
-    $("moneyTitle").textContent = "Recharge";
-    $("confirmMoneyBtn").textContent = "Submit Request";
-    $("rechargeNote").style.display = "block";
+    $("moneyTitle").textContent = "GCash Recharge";
+    $("confirmMoneyBtn").textContent = "Pay with GCash";
+    $("confirmMoneyBtn").style.display = "block";
+    $("confirmMoneyBtn").disabled = false;
+    $("paymentStatusBox").style.display = "none";
+    $("rechargePanel").style.display = "block";
+    $("withdrawPanel").style.display = "none";
+    $("moneyAmount").style.display = "block";
     $("moneyAmount").value = "";
     openModal("moneyModal");
   });
+
+
 
   $("confirmMoneyBtn").addEventListener("click", updateMoney);
 
