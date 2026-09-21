@@ -118,27 +118,51 @@ header{
   margin-bottom:18px;
 }
 
-.novarise-text{
-  margin:10px 0 0;
-  max-width:850px;
+.novarise-tagline{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:28px;
+  width:100%;
+  position:relative;
+  z-index:3;
+  margin-top:5px;
+}
+
+.novarise-tagline p{
+  margin:0;
+  text-align:center;
   color:#ffffff;
   font-size:22px;
   line-height:1.45;
-  font-weight:700;
-  text-align:center;
-  position:relative;
-  z-index:3;
+  font-weight:600;
+  letter-spacing:.2px;
   text-shadow:0 2px 8px rgba(0,0,0,.35);
 }
 
+.tagline-line{
+  width:55px;
+  height:2px;
+  background:rgba(255,255,255,.75);
+  border-radius:10px;
+  flex-shrink:0;
+}
+
 @media(max-width:600px){
-  .novarise-logo{
-    width:210px;
+
+  .novarise-tagline{
+    gap:12px;
   }
 
-  .novarise-text{
-    font-size:16px;
+  .tagline-line{
+    width:25px;
   }
+
+  .novarise-tagline p{
+    font-size:16px;
+    line-height:1.5;
+  }
+
 }
 /* =====================================================
    MAIN
