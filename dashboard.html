@@ -100,8 +100,42 @@ header{
 #logoutButton:hover{
   background:rgba(255,255,255,.2);
 }
+.novarise-message{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:285px;
+  padding:30px 25px;
+}
 
+.novarise-logo{
+  width:240px;
+  max-width:80%;
+  height:auto;
+  object-fit:contain;
+  margin-bottom:18px;
+}
 
+.novarise-text{
+  margin:0;
+  max-width:800px;
+  color:#174b82;
+  font-size:19px;
+  line-height:1.55;
+  font-weight:600;
+}
+
+@media(max-width:600px){
+  .novarise-logo{
+    width:210px;
+  }
+
+  .novarise-text{
+    font-size:16px;
+  }
+}
 /* =====================================================
    MAIN
 ===================================================== */
@@ -1426,46 +1460,21 @@ button:hover{
 
   <div class="top-grid">
 
-    <div class="card balance-card">
+  <div class="card balance-card novarise-message">
 
-      <div class="balance-title">
+    <img
+      src="novarise-logo.png"
+      alt="NOVARISE"
+      class="novarise-logo"
+    >
 
-        <div class="balance-icon">
-          💳
-        </div>
-
-        <h3>
-          Your Balance
-        </h3>
-
-      </div>
-
-      <div
-        class="balance"
-        id="balance"
-      >
-        ₱0.00
-      </div>
-
-      <div class="buttons">
-
-        <button id="depositButton">
-          ↓ Deposit
-        </button>
-
-        <button id="withdrawButton">
-          ↑ Withdraw
-        </button>
-
-      </div>
-
-    </div>
-
-
-
+    <p class="novarise-text">
+      NOVARISE — where vision meets growth, and every step leads toward a brighter tomorrow
+    </p>
 
   </div>
 
+</div>
 
   <!-- =================================================
        INVESTMENT PRODUCTS
