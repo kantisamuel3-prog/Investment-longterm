@@ -1341,13 +1341,15 @@ button:hover{
 
 
 /* =====================================================
-   PRODUCT SIZE ENHANCEMENT
+   PRODUCT SIZE + BUTTON ALIGNMENT
    Presentation-only: functionality unchanged
 ===================================================== */
 
 .products .product{
   padding:23px;
   border-radius:23px;
+  display:flex;
+  flex-direction:column;
 }
 
 .products .product-icon{
@@ -1378,6 +1380,11 @@ button:hover{
   padding:15px 12px;
   font-size:14px;
   min-height:48px;
+  height:48px;
+  margin-top:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 @media(max-width:600px){
@@ -1414,6 +1421,11 @@ button:hover{
     padding:11px 4px;
     font-size:10px;
     min-height:42px;
+    height:42px;
+    margin-top:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
 }
 
