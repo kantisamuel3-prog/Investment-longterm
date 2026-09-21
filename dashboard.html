@@ -253,65 +253,6 @@ button:hover{
 
 
 /* =====================================================
-   TRANSACTION
-===================================================== */
-
-.transaction-card{
-  background:linear-gradient(145deg,#ffffff,#edf7ff);
-  border:1px solid #cce4f8;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-}
-
-.transaction-heading{
-  display:flex;
-  align-items:flex-start;
-  gap:15px;
-}
-
-.transaction-icon{
-  width:58px;
-  height:58px;
-  flex-shrink:0;
-  border-radius:17px;
-  background:linear-gradient(135deg,#0c75c9,#167ee0);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:27px;
-  box-shadow:0 7px 18px rgba(15,112,202,.22);
-}
-
-.transaction-heading h3{
-  margin:2px 0 8px;
-  font-size:20px;
-  color:#123b70;
-}
-
-.transaction-heading p{
-  margin:0;
-  color:#647b98;
-  line-height:1.5;
-  font-size:14px;
-}
-
-#transactionButton{
-  width:100%;
-  max-width:230px;
-  margin:18px auto 0;
-  display:block;
-  background:linear-gradient(135deg,#0875d1,#0754a2);
-  color:white;
-  font-size:14px;
-  padding:11px 18px;
-  border-radius:12px;
-  box-shadow:0 7px 18px rgba(37,99,235,.18);
-}
-
-
-/* =====================================================
    PRODUCTS SECTION
 ===================================================== */
 
@@ -1521,38 +1462,7 @@ button:hover{
     </div>
 
 
-    <div class="card transaction-card">
 
-      <div>
-
-        <div class="transaction-heading">
-
-          <div class="transaction-icon">
-            📄
-          </div>
-
-          <div>
-
-            <h3>
-              Transaction History
-            </h3>
-
-            <p>
-              View your deposit, withdrawal
-              and investment transactions.
-            </p>
-
-          </div>
-
-        </div>
-
-        <button id="transactionButton">
-          👁 View Transactions →
-        </button>
-
-      </div>
-
-    </div>
 
   </div>
 
@@ -3551,21 +3461,6 @@ confirmInvest.addEventListener(
       selectedInvestment.name,
       selectedInvestment.daily
     );
-
-  }
-);
-
-
-/* =====================================================
-   VIEW TRANSACTIONS
-===================================================== */
-
-transactionButton.addEventListener(
-  "click",
-  () => {
-
-    window.location.href =
-      "transactions.html";
 
   }
 );
