@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta
   name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, User-scalable=no"
 >
 <title>Novarise</title>
 
@@ -182,7 +182,7 @@ main{
   color:#123b70;
 }
 
-#userEmail{
+#UserEmail{
   color:#647b98;
   font-size:15px;
   word-break:break-word;
@@ -1473,7 +1473,7 @@ button:hover{
       Welcome Member!
     </h2>
 
-    <div id="userEmail">
+    <div id="UserEmail">
       Checking account...
     </div>
 
@@ -1775,7 +1775,7 @@ button:hover{
         </h3>
 
         <p class="product-description">
-          A larger capital option for users looking for a higher example return.
+          A larger capital option for Users looking for a higher example return.
         </p>
 
 
@@ -2901,20 +2901,20 @@ function showBalance(amount){
 
 async function loadUserData(user){
 
-  const userRef =
+  const UserRef =
     doc(
       db,
       "Users",
-      user.uid
+      User.uid
     );
 
   const snapshot =
-    await getDoc(userRef);
+    await getDoc(UserRef);
 
   if(!snapshot.exists()){
 
     await setDoc(
-      userRef,
+      UserRef,
       {
         balance:0,
         transactions:[]
@@ -2972,7 +2972,7 @@ async function deposit(){
 
   try{
 
-    const userRef =
+    const UserRef =
       doc(
         db,
         "Users",
@@ -2984,7 +2984,7 @@ async function deposit(){
       async transaction => {
 
         const snapshot =
-          await transaction.get(userRef);
+          await transaction.get(UserRef);
 
         const data =
           snapshot.exists()
@@ -3014,7 +3014,7 @@ async function deposit(){
         });
 
         transaction.set(
-          userRef,
+          UserRef,
           {
             balance:newBalance,
             transactions:transactions
@@ -3084,7 +3084,7 @@ async function withdraw(){
 
   try{
 
-    const userRef =
+    const UserRef =
       doc(
         db,
         "Users",
@@ -3096,7 +3096,7 @@ async function withdraw(){
       async transaction => {
 
         const snapshot =
-          await transaction.get(userRef);
+          await transaction.get(UserRef);
 
         if(!snapshot.exists()){
 
