@@ -482,13 +482,13 @@
     max-width:330px;
   }
   #qrCodeContainer{
-    width:250px;max-width:100%;min-height:250px;margin:0 auto 14px;
+    width:294px;max-width:100%;min-height:294px;margin:0 auto 14px;
     display:flex;align-items:center;justify-content:center;
     padding:9px;background:#fff;border:1px solid #dce8f5;border-radius:16px;
     box-shadow:0 6px 18px rgba(23,59,109,.08);box-sizing:border-box;
   }
   #qrCodeContainer img,#qrCodeContainer canvas{
-    display:block!important;width:230px!important;height:230px!important;max-width:100%;
+    display:block!important;width:272px!important;height:272px!important;max-width:100%;image-rendering:pixelated;
   }
   .open-gcash-btn{
     width:100%;max-width:330px;height:52px;margin:0 auto 10px;
@@ -509,8 +509,8 @@
   @media(max-width:390px){
     .qr-payment-box{padding:15px 10px 14px}
     .qr-gcash-brand{font-size:23px}
-    #qrCodeContainer{width:238px;min-height:238px}
-    #qrCodeContainer img,#qrCodeContainer canvas{width:218px!important;height:218px!important}
+    #qrCodeContainer{width:274px;min-height:274px}
+    #qrCodeContainer img,#qrCodeContainer canvas{width:252px!important;height:252px!important}
     .qr-payment-title{font-size:15px}
   }
 
@@ -1383,9 +1383,9 @@
 
         new QRCode(qrContainer,{
           text:qrCode,
-          width:230,
-          height:230,
-          correctLevel:QRCode.CorrectLevel.M
+          width:272,
+          height:272,
+          correctLevel:QRCode.CorrectLevel.L
         });
 
         $("qrPaymentBox").classList.add("show");
