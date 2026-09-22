@@ -1091,9 +1091,14 @@
     );
   }
 
-  if (!data.checkoutUrl || !data.orderId) {
-    throw new Error("Payment checkout information is missing.");
-  }
+  const checkoutUrl = data.checkoutUrl || data.redirectUrl;
+
+if (!checkoutUrl || !data.orderId) {
+  console.error("PayerMax Worker response:", data);
+  throw new Error("Payment checkout information is missing.");
+}
+
+data.checkoutUrl = checkoutUrl;
 
   return data;
 }
