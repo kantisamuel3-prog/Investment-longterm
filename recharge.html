@@ -77,6 +77,7 @@ body{padding-bottom:30px}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script>
+
 const firebaseConfig = {
   apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqG",
   authDomain: "investpro-2dafb.firebaseapp.com",
@@ -90,207 +91,111 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const WORKER = "https://novarise-payermax.kantisamuel3.workers.dev";
 
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(error => {
+  console.error("Firebase persistence setup failed:", error);
+});
 let currentUser = null;
-
-// Restore the saved Firebase login session BEFORE starting the auth observer.
-// This prevents a temporary user=null state from sending the member to login.html.
-const authPersistenceReady = auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-  .catch(error => {
-    console.error("Firebase persistence setup failed:", error);
-  });
 let pollToken = 0;
 const $ = id => document.getElementById(id);
 
 function setStatus(text, show=true){
   $("statusText").textContent = text;
-  $("status").classList.toggle("show", show);
+  $("status").classList.toggle("show",show);
 }
 
 async function ensureQRCodeLibrary(){
   if(window.QRCode) return;
-
-  const existing = document.querySelector('script[data-novarise-qrcode="1"]');
-  if(existing){
-    await new Promise((resolve,reject)=>{
-      if(window.QRCode){ resolve(); return; }
-      existing.addEventListener("load",resolve,{once:true});
-      existing.addEventListener("error",reject,{once:true});
-    });
-    return;
-  }
-
   await new Promise((resolve,reject)=>{
     const script=document.createElement("script");
     script.src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
     script.async=true;
-    script.dataset.novariseQrcode="1";
     script.onload=resolve;
     script.onerror=()=>reject(new Error("Unable to load QR generator."));
     document.head.appendChild(script);
   });
 }
 
-async function waitForAuthenticatedUser(timeout=10000){
-  if(auth.currentUser){
-    currentUser=auth.currentUser;
-    return currentUser;
-  }
-
-  return await new Promise((resolve,reject)=>{
-    let finished=false;
-
-    const unsubscribe=auth.onAuthStateChanged(user=>{
-      if(finished) return;
-      if(user){
-        finished=true;
-        unsubscribe();
-        currentUser=user;
-        resolve(user);
-      }
-    });
-
-    setTimeout(()=>{
-      if(finished) return;
-      finished=true;
-      unsubscribe();
-      reject(new Error("Please log in again."));
-    },timeout);
-  });
-}
-
 async function createPayment(amount){
-  const user=await waitForAuthenticatedUser();
-  const token=await user.getIdToken(true);
-
+  const token=await currentUser.getIdToken(true);
   const response=await fetch(`${WORKER}/create-payermax-payment`,{
     method:"POST",
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization":`Bearer ${token}`
-    },
+    headers:{"Content-Type":"application/json","Authorization":`Bearer ${token}`},
     body:JSON.stringify({amount:Number(amount)})
   });
-
   const data=await response.json().catch(()=>({}));
-
-  if(!response.ok){
-    throw new Error(data.message||data.error||"Unable to create payment.");
-  }
-
-  if(!data.qrCode||!data.orderId){
-    throw new Error("Missing payment QR information.");
-  }
-
+  if(!response.ok) throw new Error(data.message||data.error||"Unable to create payment.");
+  if(!data.qrCode||!data.orderId) throw new Error("Missing payment QR information.");
   return data;
 }
 
 async function paymentStatus(orderId){
-  const user=await waitForAuthenticatedUser();
-  const token=await user.getIdToken(true);
-
-  const response=await fetch(
-    `${WORKER}/recharge-status?orderId=${encodeURIComponent(orderId)}`,
-    {headers:{"Authorization":`Bearer ${token}`}}
-  );
-
+  const token=await currentUser.getIdToken(true);
+  const response=await fetch(`${WORKER}/recharge-status?orderId=${encodeURIComponent(orderId)}`,{
+    headers:{"Authorization":`Bearer ${token}`}
+  });
   const data=await response.json().catch(()=>({}));
-
-  if(!response.ok){
-    throw new Error(data.message||data.error||"Unable to check payment status.");
-  }
-
+  if(!response.ok) throw new Error(data.message||data.error||"Unable to check payment status.");
   return data;
 }
 
 async function poll(orderId){
   const myToken=++pollToken;
-
   for(let i=0;i<60;i++){
     if(myToken!==pollToken) return;
-
     try{
       const result=await paymentStatus(orderId);
       const status=result.status||result.data?.status||"PENDING";
-
       if(status==="SUCCESS"){
         setStatus("Payment successful. Your balance has been updated.");
         $("doneBox").classList.add("show");
         $("payBtn").textContent="Payment Completed";
-        $("payBtn").disabled=true;
         sessionStorage.removeItem("novariseRechargeOrder");
         return;
       }
-
       if(["FAILED","CANCELLED","EXPIRED"].includes(status)){
         setStatus("Payment was not completed. No balance was added.");
         $("payBtn").disabled=false;
         $("payBtn").textContent="Generate GCash QR";
         return;
       }
-
       setStatus("Waiting for GCash payment confirmation…");
     }catch(error){
       console.error(error);
       setStatus("Waiting for payment confirmation…");
     }
-
     await new Promise(resolve=>setTimeout(resolve,2500));
   }
-
-  if(myToken===pollToken){
-    setStatus("Payment is still pending. Keep the QR open or check again later.");
-  }
+  if(myToken===pollToken) setStatus("Payment is still pending. Keep the QR open or check again later.");
 }
 
 $("backBtn").addEventListener("click",()=>window.location.href="my.html");
-
-$("openGcashBtn").addEventListener("click",()=>{
-  window.location.href="https://payments.gcash.com/";
-});
+$("openGcashBtn").addEventListener("click",()=>{ window.location.href="https://payments.gcash.com/"; });
 
 $("payBtn").addEventListener("click",async()=>{
-  const button=$("payBtn");
+  if(!currentUser){ setStatus("Please log in again."); return; }
   const amount=Number($("amount").value);
+  if(!Number.isFinite(amount)||amount<=0){ setStatus("Enter a valid recharge amount."); return; }
 
-  if(!Number.isFinite(amount)||amount<=0){
-    setStatus("Enter a valid recharge amount.");
-    return;
-  }
-
+  const button=$("payBtn");
   button.disabled=true;
   button.textContent="Creating QR…";
   $("doneBox").classList.remove("show");
   $("qrCard").classList.remove("show");
-  setStatus("Checking your login session…");
+  setStatus("Creating secure QR payment…");
 
   try{
     const result=await createPayment(amount);
-
     await ensureQRCodeLibrary();
-
     const container=$("qrCodeContainer");
     container.innerHTML="";
-
-    new QRCode(container,{
-      text:result.qrCode,
-      width:304,
-      height:304,
-      correctLevel:QRCode.CorrectLevel.L
-    });
-
+    new QRCode(container,{text:result.qrCode,width:304,height:304,correctLevel:QRCode.CorrectLevel.L});
     $("qrCard").classList.add("show");
     $("orderText").textContent=`Order: ${result.orderId}`;
-    $("expireText").textContent=result.contentExpireTime
-      ? `QR expires: ${result.contentExpireTime}`
-      : "QR payment expires after the payment window.";
-
+    $("expireText").textContent=result.contentExpireTime?`QR expires: ${result.contentExpireTime}`:"QR payment expires after the payment window.";
     sessionStorage.setItem("novariseRechargeOrder",result.orderId);
-
     button.textContent="QR Ready";
     setStatus("Scan the QR with GCash and complete the payment.");
-
     poll(result.orderId);
-
   }catch(error){
     console.error(error);
     button.disabled=false;
@@ -300,32 +205,22 @@ $("payBtn").addEventListener("click",async()=>{
   }
 });
 
-/*
-  IMPORTANT:
-  Use auth.onAuthStateChanged with the Firebase compat SDK.
-  The previous code used bare onAuthStateChanged(...), which belongs
-  to the modular SDK and left currentUser as null.
-*/
-authPersistenceReady.then(()=>{
-  auth.onAuthStateChanged(user=>{
-    if(!user){
-      currentUser=null;
-      window.location.replace("login.html");
-      return;
-    }
+onAuthStateChanged(auth,user=>{
+  if(!user){
+    window.location.replace("login.html");
+    return;
+  }
 
-    currentUser=user;
+  currentUser=user;
 
-    const pending=sessionStorage.getItem("novariseRechargeOrder");
-
-    if(pending){
-      $("orderText").textContent=`Order: ${pending}`;
-      setStatus("Checking your previous payment…");
-      poll(pending);
-    }else{
-      setStatus("Enter an amount, then generate your GCash QR.",true);
-    }
-  });
+  const pending=sessionStorage.getItem("novariseRechargeOrder");
+  if(pending){
+    $("orderText").textContent=`Order: ${pending}`;
+    setStatus("Checking your previous payment…");
+    poll(pending);
+  }else{
+    setStatus("Enter an amount, then generate your GCash QR.",true);
+  }
 });
 </script>
 </body>
