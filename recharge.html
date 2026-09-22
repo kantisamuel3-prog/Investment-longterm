@@ -86,7 +86,7 @@ body{padding-bottom:30px}
 <script>
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqG",
+  apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGkG",
   authDomain: "investpro-2dafb.firebaseapp.com",
   projectId: "investpro-2dafb",
   storageBucket: "investpro-2dafb.firebasestorage.app",
@@ -219,24 +219,32 @@ $("payBtn").addEventListener("click",async()=>{
   }
 });
 
-auth.onAuthStateChanged(user=>{
-    currentUser = user || null;
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  .then(() => {
+    auth.onAuthStateChanged(user=>{
+      currentUser = user || null;
+      authReadyResolve();
+
+      if(!user){
+        setStatus("Your login session was not found. Please open Login and sign in again.");
+        $("payBtn").disabled = false;
+        return;
+      }
+
+      const pending=sessionStorage.getItem("novariseRechargeOrder");
+      if(pending){
+        $("orderText").textContent=`Order: ${pending}`;
+        setStatus("Checking your previous payment…");
+        poll(pending);
+      }else{
+        setStatus("Enter an amount, then generate your GCash QR.",true);
+      }
+    });
+  })
+  .catch(error=>{
+    console.error("Firebase persistence setup failed:",error);
     authReadyResolve();
-
-    if(!user){
-      setStatus("Your login session was not found. Please open Login and sign in again.");
-      $("payBtn").disabled = false;
-      return;
-    }
-
-    const pending=sessionStorage.getItem("novariseRechargeOrder");
-    if(pending){
-      $("orderText").textContent=`Order: ${pending}`;
-      setStatus("Checking your previous payment…");
-      poll(pending);
-    }else{
-      setStatus("Enter an amount, then generate your GCash QR.",true);
-    }
+    setStatus("Unable to initialize your login session. Please refresh and try again.");
   });
 </script>
 </body>
