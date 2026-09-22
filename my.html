@@ -435,6 +435,85 @@
   .proof-input{width:100%;padding:11px;border:1px dashed #b9d9ca;border-radius:12px;background:#fbfffd;font-size:12px}
   .proof-preview{display:none;margin-top:9px;width:100%;max-height:150px;object-fit:contain;border-radius:12px;border:1px solid #e5eee9;background:#fff}
 
+
+  /* GCash QR payment presentation */
+  .qr-payment-box{
+    display:none;
+    margin:12px 0 14px;
+    padding:18px 14px 16px;
+    border:1px solid #e2ebf7;
+    border-radius:22px;
+    background:linear-gradient(180deg,#ffffff 0%,#f7fbff 100%);
+    text-align:center;
+    box-shadow:0 10px 28px rgba(10,58,110,.08);
+  }
+  .qr-payment-box.show{display:block}
+  .qr-gcash-brand{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    margin:0 0 8px;
+    color:#1260d9;
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:-.6px;
+  }
+  .qr-gcash-mark{
+    width:39px;height:39px;border-radius:50%;
+    display:grid;place-items:center;
+    border:4px solid #1260d9;
+    color:#1260d9;
+    font-size:18px;
+    line-height:1;
+    font-weight:900;
+  }
+  .qr-secure{
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    color:#14a889;font-size:14px;font-weight:900;
+    margin-bottom:12px;
+  }
+  .qr-payment-title{
+    color:#173b6d;font-size:17px;font-weight:900;line-height:1.25;
+    margin:0 auto 7px;max-width:330px;
+  }
+  .qr-payment-note{
+    color:#71809a;font-size:12px;line-height:1.45;margin:0 auto 12px;
+    max-width:330px;
+  }
+  #qrCodeContainer{
+    width:250px;max-width:100%;min-height:250px;margin:0 auto 14px;
+    display:flex;align-items:center;justify-content:center;
+    padding:9px;background:#fff;border:1px solid #dce8f5;border-radius:16px;
+    box-shadow:0 6px 18px rgba(23,59,109,.08);box-sizing:border-box;
+  }
+  #qrCodeContainer img,#qrCodeContainer canvas{
+    display:block!important;width:230px!important;height:230px!important;max-width:100%;
+  }
+  .open-gcash-btn{
+    width:100%;max-width:330px;height:52px;margin:0 auto 10px;
+    border:0;border-radius:27px;background:#0969ed;color:#fff;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    font-size:15px;font-weight:900;cursor:pointer;
+    box-shadow:0 9px 20px rgba(9,105,237,.22);
+  }
+  .open-gcash-btn:active{transform:scale(.98)}
+  .open-gcash-icon{
+    width:24px;height:24px;border:2px solid #fff;border-radius:50%;
+    display:grid;place-items:center;font-size:12px;font-weight:900;
+  }
+  .qr-expire{color:#7888a0;font-size:10px;line-height:1.4;margin-top:4px}
+  .qr-order{color:#91a0b4;font-size:9px;margin-top:4px;word-break:break-all}
+  .qr-help{color:#728198;font-size:10px;line-height:1.4;margin-top:8px}
+
+  @media(max-width:390px){
+    .qr-payment-box{padding:15px 10px 14px}
+    .qr-gcash-brand{font-size:23px}
+    #qrCodeContainer{width:238px;min-height:238px}
+    #qrCodeContainer img,#qrCodeContainer canvas{width:218px!important;height:218px!important}
+    .qr-payment-title{font-size:15px}
+  }
+
   .modal-backdrop{
     position:fixed;
     inset:0;
@@ -964,12 +1043,21 @@
       </div>
 
       <div class="qr-payment-box" id="qrPaymentBox">
-        <div class="qr-payment-title">Scan with GCash</div>
-        <div class="qr-payment-note">Use the GCash Scan QR feature and scan this payment QR.</div>
+        <div class="qr-gcash-brand">
+          <span class="qr-gcash-mark">G</span>
+          <span>GCash</span>
+        </div>
+        <div class="qr-secure">✓ Secure Payment</div>
+        <div class="qr-payment-title">Scan the QR code below with your GCash app to complete your payment.</div>
+        <div class="qr-payment-note">You can also tap the button below to open the official GCash payment page.</div>
         <div id="qrCodeContainer"></div>
+        <button class="open-gcash-btn" id="openGcashBtn" type="button">
+          <span class="open-gcash-icon">G</span>
+          <span>Open in GCash</span>
+        </button>
         <div class="qr-expire" id="qrExpireText">QR payment expires after the payment window.</div>
         <div class="qr-order" id="qrOrderText"></div>
-        <div class="qr-help">Your Novarise balance is updated only after the payment service confirms the transaction successfully.</div>
+        <div class="qr-help">Or log in to GCash and scan this QR with the QR Scanner. Your Novarise balance updates only after successful confirmation.</div>
       </div>
 
       <div class="payment-status" id="paymentStatusBox" style="display:none">
@@ -1307,7 +1395,8 @@
         }
 
         statusText.textContent = "Scan the QR with GCash and complete the payment.";
-        button.textContent = "QR Created";
+        button.textContent = "QR Ready";
+        button.disabled = true;
 
         pollRechargePayment(orderId);
       }catch(err){
@@ -1414,6 +1503,11 @@
   });
 
 
+
+  $("openGcashBtn").addEventListener("click", () => {
+    // PayerMax documents this as GCash's official web redirect.
+    window.location.href = "https://payments.gcash.com/";
+  });
 
   $("confirmMoneyBtn").addEventListener("click", updateMoney);
 
