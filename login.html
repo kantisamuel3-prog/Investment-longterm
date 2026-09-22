@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Novarise - Login</title>
+<link rel="preload" as="image" href="novarise-logo.png.avif" fetchpriority="high">
 
 <style>
 * {
@@ -16,7 +17,6 @@
 :root {
   --blue: #168ff0;
   --blue-dark: #155fd6;
-  --blue-light: #eaf6ff;
   --green: #a8d92d;
   --text: #12365d;
   --muted: #7890aa;
@@ -29,7 +29,7 @@ html, body {
 }
 
 body {
-  min-height: 100svh;
+  min-height: 100vh;
   background:
     radial-gradient(circle at 8% 8%, rgba(39,154,245,.11), transparent 25%),
     radial-gradient(circle at 92% 88%, rgba(168,217,45,.10), transparent 22%),
@@ -44,6 +44,7 @@ body {
   position: relative;
 }
 
+/* Background decorations */
 body::before,
 body::after {
   content: "";
@@ -58,7 +59,11 @@ body::before {
   left: -235px;
   top: -225px;
   border-radius: 50%;
-  background: linear-gradient(145deg, rgba(22,143,240,.80), rgba(22,143,240,.08));
+  background: linear-gradient(
+    145deg,
+    rgba(22,143,240,.80),
+    rgba(22,143,240,.08)
+  );
   opacity: .78;
 }
 
@@ -68,7 +73,11 @@ body::after {
   right: -180px;
   bottom: -105px;
   border-radius: 50% 50% 0 0;
-  background: linear-gradient(160deg, rgba(22,143,240,.78), rgba(22,143,240,.04));
+  background: linear-gradient(
+    160deg,
+    rgba(22,143,240,.78),
+    rgba(22,143,240,.04)
+  );
 }
 
 .bg-dots {
@@ -78,29 +87,42 @@ body::after {
   width: 72px;
   height: 72px;
   opacity: .34;
-  background-image: radial-gradient(#68b9f4 1.8px, transparent 1.8px);
+  background-image: radial-gradient(
+    #68b9f4 1.8px,
+    transparent 1.8px
+  );
   background-size: 16px 16px;
   z-index: 0;
 }
 
+/* Main layout */
 .page {
   width: min(1120px, 100%);
   display: grid;
-  grid-template-columns: minmax(220px, 0.75fr) minmax(420px, 1fr) minmax(220px, 0.75fr);
+  grid-template-columns:
+    minmax(220px, .75fr)
+    minmax(420px, 1fr)
+    minmax(220px, .75fr);
   align-items: center;
   gap: 26px;
   position: relative;
   z-index: 1;
 }
 
+/* Side sections */
 .side {
   display: flex;
   flex-direction: column;
   gap: 22px;
 }
 
-.side-left { padding: 14px 0 14px 8px; }
-.side-right { padding: 14px 8px 14px 0; }
+.side-left {
+  padding: 14px 0 14px 8px;
+}
+
+.side-right {
+  padding: 14px 8px 14px 0;
+}
 
 .side-title {
   font-size: clamp(30px, 3vw, 42px);
@@ -110,7 +132,9 @@ body::after {
   color: #168ff0;
 }
 
-.side-title span { color: #8dbf20; }
+.side-title span {
+  color: #8dbf20;
+}
 
 .side-copy {
   max-width: 255px;
@@ -123,9 +147,14 @@ body::after {
   width: 115px;
   height: 4px;
   border-radius: 99px;
-  background: linear-gradient(90deg, var(--blue), var(--green));
+  background: linear-gradient(
+    90deg,
+    var(--blue),
+    var(--green)
+  );
 }
 
+/* Feature items */
 .feature {
   display: flex;
   gap: 12px;
@@ -145,7 +174,10 @@ body::after {
   box-shadow: 0 7px 18px rgba(39,125,198,.08);
 }
 
-.feature-icon svg { width: 20px; height: 20px; }
+.feature-icon svg {
+  width: 20px;
+  height: 20px;
+}
 
 .feature h3 {
   color: #1765b6;
@@ -159,6 +191,7 @@ body::after {
   line-height: 1.4;
 }
 
+/* Login card */
 .login-box {
   width: 100%;
   max-width: 440px;
@@ -196,9 +229,14 @@ body::after {
   width: 135px;
   height: 135px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(22,143,240,.11), rgba(168,217,45,.08));
+  background: linear-gradient(
+    135deg,
+    rgba(22,143,240,.11),
+    rgba(168,217,45,.08)
+  );
 }
 
+/* Logo */
 .logo {
   text-align: center;
   position: relative;
@@ -222,17 +260,28 @@ body::after {
   margin-bottom: 8px;
 }
 
-.brand-tagline b { color: #168ff0; }
-.brand-tagline em { color: #a4d52c; font-style: normal; }
+.brand-tagline b {
+  color: #168ff0;
+}
+
+.brand-tagline em {
+  color: #a4d52c;
+  font-style: normal;
+}
 
 .divider-accent {
   width: 84px;
   height: 4px;
   margin: 0 auto 13px;
   border-radius: 99px;
-  background: linear-gradient(90deg, var(--blue), var(--green));
+  background: linear-gradient(
+    90deg,
+    var(--blue),
+    var(--green)
+  );
 }
 
+/* Welcome */
 .welcome {
   text-align: center;
   margin-bottom: 16px;
@@ -252,6 +301,7 @@ body::after {
   line-height: 1.45;
 }
 
+/* Form */
 .form-area {
   position: relative;
   z-index: 1;
@@ -265,41 +315,43 @@ label {
   color: #164e80;
 }
 
-.field-wrap { position: relative; }
-
-.field-icon {
-  position: absolute;
-  left: 13px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #2293e9;
-  pointer-events: none;
-  z-index: 2;
+.field-wrap {
+  position: relative;
 }
 
-.field-icon svg { width: 17px; height: 17px; }
-
-.phone-input,
-.password-input {
+/* Phone */
+.phone-input {
   width: 100%;
   height: 49px;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: #fbfdff;
-  transition: .2s ease;
-}
-
-.phone-input {
   display: flex;
   align-items: center;
   margin-bottom: 14px;
+  transition: .2s ease;
 }
 
-.phone-input:focus-within,
-.field-wrap:focus-within .password-input {
+.phone-input:focus-within {
   border-color: #65b8f5;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(22,143,240,.08);
+  box-shadow:
+    0 0 0 4px rgba(22,143,240,.08);
+}
+
+.field-icon {
+  color: #2293e9;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.phone-input .field-icon {
+  margin-left: 13px;
+}
+
+.field-icon svg {
+  width: 17px;
+  height: 17px;
 }
 
 .country-code {
@@ -309,7 +361,7 @@ label {
   color: #164a78;
   font-size: 14px;
   font-weight: 700;
-  padding: 0 10px 0 11px;
+  padding: 0 10px;
   margin-left: 5px;
   border-right: 1px solid #dce8f2;
   white-space: nowrap;
@@ -328,16 +380,33 @@ label {
 }
 
 .phone-input input::placeholder,
-.password-input::placeholder { color: #9aadc0; }
+.password-input::placeholder {
+  color: #9aadc0;
+}
 
+/* Password */
 .password-input {
+  width: 100%;
+  height: 49px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fbfdff;
   padding: 0 44px 0 42px;
   outline: none;
   font-size: 14px;
   color: #173e61;
   margin-bottom: 15px;
+  transition: .2s ease;
 }
 
+.field-wrap:focus-within .password-input {
+  border-color: #65b8f5;
+  background: #fff;
+  box-shadow:
+    0 0 0 4px rgba(22,143,240,.08);
+}
+
+/* Eye */
 .eye-button {
   position: absolute;
   right: 10px;
@@ -354,9 +423,17 @@ label {
   place-items: center;
 }
 
-.eye-button:hover { background: #edf7ff; color: #168ff0; }
-.eye-button svg { width: 19px; height: 19px; }
+.eye-button:hover {
+  background: #edf7ff;
+  color: #168ff0;
+}
 
+.eye-button svg {
+  width: 19px;
+  height: 19px;
+}
+
+/* Message */
 .message {
   display: none;
   margin-bottom: 12px;
@@ -381,25 +458,52 @@ label {
   color: #28733e;
 }
 
+/* Login button */
 .login-btn {
   width: 100%;
   height: 49px;
   border: 0;
   border-radius: 12px;
-  background: linear-gradient(100deg, #19a8ee 0%, #1673e7 58%, #1d5ddd 100%);
+  background: linear-gradient(
+    100deg,
+    #19a8ee 0%,
+    #1673e7 58%,
+    #1d5ddd 100%
+  );
   color: #fff;
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 10px 20px rgba(25,122,226,.19);
-  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+  box-shadow:
+    0 10px 20px rgba(25,122,226,.19);
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    opacity .18s ease;
 }
 
-.login-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 13px 23px rgba(25,122,226,.23); }
-.login-btn:active:not(:disabled) { transform: translateY(0); }
-.login-btn:disabled { opacity: .62; cursor: not-allowed; }
-.login-arrow { margin-left: 7px; font-size: 18px; vertical-align: -1px; }
+.login-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow:
+    0 13px 23px rgba(25,122,226,.23);
+}
 
+.login-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-btn:disabled {
+  opacity: .62;
+  cursor: not-allowed;
+}
+
+.login-arrow {
+  margin-left: 7px;
+  font-size: 18px;
+  vertical-align: -1px;
+}
+
+/* Register */
 .or-line {
   display: flex;
   align-items: center;
@@ -432,7 +536,11 @@ label {
   transition: .18s ease;
 }
 
-.register a:hover { background: #eff8ff; border-color: #72bdf4; transform: translateY(-1px); }
+.register a:hover {
+  background: #eff8ff;
+  border-color: #72bdf4;
+  transform: translateY(-1px);
+}
 
 .card-note {
   text-align: center;
@@ -442,100 +550,235 @@ label {
   letter-spacing: .15px;
 }
 
+/* Tablet / smaller desktop */
 @media (max-width: 980px) {
-  body { padding: 18px; }
-  .page { grid-template-columns: 1fr; max-width: 500px; }
-  .side { display: none; }
-  .login-box { max-width: 500px; }
+  body {
+    padding: 18px;
+  }
+
+  .page {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  .side {
+    display: none;
+  }
+
+  .login-box {
+    max-width: 500px;
+  }
 }
 
+/* Phone */
 @media (max-width: 520px) {
-  body { padding: 12px; }
-  .login-box { padding: 21px 20px 22px; border-radius: 20px; }
-  .logo img { width: 160px; }
-  .welcome h1 { font-size: 21px; }
-  .subtitle { font-size: 12.5px; }
+  body {
+    padding: 12px;
+  }
+
+  .login-box {
+    padding: 21px 20px 22px;
+    border-radius: 20px;
+  }
+
+  .logo img {
+    width: 160px;
+  }
+
+  .welcome h1 {
+    font-size: 21px;
+  }
+
+  .subtitle {
+    font-size: 12.5px;
+  }
 }
 
+/* Short screens */
 @media (max-height: 760px) and (min-width: 981px) {
-  body { padding-top: 10px; padding-bottom: 10px; }
-  .login-box { padding-top: 18px; padding-bottom: 18px; }
-  .logo img { width: 150px; }
-  .brand-tagline { margin-bottom: 5px; }
-  .divider-accent { margin-bottom: 9px; }
-  .welcome { margin-bottom: 11px; }
-  .phone-input { margin-bottom: 10px; }
-  .password-input { margin-bottom: 11px; }
-  .or-line { margin: 9px 0 8px; }
-  .register a { height: 40px; }
-  .card-note { margin-top: 9px; }
+  body {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .login-box {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .logo img {
+    width: 150px;
+  }
+
+  .brand-tagline {
+    margin-bottom: 5px;
+  }
+
+  .divider-accent {
+    margin-bottom: 9px;
+  }
+
+  .welcome {
+    margin-bottom: 11px;
+  }
+
+  .phone-input {
+    margin-bottom: 10px;
+  }
+
+  .password-input {
+    margin-bottom: 11px;
+  }
+
+  .or-line {
+    margin: 9px 0 8px;
+  }
+
+  .register a {
+    height: 40px;
+  }
+
+  .card-note {
+    margin-top: 9px;
+  }
 }
 </style>
 </head>
 
 <body>
+
 <div class="bg-dots"></div>
 
 <main class="page">
 
-  <!-- LEFT DECORATIVE PANEL -->
+  <!-- LEFT SIDE -->
   <section class="side side-left">
+
     <div>
-      <div class="side-title">Together<br><span>We Rise</span></div>
-      <div class="wave-line" style="margin:18px 0;"></div>
+      <div class="side-title">
+        Together<br>
+        <span>We Rise</span>
+      </div>
+
+      <div
+        class="wave-line"
+        style="margin:18px 0;"
+      ></div>
+
       <p class="side-copy">
-        More opportunities. A brighter future. With <strong>Novarise.</strong>
+        More opportunities. A brighter future.
+        With <strong>Novarise.</strong>
       </p>
     </div>
 
     <div class="feature">
+
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
           <path d="M12 3l7 3v5c0 4.6-3 8.7-7 10-4-1.3-7-5.4-7-10V6l7-3z"/>
           <path d="M9.5 12l1.7 1.7 3.5-3.7"/>
         </svg>
+
       </div>
+
       <div>
         <h3>Secure Access</h3>
         <p>Your information is protected.</p>
       </div>
+
     </div>
+
   </section>
+
 
   <!-- LOGIN CARD -->
   <section class="login-box">
 
     <div class="logo">
-      <img src="novarise-logo.png.avif" alt="Novarise Logo">
+      <img
+        src="novarise-logo.png.avif"
+        alt="Novarise Logo"
+        width="178"
+        height="auto"
+        decoding="sync"
+        fetchpriority="high"
+      >
     </div>
 
     <div class="brand-tagline">
-      <b>BUILD</b> &nbsp;•&nbsp; <b>INVEST</b> &nbsp;•&nbsp; <em>GROW</em>
+      <b>BUILD</b>
+      &nbsp;•&nbsp;
+      <b>INVEST</b>
+      &nbsp;•&nbsp;
+      <em>GROW</em>
     </div>
 
     <div class="divider-accent"></div>
 
+
     <div class="welcome">
+
       <h1>Welcome Back!</h1>
+
       <div class="subtitle">
         Login to your account to continue<br>
         your journey with Novarise.
       </div>
+
     </div>
 
-    <div id="message" class="message"></div>
 
-    <form id="loginForm" class="form-area">
+    <div
+      id="message"
+      class="message"
+    ></div>
 
-      <label for="phone">Phone Number</label>
+
+    <!-- LOGIN FORM -->
+    <form
+      id="loginForm"
+      class="form-area"
+    >
+
+      <!-- PHONE -->
+      <label for="phone">
+        Phone Number
+      </label>
+
       <div class="field-wrap">
+
         <div class="phone-input">
-          <span class="field-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+          <span
+            class="field-icon"
+            aria-hidden="true"
+          >
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+
               <path d="M6.6 3.5h2.2l1.1 4-1.8 1.5a15.5 15.5 0 0 0 6.9 6.9l1.5-1.8 4 1.1v2.2c0 1-.8 1.9-1.8 1.9C11.1 19.2 4.8 12.9 4.7 5.3c0-1 .8-1.8 1.9-1.8z"/>
+
             </svg>
+
           </span>
-          <span class="country-code">+63</span>
+
+
+          <span class="country-code">
+            +63
+          </span>
+
+
           <input
             id="phone"
             type="tel"
@@ -546,17 +789,46 @@ label {
             pattern="9[0-9]{9}"
             required
           >
+
         </div>
+
       </div>
 
-      <label for="password">Password</label>
+
+      <!-- PASSWORD -->
+      <label for="password">
+        Password
+      </label>
+
       <div class="field-wrap">
-        <span class="field-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="5" y="10" width="14" height="10" rx="2"/>
+
+        <span
+          class="field-icon"
+          aria-hidden="true"
+          style="position:absolute;left:13px;top:50%;transform:translateY(-50%);"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+
+            <rect
+              x="5"
+              y="10"
+              width="14"
+              height="10"
+              rx="2"
+            />
+
             <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+
           </svg>
+
         </span>
+
 
         <input
           id="password"
@@ -567,24 +839,69 @@ label {
           required
         >
 
-        <button type="button" class="eye-button" id="togglePassword" aria-label="Show password">
-          <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+        <button
+          type="button"
+          class="eye-button"
+          id="togglePassword"
+          aria-label="Show password"
+        >
+
+          <svg
+            id="eyeIcon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+
             <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/>
-            <circle cx="12" cy="12" r="2.5"/>
+
+            <circle
+              cx="12"
+              cy="12"
+              r="2.5"
+            />
+
           </svg>
+
         </button>
+
       </div>
 
-      <button id="loginBtn" class="login-btn" type="submit">
-        Login <span class="login-arrow">→</span>
+
+      <!-- LOGIN BUTTON -->
+      <button
+        id="loginBtn"
+        class="login-btn"
+        type="submit"
+      >
+
+        Login
+        <span class="login-arrow">
+          →
+        </span>
+
       </button>
+
     </form>
 
-    <div class="or-line"><span>or</span></div>
 
-    <div class="register">
-      <a href="register.html">Create Account</a>
+    <!-- OR -->
+    <div class="or-line">
+      <span>or</span>
     </div>
+
+
+    <!-- CREATE ACCOUNT -->
+    <div class="register">
+
+      <a href="register.html">
+        Create Account
+      </a>
+
+    </div>
+
 
     <div class="card-note">
       Secure access • Simple experience • Built for growth
@@ -592,161 +909,301 @@ label {
 
   </section>
 
-  <!-- RIGHT DECORATIVE PANEL -->
+
+  <!-- RIGHT SIDE -->
   <section class="side side-right">
+
     <div class="feature">
+
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+
           <path d="M4 19V5"/>
           <path d="M4 19h16"/>
           <path d="M7 15l3-4 3 2 5-7"/>
+
         </svg>
+
       </div>
+
       <div>
+
         <h3>Grow Together</h3>
-        <p>More opportunities for a better tomorrow.</p>
+
+        <p>
+          More opportunities for a better tomorrow.
+        </p>
+
       </div>
+
     </div>
 
+
     <div class="feature">
+
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="9" cy="8" r="3"/>
-          <circle cx="17" cy="9" r="2.5"/>
-          <path d="M3.5 19c.7-3 2.6-4.5 5.5-4.5S13.8 16 14.5 19"/>
-          <path d="M14 15c2.7-.8 5.5.4 6.5 3"/>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+
+          <circle
+            cx="9"
+            cy="8"
+            r="3"
+          />
+
+          <circle
+            cx="17"
+            cy="9"
+            r="2.5"
+          />
+
+          <path
+            d="M3.5 19c.7-3 2.6-4.5 5.5-4.5S13.8 16 14.5 19"
+          />
+
+          <path
+            d="M14 15c2.7-.8 5.5.4 6.5 3"
+          />
+
         </svg>
+
       </div>
+
       <div>
+
         <h3>Stronger Community</h3>
-        <p>We build progress, side by side.</p>
+
+        <p>
+          We build progress, side by side.
+        </p>
+
       </div>
+
     </div>
+
   </section>
 
 </main>
+
 
 <!-- =========================
      FIREBASE
      ========================= -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
+
 <script>
+
 /* =========================
    FIREBASE CONFIG
    ========================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqG",
-  authDomain: "investpro-2dafb.firebaseapp.com",
-  projectId: "investpro-2dafb",
-  storageBucket: "investpro-2dafb.firebasestorage.app",
-  messagingSenderId: "135092039764",
-  appId: "1:135092039764:web:c4c71eef0c904346a77dc1",
-  measurementId: "G-0L77SFTC4F"
+
+  apiKey:
+    "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+
+  authDomain:
+    "investpro-2dafb.firebaseapp.com",
+
+  projectId:
+    "investpro-2dafb",
+
+  storageBucket:
+    "investpro-2dafb.firebasestorage.app",
+
+  messagingSenderId:
+    "135092039764",
+
+  appId:
+    "1:135092039764:web:c4c71eef0c904346a77dc1",
+
+  measurementId:
+    "G-0L77SFTC4F"
 };
+
 
 /* =========================
    INITIALIZE FIREBASE
    ========================= */
 
 firebase.initializeApp(firebaseConfig);
+
 const auth = firebase.auth();
 
-/* Keep the same Firebase auth session across login → dashboard → my → recharge. */
-const persistenceReady = auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-  .catch((error) => {
-    console.error("Firebase persistence setup failed:", error);
-    throw error;
-  });
 
 /* =========================
    ELEMENTS
    ========================= */
 
-const phoneInput = document.getElementById("phone");
-const passwordInput = document.getElementById("password");
-const loginButton = document.getElementById("loginBtn");
-const messageBox = document.getElementById("message");
-const togglePassword = document.getElementById("togglePassword");
+const phoneInput =
+  document.getElementById("phone");
+
+const passwordInput =
+  document.getElementById("password");
+
+const loginButton =
+  document.getElementById("loginBtn");
+
+const messageBox =
+  document.getElementById("message");
+
+const togglePassword =
+  document.getElementById("togglePassword");
+
 
 /* =========================
    PASSWORD VISIBILITY
    ========================= */
 
-togglePassword.addEventListener("click", function () {
-  const showing = passwordInput.type === "text";
-  passwordInput.type = showing ? "password" : "text";
-  this.setAttribute("aria-label", showing ? "Show password" : "Hide password");
-});
+togglePassword.addEventListener(
+  "click",
+  function () {
+
+    const showing =
+      passwordInput.type === "text";
+
+    passwordInput.type =
+      showing
+        ? "password"
+        : "text";
+
+    this.setAttribute(
+      "aria-label",
+      showing
+        ? "Show password"
+        : "Hide password"
+    );
+
+  }
+);
+
 
 /* =========================
    NORMALIZE PHONE
    ========================= */
 
 function normalizePhone(phone) {
-  phone = phone.replace(/\D/g, "");
+
+  phone =
+    phone.replace(/\D/g, "");
 
   if (/^9\d{9}$/.test(phone)) {
+
     return "63" + phone;
+
   }
 
   return "";
+
 }
+
 
 /* =========================
    PHONE → FIREBASE EMAIL
    ========================= */
 
 function phoneToFirebaseEmail(phone) {
-  const normalized = normalizePhone(phone);
+
+  const normalized =
+    normalizePhone(phone);
 
   if (!normalized) {
+
     return "";
+
   }
 
-  return normalized + "@novarise.local";
+  return normalized +
+    "@novarise.local";
+
 }
+
 
 /* =========================
    SHOW MESSAGE
    ========================= */
 
-function showMessage(message, type) {
-  messageBox.textContent = message;
-  messageBox.className = "message " + type;
+function showMessage(
+  message,
+  type
+) {
+
+  messageBox.textContent =
+    message;
+
+  messageBox.className =
+    "message " + type;
+
 }
+
 
 /* =========================
    PHONE INPUT
    ========================= */
 
-phoneInput.addEventListener("input", function () {
-  this.value = this.value.replace(/\D/g, "");
+phoneInput.addEventListener(
+  "input",
+  function () {
 
-  if (this.value.length > 10) {
-    this.value = this.value.substring(0, 10);
+    this.value =
+      this.value.replace(
+        /\D/g,
+        ""
+      );
+
+
+    if (this.value.length > 10) {
+
+      this.value =
+        this.value.substring(
+          0,
+          10
+        );
+
+    }
+
+
+    if (
+      this.value.length > 0 &&
+      this.value.charAt(0) !== "9"
+    ) {
+
+      this.value = "";
+
+      showMessage(
+        "Phone number must start with 9.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    messageBox.className =
+      "message";
+
+    messageBox.textContent =
+      "";
+
   }
+);
 
-  if (
-    this.value.length > 0 &&
-    this.value.charAt(0) !== "9"
-  ) {
-    this.value = "";
-
-    showMessage(
-      "Phone number must start with 9.",
-      "error"
-    );
-
-    return;
-  }
-
-  messageBox.className = "message";
-  messageBox.textContent = "";
-});
 
 /* =========================
    LOGIN
@@ -754,85 +1211,147 @@ phoneInput.addEventListener("input", function () {
 
 document
   .getElementById("loginForm")
-  .addEventListener("submit", function (event) {
+  .addEventListener(
+    "submit",
+    function (event) {
 
-    event.preventDefault();
+      event.preventDefault();
 
-    const phone = phoneInput.value.trim();
-    const password = passwordInput.value;
 
-    if (!phone || !password) {
-      showMessage(
-        "Please enter your phone number and password.",
-        "error"
-      );
-      return;
-    }
+      const phone =
+        phoneInput.value.trim();
 
-    if (!/^9\d{9}$/.test(phone)) {
-      showMessage(
-        "Please enter a valid 10-digit Philippine mobile number starting with 9.",
-        "error"
-      );
+      const password =
+        passwordInput.value;
 
-      phoneInput.focus();
-      return;
-    }
 
-    const firebaseEmail = phoneToFirebaseEmail(phone);
+      if (
+        !phone ||
+        !password
+      ) {
 
-    if (!firebaseEmail) {
-      showMessage(
-        "Invalid phone number.",
-        "error"
-      );
-      return;
-    }
-
-    loginButton.disabled = true;
-    loginButton.innerHTML = 'Logging in...';
-
-    persistenceReady
-      .then(() => auth.signInWithEmailAndPassword(
-        firebaseEmail,
-        password
-      ))
-
-      .then(() => {
-        window.location.href = "dashboard.html";
-      })
-
-      .catch((error) => {
-        console.error(
-          "Firebase login error:",
-          error
+        showMessage(
+          "Please enter your phone number and password.",
+          "error"
         );
 
-        let message =
-          "Login failed. Please check your phone number and password.";
+        return;
 
-        if (
-          error.code === "auth/invalid-credential" ||
-          error.code === "auth/wrong-password" ||
-          error.code === "auth/user-not-found"
-        ) {
-          message =
-            "Incorrect phone number or password.";
-        }
+      }
 
-        else if (
-          error.code === "auth/too-many-requests"
-        ) {
-          message =
-            "Too many login attempts. Please try again later.";
-        }
 
-        showMessage(message, "error");
+      if (
+        !/^9\d{9}$/.test(phone)
+      ) {
 
-        loginButton.disabled = false;
-        loginButton.innerHTML = 'Login <span class="login-arrow">→</span>';
-      });
-  });
+        showMessage(
+          "Please enter a valid 10-digit Philippine mobile number starting with 9.",
+          "error"
+        );
+
+        phoneInput.focus();
+
+        return;
+
+      }
+
+
+      const firebaseEmail =
+        phoneToFirebaseEmail(
+          phone
+        );
+
+
+      if (!firebaseEmail) {
+
+        showMessage(
+          "Invalid phone number.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      loginButton.disabled =
+        true;
+
+      loginButton.innerHTML =
+        "Logging in...";
+
+
+      auth
+        .signInWithEmailAndPassword(
+          firebaseEmail,
+          password
+        )
+
+        .then(() => {
+
+          window.location.href =
+            "dashboard.html";
+
+        })
+
+
+        .catch((error) => {
+
+          console.error(
+            "Firebase login error:",
+            error
+          );
+
+
+          let message =
+            "Login failed. Please check your phone number and password.";
+
+
+          if (
+            error.code ===
+              "auth/invalid-credential" ||
+
+            error.code ===
+              "auth/wrong-password" ||
+
+            error.code ===
+              "auth/user-not-found"
+          ) {
+
+            message =
+              "Incorrect phone number or password.";
+
+          }
+
+
+          else if (
+            error.code ===
+              "auth/too-many-requests"
+          ) {
+
+            message =
+              "Too many login attempts. Please try again later.";
+
+          }
+
+
+          showMessage(
+            message,
+            "error"
+          );
+
+
+          loginButton.disabled =
+            false;
+
+          loginButton.innerHTML =
+            'Login <span class="login-arrow">→</span>';
+
+        });
+
+    }
+  );
+
 </script>
 
 </body>
