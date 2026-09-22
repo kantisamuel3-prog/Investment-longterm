@@ -91,10 +91,14 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const WORKER = "https://novarise-payermax.kantisamuel3.workers.dev";
 
-auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(error => {
-  console.error("Firebase persistence setup failed:", error);
-});
+const persistenceReady = auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  .catch(error => {
+    console.error("Firebase persistence setup failed:", error);
+  });
 let currentUser = null;
+let authResolved = false;
+let authReadyResolve;
+const authReady = new Promise(resolve => { authReadyResolve = resolve; });
 let pollToken = 0;
 const $ = id => document.getElementById(id);
 
@@ -172,7 +176,15 @@ $("backBtn").addEventListener("click",()=>window.location.href="my.html");
 $("openGcashBtn").addEventListener("click",()=>{ window.location.href="https://payments.gcash.com/"; });
 
 $("payBtn").addEventListener("click",async()=>{
-  if(!currentUser){ setStatus("Please log in again."); return; }
+  await authReady;
+
+  const user = currentUser || auth.currentUser;
+  if(!user){
+    setStatus("Your login session was not found. Please open Login and sign in again.");
+    return;
+  }
+  currentUser = user;
+
   const amount=Number($("amount").value);
   if(!Number.isFinite(amount)||amount<=0){ setStatus("Enter a valid recharge amount."); return; }
 
@@ -205,22 +217,32 @@ $("payBtn").addEventListener("click",async()=>{
   }
 });
 
-onAuthStateChanged(auth,user=>{
-  if(!user){
-    window.location.replace("login.html");
-    return;
-  }
+persistenceReady.then(() => {
+  onAuthStateChanged(auth,user=>{
+    authResolved = true;
+    currentUser = user || null;
+    authReadyResolve();
 
-  currentUser=user;
+    if(!user){
+      setStatus("Your login session was not found. Please open Login and sign in again.");
+      $("payBtn").disabled = false;
+      return;
+    }
 
-  const pending=sessionStorage.getItem("novariseRechargeOrder");
-  if(pending){
-    $("orderText").textContent=`Order: ${pending}`;
-    setStatus("Checking your previous payment…");
-    poll(pending);
-  }else{
-    setStatus("Enter an amount, then generate your GCash QR.",true);
-  }
+    const pending=sessionStorage.getItem("novariseRechargeOrder");
+    if(pending){
+      $("orderText").textContent=`Order: ${pending}`;
+      setStatus("Checking your previous payment…");
+      poll(pending);
+    }else{
+      setStatus("Enter an amount, then generate your GCash QR.",true);
+    }
+  });
+}).catch(error => {
+  console.error(error);
+  authResolved = true;
+  authReadyResolve();
+  setStatus("Unable to initialize your login session. Please refresh and try again.");
 });
 </script>
 </body>
