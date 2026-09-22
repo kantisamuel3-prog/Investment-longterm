@@ -1219,13 +1219,21 @@ async function getRechargePaymentStatus(orderId) {
       statusText.textContent = "Creating secure payment…";
 
       try{
-        const result = await createRechargePayment(amount);
-        const data = result.data || {};
-        if(!data.checkoutUrl || !data.orderId) throw new Error("Missing payment checkout information.");
-        sessionStorage.setItem("novariseRechargeOrder", data.orderId);
-        statusText.textContent = "Redirecting to GCash checkout…";
-        window.location.href = data.checkoutUrl;
-      }catch(err){
+  const result = await createRechargePayment(amount);
+  const data = result.data || result;
+
+  const checkoutUrl = data.checkoutUrl || data.redirectUrl;
+  const orderId = data.orderId;
+
+  if(!checkoutUrl || !orderId){
+    console.error("Payment response:", result);
+    throw new Error("Missing payment checkout information.");
+  }
+
+  sessionStorage.setItem("novariseRechargeOrder", orderId);
+  statusText.textContent = "Redirecting to GCash checkout…";
+  window.location.href = checkoutUrl;
+}catch(err){
         console.error(err);
         statusBox.style.display = "none";
         toast(err?.message || "GCash payment is not available yet.");
