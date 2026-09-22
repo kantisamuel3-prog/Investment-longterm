@@ -1488,18 +1488,7 @@
   });
 
   $("rechargeBtn").addEventListener("click", () => {
-    moneyMode = "recharge";
-    paymentPollToken++;
-    $("moneyTitle").textContent = "GCash Recharge";
-    $("confirmMoneyBtn").textContent = "Pay with GCash";
-    $("confirmMoneyBtn").style.display = "block";
-    $("confirmMoneyBtn").disabled = false;
-    $("rechargePanel").style.display = "block";
-    $("withdrawPanel").style.display = "none";
-    $("moneyAmount").style.display = "block";
-    $("moneyAmount").value = "";
-    resetRechargeQR();
-    openModal("moneyModal");
+    window.location.href = "recharge.html";
   });
 
 
