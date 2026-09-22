@@ -21,21 +21,24 @@ body{padding-bottom:30px}
 .amount-wrap:focus-within{border-color:#1478ef;box-shadow:0 0 0 4px rgba(20,120,239,.09)}
 .currency{font-weight:900;font-size:21px;color:#1763b4;margin-right:8px}.amount-wrap input{border:0;outline:0;background:transparent;width:100%;font-size:22px;font-weight:800;color:#12345d}
 .pay-btn{width:100%;height:55px;border:0;border-radius:15px;margin-top:13px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;font-weight:900;font-size:15px;box-shadow:0 9px 20px rgba(8,105,232,.20);cursor:pointer}.pay-btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
-.qr-card{display:none;margin-top:16px;background:#fff;border:1px solid #dce8f3;border-radius:24px;padding:20px 16px 18px;text-align:center;box-shadow:0 12px 32px rgba(18,55,91,.08)}
+.qr-card{display:none;margin:16px -18px -18px;background:#0869e8;border:0;border-radius:0 0 22px 22px;padding:0;text-align:center;overflow:hidden;box-shadow:none}
 .qr-card.show{display:block}
-.gcash-brand{display:flex;align-items:center;justify-content:center;gap:9px;font-size:22px;font-weight:950;color:#1768d8}.gmark{width:39px;height:39px;border:3px solid #1768d8;border-radius:50%;display:grid;place-items:center;font-size:20px;font-weight:900}
-.secure{display:inline-flex;align-items:center;gap:5px;margin-top:8px;color:#08a579;font-size:12px;font-weight:900}
-.qr-title{margin:15px auto 5px;max-width:510px;font-size:17px;line-height:1.35;font-weight:900;color:#173d70}.qr-note{margin:0 auto 15px;color:#8292a5;font-size:12px;line-height:1.45;max-width:510px}
-.qr-shell{width:100%;display:flex;justify-content:center;padding:14px;background:#fff;border:1px solid #e2e9f0;border-radius:18px;box-shadow:0 5px 20px rgba(20,56,91,.07)}
+.gcash-page{background:linear-gradient(180deg,#0869e8 0%,#0869e8 30%,#f7f7f8 30%,#f7f7f8 100%);padding:34px 0 22px}
+.gcash-brand{display:flex;align-items:center;justify-content:center;gap:10px;color:#fff;font-size:38px;font-weight:500;letter-spacing:-1px;margin:0 auto 54px}.gmark{width:45px;height:45px;border:4px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:24px;font-weight:800;line-height:1}
+.gcash-payment-card{background:#fff;border-radius:22px 22px 0 0;padding:34px 22px 24px;box-shadow:0 -2px 14px rgba(0,0,0,.06)}
+.safety{display:flex;align-items:center;justify-content:center;gap:12px;color:#68748a;font-size:16px;font-weight:800;margin-bottom:18px}.shield{width:31px;height:36px;border:2px solid #b9c0cb;border-radius:9px 9px 12px 12px;display:grid;place-items:center;color:#aeb6c1;font-size:18px}
+.gcash-main-title{margin:0 auto;max-width:610px;color:#24295d;font-size:24px;line-height:1.28;font-weight:900}
+.open-btn{width:min(100%,430px);height:58px;border:0;border-radius:32px;background:#0869e8;color:#fff;font-size:20px;font-weight:500;margin:28px auto 24px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:none;cursor:pointer}.open-mark{display:none}
+.scan-copy{margin:0 auto 22px;max-width:590px;color:#78869a;font-size:16px;line-height:1.35}
+.qr-shell{width:100%;display:flex;justify-content:center;padding:0;background:#fff;border:0;border-radius:0;box-shadow:none}
 #qrCodeContainer{width:304px;height:304px;display:flex;align-items:center;justify-content:center;background:#fff}
 #qrCodeContainer img,#qrCodeContainer canvas{display:block!important;width:304px!important;height:304px!important;image-rendering:auto}
-.open-btn{width:min(100%,390px);height:54px;border:0;border-radius:28px;background:#0875ed;color:#fff;font-size:15px;font-weight:900;margin:15px auto 0;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 9px 22px rgba(8,117,237,.23);cursor:pointer}.open-mark{width:25px;height:25px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:900}
-.expire{margin-top:11px;color:#8192a7;font-size:11px}.order{margin-top:4px;color:#8092a7;font-size:10px;word-break:break-all}.help{margin:12px auto 0;max-width:540px;color:#73869c;font-size:11px;line-height:1.5}
+.expire{margin-top:18px;color:#8192a7;font-size:11px}.order{margin-top:4px;color:#8092a7;font-size:10px;word-break:break-all}.help{margin:12px auto 0;max-width:540px;color:#73869c;font-size:11px;line-height:1.5}
 .status{display:none;align-items:flex-start;gap:9px;margin-top:13px;padding:13px 14px;border-radius:14px;background:#f4f9ff;border:1px solid #dbe9f8;color:#46627e;font-size:12px;line-height:1.45;text-align:left}.status.show{display:flex}.dot{width:9px;height:9px;border-radius:50%;background:#2f7df0;margin-top:4px;flex:none;box-shadow:0 0 0 4px rgba(47,125,240,.12)}
 .done{display:none;margin-top:13px;padding:13px;border-radius:14px;background:#effbf6;border:1px solid #cfeee0;color:#087a52;font-size:12px;font-weight:800}.done.show{display:block}
 .small{margin-top:13px;text-align:center;color:#8a99a9;font-size:10px;line-height:1.45}
-@media(max-width:520px){.page{padding:12px 12px 24px}.hero{padding:19px 17px;border-radius:21px}.hero h1{font-size:22px}.card{padding:15px;border-radius:20px}.qr-card{padding:17px 10px 16px;border-radius:21px}.qr-title{font-size:15px}.qr-shell{padding:10px;border-radius:15px}#qrCodeContainer{width:270px;height:270px}#qrCodeContainer img,#qrCodeContainer canvas{width:270px!important;height:270px!important}.open-btn{height:52px}.topbar{margin-bottom:10px}}
-@media(max-width:340px){#qrCodeContainer{width:238px;height:238px}#qrCodeContainer img,#qrCodeContainer canvas{width:238px!important;height:238px!important}.qr-title{font-size:14px}}
+@media(max-width:520px){.page{padding:12px 12px 24px}.hero{padding:19px 17px;border-radius:21px}.hero h1{font-size:22px}.card{padding:15px;border-radius:20px}.qr-card{margin-left:-15px;margin-right:-15px;margin-bottom:-15px;border-radius:0 0 20px 20px}.gcash-page{padding-top:32px}.gcash-brand{font-size:35px;margin-bottom:48px}.gcash-payment-card{padding:30px 14px 22px}.safety{font-size:15px}.gcash-main-title{font-size:20px}.open-btn{height:54px;font-size:18px;margin-top:24px}.scan-copy{font-size:15px}.qr-shell{padding:0}#qrCodeContainer{width:270px;height:270px}#qrCodeContainer img,#qrCodeContainer canvas{width:270px!important;height:270px!important}.topbar{margin-bottom:10px}}
+@media(max-width:340px){#qrCodeContainer{width:238px;height:238px}#qrCodeContainer img,#qrCodeContainer canvas{width:238px!important;height:238px!important}.gcash-main-title{font-size:18px}.scan-copy{font-size:14px}}
 </style>
 </head>
 <body>
@@ -58,15 +61,19 @@ body{padding-bottom:30px}
     <div class="status" id="status"><span class="dot"></span><span id="statusText">Preparing secure payment…</span></div>
 
     <div class="qr-card" id="qrCard">
-      <div class="gcash-brand"><span class="gmark">G</span><span>GCash</span></div>
-      <div class="secure">✓ Secure Payment</div>
-      <div class="qr-title">Scan the QR code below with your GCash app to complete your payment.</div>
-      <div class="qr-note">Use the QR Scanner in GCash and complete the payment for your selected recharge amount.</div>
-      <div class="qr-shell"><div id="qrCodeContainer"></div></div>
-      <button class="open-btn" id="openGcashBtn" type="button"><span class="open-mark">G</span><span>Open in GCash</span></button>
-      <div class="expire" id="expireText">QR payment expires after the payment window.</div>
-      <div class="order" id="orderText"></div>
-      <div class="help">Or log in to GCash and scan this QR with the QR Scanner. Your Novarise balance updates only after successful confirmation.</div>
+      <div class="gcash-page">
+        <div class="gcash-brand"><span class="gmark">G</span><span>GCash</span></div>
+        <div class="gcash-payment-card">
+          <div class="safety"><span class="shield">✓</span><span>A safer way to pay!</span></div>
+          <h2 class="gcash-main-title">Complete the payment in your GCash app<br>by tapping the button</h2>
+          <button class="open-btn" id="openGcashBtn" type="button">Open in GCash</button>
+          <p class="scan-copy">or log in to GCash and scan this QR with the QR Scanner.</p>
+          <div class="qr-shell"><div id="qrCodeContainer"></div></div>
+          <div class="expire" id="expireText">QR payment expires after the payment window.</div>
+          <div class="order" id="orderText"></div>
+          <div class="help">Your Novarise balance updates only after successful payment confirmation.</div>
+        </div>
+      </div>
     </div>
 
     <div class="done" id="doneBox">Payment successful. Your Novarise balance has been updated.</div>
