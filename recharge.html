@@ -76,7 +76,7 @@ body{padding-bottom:30px}
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqG",
@@ -201,9 +201,25 @@ $("payBtn").addEventListener("click",async()=>{
   }
 });
 
-onAuthStateChanged(auth,user=>{
-  if(!user){ window.location.href="login.html"; return; }
-  currentUser=user;
+async function initializeRechargePage(){
+  /*
+   * IMPORTANT: wait until Firebase finishes restoring the existing
+   * login session before checking auth.currentUser. Without this wait,
+   * the page can briefly see null while moving from my.html to this
+   * page and incorrectly redirect a logged-in user to login.html.
+   */
+  try{
+    await auth.authStateReady();
+  }catch(error){
+    console.error("Firebase auth initialization error:",error);
+  }
+
+  currentUser=auth.currentUser;
+
+  if(!currentUser){
+    window.location.replace("login.html");
+    return;
+  }
 
   const pending=sessionStorage.getItem("novariseRechargeOrder");
   if(pending){
@@ -213,7 +229,9 @@ onAuthStateChanged(auth,user=>{
   }else{
     setStatus("Enter an amount, then generate your GCash QR.",true);
   }
-});
+}
+
+initializeRechargePage();
 </script>
 </body>
 </html>
