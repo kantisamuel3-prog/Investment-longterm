@@ -1046,7 +1046,7 @@
     setDoc,
     runTransaction
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-  import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
+ 
 
   const firebaseConfig = {
     apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
@@ -1060,10 +1060,71 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-  const functions = getFunctions(app, "asia-southeast1");
-  const createGcashPayment = httpsCallable(functions, "createGcashPayment");
-  const getRechargeStatus = httpsCallable(functions, "getRechargeStatus");
+  const PAYERMAX_WORKER_URL =
+  "https://novarise-payermax.kantisamuel3.workers.dev";
+  async function createRechargePayment(amount) {
+  if (!currentUser) throw new Error("Please log in again.");
 
+  const idToken = await currentUser.getIdToken(true);
+
+  const response = await fetch(
+    `${PAYERMAX_WORKER_URL}/create-payermax-payment`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${idToken}`
+      },
+      body: JSON.stringify({
+        amount: Number(amount)
+      })
+    }
+  );
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      data.message ||
+      data.error ||
+      "Unable to create payment."
+    );
+  }
+
+  if (!data.checkoutUrl || !data.orderId) {
+    throw new Error("Payment checkout information is missing.");
+  }
+
+  return data;
+}
+  
+async function getRechargePaymentStatus(orderId) {
+  if (!currentUser) throw new Error("Please log in again.");
+
+  const idToken = await currentUser.getIdToken(true);
+
+  const response = await fetch(
+    `${PAYERMAX_WORKER_URL}/recharge-status?orderId=${encodeURIComponent(orderId)}`,
+    {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${idToken}`
+      }
+    }
+  );
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      data.message ||
+      data.error ||
+      "Unable to check payment status."
+    );
+  }
+
+  return data;
+}
   let currentUser = null;
   let currentData = {};
   let moneyMode = "recharge";
@@ -1153,7 +1214,7 @@
       statusText.textContent = "Creating secure payment…";
 
       try{
-        const result = await createGcashPayment({ amount });
+        const result = await createRechargePayment(amount);
         const data = result.data || {};
         if(!data.checkoutUrl || !data.orderId) throw new Error("Missing payment checkout information.");
         sessionStorage.setItem("novariseRechargeOrder", data.orderId);
@@ -1208,7 +1269,7 @@
 
     for(let i=0;i<12;i++){
       try{
-        const result = await getRechargeStatus({ orderId });
+        const result = await getRechargePaymentStatus(orderId);
         const status = result.data?.status;
         if(status === "SUCCESS"){
           $("paymentStatusText").textContent = "Payment successful. Your balance has been updated.";
@@ -1383,6 +1444,7 @@
 
     try{
       await loadUser(user);
+     await checkReturnedRecharge();
     }catch(err){
       console.error(err);
       $("userName").textContent = user.email || "Member";
