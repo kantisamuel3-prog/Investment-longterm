@@ -98,12 +98,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const WORKER = "https://novarise-payermax.kantisamuel3.workers.dev";
 
-const persistenceReady = auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-  .catch(error => {
-    console.error("Firebase persistence setup failed:", error);
-  });
 let currentUser = null;
-let authResolved = false;
 let authReadyResolve;
 const authReady = new Promise(resolve => { authReadyResolve = resolve; });
 let pollToken = 0;
@@ -224,9 +219,7 @@ $("payBtn").addEventListener("click",async()=>{
   }
 });
 
-persistenceReady.then(() => {
-  onAuthStateChanged(auth,user=>{
-    authResolved = true;
+auth.onAuthStateChanged(user=>{
     currentUser = user || null;
     authReadyResolve();
 
@@ -245,12 +238,6 @@ persistenceReady.then(() => {
       setStatus("Enter an amount, then generate your GCash QR.",true);
     }
   });
-}).catch(error => {
-  console.error(error);
-  authResolved = true;
-  authReadyResolve();
-  setStatus("Unable to initialize your login session. Please refresh and try again.");
-});
 </script>
 </body>
 </html>
