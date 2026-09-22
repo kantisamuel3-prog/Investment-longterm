@@ -7,7 +7,7 @@
 
   <meta
   name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, User-scalable=no"
 >
 
   <meta name="theme-color" content="#168ff0">
@@ -1607,7 +1607,7 @@
       }
 
 
-      const usersRef =
+      const UsersRef =
         collection(
           db,
           "Users"
@@ -1620,7 +1620,7 @@
 
       const referralQuery =
         query(
-          usersRef,
+          UsersRef,
           where(
             "referralCode",
             "==",
@@ -1665,7 +1665,7 @@
 
       const invitationQuery =
         query(
-          usersRef,
+          UsersRef,
           where(
             "invitationCode",
             "==",
@@ -1710,7 +1710,7 @@
 
       const inviteQuery =
         query(
-          usersRef,
+          UsersRef,
           where(
             "inviteCode",
             "==",
@@ -1891,7 +1891,7 @@
             true;
 
 
-          let user =
+          let User =
             null;
 
 
@@ -1910,7 +1910,7 @@
               "Creating account...";
 
 
-            const userCredential =
+            const UserCredential =
               await createUserWithEmailAndPassword(
                 auth,
                 firebaseEmail,
@@ -1920,11 +1920,11 @@
 
             /*
              * IMPORTANT:
-             * Firebase property is .user
+             * Firebase property is .User
              */
 
-            user =
-              userCredential.user;
+            User =
+              UserCredential.User;
 
 
             authCreated =
@@ -2017,7 +2017,7 @@
                 try {
 
                   await deleteUser(
-                    user
+                    User
                   );
 
                 } catch (
@@ -2060,7 +2060,7 @@
                ================================= */
 
             await updateProfile(
-              user,
+              User,
               {
                 displayName:
                   normalizedPhone
@@ -2074,7 +2074,7 @@
 
             const myReferralCode =
               createReferralCode(
-                user.uid
+                User.uid
               );
 
 
@@ -2093,7 +2093,7 @@
             if (
               referrer &&
               referrer.uid !==
-              user.uid
+              User.uid
             ) {
 
               referredBy =
@@ -2110,10 +2110,10 @@
                NEW USER DATA
                ================================= */
 
-            const userData = {
+            const UserData = {
 
               uid:
-                user.uid,
+                User.uid,
 
               phone:
                 normalizedPhone,
@@ -2173,13 +2173,13 @@
               doc(
                 db,
                 "Users",
-                user.uid
+                User.uid
               );
 
 
             batch.set(
               newUserRef,
-              userData
+              UserData
             );
 
 
@@ -2190,7 +2190,7 @@
             if (
               referrer &&
               referrer.uid !==
-              user.uid
+              User.uid
             ) {
 
               registerButton.innerHTML =
@@ -2278,13 +2278,13 @@
 
             if (
               authCreated &&
-              user
+              User
             ) {
 
               try {
 
                 await deleteUser(
-                  user
+                  User
                 );
 
               } catch (
