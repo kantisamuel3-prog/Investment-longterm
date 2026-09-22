@@ -90,11 +90,14 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const WORKER = "https://novarise-payermax.kantisamuel3.workers.dev";
 
-auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(error => {
-  console.error("Firebase persistence setup failed:", error);
-});
-
 let currentUser = null;
+
+// Restore the saved Firebase login session BEFORE starting the auth observer.
+// This prevents a temporary user=null state from sending the member to login.html.
+const authPersistenceReady = auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  .catch(error => {
+    console.error("Firebase persistence setup failed:", error);
+  });
 let pollToken = 0;
 const $ = id => document.getElementById(id);
 
@@ -303,24 +306,26 @@ $("payBtn").addEventListener("click",async()=>{
   The previous code used bare onAuthStateChanged(...), which belongs
   to the modular SDK and left currentUser as null.
 */
-auth.onAuthStateChanged(user=>{
-  if(!user){
-    currentUser=null;
-    window.location.replace("login.html");
-    return;
-  }
+authPersistenceReady.then(()=>{
+  auth.onAuthStateChanged(user=>{
+    if(!user){
+      currentUser=null;
+      window.location.replace("login.html");
+      return;
+    }
 
-  currentUser=user;
+    currentUser=user;
 
-  const pending=sessionStorage.getItem("novariseRechargeOrder");
+    const pending=sessionStorage.getItem("novariseRechargeOrder");
 
-  if(pending){
-    $("orderText").textContent=`Order: ${pending}`;
-    setStatus("Checking your previous payment…");
-    poll(pending);
-  }else{
-    setStatus("Enter an amount, then generate your GCash QR.",true);
-  }
+    if(pending){
+      $("orderText").textContent=`Order: ${pending}`;
+      setStatus("Checking your previous payment…");
+      poll(pending);
+    }else{
+      setStatus("Enter an amount, then generate your GCash QR.",true);
+    }
+  });
 });
 </script>
 </body>
