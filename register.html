@@ -1924,7 +1924,7 @@
              */
 
             User =
-              UserCredential.User;
+              UserCredential.user;
 
 
             authCreated =
@@ -1968,11 +1968,10 @@
 
                 try {
 
-                  await deleteUser(
-                    user
-                  );
-
-                } catch (
+                  await deleteUser(User);
+                  
+                }
+                catch (
                   cleanupError
                 ) {
 
@@ -2011,7 +2010,7 @@
 
               if (
                 referrer.uid ===
-                user.uid
+                User.uid
               ) {
 
                 try {
