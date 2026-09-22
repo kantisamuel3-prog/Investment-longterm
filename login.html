@@ -277,29 +277,31 @@ label {
   z-index: 2;
 }
 
-.field-icon svg { width: 17px; height: 17px; }
-
-.phone-input,
-.password-input {
-  width: 100%;
-  height: 49px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: #fbfdff;
-  transition: .2s ease;
+.field-icon {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #2293e9;
+  pointer-events: none;
+  z-index: 2;
 }
 
-.phone-input {
-  display: flex;
-  align-items: center;
-  margin-bottom: 14px;
+/* PHONE ICON FIX */
+.phone-input .field-icon {
+  position: static;
+  transform: none;
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  margin-left: 13px;
+  display: grid;
+  place-items: center;
 }
 
-.phone-input:focus-within,
-.field-wrap:focus-within .password-input {
-  border-color: #65b8f5;
-  background: #fff;
-  box-shadow: 0 0 0 4px rgba(22,143,240,.08);
+.phone-input .field-icon svg {
+  width: 17px;
+  height: 17px;
 }
 
 .country-code {
@@ -309,8 +311,8 @@ label {
   color: #164a78;
   font-size: 14px;
   font-weight: 700;
-  padding: 0 10px 0 11px;
-  margin-left: 5px;
+  padding: 0 10px;
+  margin-left: 8px;
   border-right: 1px solid #dce8f2;
   white-space: nowrap;
 }
