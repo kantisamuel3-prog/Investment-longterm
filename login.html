@@ -277,19 +277,13 @@ label {
   z-index: 2;
 }
 
-.field-icon {
-  position: absolute;
-  left: 13px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #2293e9;
-  pointer-events: none;
-  z-index: 2;
-}
+.field-icon svg { width: 17px; height: 17px; }
 
-/* PHONE ICON FIX */
+/* PHONE FIELD FIX: icon now has its own space and cannot overlap +63 */
 .phone-input .field-icon {
   position: static;
+  left: auto;
+  top: auto;
   transform: none;
   width: 17px;
   height: 17px;
@@ -302,6 +296,29 @@ label {
 .phone-input .field-icon svg {
   width: 17px;
   height: 17px;
+}
+
+.phone-input,
+.password-input {
+  width: 100%;
+  height: 49px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fbfdff;
+  transition: .2s ease;
+}
+
+.phone-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.phone-input:focus-within,
+.field-wrap:focus-within .password-input {
+  border-color: #65b8f5;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(22,143,240,.08);
 }
 
 .country-code {
@@ -397,7 +414,11 @@ label {
   transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
 }
 
-.login-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 13px 23px rgba(25,122,226,.23); }
+.login-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 13px 23px rgba(25,122,226,.23);
+}
+
 .login-btn:active:not(:disabled) { transform: translateY(0); }
 .login-btn:disabled { opacity: .62; cursor: not-allowed; }
 .login-arrow { margin-left: 7px; font-size: 18px; vertical-align: -1px; }
@@ -434,7 +455,11 @@ label {
   transition: .18s ease;
 }
 
-.register a:hover { background: #eff8ff; border-color: #72bdf4; transform: translateY(-1px); }
+.register a:hover {
+  background: #eff8ff;
+  border-color: #72bdf4;
+  transform: translateY(-1px);
+}
 
 .card-note {
   text-align: center;
@@ -530,14 +555,18 @@ label {
     <form id="loginForm" class="form-area">
 
       <label for="phone">Phone Number</label>
+
       <div class="field-wrap">
         <div class="phone-input">
+
           <span class="field-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M6.6 3.5h2.2l1.1 4-1.8 1.5a15.5 15.5 0 0 0 6.9 6.9l1.5-1.8 4 1.1v2.2c0 1-.8 1.9-1.8 1.9C11.1 19.2 4.8 12.9 4.7 5.3c0-1 .8-1.8 1.9-1.8z"/>
             </svg>
           </span>
+
           <span class="country-code">+63</span>
+
           <input
             id="phone"
             type="tel"
@@ -548,11 +577,14 @@ label {
             pattern="9[0-9]{9}"
             required
           >
+
         </div>
       </div>
 
       <label for="password">Password</label>
+
       <div class="field-wrap">
+
         <span class="field-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="5" y="10" width="14" height="10" rx="2"/>
@@ -569,17 +601,24 @@ label {
           required
         >
 
-        <button type="button" class="eye-button" id="togglePassword" aria-label="Show password">
+        <button
+          type="button"
+          class="eye-button"
+          id="togglePassword"
+          aria-label="Show password"
+        >
           <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/>
             <circle cx="12" cy="12" r="2.5"/>
           </svg>
         </button>
+
       </div>
 
       <button id="loginBtn" class="login-btn" type="submit">
         Login <span class="login-arrow">→</span>
       </button>
+
     </form>
 
     <div class="or-line"><span>or</span></div>
@@ -596,6 +635,7 @@ label {
 
   <!-- RIGHT DECORATIVE PANEL -->
   <section class="side side-right">
+
     <div class="feature">
       <div class="feature-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -604,6 +644,7 @@ label {
           <path d="M7 15l3-4 3 2 5-7"/>
         </svg>
       </div>
+
       <div>
         <h3>Grow Together</h3>
         <p>More opportunities for a better tomorrow.</p>
@@ -619,11 +660,13 @@ label {
           <path d="M14 15c2.7-.8 5.5.4 6.5 3"/>
         </svg>
       </div>
+
       <div>
         <h3>Stronger Community</h3>
         <p>We build progress, side by side.</p>
       </div>
     </div>
+
   </section>
 
 </main>
@@ -680,8 +723,13 @@ const togglePassword = document.getElementById("togglePassword");
 
 togglePassword.addEventListener("click", function () {
   const showing = passwordInput.type === "text";
+
   passwordInput.type = showing ? "password" : "text";
-  this.setAttribute("aria-label", showing ? "Show password" : "Hide password");
+
+  this.setAttribute(
+    "aria-label",
+    showing ? "Show password" : "Hide password"
+  );
 });
 
 /* =========================
@@ -726,6 +774,7 @@ function showMessage(message, type) {
    ========================= */
 
 phoneInput.addEventListener("input", function () {
+
   this.value = this.value.replace(/\D/g, "");
 
   if (this.value.length > 10) {
@@ -736,6 +785,7 @@ phoneInput.addEventListener("input", function () {
     this.value.length > 0 &&
     this.value.charAt(0) !== "9"
   ) {
+
     this.value = "";
 
     showMessage(
@@ -764,35 +814,41 @@ document
     const password = passwordInput.value;
 
     if (!phone || !password) {
+
       showMessage(
         "Please enter your phone number and password.",
         "error"
       );
+
       return;
     }
 
     if (!/^9\d{9}$/.test(phone)) {
+
       showMessage(
         "Please enter a valid 10-digit Philippine mobile number starting with 9.",
         "error"
       );
 
       phoneInput.focus();
+
       return;
     }
 
     const firebaseEmail = phoneToFirebaseEmail(phone);
 
     if (!firebaseEmail) {
+
       showMessage(
         "Invalid phone number.",
         "error"
       );
+
       return;
     }
 
     loginButton.disabled = true;
-    loginButton.innerHTML = 'Logging in...';
+    loginButton.innerHTML = "Logging in...";
 
     auth
       .signInWithEmailAndPassword(
@@ -801,10 +857,13 @@ document
       )
 
       .then(() => {
+
         window.location.href = "dashboard.html";
+
       })
 
       .catch((error) => {
+
         console.error(
           "Firebase login error:",
           error
@@ -818,22 +877,28 @@ document
           error.code === "auth/wrong-password" ||
           error.code === "auth/user-not-found"
         ) {
+
           message =
             "Incorrect phone number or password.";
-        }
 
-        else if (
+        } else if (
           error.code === "auth/too-many-requests"
         ) {
+
           message =
             "Too many login attempts. Please try again later.";
+
         }
 
         showMessage(message, "error");
 
         loginButton.disabled = false;
-        loginButton.innerHTML = 'Login <span class="login-arrow">→</span>';
+
+        loginButton.innerHTML =
+          'Login <span class="login-arrow">→</span>';
+
       });
+
   });
 </script>
 
