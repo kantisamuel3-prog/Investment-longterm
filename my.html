@@ -1577,21 +1577,14 @@
     });
   });
 
-  let authStateReady = false;
-
+  // Persistence is configured before this listener, so the first auth
+  // callback is the real restored session state. Do not use a second
+  // "authStateReady" flag because it can hide a genuine signed-out state.
   onAuthStateChanged(auth, async user => {
-    // Firebase can briefly report no user while restoring the saved session.
-    // Only redirect after the initial auth state has finished resolving.
     if(!user){
-      if(!authStateReady){
-        authStateReady = true;
-        return;
-      }
-      window.location.href = "login.html";
+      window.location.replace("login.html");
       return;
     }
-
-    authStateReady = true;
 
     try{
       await loadUser(user);
