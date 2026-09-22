@@ -1134,6 +1134,8 @@
   import {
     getAuth,
     onAuthStateChanged,
+    setPersistence,
+    browserLocalPersistence,
     signOut
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
   import {
@@ -1156,6 +1158,10 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
+
+  // Keep the Firebase session saved in this browser so a page refresh
+  // or opening My again does not accidentally look like a logout.
+  await setPersistence(auth, browserLocalPersistence);
 
   const PAYERMAX_WORKER_URL =
     "https://novarise-payermax.kantisamuel3.workers.dev";
@@ -1571,11 +1577,21 @@
     });
   });
 
+  let authStateReady = false;
+
   onAuthStateChanged(auth, async user => {
+    // Firebase can briefly report no user while restoring the saved session.
+    // Only redirect after the initial auth state has finished resolving.
     if(!user){
+      if(!authStateReady){
+        authStateReady = true;
+        return;
+      }
       window.location.href = "login.html";
       return;
     }
+
+    authStateReady = true;
 
     try{
       await loadUser(user);
