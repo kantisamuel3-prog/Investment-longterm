@@ -950,17 +950,26 @@
     <div id="rechargePanel" style="display:none">
       <div class="gcash-box">
         <div class="gcash-logo">GCash</div>
-        <h4>Secure GCash Payment</h4>
-        <p>Enter the amount above, then continue to the official GCash checkout. Your Novarise balance is credited only after the payment is confirmed successful by the payment service.</p>
+        <h4>GCash QR Payment</h4>
+        <p>Enter your amount, tap Pay with GCash, then scan the QR code using your GCash app.</p>
       </div>
 
       <div class="gcash-steps">
         <strong>How to recharge:</strong><br>
         1. Enter the amount you want to add.<br>
         2. Tap <strong>Pay with GCash</strong>.<br>
-        3. Complete the payment in GCash checkout.<br>
-        4. Return to Novarise and wait for the payment status to become <strong>Success</strong>.<br>
-        5. Your balance is updated only after a verified successful payment notification.
+        3. Scan the QR code shown below using GCash.<br>
+        4. Complete the payment in GCash.<br>
+        5. Keep this window open while Novarise confirms the payment.
+      </div>
+
+      <div class="qr-payment-box" id="qrPaymentBox">
+        <div class="qr-payment-title">Scan with GCash</div>
+        <div class="qr-payment-note">Use the GCash Scan QR feature and scan this payment QR.</div>
+        <div id="qrCodeContainer"></div>
+        <div class="qr-expire" id="qrExpireText">QR payment expires after the payment window.</div>
+        <div class="qr-order" id="qrOrderText"></div>
+        <div class="qr-help">Your Novarise balance is updated only after the payment service confirms the transaction successfully.</div>
       </div>
 
       <div class="payment-status" id="paymentStatusBox" style="display:none">
@@ -990,7 +999,7 @@
 
     <div class="field">
       <label>BANK NAME</label>
-      <input id="bankName" type="text" placeholder="GCash/Maya only">
+      <input id="bankName" type="text" placeholder="e.g. GCash / BDO / BPI">
     </div>
 
     <div class="field">
@@ -1046,7 +1055,6 @@
     setDoc,
     runTransaction
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
- 
 
   const firebaseConfig = {
     apiKey: "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
@@ -1060,76 +1068,135 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
+
   const PAYERMAX_WORKER_URL =
-  "https://novarise-payermax.kantisamuel3.workers.dev";
-  async function createRechargePayment(amount) {
-  if (!currentUser) throw new Error("Please log in again.");
+    "https://novarise-payermax.kantisamuel3.workers.dev";
 
-  const idToken = await currentUser.getIdToken(true);
-
-  const response = await fetch(
-    `${PAYERMAX_WORKER_URL}/create-payermax-payment`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${idToken}`
-      },
-      body: JSON.stringify({
-        amount: Number(amount)
-      })
-    }
-  );
-
-  const data = await response.json().catch(() => ({}));
-
-  if (!response.ok) {
-    throw new Error(
-      data.message ||
-      data.error ||
-      "Unable to create payment."
-    );
-  }
-
-  if (!data.qrCode || !data.orderId) {
-    throw new Error("Missing payment QR information.");
-  }
-
-  return data;
-}
-  
-async function getRechargePaymentStatus(orderId) {
-  if (!currentUser) throw new Error("Please log in again.");
-
-  const idToken = await currentUser.getIdToken(true);
-
-  const response = await fetch(
-    `${PAYERMAX_WORKER_URL}/recharge-status?orderId=${encodeURIComponent(orderId)}`,
-    {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${idToken}`
-      }
-    }
-  );
-
-  const data = await response.json().catch(() => ({}));
-
-  if (!response.ok) {
-    throw new Error(
-      data.message ||
-      data.error ||
-      "Unable to check payment status."
-    );
-  }
-
-  return data;
-}
   let currentUser = null;
+  let paymentPollToken = 0;
   let currentData = {};
   let moneyMode = "recharge";
 
   const $ = (id) => document.getElementById(id);
+
+  async function createRechargePayment(amount){
+    if(!currentUser) throw new Error("Please log in again.");
+
+    const idToken = await currentUser.getIdToken(true);
+
+    const response = await fetch(
+      `${PAYERMAX_WORKER_URL}/create-payermax-payment`,
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          "Authorization":`Bearer ${idToken}`
+        },
+        body:JSON.stringify({amount:Number(amount)})
+      }
+    );
+
+    const data = await response.json().catch(() => ({}));
+
+    if(!response.ok){
+      throw new Error(data.message || data.error || "Unable to create payment.");
+    }
+
+    if(!data.qrCode || !data.orderId){
+      throw new Error("Missing payment QR information.");
+    }
+
+    return data;
+  }
+
+  async function getRechargePaymentStatus(orderId){
+    if(!currentUser) throw new Error("Please log in again.");
+
+    const idToken = await currentUser.getIdToken(true);
+
+    const response = await fetch(
+      `${PAYERMAX_WORKER_URL}/recharge-status?orderId=${encodeURIComponent(orderId)}`,
+      {
+        method:"GET",
+        headers:{"Authorization":`Bearer ${idToken}`}
+      }
+    );
+
+    const data = await response.json().catch(() => ({}));
+
+    if(!response.ok){
+      throw new Error(data.message || data.error || "Unable to check payment status.");
+    }
+
+    return data;
+  }
+
+  async function ensureQRCodeLibrary(){
+    if(window.QRCode) return;
+
+    await new Promise((resolve,reject) => {
+      const existing = document.querySelector('script[data-novarise-qrcode="1"]');
+      if(existing){
+        existing.addEventListener("load",resolve,{once:true});
+        existing.addEventListener("error",reject,{once:true});
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
+      script.async = true;
+      script.dataset.novariseQrcode = "1";
+      script.onload = resolve;
+      script.onerror = () => reject(new Error("Unable to load QR code generator."));
+      document.head.appendChild(script);
+    });
+  }
+
+  function resetRechargeQR(){
+    $("qrPaymentBox").classList.remove("show");
+    $("qrCodeContainer").innerHTML = "";
+    $("qrOrderText").textContent = "";
+    $("qrExpireText").textContent = "QR payment expires after the payment window.";
+    $("paymentStatusBox").style.display = "none";
+    $("paymentStatusText").textContent = "Preparing payment…";
+  }
+
+  async function pollRechargePayment(orderId){
+    const myToken = ++paymentPollToken;
+
+    for(let i=0;i<60;i++){
+      if(myToken !== paymentPollToken) return;
+
+      try{
+        const result = await getRechargePaymentStatus(orderId);
+        const status = result.status || result.data?.status || "PENDING";
+
+        if(status === "SUCCESS"){
+          $("paymentStatusText").textContent = "Payment successful. Your balance has been updated.";
+          await loadUser(currentUser);
+          toast("GCash payment successful. Balance updated.");
+          sessionStorage.removeItem("novariseRechargeOrder");
+          return;
+        }
+
+        if(status === "FAILED" || status === "CANCELLED" || status === "EXPIRED"){
+          $("paymentStatusText").textContent = "Payment was not completed. No balance was added.";
+          return;
+        }
+
+        $("paymentStatusText").textContent = "Waiting for GCash payment confirmation…";
+      }catch(err){
+        console.error(err);
+        $("paymentStatusText").textContent = "Waiting for payment confirmation…";
+      }
+
+      await new Promise(resolve => setTimeout(resolve,2500));
+    }
+
+    if(myToken === paymentPollToken){
+      $("paymentStatusText").textContent = "Payment is still pending. Keep the QR open or check again later.";
+    }
+  }
 
   function peso(value){
     return "₱" + Number(value || 0).toLocaleString("en-PH", {
@@ -1208,30 +1275,46 @@ async function getRechargePaymentStatus(orderId) {
       const button = $("confirmMoneyBtn");
       const statusBox = $("paymentStatusBox");
       const statusText = $("paymentStatusText");
+
       button.disabled = true;
-      button.textContent = "Preparing GCash…";
+      button.textContent = "Creating QR…";
       statusBox.style.display = "flex";
-      statusText.textContent = "Creating secure payment…";
+      statusText.textContent = "Creating secure QR payment…";
 
       try{
-  const result = await createRechargePayment(amount);
-  const data = result.data || result;
+        const result = await createRechargePayment(amount);
+        const qrCode = result.qrCode;
+        const orderId = result.orderId;
 
-  const checkoutUrl = data.checkoutUrl || data.redirectUrl;
-  const orderId = data.orderId;
+        sessionStorage.setItem("novariseRechargeOrder", orderId);
 
-  if(!checkoutUrl || !orderId){
-    console.error("Payment response:", result);
-    throw new Error("Missing payment checkout information.");
-  }
+        await ensureQRCodeLibrary();
 
-  sessionStorage.setItem("novariseRechargeOrder", orderId);
-  statusText.textContent = "Redirecting to GCash checkout…";
-  window.location.href = checkoutUrl;
-}catch(err){
+        const qrContainer = $("qrCodeContainer");
+        qrContainer.innerHTML = "";
+
+        new QRCode(qrContainer,{
+          text:qrCode,
+          width:230,
+          height:230,
+          correctLevel:QRCode.CorrectLevel.M
+        });
+
+        $("qrPaymentBox").classList.add("show");
+        $("qrOrderText").textContent = `Order: ${orderId}`;
+        if(result.contentExpireTime){
+          $("qrExpireText").textContent = `QR expires: ${result.contentExpireTime}`;
+        }
+
+        statusText.textContent = "Scan the QR with GCash and complete the payment.";
+        button.textContent = "QR Created";
+
+        pollRechargePayment(orderId);
+      }catch(err){
         console.error(err);
         statusBox.style.display = "none";
-        toast(err?.message || "GCash payment is not available yet.");
+        $("qrPaymentBox").classList.remove("show");
+        toast(err?.message || "GCash QR payment is not available yet.");
         button.disabled = false;
         button.textContent = "Pay with GCash";
       }
@@ -1257,46 +1340,6 @@ async function getRechargePaymentStatus(orderId) {
       if(err.message === "INSUFFICIENT_BALANCE") toast("Insufficient balance.");
       else { console.error(err); toast("Something went wrong. Please try again."); }
     }
-  }
-
-  async function checkReturnedRecharge(){
-    const params = new URLSearchParams(window.location.search);
-    const orderId = params.get("orderId") || sessionStorage.getItem("novariseRechargeOrder");
-    if(!orderId || !currentUser) return;
-
-    sessionStorage.removeItem("novariseRechargeOrder");
-    history.replaceState({}, document.title, window.location.pathname);
-    $("moneyTitle").textContent = "GCash Payment Status";
-    $("rechargePanel").style.display = "block";
-    $("withdrawPanel").style.display = "none";
-    $("moneyAmount").style.display = "none";
-    $("confirmMoneyBtn").style.display = "none";
-    $("paymentStatusBox").style.display = "flex";
-    $("paymentStatusText").textContent = "Checking payment status…";
-    openModal("moneyModal");
-
-    for(let i=0;i<12;i++){
-      try{
-        const result = await getRechargePaymentStatus(orderId);
-        const status = result.data?.status;
-        if(status === "SUCCESS"){
-          $("paymentStatusText").textContent = "Payment successful. Your balance has been updated.";
-          await loadUser(currentUser);
-          toast("GCash payment successful. Balance updated.");
-          return;
-        }
-        if(status === "FAILED"){
-          $("paymentStatusText").textContent = "Payment failed or expired. No balance was added.";
-          return;
-        }
-        $("paymentStatusText").textContent = "Payment is still being confirmed…";
-      }catch(err){
-        console.error(err);
-        $("paymentStatusText").textContent = "Waiting for payment confirmation…";
-      }
-      await new Promise(resolve => setTimeout(resolve, 2500));
-    }
-    $("paymentStatusText").textContent = "Payment is still pending. You can close this window; the balance will update after successful confirmation.";
   }
 
   $("withdrawBtn").addEventListener("click", () => {
@@ -1357,15 +1400,16 @@ async function getRechargePaymentStatus(orderId) {
 
   $("rechargeBtn").addEventListener("click", () => {
     moneyMode = "recharge";
+    paymentPollToken++;
     $("moneyTitle").textContent = "GCash Recharge";
     $("confirmMoneyBtn").textContent = "Pay with GCash";
     $("confirmMoneyBtn").style.display = "block";
     $("confirmMoneyBtn").disabled = false;
-    $("paymentStatusBox").style.display = "none";
     $("rechargePanel").style.display = "block";
     $("withdrawPanel").style.display = "none";
     $("moneyAmount").style.display = "block";
     $("moneyAmount").value = "";
+    resetRechargeQR();
     openModal("moneyModal");
   });
 
@@ -1452,7 +1496,6 @@ async function getRechargePaymentStatus(orderId) {
 
     try{
       await loadUser(user);
-     await checkReturnedRecharge();
     }catch(err){
       console.error(err);
       $("userName").textContent = user.email || "Member";
