@@ -1,1590 +1,1201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
-<title>Novarise — Admin Withdrawals</title>
-
-<style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-:root{
-  --blue:#08a5e3;
-  --blue-dark:#0877c9;
-  --navy:#0b3152;
-  --green:#18a957;
-  --red:#dc3f52;
-  --orange:#d98700;
-  --bg:#f4f9fc;
-  --card:#fff;
-  --text:#0b2d49;
-  --muted:#71879a;
-  --line:#e2edf4;
-  --shadow:0 12px 32px rgba(14,66,101,.08);
-}
-
-html,
-body{
-  margin:0;
-  padding:0;
-  min-height:100%;
-  background:
-    radial-gradient(
-      circle at 8% 4%,
-      rgba(8,165,227,.09),
-      transparent 25%
-    ),
-    radial-gradient(
-      circle at 92% 8%,
-      rgba(180,213,26,.08),
-      transparent 22%
-    ),
-    var(--bg);
-  color:var(--text);
-  font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-}
-
-body{
-  padding-bottom:30px;
-}
-
-.app{
-  width:100%;
-  max-width:1000px;
-  margin:0 auto;
-}
-
-/* =========================
-   HEADER
-   ========================= */
-
-.top{
-  position:relative;
-  overflow:hidden;
-  padding:22px 18px 28px;
-  background:
-    radial-gradient(
-      circle at 82% 16%,
-      rgba(180,213,26,.20),
-      transparent 23%
-    ),
-    linear-gradient(
-      135deg,
-      #063454 0%,
-      #075d8f 54%,
-      #0786bf 100%
-    );
-  box-shadow:0 12px 30px rgba(7,83,127,.14);
-}
-
-.top:after{
-  content:"";
-  position:absolute;
-  width:270px;
-  height:270px;
-  right:-120px;
-  top:-150px;
-  border-radius:50%;
-  background:rgba(180,213,26,.08);
-}
-
-.header-inner{
-  position:relative;
-  z-index:2;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  color:#fff;
-}
-
-.brand-icon{
-  width:48px;
-  height:48px;
-  border-radius:16px;
-  display:grid;
-  place-items:center;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.20);
-  box-shadow:
-    0 8px 22px rgba(0,0,0,.13),
-    inset 0 1px 0 rgba(255,255,255,.18);
-}
-
-.brand-icon svg{
-  width:30px;
-  height:30px;
-}
-
-.brand strong{
-  display:block;
-  font-size:21px;
-  letter-spacing:-.3px;
-}
-
-.brand small{
-  display:block;
-  margin-top:4px;
-  color:rgba(255,255,255,.78);
-  font-size:8px;
-  font-weight:800;
-  letter-spacing:1.4px;
-}
-
-.admin-label{
-  position:relative;
-  z-index:2;
-  padding:8px 11px;
-  border-radius:999px;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.18);
-  color:#fff;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:.7px;
-}
-
-.page-heading{
-  position:relative;
-  z-index:2;
-  margin-top:25px;
-}
-
-.page-heading h1{
-  margin:0;
-  color:#fff;
-  font-size:28px;
-  line-height:1.1;
-  letter-spacing:-.5px;
-}
-
-.page-heading p{
-  margin:8px 0 0;
-  color:rgba(255,255,255,.78);
-  font-size:13px;
-}
-
-/* =========================
-   CONTENT
-   ========================= */
-
-.content{
-  margin:18px 14px 0;
-}
-
-/* =========================
-   SUMMARY
-   ========================= */
-
-.summary{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-
-.summary-card{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:19px;
-  padding:16px;
-  box-shadow:var(--shadow);
-}
-
-.summary-label{
-  color:#8297a8;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:.8px;
-  text-transform:uppercase;
-}
-
-.summary-value{
-  margin-top:6px;
-  font-size:23px;
-  font-weight:850;
-  color:var(--navy);
-}
-
-.summary-card.pending{
-  border-color:#f4e0b7;
-  background:#fffdf8;
-}
-
-.summary-card.pending .summary-value{
-  color:var(--orange);
-}
-
-.summary-card.approved{
-  border-color:#d7eedf;
-  background:#fbfffc;
-}
-
-.summary-card.approved .summary-value{
-  color:var(--green);
-}
-
-.summary-card.rejected{
-  border-color:#f0d9dd;
-  background:#fffafb;
-}
-
-.summary-card.rejected .summary-value{
-  color:var(--red);
-}
-
-/* =========================
-   SECTION
-   ========================= */
-
-.section{
-  margin-top:16px;
-}
-
-.section-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:11px;
-}
-
-.section-head h2{
-  margin:0;
-  font-size:17px;
-  color:var(--navy);
-}
-
-.refresh-btn{
-  height:38px;
-  padding:0 13px;
-  border:1px solid #dcebf3;
-  border-radius:12px;
-  background:#fff;
-  color:var(--blue-dark);
-  font-weight:800;
-  cursor:pointer;
-}
-
-/* =========================
-   WITHDRAWAL CARD
-   ========================= */
-
-.withdraw-card{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:21px;
-  padding:17px;
-  box-shadow:var(--shadow);
-  margin-bottom:12px;
-}
-
-.withdraw-top{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:12px;
-}
-
-.member{
-  min-width:0;
-}
-
-.member-name{
-  color:var(--navy);
-  font-size:15px;
-  font-weight:850;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
-.member-email{
-  margin-top:3px;
-  color:var(--muted);
-  font-size:11px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
-.status{
-  flex:0 0 auto;
-  padding:6px 9px;
-  border-radius:999px;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:.5px;
-}
-
-.status.pending{
-  color:#9a6500;
-  background:#fff4d9;
-  border:1px solid #f2dfac;
-}
-
-.status.approved{
-  color:#087a45;
-  background:#e9f8ef;
-  border:1px solid #d2eddc;
-}
-
-.status.rejected{
-  color:#c73549;
-  background:#fff0f2;
-  border:1px solid #f0d8dc;
-}
-
-.amount-box{
-  margin-top:14px;
-  padding:13px;
-  border-radius:15px;
-  background:#f5fbfe;
-  border:1px solid #e0eef5;
-}
-
-.amount-label{
-  color:#8297a8;
-  font-size:9px;
-  font-weight:800;
-  letter-spacing:.8px;
-}
-
-.amount{
-  margin-top:3px;
-  color:var(--blue-dark);
-  font-size:23px;
-  font-weight:900;
-}
-
-.details{
-  margin-top:13px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-}
-
-.detail{
-  min-width:0;
-  padding:10px;
-  border-radius:13px;
-  background:#fafcfd;
-  border:1px solid #e7eff4;
-}
-
-.detail-label{
-  color:#8a9cab;
-  font-size:9px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-}
-
-.detail-value{
-  margin-top:4px;
-  color:#29465d;
-  font-size:11px;
-  font-weight:700;
-  word-break:break-word;
-}
-
-.date-row{
-  margin-top:11px;
-  color:#8798a6;
-  font-size:10px;
-}
-
-.actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-  margin-top:14px;
-}
-
-.action-btn{
-  height:45px;
-  border:0;
-  border-radius:13px;
-  font-size:12px;
-  font-weight:850;
-  cursor:pointer;
-}
-
-.action-btn.approve{
-  color:#fff;
-  background:linear-gradient(135deg,#18ad5d,#087a45);
-  box-shadow:0 7px 16px rgba(8,122,69,.15);
-}
-
-.action-btn.reject{
-  color:#c73549;
-  background:#fff1f3;
-  border:1px solid #f0d8dc;
-}
-
-.action-btn:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-}
-
-/* =========================
-   EMPTY / LOADING
-   ========================= */
-
-.message{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:21px;
-  padding:28px 18px;
-  text-align:center;
-  color:var(--muted);
-  box-shadow:var(--shadow);
-}
-
-.message-icon{
-  width:52px;
-  height:52px;
-  margin:0 auto 10px;
-  border-radius:17px;
-  display:grid;
-  place-items:center;
-  background:#edf8fd;
-  color:var(--blue-dark);
-  font-size:22px;
-}
-
-.message strong{
-  display:block;
-  color:var(--navy);
-  font-size:14px;
-}
-
-.message span{
-  display:block;
-  margin-top:5px;
-  font-size:11px;
-}
-
-/* =========================
-   ACCESS DENIED
-   ========================= */
-
-.access-denied{
-  display:none;
-  min-height:100vh;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.access-box{
-  width:min(430px,100%);
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:24px;
-  padding:28px 22px;
-  text-align:center;
-  box-shadow:var(--shadow);
-}
-
-.access-icon{
-  width:64px;
-  height:64px;
-  margin:0 auto 14px;
-  border-radius:20px;
-  display:grid;
-  place-items:center;
-  background:#fff0f2;
-  color:var(--red);
-  font-size:27px;
-}
-
-.access-box h2{
-  margin:0;
-  color:var(--navy);
-  font-size:20px;
-}
-
-.access-box p{
-  margin:8px 0 0;
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
-}
-
-.back-login{
-  display:inline-flex;
-  margin-top:18px;
-  height:44px;
-  padding:0 18px;
-  align-items:center;
-  justify-content:center;
-  border-radius:13px;
-  background:var(--blue);
-  color:#fff;
-  text-decoration:none;
-  font-size:12px;
-  font-weight:800;
-}
-
-/* =========================
-   RESPONSIVE
-   ========================= */
-
-@media(max-width:650px){
-
-  .summary{
-    gap:8px;
-  }
-
-  .summary-card{
-    padding:13px 11px;
-    border-radius:16px;
-  }
-
-  .summary-label{
-    font-size:8px;
-  }
-
-  .summary-value{
-    font-size:19px;
-  }
-
-}
-
-@media(max-width:480px){
-
-  .top{
-    padding:18px 15px 25px;
-  }
-
-  .brand-icon{
-    width:44px;
-    height:44px;
-    border-radius:14px;
-  }
-
-  .brand strong{
-    font-size:19px;
-  }
-
-  .admin-label{
-    font-size:8px;
-    padding:7px 8px;
-  }
-
-  .page-heading h1{
-    font-size:25px;
-  }
-
-  .content{
-    margin:14px 11px 0;
-  }
-
-  .details{
-    grid-template-columns:1fr;
-  }
-
-  .withdraw-card{
-    padding:15px;
-  }
-}
-
-@media(max-width:360px){
-
-  .summary-value{
-    font-size:17px;
-  }
-
-  .summary-label{
-    font-size:7px;
-  }
-
-  .withdraw-top{
-    gap:7px;
-  }
-
-  .member-name{
-    font-size:14px;
-  }
-
-  .amount{
-    font-size:21px;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
+
+  <title>Novarise — Withdrawals</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      background:#f4f7fb;
+      color:#17345f;
+      min-height:100vh;
+    }
+
+    .header{
+      background:linear-gradient(135deg,#082c5c,#0b5fa8);
+      color:#fff;
+      padding:20px 18px;
+      box-shadow:0 4px 18px rgba(0,0,0,.12);
+    }
+
+    .header-inner{
+      max-width:1100px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+    }
+
+    .brand-icon{
+      width:42px;
+      height:42px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#21c87a,#2b9cff);
+      font-size:21px;
+      font-weight:800;
+    }
+
+    .brand-text h1{
+      font-size:21px;
+      line-height:1.1;
+    }
+
+    .brand-text p{
+      font-size:9px;
+      letter-spacing:2px;
+      opacity:.8;
+      margin-top:4px;
+    }
+
+    .logout-btn{
+      border:1px solid rgba(255,255,255,.35);
+      background:rgba(255,255,255,.12);
+      color:#fff;
+      border-radius:10px;
+      padding:10px 14px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:25px auto;
+      padding:0 16px 40px;
+    }
+
+    .page-title{
+      margin-bottom:18px;
+    }
+
+    .page-title h2{
+      font-size:25px;
+      margin-bottom:5px;
+    }
+
+    .page-title p{
+      color:#718096;
+      font-size:14px;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-bottom:20px;
+    }
+
+    .stat{
+      background:#fff;
+      border:1px solid #e5ebf3;
+      border-radius:16px;
+      padding:18px;
+      box-shadow:0 5px 18px rgba(18,52,103,.06);
+    }
+
+    .stat-label{
+      font-size:12px;
+      color:#718096;
+      margin-bottom:8px;
+    }
+
+    .stat-value{
+      font-size:25px;
+      font-weight:800;
+      color:#123567;
+    }
+
+    .requests{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .request-card{
+      background:#fff;
+      border:1px solid #e5ebf3;
+      border-radius:18px;
+      padding:20px;
+      box-shadow:0 6px 20px rgba(18,52,103,.07);
+    }
+
+    .request-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:16px;
+    }
+
+    .member-name{
+      font-size:17px;
+      font-weight:800;
+      color:#123567;
+      word-break:break-word;
+    }
+
+    .member-email{
+      color:#718096;
+      font-size:12px;
+      margin-top:4px;
+      word-break:break-word;
+    }
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .status.pending{
+      background:#fff5d9;
+      color:#9a6800;
+    }
+
+    .status.approved{
+      background:#e5f8ef;
+      color:#087443;
+    }
+
+    .status.rejected{
+      background:#ffe8e8;
+      color:#b42318;
+    }
+
+    .amount{
+      font-size:28px;
+      font-weight:900;
+      color:#075fae;
+      margin-bottom:15px;
+    }
+
+    .details{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      margin-bottom:17px;
+    }
+
+    .detail{
+      background:#f7f9fc;
+      border-radius:11px;
+      padding:11px;
+      min-width:0;
+    }
+
+    .detail-label{
+      display:block;
+      color:#8491a5;
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      margin-bottom:4px;
+    }
+
+    .detail-value{
+      display:block;
+      color:#263f63;
+      font-size:13px;
+      font-weight:700;
+      word-break:break-word;
+    }
+
+    .request-date{
+      color:#8a96a8;
+      font-size:11px;
+      margin-bottom:16px;
+    }
+
+    .actions{
+      display:flex;
+      gap:9px;
+    }
+
+    .action-btn{
+      flex:1;
+      border:0;
+      border-radius:11px;
+      padding:12px;
+      font-weight:800;
+      cursor:pointer;
+      font-size:13px;
+    }
+
+    .approve-btn{
+      background:#16a765;
+      color:#fff;
+    }
+
+    .reject-btn{
+      background:#fff;
+      color:#c62828;
+      border:1px solid #efb5b5;
+    }
+
+    .action-btn:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+    }
+
+    .empty{
+      background:#fff;
+      border:1px dashed #ccd6e3;
+      border-radius:18px;
+      padding:40px 20px;
+      text-align:center;
+      color:#7b8794;
+    }
+
+    .loading{
+      text-align:center;
+      padding:40px 20px;
+      color:#718096;
+    }
+
+    .error-box{
+      background:#fff0f0;
+      border:1px solid #f2b8b8;
+      color:#a52222;
+      padding:15px;
+      border-radius:13px;
+      margin-bottom:18px;
+      display:none;
+      font-size:13px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:25px;
+      transform:translateX(-50%) translateY(20px);
+      background:#17345f;
+      color:#fff;
+      padding:12px 17px;
+      border-radius:12px;
+      font-size:13px;
+      font-weight:700;
+      opacity:0;
+      pointer-events:none;
+      transition:.25s ease;
+      z-index:99999;
+      max-width:90%;
+      text-align:center;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    @media(max-width:700px){
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      .header-inner{
+        align-items:flex-start;
+      }
+
+      .details{
+        grid-template-columns:1fr;
+      }
+
+      .request-top{
+        flex-direction:column;
+      }
+
+      .amount{
+        font-size:25px;
+      }
+    }
+
+    @media(max-width:420px){
+      .header{
+        padding:15px 13px;
+      }
+
+      .brand-icon{
+        width:38px;
+        height:38px;
+      }
+
+      .brand-text h1{
+        font-size:19px;
+      }
+
+      .logout-btn{
+        padding:9px 11px;
+        font-size:12px;
+      }
+
+      .container{
+        margin-top:18px;
+        padding-left:12px;
+        padding-right:12px;
+      }
+
+      .request-card{
+        padding:16px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="app" id="adminApp" style="display:none;">
-
-  <header class="top">
-
+  <header class="header">
     <div class="header-inner">
 
       <div class="brand">
+        <div class="brand-icon">N</div>
 
-        <div class="brand-icon" aria-hidden="true">
-          <svg viewBox="0 0 48 48" fill="none">
-            <path
-              d="M8 31.5C12.2 15.2 23.7 8.8 39.5 8.5C39.2 24.3 32.8 35.8 16.5 40"
-              stroke="#B4D51A"
-              stroke-width="4.2"
-              stroke-linecap="round"
-            />
-
-            <path
-              d="M10 38C16.2 28.8 23.5 22.2 33.5 16.5"
-              stroke="#08A5E3"
-              stroke-width="4.2"
-              stroke-linecap="round"
-            />
-
-            <path
-              d="M25.8 12.2C30.7 14.4 34.1 18.1 35.8 23"
-              stroke="#fff"
-              stroke-width="2.2"
-              stroke-linecap="round"
-              opacity=".85"
-            />
-          </svg>
+        <div class="brand-text">
+          <h1>Novarise</h1>
+          <p>BUILD INVEST GROW</p>
         </div>
-
-        <div>
-          <strong>Novarise</strong>
-          <small>BUILD • INVEST • GROW</small>
-        </div>
-
       </div>
 
-      <div class="admin-label">
-        ADMIN
-      </div>
+      <button class="logout-btn" id="logoutButton" type="button">
+        Logout
+      </button>
 
     </div>
-
-    <div class="page-heading">
-      <h1>Withdrawals</h1>
-      <p>Review and manage member withdrawal requests.</p>
-    </div>
-
   </header>
 
+  <main class="container">
 
-  <main class="content">
+    <div class="page-title">
+      <h2>Withdrawal Requests</h2>
+      <p>Review and process member withdrawal requests.</p>
+    </div>
 
-    <section class="summary">
+    <div class="error-box" id="errorBox"></div>
 
-      <div class="summary-card pending">
-        <div class="summary-label">Pending</div>
-        <div class="summary-value" id="pendingCount">0</div>
+    <section class="stats">
+
+      <div class="stat">
+        <div class="stat-label">PENDING REQUESTS</div>
+        <div class="stat-value" id="pendingCount">0</div>
       </div>
 
-      <div class="summary-card approved">
-        <div class="summary-label">Approved</div>
-        <div class="summary-value" id="approvedCount">0</div>
+      <div class="stat">
+        <div class="stat-label">PENDING AMOUNT</div>
+        <div class="stat-value" id="pendingAmount">₱0.00</div>
       </div>
 
-      <div class="summary-card rejected">
-        <div class="summary-label">Rejected</div>
-        <div class="summary-value" id="rejectedCount">0</div>
+      <div class="stat">
+        <div class="stat-label">TOTAL REQUESTS</div>
+        <div class="stat-value" id="totalCount">0</div>
       </div>
 
     </section>
 
-
-    <section class="section">
-
-      <div class="section-head">
-        <h2>Withdrawal Requests</h2>
-
-        <button
-          class="refresh-btn"
-          id="refreshBtn"
-          type="button"
-        >
-          ↻ Refresh
-        </button>
-      </div>
-
-      <div id="requestsContainer">
-
-        <div class="message">
-          <div class="message-icon">⌛</div>
-          <strong>Loading requests...</strong>
-          <span>Please wait.</span>
-        </div>
-
-      </div>
-
+    <section id="requests" class="requests">
+      <div class="loading">Loading withdrawal requests...</div>
     </section>
 
   </main>
 
-</div>
+  <div class="toast" id="toast"></div>
 
 
-<div class="access-denied" id="accessDenied">
+  <script type="module">
 
-  <div class="access-box">
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-    <div class="access-icon">!</div>
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from
+      "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    <h2>Access Denied</h2>
-
-    <p>
-      This page is restricted to the Novarise withdrawal administrator.
-    </p>
-
-    <a class="back-login" href="login.html">
-      Back to Login
-    </a>
-
-  </div>
-
-</div>
-
-
-<script type="module">
-
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getAuth,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  doc,
-  runTransaction
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      doc,
+      runTransaction
+    } from
+      "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-/* =========================
-   FIREBASE
-   ========================= */
+    /* =========================
+       FIREBASE
+    ========================= */
 
-const firebaseConfig = {
-  apiKey:
-    "AIzaSyCIBDQOIiCOgfV4pMCUr0UCNZoIDYDqGk",
-
-  authDomain:
-    "investpro-2dafb.firebaseapp.com",
-
-  projectId:
-    "investpro-2dafb.firebasestorage.app",
-
-  storageBucket:
-    "investpro-2dafb.firebasestorage.app",
-
-  messagingSenderId:
-    "135092039764",
-
-  appId:
-    "1:135092039764:web:c4c71eef0c904346a77dc1"
-};
+    const firebaseConfig = {
+      apiKey:
+        "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgK4",
+      authDomain:
+        "investpro-2dafb.firebaseapp.com",
+      projectId:
+        "investpro-2dafb",
+      storageBucket:
+        "investpro-2dafb.firebasestorage.app",
+      messagingSenderId:
+        "135092039764",
+      appId:
+        "1:135092039764:web:c4c71eef0c904346a77dc1"
+    };
 
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
 
-/* =========================
-   ADMIN
-   ========================= */
-
-const ADMIN_EMAIL =
-  "adminwithdraw@novarise.com";
+    const ADMIN_EMAIL = "adminwithdraw@novarise.com";
 
 
-let withdrawalRequests = [];
+    const $ = id => document.getElementById(id);
 
 
-/* =========================
-   HELPERS
-   ========================= */
+    /* =========================
+       TOAST
+    ========================= */
 
-function peso(value){
+    function toast(message){
 
-  return "₱" +
-    Number(value || 0).toLocaleString(
-      "en-PH",
-      {
-        minimumFractionDigits:2,
-        maximumFractionDigits:2
+      const el = $("toast");
+
+      el.textContent = message;
+      el.classList.add("show");
+
+      setTimeout(() => {
+        el.classList.remove("show");
+      }, 2800);
+    }
+
+
+    /* =========================
+       ERROR
+    ========================= */
+
+    function showError(message){
+
+      const box = $("errorBox");
+
+      box.textContent = message;
+      box.style.display = "block";
+    }
+
+
+    /* =========================
+       AUTH CHECK
+    ========================= */
+
+    onAuthStateChanged(auth, async user => {
+
+      if(!user){
+
+        location.href = "login.html";
+        return;
       }
-    );
 
-}
+      if(
+        !user.email ||
+        user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()
+      ){
 
+        showError("Access denied. This page is for the withdrawal administrator only.");
 
-function escapeHtml(value){
+        setTimeout(() => {
+          location.href = "dashboard.html";
+        }, 1800);
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+        return;
+      }
 
-}
-
-
-function formatDate(value){
-
-  if(!value){
-    return "—";
-  }
-
-  try{
-
-    if(
-      typeof value === "object" &&
-      value !== null &&
-      typeof value.toDate === "function"
-    ){
-      return value.toDate().toLocaleString("en-PH");
-    }
-
-    const date = new Date(value);
-
-    if(!Number.isNaN(date.getTime())){
-      return date.toLocaleString("en-PH");
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-  }
-
-  return String(value);
-
-}
-
-
-/* =========================
-   LOAD WITHDRAWALS
-   ========================= */
-
-async function loadWithdrawals(){
-
-  const container =
-    document.getElementById("requestsContainer");
-
-  container.innerHTML = `
-    <div class="message">
-      <div class="message-icon">⌛</div>
-      <strong>Loading requests...</strong>
-      <span>Please wait.</span>
-    </div>
-  `;
-
-
-  try{
-
-    const usersSnapshot =
-      await getDocs(collection(db,"Users"));
-
-
-    withdrawalRequests = [];
-
-
-    usersSnapshot.forEach(userDoc => {
-
-      const data = userDoc.data() || {};
-
-      const transactions =
-        Array.isArray(data.transactions)
-          ? data.transactions
-          : [];
-
-
-      transactions.forEach(
-        (transaction,index) => {
-
-          if(
-            transaction &&
-            transaction.type === "Withdrawal Request"
-          ){
-
-            withdrawalRequests.push({
-
-              uid:userDoc.id,
-
-              transactionIndex:index,
-
-              email:data.email ||
-                    data.userEmail ||
-                    "",
-
-              name:data.name ||
-                   data.displayName ||
-                   data.email ||
-                   "Member",
-
-              transaction
-
-            });
-
-          }
-
-        }
-      );
-
+      await loadWithdrawals();
     });
 
 
-    renderSummary();
-    renderRequests();
+    /* =========================
+       LOAD WITHDRAWALS
+    ========================= */
 
-  }catch(error){
+    async function loadWithdrawals(){
 
-    console.error(error);
+      const container = $("requests");
 
-    container.innerHTML = `
-      <div class="message">
-        <div class="message-icon">!</div>
-        <strong>Unable to load withdrawals</strong>
-        <span>
-          Please check your Firebase connection and try again.
-        </span>
-      </div>
-    `;
+      container.innerHTML =
+        `<div class="loading">Loading withdrawal requests...</div>`;
 
-  }
+      try{
 
-}
+        const usersSnapshot =
+          await getDocs(collection(db, "Users"));
 
+        const requests = [];
 
-/* =========================
-   SUMMARY
-   ========================= */
+        usersSnapshot.forEach(userDoc => {
 
-function renderSummary(){
+          const data = userDoc.data() || {};
 
-  let pending = 0;
-  let approved = 0;
-  let rejected = 0;
+          const transactions =
+            Array.isArray(data.transactions)
+              ? data.transactions
+              : [];
 
+          transactions.forEach((tx, index) => {
 
-  withdrawalRequests.forEach(item => {
+            if(
+              tx &&
+              tx.type === "Withdrawal Request"
+            ){
 
-    const status =
-      String(
-        item.transaction.status || "PENDING"
-      ).toUpperCase();
+              requests.push({
+                uid:userDoc.id,
+                transactionIndex:index,
+                user:data,
+                tx
+              });
 
+            }
 
-    if(status === "PENDING"){
-      pending++;
-    }
+          });
 
-    if(status === "APPROVED"){
-      approved++;
-    }
-
-    if(status === "REJECTED"){
-      rejected++;
-    }
-
-  });
+        });
 
 
-  document.getElementById(
-    "pendingCount"
-  ).textContent = pending;
+        requests.sort((a,b) => {
+
+          const dateA =
+            new Date(a.tx.date || 0).getTime();
+
+          const dateB =
+            new Date(b.tx.date || 0).getTime();
+
+          return dateB - dateA;
+        });
 
 
-  document.getElementById(
-    "approvedCount"
-  ).textContent = approved;
+        renderRequests(requests);
 
+      }catch(error){
 
-  document.getElementById(
-    "rejectedCount"
-  ).textContent = rejected;
+        console.error(error);
 
-}
+        showError(
+          "Unable to load withdrawal requests. Check your Firestore permissions."
+        );
 
-
-/* =========================
-   RENDER
-   ========================= */
-
-function renderRequests(){
-
-  const container =
-    document.getElementById("requestsContainer");
-
-
-  if(!withdrawalRequests.length){
-
-    container.innerHTML = `
-      <div class="message">
-
-        <div class="message-icon">✓</div>
-
-        <strong>No withdrawal requests</strong>
-
-        <span>
-          There are currently no withdrawal records.
-        </span>
-
-      </div>
-    `;
-
-    return;
-
-  }
-
-
-  const sorted =
-    [...withdrawalRequests].sort(
-      (a,b) => {
-
-        const aStatus =
-          String(
-            a.transaction.status || "PENDING"
-          ).toUpperCase();
-
-        const bStatus =
-          String(
-            b.transaction.status || "PENDING"
-          ).toUpperCase();
-
-
-        if(
-          aStatus === "PENDING" &&
-          bStatus !== "PENDING"
-        ){
-          return -1;
-        }
-
-        if(
-          aStatus !== "PENDING" &&
-          bStatus === "PENDING"
-        ){
-          return 1;
-        }
-
-
-        return 0;
-
+        container.innerHTML = "";
       }
-    );
+    }
 
 
-  container.innerHTML =
-    sorted.map(item => {
+    /* =========================
+       RENDER
+    ========================= */
 
-      const t = item.transaction;
+    function renderRequests(requests){
 
-      const status =
-        String(
-          t.status || "PENDING"
-        ).toUpperCase();
+      const container = $("requests");
+
+      let pendingCount = 0;
+      let pendingAmount = 0;
+
+      requests.forEach(item => {
+
+        if(item.tx.status === "PENDING"){
+
+          pendingCount++;
+
+          pendingAmount +=
+            Number(item.tx.amount || 0);
+        }
+
+      });
 
 
-      const account =
-        t.withdrawalAccount || {};
+      $("pendingCount").textContent =
+        pendingCount;
+
+      $("pendingAmount").textContent =
+        money(pendingAmount);
+
+      $("totalCount").textContent =
+        requests.length;
 
 
-      const canProcess =
-        status === "PENDING";
+      if(!requests.length){
+
+        container.innerHTML = `
+          <div class="empty">
+            <strong>No withdrawal requests</strong>
+            <br>
+            <span>There are currently no withdrawal requests.</span>
+          </div>
+        `;
+
+        return;
+      }
 
 
-      return `
-        <article
-          class="withdraw-card"
-          data-uid="${escapeHtml(item.uid)}"
-          data-index="${item.transactionIndex}"
-        >
+      container.innerHTML = "";
 
-          <div class="withdraw-top">
 
-            <div class="member">
+      requests.forEach(item => {
 
+        const tx = item.tx;
+        const user = item.user;
+
+        const status =
+          String(tx.status || "PENDING").toUpperCase();
+
+        const card =
+          document.createElement("div");
+
+        card.className = "request-card";
+
+
+        const displayName =
+          user.name ||
+          user.displayName ||
+          tx.accountName ||
+          "Novarise Member";
+
+
+        const email =
+          user.email ||
+          "";
+
+
+        const date =
+          formatDate(tx.date);
+
+
+        card.innerHTML = `
+
+          <div class="request-top">
+
+            <div>
               <div class="member-name">
-                ${escapeHtml(item.name)}
+                ${escapeHtml(displayName)}
               </div>
 
               <div class="member-email">
-                ${escapeHtml(item.email || "Member account")}
+                ${escapeHtml(email)}
               </div>
-
             </div>
 
-            <div class="status ${status.toLowerCase()}">
+            <span class="status ${status.toLowerCase()}">
               ${escapeHtml(status)}
-            </div>
+            </span>
 
           </div>
 
 
-          <div class="amount-box">
-
-            <div class="amount-label">
-              WITHDRAWAL AMOUNT
-            </div>
-
-            <div class="amount">
-              ${peso(t.amount)}
-            </div>
-
+          <div class="amount">
+            ${money(Number(tx.amount || 0))}
           </div>
 
 
           <div class="details">
 
             <div class="detail">
-
-              <div class="detail-label">
+              <span class="detail-label">
                 Method
-              </div>
+              </span>
 
-              <div class="detail-value">
-                ${escapeHtml(account.bankName || "—")}
-              </div>
-
+              <span class="detail-value">
+                ${escapeHtml(tx.method || "—")}
+              </span>
             </div>
 
 
             <div class="detail">
-
-              <div class="detail-label">
+              <span class="detail-label">
                 Account Name
-              </div>
+              </span>
 
-              <div class="detail-value">
-                ${escapeHtml(account.accountName || "—")}
-              </div>
-
+              <span class="detail-value">
+                ${escapeHtml(tx.accountName || "—")}
+              </span>
             </div>
 
 
             <div class="detail">
-
-              <div class="detail-label">
+              <span class="detail-label">
                 Account Number
-              </div>
+              </span>
 
-              <div class="detail-value">
-                ${escapeHtml(account.accountNumber || "—")}
-              </div>
-
+              <span class="detail-value">
+                ${escapeHtml(tx.accountNumber || "—")}
+              </span>
             </div>
 
 
             <div class="detail">
+              <span class="detail-label">
+                Request ID
+              </span>
 
-              <div class="detail-label">
-                Request Status
-              </div>
-
-              <div class="detail-value">
-                ${escapeHtml(status)}
-              </div>
-
+              <span class="detail-value">
+                ${escapeHtml(tx.requestId || "—")}
+              </span>
             </div>
 
           </div>
 
 
-          <div class="date-row">
-            Requested: ${escapeHtml(formatDate(t.date))}
+          <div class="request-date">
+            ${escapeHtml(date)}
           </div>
 
 
           ${
-            canProcess
-            ?
-            `
-              <div class="actions">
+            status === "PENDING"
+              ? `
+                <div class="actions">
 
-                <button
-                  class="action-btn approve"
-                  type="button"
-                  data-action="approve"
-                  data-uid="${escapeHtml(item.uid)}"
-                  data-index="${item.transactionIndex}"
-                >
-                  ✓ APPROVE
-                </button>
+                  <button
+                    class="action-btn approve-btn"
+                    data-action="approve"
+                    data-uid="${escapeHtml(item.uid)}"
+                    data-index="${item.transactionIndex}"
+                  >
+                    APPROVE
+                  </button>
 
-                <button
-                  class="action-btn reject"
-                  type="button"
-                  data-action="reject"
-                  data-uid="${escapeHtml(item.uid)}"
-                  data-index="${item.transactionIndex}"
-                >
-                  ✕ REJECT
-                </button>
+                  <button
+                    class="action-btn reject-btn"
+                    data-action="reject"
+                    data-uid="${escapeHtml(item.uid)}"
+                    data-index="${item.transactionIndex}"
+                  >
+                    REJECT
+                  </button>
 
-              </div>
-            `
-            :
-            ""
+                </div>
+              `
+              : ""
           }
 
-        </article>
-      `;
-
-    }).join("");
+        `;
 
 
-  container
-    .querySelectorAll("[data-action]")
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const action =
-            button.dataset.action;
-
-          const uid =
-            button.dataset.uid;
-
-          const index =
-            Number(button.dataset.index);
+        container.appendChild(card);
+      });
 
 
-          processWithdrawal(
-            uid,
-            index,
-            action,
-            button
+      container
+        .querySelectorAll("[data-action]")
+        .forEach(button => {
+
+          button.addEventListener("click", () => {
+
+            const action =
+              button.dataset.action;
+
+            const uid =
+              button.dataset.uid;
+
+            const index =
+              Number(button.dataset.index);
+
+
+            if(action === "approve"){
+
+              approveWithdrawal(
+                uid,
+                index,
+                button
+              );
+
+            }else if(action === "reject"){
+
+              rejectWithdrawal(
+                uid,
+                index,
+                button
+              );
+
+            }
+
+          });
+
+        });
+
+    }
+
+
+    /* =========================
+       APPROVE
+    ========================= */
+
+    async function approveWithdrawal(
+      uid,
+      transactionIndex,
+      button
+    ){
+
+      const confirmed =
+        confirm(
+          "Approve this withdrawal request?"
+        );
+
+      if(!confirmed) return;
+
+
+      button.disabled = true;
+
+
+      try{
+
+        const ref =
+          doc(db, "Users", uid);
+
+
+        await runTransaction(
+          db,
+          async transaction => {
+
+            const snap =
+              await transaction.get(ref);
+
+
+            if(!snap.exists()){
+              throw new Error("USER_NOT_FOUND");
+            }
+
+
+            const data =
+              snap.data();
+
+
+            const transactions =
+              Array.isArray(data.transactions)
+                ? [...data.transactions]
+                : [];
+
+
+            const tx =
+              transactions[transactionIndex];
+
+
+            if(
+              !tx ||
+              tx.type !== "Withdrawal Request"
+            ){
+              throw new Error("REQUEST_NOT_FOUND");
+            }
+
+
+            if(tx.status !== "PENDING"){
+              throw new Error("ALREADY_PROCESSED");
+            }
+
+
+            /*
+             * IMPORTANT:
+             * Balance is NOT deducted here.
+             *
+             * It was already deducted when
+             * the member submitted the request.
+             */
+
+            transactions[transactionIndex] = {
+              ...tx,
+              status:"APPROVED",
+              approvedAt:new Date().toISOString()
+            };
+
+
+            transaction.set(
+              ref,
+              { transactions },
+              { merge:true }
+            );
+
+          }
+        );
+
+
+        toast("Withdrawal approved.");
+
+        await loadWithdrawals();
+
+
+      }catch(error){
+
+        console.error(error);
+
+        if(error.message === "ALREADY_PROCESSED"){
+
+          toast(
+            "This withdrawal was already processed."
           );
 
+        }else{
+
+          toast(
+            "Unable to approve withdrawal."
+          );
+
+        }
+
+        button.disabled = false;
+      }
+
+    }
+
+
+    /* =========================
+       REJECT
+    ========================= */
+
+    async function rejectWithdrawal(
+      uid,
+      transactionIndex,
+      button
+    ){
+
+      const confirmed =
+        confirm(
+          "Reject this withdrawal? The amount will be refunded to the member's balance."
+        );
+
+      if(!confirmed) return;
+
+
+      button.disabled = true;
+
+
+      try{
+
+        const ref =
+          doc(db, "Users", uid);
+
+
+        await runTransaction(
+          db,
+          async transaction => {
+
+            const snap =
+              await transaction.get(ref);
+
+
+            if(!snap.exists()){
+              throw new Error("USER_NOT_FOUND");
+            }
+
+
+            const data =
+              snap.data();
+
+
+            const transactions =
+              Array.isArray(data.transactions)
+                ? [...data.transactions]
+                : [];
+
+
+            const tx =
+              transactions[transactionIndex];
+
+
+            if(
+              !tx ||
+              tx.type !== "Withdrawal Request"
+            ){
+              throw new Error("REQUEST_NOT_FOUND");
+            }
+
+
+            if(tx.status !== "PENDING"){
+              throw new Error("ALREADY_PROCESSED");
+            }
+
+
+            const amount =
+              Number(tx.amount || 0);
+
+
+            const balance =
+              Number(data.balance || 0);
+
+
+            /*
+             * REJECT:
+             * Refund the amount that was already
+             * deducted when the member requested
+             * the withdrawal.
+             */
+
+            transactions[transactionIndex] = {
+              ...tx,
+              status:"REJECTED",
+              rejectedAt:new Date().toISOString()
+            };
+
+
+            transaction.set(
+              ref,
+              {
+                balance:balance + amount,
+                transactions
+              },
+              { merge:true }
+            );
+
+          }
+        );
+
+
+        toast(
+          "Withdrawal rejected and amount refunded."
+        );
+
+        await loadWithdrawals();
+
+
+      }catch(error){
+
+        console.error(error);
+
+        if(error.message === "ALREADY_PROCESSED"){
+
+          toast(
+            "This withdrawal was already processed."
+          );
+
+        }else{
+
+          toast(
+            "Unable to reject withdrawal."
+          );
+
+        }
+
+        button.disabled = false;
+      }
+
+    }
+
+
+    /* =========================
+       HELPERS
+    ========================= */
+
+    function money(amount){
+
+      return new Intl.NumberFormat(
+        "en-PH",
+        {
+          style:"currency",
+          currency:"PHP",
+          minimumFractionDigits:2
+        }
+      ).format(Number(amount || 0));
+
+    }
+
+
+    function formatDate(value){
+
+      if(!value){
+        return "Date unavailable";
+      }
+
+
+      let date;
+
+
+      if(
+        typeof value === "object" &&
+        value.seconds
+      ){
+
+        date =
+          new Date(
+            value.seconds * 1000
+          );
+
+      }else{
+
+        date =
+          new Date(value);
+
+      }
+
+
+      if(Number.isNaN(date.getTime())){
+        return String(value);
+      }
+
+
+      return date.toLocaleString(
+        "en-PH",
+        {
+          year:"numeric",
+          month:"short",
+          day:"numeric",
+          hour:"numeric",
+          minute:"2-digit"
         }
       );
 
-    });
-
-}
+    }
 
 
-/* =========================
-   APPROVE / REJECT
-   ========================= */
+    function escapeHtml(value){
 
-async function processWithdrawal(
-  uid,
-  transactionIndex,
-  action,
-  clickedButton
-){
+      return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
-  if(
-    action !== "approve" &&
-    action !== "reject"
-  ){
-    return;
-  }
+    }
 
 
-  const card =
-    clickedButton.closest(".withdraw-card");
+    /* =========================
+       LOGOUT
+    ========================= */
 
+    $("logoutButton").addEventListener(
+      "click",
+      async () => {
 
-  const buttons =
-    card
-      ? card.querySelectorAll("button")
-      : [];
+        await signOut(auth);
 
-
-  buttons.forEach(
-    button => button.disabled = true
-  );
-
-
-  const userRef =
-    doc(db,"Users",uid);
-
-
-  try{
-
-    await runTransaction(
-      db,
-      async transaction => {
-
-        const snap =
-          await transaction.get(userRef);
-
-
-        if(!snap.exists()){
-          throw new Error("USER_NOT_FOUND");
-        }
-
-
-        const data =
-          snap.data() || {};
-
-
-        const transactions =
-          Array.isArray(data.transactions)
-            ? [...data.transactions]
-            : [];
-
-
-        if(
-          transactionIndex < 0 ||
-          transactionIndex >= transactions.length
-        ){
-          throw new Error("REQUEST_NOT_FOUND");
-        }
-
-
-        const request =
-          transactions[transactionIndex];
-
-
-        if(
-          !request ||
-          request.type !== "Withdrawal Request"
-        ){
-          throw new Error("REQUEST_NOT_FOUND");
-        }
-
-
-        const currentStatus =
-          String(
-            request.status || "PENDING"
-          ).toUpperCase();
-
-
-        if(currentStatus !== "PENDING"){
-          throw new Error("ALREADY_PROCESSED");
-        }
-
-
-        const amount =
-          Number(request.amount || 0);
-
-
-        if(
-          !Number.isFinite(amount) ||
-          amount <= 0
-        ){
-          throw new Error("INVALID_AMOUNT");
-        }
-
-
-        /*
-         * APPROVE
-         *
-         * Balance was already deducted
-         * when the member submitted the
-         * withdrawal request.
-         *
-         * Therefore:
-         * APPROVE = status only.
-         */
-
-        if(action === "approve"){
-
-          transactions[transactionIndex] = {
-            ...request,
-            status:"APPROVED",
-            processedAt:new Date().toISOString()
-          };
-
-
-          transaction.update(
-            userRef,
-            {
-              transactions
-            }
-          );
-
-          return;
-        }
-
-
-        /*
-         * REJECT
-         *
-         * The member's balance was already
-         * deducted when the request was made.
-         *
-         * Therefore:
-         * REJECT = restore the amount.
-         */
-
-        const currentBalance =
-          Number(data.balance || 0);
-
-
-        transactions[transactionIndex] = {
-          ...request,
-          status:"REJECTED",
-          processedAt:new Date().toISOString()
-        };
-
-
-        transaction.update(
-          userRef,
-          {
-            balance:currentBalance + amount,
-            transactions
-          }
-        );
+        location.href = "login.html";
 
       }
     );
 
-
-    await loadWithdrawals();
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    if(error.message === "ALREADY_PROCESSED"){
-
-      alert(
-        "This withdrawal has already been processed."
-      );
-
-    }
-    else if(error.message === "INSUFFICIENT_BALANCE"){
-
-      alert(
-        "The member does not have enough balance."
-      );
-
-    }
-    else if(error.message === "REQUEST_NOT_FOUND"){
-
-      alert(
-        "Withdrawal request was not found."
-      );
-
-    }
-    else if(error.message === "INVALID_AMOUNT"){
-
-      alert(
-        "Invalid withdrawal amount."
-      );
-
-    }
-    else{
-
-      alert(
-        "Unable to process withdrawal. Please try again."
-      );
-
-    }
-
-
-    buttons.forEach(
-      button => button.disabled = false
-    );
-
-  }
-
-}
-
-
-/* =========================
-   REFRESH
-   ========================= */
-
-document
-  .getElementById("refreshBtn")
-  .addEventListener(
-    "click",
-    loadWithdrawals
-  );
-
-
-/* =========================
-   AUTH
-   ========================= */
-
-onAuthStateChanged(
-  auth,
-  async user => {
-
-    if(!user){
-
-      document
-        .getElementById("adminApp")
-        .style.display = "none";
-
-      document
-        .getElementById("accessDenied")
-        .style.display = "flex";
-
-      return;
-
-    }
-
-
-    if(
-      String(user.email || "").toLowerCase()
-      !== ADMIN_EMAIL.toLowerCase()
-    ){
-
-      document
-        .getElementById("adminApp")
-        .style.display = "none";
-
-      document
-        .getElementById("accessDenied")
-        .style.display = "flex";
-
-      return;
-
-    }
-
-
-    document
-      .getElementById("accessDenied")
-      .style.display = "none";
-
-
-    document
-      .getElementById("adminApp")
-      .style.display = "block";
-
-
-    await loadWithdrawals();
-
-  }
-);
-
-</script>
+  </script>
 
 </body>
 </html>
