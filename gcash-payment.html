@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -248,7 +249,41 @@ async function initPayment(){
 
 $("backBtn").addEventListener("click",()=>window.location.href="recharge.html");
 $("backBtnBottom").addEventListener("click",()=>window.location.href="recharge.html");
-$("openGcashBtn").addEventListener("click",()=>{window.location.href="https://payments.gcash.com/";});
+
+/*
+ * Go to GCash
+ *
+ * First attempt:
+ * Ask the device to open the GCash app.
+ *
+ * Fallback:
+ * If the device/browser does not support the app-opening request,
+ * open the GCash payment website instead.
+ *
+ * This does NOT change the QR or payment process.
+ */
+$("openGcashBtn").addEventListener("click",()=>{
+  const fallbackUrl="https://payments.gcash.com/";
+
+  let fallbackTimer=setTimeout(()=>{
+    window.location.href=fallbackUrl;
+  },1200);
+
+  const handleVisibility=()=>{
+    clearTimeout(fallbackTimer);
+    document.removeEventListener("visibilitychange",handleVisibility);
+  };
+
+  document.addEventListener("visibilitychange",handleVisibility);
+
+  try{
+    window.location.href="gcash://";
+  }catch(error){
+    clearTimeout(fallbackTimer);
+    document.removeEventListener("visibilitychange",handleVisibility);
+    window.location.href=fallbackUrl;
+  }
+});
 
 onAuthStateChanged(auth,async user=>{
   if(!user){
@@ -259,5 +294,6 @@ onAuthStateChanged(auth,async user=>{
   await initPayment();
 });
 </script>
+
 </body>
 </html>
