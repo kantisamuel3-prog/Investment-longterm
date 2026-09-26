@@ -367,9 +367,20 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
-auth.onAuthStateChanged((user)=>{
 
- console.log("ADMIN PAGE USER:", user);
+auth.setPersistence(
+  firebase.auth.Auth.Persistence.LOCAL
+)
+.then(()=>{
+
+  auth.onAuthStateChanged((user)=>{
+
+    console.log(
+      "ADMIN PAGE USER:",
+      user
+    );
+
+  });
 
 });
 
@@ -459,9 +470,14 @@ function formatMoney(value){
 
     auth.onAuthStateChanged(async (user) => {
 
-  console.log("CURRENT FIREBASE USER:", user);
+  console.log(
+    "CURRENT FIREBASE USER:",
+    user
+  );
 
-  await checkUser(user);
+  if(user){
+    await checkUser(user);
+  }
 
 });
 
