@@ -1091,52 +1091,108 @@
   }
 
   async function updateMoney(){
-    if(!currentUser) return;
+  if(!currentUser) return;
 
-    const amount = Number($("moneyAmount").value);
-    if(!Number.isFinite(amount) || amount <= 0){
-      toast("Enter a valid amount.");
-      return;
-    }
+  const amount = Number($("moneyAmount").value);
 
-    const ref = doc(db, "Users", currentUser.uid);
-
-    try{
-      await runTransaction(db, async transaction => {
-        const snap = await transaction.get(ref);
-        const data = snap.exists() ? snap.data() : {};
-        const balance = Number(data.balance || 0);
-        const transactions = Array.isArray(data.transactions) ? [...data.transactions] : [];
-
-        if(amount > balance){
-          throw new Error("INSUFFICIENT_BALANCE");
-        }
-
-        transactions.push({
-          type:"Withdraw",
-          amount,
-          date:new Date().toLocaleString()
-        });
-
-        transaction.set(ref,{
-          balance:balance - amount,
-          transactions
-        },{merge:true});
-      });
-
-      closeModal("moneyModal");
-      $("moneyAmount").value = "";
-      await loadUser(currentUser);
-      toast("Withdrawal recorded.");
-    }catch(err){
-      if(err.message === "INSUFFICIENT_BALANCE") toast("Insufficient balance.");
-      else {
-        console.error(err);
-        toast("Something went wrong. Please try again.");
-      }
-    }
+  if(!Number.isFinite(amount) || amount <= 0){
+    toast("Enter a valid amount.");
+    return;
   }
 
+  const withdrawalAccount = currentData.withdrawalAccount || {};
+
+  if(
+    !withdrawalAccount.bankName ||
+    !withdrawalAccount.accountName ||
+    !withdrawalAccount.accountNumber
+  ){
+    toast("Please save your Bank account first.");
+    closeModal("moneyModal");
+    openModal("bankModal");
+    return;
+  }
+
+  const ref = doc(db, "Users", currentUser.uid);
+
+  try{
+
+    await runTransaction(db, async transaction => {
+
+      const snap = await transaction.get(ref);
+
+      if(!snap.exists()){
+        throw new Error("USER_NOT_FOUND");
+      }
+
+      const data = snap.data() || {};
+
+      const balance = Number(data.balance || 0);
+
+      const transactions = Array.isArray(data.transactions)
+        ? [...data.transactions]
+        : [];
+
+      if(amount > balance){
+        throw new Error("INSUFFICIENT_BALANCE");
+      }
+
+      /*
+       * Withdrawal flow:
+       * 1. Balance is deducted immediately.
+       * 2. Withdrawal is saved as PENDING.
+       * 3. Admin will approve or reject it later.
+       */
+
+      transactions.push({
+        type: "Withdrawal Request",
+        status: "PENDING",
+        amount: amount,
+
+        withdrawalAccount: {
+          bankName: withdrawalAccount.bankName,
+          accountName: withdrawalAccount.accountName,
+          accountNumber: withdrawalAccount.accountNumber
+        },
+
+        date: new Date().toISOString()
+      });
+
+      transaction.set(
+        ref,
+        {
+          balance: balance - amount,
+          transactions: transactions
+        },
+        {
+          merge: true
+        }
+      );
+
+    });
+
+    closeModal("moneyModal");
+    $("moneyAmount").value = "";
+
+    await loadUser(currentUser);
+
+    toast("Withdrawal request submitted.");
+
+  }catch(err){
+
+    if(err.message === "INSUFFICIENT_BALANCE"){
+      toast("Insufficient balance.");
+    }
+    else if(err.message === "USER_NOT_FOUND"){
+      toast("Account not found.");
+    }
+    else{
+      console.error(err);
+      toast("Something went wrong. Please try again.");
+    }
+
+  }
+}
   $("withdrawBtn").addEventListener("click", () => {
     $("moneyTitle").textContent = "Withdraw";
     $("moneyAmount").value = "";
