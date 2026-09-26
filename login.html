@@ -1289,10 +1289,19 @@ document
 
         .then(() => {
 
-          window.location.href =
-            "dashboard.html";
+  if (firebaseEmail === "639999999999@novarise.local") {
 
-        })
+    window.location.href =
+      "admin-withdraw.html";
+
+  } else {
+
+    window.location.href =
+      "dashboard.html";
+
+  }
+
+})
 
 
         .catch((error) => {
