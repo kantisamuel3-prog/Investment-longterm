@@ -451,11 +451,13 @@ function formatMoney(value){
       await loadWithdrawals();
     };
 
-    await checkUser(auth.currentUser);
-
     auth.onAuthStateChanged(async (user) => {
-      await checkUser(user);
-    });
+
+  console.log("CURRENT FIREBASE USER:", user);
+
+  await checkUser(user);
+
+});
 
   }catch(error){
 
