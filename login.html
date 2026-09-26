@@ -1300,22 +1300,42 @@ document
 
   .then((userCredential) => {
 
-  console.log("LOGIN SUCCESS:", userCredential.user);
+  const user = userCredential.user;
 
-  if (firebaseEmail === "639999999999@novarise.local") {
+  console.log(
+    "LOGIN SUCCESS:",
+    user.email
+  );
 
-    window.location.href =
-      "admin-withdraw.html";
 
-  } else {
+  return auth.setPersistence(
+    firebase.auth.Auth.Persistence.LOCAL
+  ).then(() => {
 
-    window.location.href =
-      "dashboard.html";
+    console.log(
+      "SESSION SAVED:",
+      auth.currentUser
+    );
 
-  }
+
+    if (
+      user.email ===
+      "639999999999@novarise.local"
+    ) {
+
+      window.location.href =
+        "admin-withdraw.html";
+
+    } else {
+
+      window.location.href =
+        "dashboard.html";
+
+    }
+
+  });
 
 })
-
 
         .catch((error) => {
 
