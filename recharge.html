@@ -1388,81 +1388,311 @@
    * We do NOT generate another QR from that URL.
    */
 
-  function displayPaymentQR(qrCode){
+  async function displayPaymentQR(qrCode){
 
-    const qrContainer =
-      $("qrCodeContainer");
+  const qrContainer =
+    $("qrCodeContainer");
 
+  qrContainer.innerHTML = "";
 
-    qrContainer.innerHTML = "";
+  const loadScript = (src, check, message) => {
 
+    if(check()){
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve, reject) => {
+
+      const existing =
+        document.querySelector(
+          `script[src="${src}"]`
+        );
+
+      if(existing){
+
+        existing.addEventListener(
+          "load",
+          resolve,
+          {once:true}
+        );
+
+        existing.addEventListener(
+          "error",
+          () => reject(
+            new Error(message)
+          ),
+          {once:true}
+        );
+
+        return;
+      }
+
+      const script =
+        document.createElement("script");
+
+      script.src = src;
+      script.async = true;
+
+      script.onload = resolve;
+
+      script.onerror = () => {
+        reject(
+          new Error(message)
+        );
+      };
+
+      document.head.appendChild(
+        script
+      );
+
+    });
+
+  };
+
+  try{
+
+    await loadScript(
+      "https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js",
+      () => !!window.jsQR,
+      "Unable to load QR decoder."
+    );
+
+    await loadScript(
+      "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js",
+      () => !!window.QRCode,
+      "Unable to load QR generator."
+    );
 
     const image =
-      document.createElement("img");
+      new Image();
 
+    image.crossOrigin =
+      "anonymous";
 
     image.src =
       String(qrCode);
 
+    await new Promise(
+      (resolve, reject) => {
 
-    image.alt =
-      "GCash payment QR";
+        image.onload =
+          resolve;
 
+        image.onerror =
+          () => reject(
+            new Error(
+              "Unable to read PayMongo QR image."
+            )
+          );
 
-    image.width =
-      230;
+      }
+    );
 
+    const canvas =
+      document.createElement("canvas");
 
-    image.height =
-      230;
+    const width =
+      image.naturalWidth ||
+      image.width;
 
+    const height =
+      image.naturalHeight ||
+      image.height;
 
-    image.decoding =
-      "async";
+    canvas.width =
+      width;
 
+    canvas.height =
+      height;
 
-    image.referrerPolicy =
-      "no-referrer";
+    const context =
+      canvas.getContext(
+        "2d",
+        {
+          willReadFrequently:true
+        }
+      );
 
+    context.drawImage(
+      image,
+      0,
+      0,
+      width,
+      height
+    );
 
-    image.onerror =
-      () => {
+    const imageData =
+      context.getImageData(
+        0,
+        0,
+        width,
+        height
+      );
 
-        qrContainer.innerHTML = "";
+    const decoded =
+      window.jsQR(
+        imageData.data,
+        width,
+        height,
+        {
+          inversionAttempts:
+            "attemptBoth"
+        }
+      );
 
-        const message =
-          document.createElement("div");
+    /*
+     * If decoding fails,
+     * keep the original PayMongo QR
+     * so the payment flow is not broken.
+     */
 
-        message.style.color =
-          "#b53d50";
+    if(!decoded || !decoded.data){
 
-        message.style.fontSize =
-          "12px";
+      const fallback =
+        document.createElement("img");
 
-        message.style.fontWeight =
-          "700";
+      fallback.src =
+        String(qrCode);
 
-        message.textContent =
-          "Unable to load the payment QR. Please try again.";
+      fallback.alt =
+        "GCash payment QR";
 
-        qrContainer.appendChild(
-          message
-        );
+      fallback.width =
+        230;
 
-      };
+      fallback.height =
+        230;
 
+      fallback.style.display =
+        "block";
+
+      fallback.style.width =
+        "230px";
+
+      fallback.style.height =
+        "230px";
+
+      fallback.style.maxWidth =
+        "100%";
+
+      fallback.style.objectFit =
+        "contain";
+
+      qrContainer.appendChild(
+        fallback
+      );
+
+      console.warn(
+        "QR decoder could not read the PayMongo QR. Original QR retained."
+      );
+
+      return;
+    }
+
+    /*
+     * Rebuild a clean QR from the
+     * decoded PayMongo payment data.
+     * No logo is added.
+     */
+
+    const cleanQR =
+      document.createElement("div");
+
+    cleanQR.style.width =
+      "230px";
+
+    cleanQR.style.height =
+      "230px";
+
+    cleanQR.style.display =
+      "flex";
+
+    cleanQR.style.alignItems =
+      "center";
+
+    cleanQR.style.justifyContent =
+      "center";
+
+    cleanQR.style.background =
+      "#fff";
 
     qrContainer.appendChild(
-      image
+      cleanQR
+    );
+
+    new window.QRCode(
+      cleanQR,
+      {
+        text:
+          decoded.data,
+
+        width:
+          230,
+
+        height:
+          230,
+
+        correctLevel:
+          window.QRCode.CorrectLevel.M
+      }
+    );
+
+  }catch(error){
+
+    console.error(
+      "QR rebuild error:",
+      error
+    );
+
+    /*
+     * Safety fallback:
+     * show the original PayMongo QR.
+     */
+
+    qrContainer.innerHTML = "";
+
+    const fallback =
+      document.createElement("img");
+
+    fallback.src =
+      String(qrCode);
+
+    fallback.alt =
+      "GCash payment QR";
+
+    fallback.width =
+      230;
+
+    fallback.height =
+      230;
+
+    fallback.style.display =
+      "block";
+
+    fallback.style.width =
+      "230px";
+
+    fallback.style.height =
+      "230px";
+
+    fallback.style.maxWidth =
+      "100%";
+
+    fallback.style.objectFit =
+      "contain";
+
+    qrContainer.appendChild(
+      fallback
     );
 
   }
 
+}
 
-  /*
-   * Generate QR
-   */
-
+/*
+ * Generate QR
+ */
+  
   async function generatePaymentQR(){
 
     if(!currentUser){
