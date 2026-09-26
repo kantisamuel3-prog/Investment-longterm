@@ -1100,32 +1100,12 @@
     return;
   }
 
-  const withdrawalAccount = currentData.withdrawalAccount || {};
-
-  if(
-    !withdrawalAccount.bankName ||
-    !withdrawalAccount.accountName ||
-    !withdrawalAccount.accountNumber
-  ){
-    toast("Please save your Bank account first.");
-    closeModal("moneyModal");
-    openModal("bankModal");
-    return;
-  }
-
   const ref = doc(db, "Users", currentUser.uid);
 
   try{
-
     await runTransaction(db, async transaction => {
-
       const snap = await transaction.get(ref);
-
-      if(!snap.exists()){
-        throw new Error("USER_NOT_FOUND");
-      }
-
-      const data = snap.data() || {};
+      const data = snap.exists() ? snap.data() : {};
 
       const balance = Number(data.balance || 0);
 
@@ -1133,42 +1113,48 @@
         ? [...data.transactions]
         : [];
 
+      const account = data.withdrawalAccount || {};
+
+      // Check if Bank account is saved
+      if(
+        !account.bankName ||
+        !account.accountName ||
+        !account.accountNumber
+      ){
+        throw new Error("NO_WITHDRAWAL_ACCOUNT");
+      }
+
+      // Check available balance
       if(amount > balance){
         throw new Error("INSUFFICIENT_BALANCE");
       }
 
-      /*
-       * Withdrawal flow:
-       * 1. Balance is deducted immediately.
-       * 2. Withdrawal is saved as PENDING.
-       * 3. Admin will approve or reject it later.
-       */
+      // Unique withdrawal request ID
+      const requestId =
+        Date.now().toString() + "_" +
+        Math.random().toString(36).slice(2, 10);
 
+      // Add pending withdrawal transaction
       transactions.push({
-        type: "Withdrawal Request",
-        status: "PENDING",
-        amount: amount,
-
-        withdrawalAccount: {
-          bankName: withdrawalAccount.bankName,
-          accountName: withdrawalAccount.accountName,
-          accountNumber: withdrawalAccount.accountNumber
-        },
-
-        date: new Date().toISOString()
+        requestId,
+        type:"Withdrawal Request",
+        status:"PENDING",
+        amount,
+        method:account.bankName,
+        accountName:account.accountName,
+        accountNumber:account.accountNumber,
+        date:new Date().toISOString()
       });
 
+      // Deduct balance immediately
       transaction.set(
         ref,
         {
-          balance: balance - amount,
-          transactions: transactions
+          balance:balance - amount,
+          transactions
         },
-        {
-          merge: true
-        }
+        {merge:true}
       );
-
     });
 
     closeModal("moneyModal");
@@ -1182,15 +1168,14 @@
 
     if(err.message === "INSUFFICIENT_BALANCE"){
       toast("Insufficient balance.");
-    }
-    else if(err.message === "USER_NOT_FOUND"){
-      toast("Account not found.");
-    }
-    else{
+
+    }else if(err.message === "NO_WITHDRAWAL_ACCOUNT"){
+      toast("Please save your Bank account first.");
+
+    }else{
       console.error(err);
       toast("Something went wrong. Please try again.");
     }
-
   }
 }
   $("withdrawBtn").addEventListener("click", () => {
