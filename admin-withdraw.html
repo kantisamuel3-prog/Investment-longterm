@@ -324,9 +324,9 @@ button:disabled{
 
 <!-- Firebase Compat SDK
      SAME AUTH SYSTEM AS login.html -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore-compat.js"></script>
 
 
 <script>
@@ -407,130 +407,66 @@ function formatMoney(value){
 ----------------------------------------- */
 
 /*
-  Restore the existing Novarise Firebase Auth
-  session. This does NOT change the login system.
+  Wait for Firebase to finish restoring the existing
+  LOCAL authentication session before checking the user.
+
+  This does NOT change the login system. It only waits
+  for Firebase Auth to finish restoring the session here.
 */
 (async function(){
 
   try{
 
-    await auth.setPersistence(
-      firebase.auth.Auth.Persistence.LOCAL
-    );
-
-    /*
-      Wait for Firebase to finish restoring the
-      saved browser Auth session.
-    */
     if(typeof auth.authStateReady === "function"){
       await auth.authStateReady();
     }
 
-    let user = auth.currentUser;
+    const checkUser = async (user) => {
 
-    /*
-      Give Firebase one more chance to deliver the
-      restored Auth user before showing the error.
-    */
-    if(!user){
+      if(!user){
+        $("withdrawals").innerHTML = `
+          <div class="error">
+            Please login first using the existing Novarise login page.
+          </div>
+        `;
+        $("pendingCount").textContent = "0";
+        $("pendingAmount").textContent = "₱0.00";
+        $("totalCount").textContent = "0";
+        return;
+      }
 
-      user = await new Promise(resolve => {
+      if(user.email !== ADMIN_EMAIL){
+        $("withdrawals").innerHTML = `
+          <div class="error">
+            Access denied.<br><br>
+            This page is for the withdrawal administrator only.
+          </div>
+        `;
+        $("pendingCount").textContent = "0";
+        $("pendingAmount").textContent = "₱0.00";
+        $("totalCount").textContent = "0";
+        return;
+      }
 
-        let finished = false;
+      await loadWithdrawals();
+    };
 
-        const unsubscribe =
-          auth.onAuthStateChanged(currentUser => {
+    await checkUser(auth.currentUser);
 
-            if(finished) return;
-
-            finished = true;
-            unsubscribe();
-
-            resolve(currentUser || null);
-
-          });
-
-        setTimeout(() => {
-
-          if(finished) return;
-
-          finished = true;
-          unsubscribe();
-
-          resolve(auth.currentUser || null);
-
-        }, 3000);
-
-      });
-
-    }
-
-
-    /* ---------------------------------------
-       NO LOGIN SESSION
-    --------------------------------------- */
-
-    if(!user){
-
-      $("withdrawals").innerHTML = `
-        <div class="error">
-          Please login first using the existing Novarise login page.
-        </div>
-      `;
-
-      $("pendingCount").textContent = "0";
-      $("pendingAmount").textContent = "₱0.00";
-      $("totalCount").textContent = "0";
-
-      return;
-    }
-
-
-    /* ---------------------------------------
-       ADMIN AUTHORIZATION
-    --------------------------------------- */
-
-    if(user.email !== ADMIN_EMAIL){
-
-      $("withdrawals").innerHTML = `
-        <div class="error">
-          Access denied.<br><br>
-          This page is for the withdrawal administrator only.
-        </div>
-      `;
-
-      $("pendingCount").textContent = "0";
-      $("pendingAmount").textContent = "₱0.00";
-      $("totalCount").textContent = "0";
-
-      return;
-    }
-
-
-    /* ---------------------------------------
-       ADMIN VERIFIED
-    --------------------------------------- */
-
-    await loadWithdrawals();
-
+    auth.onAuthStateChanged(async (user) => {
+      await checkUser(user);
+    });
 
   }catch(error){
 
-    console.error(
-      "Firebase Auth restore error:",
-      error
-    );
+    console.error("Firebase Auth restore error:", error);
 
     $("withdrawals").innerHTML = `
       <div class="error">
-        Unable to restore the administrator login session.
+        Unable to restore the administrator login session.<br>
         Please refresh the page.
       </div>
     `;
-
-    $("pendingCount").textContent = "0";
-    $("pendingAmount").textContent = "₱0.00";
-    $("totalCount").textContent = "0";
 
   }
 
