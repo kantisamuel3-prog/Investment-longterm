@@ -7,7 +7,7 @@
       content="width=device-width,
       initial-scale=1.0,
       maximum-scale=1.0,
-      user-scalable=no">
+      User-scalable=no">
 
 <title>Novarise — Admin Withdrawals</title>
 
@@ -414,19 +414,19 @@ auth.setPersistence(
   firebase.auth.Auth.Persistence.LOCAL
 ).then(() => {
 
-  auth.onAuthStateChanged(async (user) => {
+  auth.onAuthStateChanged(async (User) => {
 
     /*
       Firebase may need a moment to restore
       the existing logged-in session.
     */
-    if(!user){
+    if(!User){
 
       await new Promise(resolve =>
         setTimeout(resolve, 1000)
       );
 
-      user = auth.currentUser;
+      User = auth.currentUser;
     }
 
 
@@ -434,7 +434,7 @@ auth.setPersistence(
        NO LOGIN SESSION
     --------------------------------------- */
 
-    if(!user){
+    if(!User){
 
       $("withdrawals").innerHTML = `
         <div class="error">
@@ -454,7 +454,7 @@ auth.setPersistence(
        ADMIN AUTHORIZATION
     --------------------------------------- */
 
-    if(user.email !== ADMIN_EMAIL){
+    if(User.email !== ADMIN_EMAIL){
 
       $("withdrawals").innerHTML = `
         <div class="error">
@@ -518,13 +518,13 @@ async function loadWithdrawals(){
     const requests = [];
 
 
-    snapshot.forEach(userDoc => {
+    snapshot.forEach(UserDoc => {
 
-      const userData = userDoc.data() || {};
+      const UserData = UserDoc.data() || {};
 
       const transactions =
-        Array.isArray(userData.transactions)
-          ? userData.transactions
+        Array.isArray(UserData.transactions)
+          ? UserData.transactions
           : [];
 
 
@@ -537,13 +537,13 @@ async function loadWithdrawals(){
 
           requests.push({
 
-            userId:userDoc.id,
+            UserId:UserDoc.id,
 
             transactionIndex:index,
 
-            userName:
-              userData.name ||
-              userData.displayName ||
+            UserName:
+              UserData.name ||
+              UserData.displayName ||
               "Member",
 
             ...transaction
@@ -713,7 +713,7 @@ function renderWithdrawal(request,index){
           class="approve-btn"
           id="approve-${index}"
           onclick="approveWithdrawal(
-            '${escapeAttribute(request.userId)}',
+            '${escapeAttribute(request.UserId)}',
             '${escapeAttribute(request.requestId || "")}',
             ${Number(request.amount || 0)},
             ${index}
@@ -725,7 +725,7 @@ function renderWithdrawal(request,index){
           class="reject-btn"
           id="reject-${index}"
           onclick="rejectWithdrawal(
-            '${escapeAttribute(request.userId)}',
+            '${escapeAttribute(request.UserId)}',
             '${escapeAttribute(request.requestId || "")}',
             ${Number(request.amount || 0)},
             ${index}
@@ -766,7 +766,7 @@ function renderWithdrawal(request,index){
         <div class="info-row">
           <span>Member</span>
           <strong>
-            ${escapeHtml(request.userName)}
+            ${escapeHtml(request.UserName)}
           </strong>
         </div>
 
@@ -826,7 +826,7 @@ function renderWithdrawal(request,index){
 ----------------------------------------- */
 
 async function approveWithdrawal(
-  userId,
+  UserId,
   requestId,
   amount,
   index
@@ -848,15 +848,15 @@ async function approveWithdrawal(
 
   try{
 
-    const userRef =
-      db.collection("Users").doc(userId);
+    const UserRef =
+      db.collection("Users").doc(UserId);
 
 
     await db.runTransaction(
       async transaction => {
 
         const snap =
-          await transaction.get(userRef);
+          await transaction.get(UserRef);
 
 
         if(!snap.exists){
@@ -941,7 +941,7 @@ async function approveWithdrawal(
         */
 
         transaction.update(
-          userRef,
+          UserRef,
           {
             transactions
           }
@@ -989,7 +989,7 @@ async function approveWithdrawal(
 ----------------------------------------- */
 
 async function rejectWithdrawal(
-  userId,
+  UserId,
   requestId,
   amount,
   index
@@ -1011,15 +1011,15 @@ async function rejectWithdrawal(
 
   try{
 
-    const userRef =
-      db.collection("Users").doc(userId);
+    const UserRef =
+      db.collection("Users").doc(UserId);
 
 
     await db.runTransaction(
       async transaction => {
 
         const snap =
-          await transaction.get(userRef);
+          await transaction.get(UserRef);
 
 
         if(!snap.exists){
@@ -1112,7 +1112,7 @@ async function rejectWithdrawal(
 
 
         transaction.update(
-          userRef,
+          UserRef,
           {
 
             balance:
