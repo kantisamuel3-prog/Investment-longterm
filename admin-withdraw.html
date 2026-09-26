@@ -365,7 +365,11 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+auth.onAuthStateChanged((user)=>{
 
+ console.log("ADMIN PAGE USER:", user);
+
+});
 
 /*
   ADMIN ACCOUNT
