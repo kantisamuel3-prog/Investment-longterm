@@ -213,25 +213,53 @@ async function displayPaymentQR(qrCode){
 
     new window.QRCode(container,{
       text:decoded.data,
-      width:190,
-      height:190,
+      width:220,
+      height:220,
       correctLevel:window.QRCode.CorrectLevel.M
     });
+
+    /* Keep exactly ONE rendered QR element.
+       Some mobile browsers can display multiple QR render layers
+       produced by QRCode.js. This removes the extra layer only. */
+    const qrElements = Array.from(
+      container.querySelectorAll("canvas, img, table")
+    );
+
+    const keep =
+      container.querySelector("canvas") ||
+      container.querySelector("img") ||
+      container.querySelector("table");
+
+    qrElements.forEach((el)=>{
+      if(el !== keep) el.remove();
+    });
+
+    if(keep){
+      keep.style.width = "220px";
+      keep.style.height = "220px";
+      keep.style.minWidth = "220px";
+      keep.style.minHeight = "220px";
+      keep.style.maxWidth = "220px";
+      keep.style.maxHeight = "220px";
+      keep.style.display = "block";
+      keep.style.objectFit = "contain";
+      keep.style.imageRendering = "pixelated";
+    }
   }catch(error){
     console.error("QR rebuild error:",error);
     container.innerHTML="";
     const fallback=document.createElement("img");
     fallback.src=String(qrCode);
     fallback.alt="GCash payment QR";
-    fallback.width=190;
-    fallback.height=190;
+    fallback.width=220;
+    fallback.height=220;
     fallback.style.display="block";
-    fallback.style.width="190px";
-    fallback.style.height="190px";
-    fallback.style.minWidth="190px";
-    fallback.style.minHeight="190px";
-    fallback.style.maxWidth="190px";
-    fallback.style.maxHeight="190px";
+    fallback.style.width="220px";
+    fallback.style.height="220px";
+    fallback.style.minWidth="220px";
+    fallback.style.minHeight="220px";
+    fallback.style.maxWidth="220px";
+    fallback.style.maxHeight="220px";
     fallback.style.objectFit="contain";
     container.appendChild(fallback);
   }
