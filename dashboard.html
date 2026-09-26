@@ -2815,7 +2815,8 @@ import {
   doc,
   getDoc,
   setDoc,
-  runTransaction
+  runTransaction,
+  Timestamp
 } from
 "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
@@ -2984,6 +2985,157 @@ async function loadUserData(user){
 
 }
 
+  /* ================================
+   INVESTMENT DAILY INCOME
+================================ */
+
+async function processInvestmentIncome(user){
+
+  if(!user){
+    return;
+  }
+
+  const userRef =
+    doc(
+      db,
+      "Users",
+      user.uid
+    );
+
+  try{
+
+    await runTransaction(
+      db,
+      async transaction => {
+
+        const snapshot =
+          await transaction.get(userRef);
+
+        if(!snapshot.exists()){
+          return;
+        }
+
+        const data =
+          snapshot.data();
+
+        const transactions =
+          Array.isArray(data.transactions)
+            ? data.transactions
+            : [];
+
+        let balance =
+          Number(data.balance || 0);
+
+        let changed = false;
+
+        const now =
+          Date.now();
+
+        const updatedTransactions =
+          transactions.map(investment => {
+
+            if(
+              investment.type !==
+              "Investment"
+            ){
+              return investment;
+            }
+
+            if(
+              !investment.date ||
+              !investment.dailyReturn ||
+              !investment.cycleDays
+            ){
+              return investment;
+            }
+
+            const startTime =
+              investment.date.toMillis();
+
+            const elapsedDays =
+              Math.floor(
+                (now - startTime) /
+                (24 * 60 * 60 * 1000)
+              );
+
+            const daysToCredit =
+              Math.min(
+                elapsedDays,
+                Number(
+                  investment.cycleDays
+                )
+              );
+
+            const alreadyCredited =
+              Number(
+                investment.incomeDaysCredited || 0
+              );
+
+            const newDays =
+              daysToCredit -
+              alreadyCredited;
+
+            if(newDays <= 0){
+              return investment;
+            }
+
+            const income =
+              Number(
+                investment.dailyReturn
+              ) * newDays;
+
+            balance += income;
+
+            changed = true;
+
+            return {
+              ...investment,
+
+              incomeDaysCredited:
+                daysToCredit,
+
+              totalIncome:
+                Number(
+                  investment.totalIncome || 0
+                ) + income,
+
+              lastIncomeDate:
+                new Date()
+            };
+
+          });
+
+        if(!changed){
+          return;
+        }
+
+        transaction.set(
+          userRef,
+          {
+            balance:
+              balance,
+
+            transactions:
+              updatedTransactions
+          },
+          {
+            merge:true
+          }
+        );
+
+      }
+    );
+
+  }catch(error){
+
+    console.error(
+      "Investment income error:",
+      error
+    );
+
+  }
+
+}
 
 /* =====================================================
    DEPOSIT
@@ -3057,7 +3209,7 @@ async function deposit(){
           amount:amount,
 
           date:
-            new Date().toLocaleString("en-PH")
+  Timestamp.now()
 
         });
 
@@ -3351,22 +3503,26 @@ async function buyProduct(
             ? data.transactions
             : [];
 
-        transactions.push({
+       transactions.push({
 
-          type:"Investment",
+  type:"Investment",
 
-          amount:price,
+  amount:price,
 
-          product:name,
+  product:name,
 
-          dailyReturn:daily,
+  dailyReturn:daily,
 
-          cycleDays:30,
+  cycleDays:30,
 
-          date:
-            new Date().toLocaleString("en-PH")
+  incomeDaysCredited:0,
 
-        });
+  totalIncome:0,
+
+  date:
+    Timestamp.now()
+
+});
 
         transaction.set(
           userRef,
@@ -3635,6 +3791,10 @@ onAuthStateChanged(
     try{
 
       await loadUserData(user);
+
+await processInvestmentIncome(user);
+
+await loadUserData(user);
 
     }catch(error){
 
