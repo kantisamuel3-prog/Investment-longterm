@@ -2,244 +2,282 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
 
 <title>Novarise — Admin Withdrawals</title>
 
 <style>
 *{
   box-sizing:border-box;
-  margin:0;
-  padding:0;
+  -webkit-tap-highlight-color:transparent;
 }
 
-body{
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
   font-family:Arial,Helvetica,sans-serif;
   background:#f4f7fb;
   color:#172033;
-  min-height:100vh;
 }
 
-.header{
-  background:linear-gradient(135deg,#0b2d5c,#1456a0);
-  color:white;
-  padding:22px 18px;
-  box-shadow:0 4px 15px rgba(0,0,0,.12);
-}
-
-.header h1{
-  font-size:22px;
-  margin-bottom:5px;
-}
-
-.header p{
-  font-size:13px;
-  opacity:.85;
+body{
+  padding:20px 14px 40px;
 }
 
 .container{
+  width:100%;
   max-width:900px;
-  margin:auto;
-  padding:18px;
+  margin:0 auto;
+}
+
+.header{
+  background:linear-gradient(135deg,#0b2a5b,#1557b0);
+  color:#fff;
+  border-radius:20px;
+  padding:22px 20px;
+  margin-bottom:18px;
+  box-shadow:0 10px 30px rgba(20,65,130,.15);
+}
+
+.logo{
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:.3px;
+}
+
+.subtitle{
+  margin-top:5px;
+  font-size:13px;
+  opacity:.82;
 }
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:12px;
+  gap:10px;
   margin-bottom:18px;
 }
 
 .stat{
-  background:white;
-  border-radius:14px;
-  padding:15px;
-  box-shadow:0 4px 14px rgba(0,0,0,.06);
+  background:#fff;
+  border-radius:16px;
+  padding:16px 12px;
+  text-align:center;
+  box-shadow:0 5px 18px rgba(25,55,100,.07);
 }
 
 .stat-label{
-  font-size:12px;
-  color:#7b8798;
+  font-size:11px;
+  color:#718096;
   margin-bottom:7px;
 }
 
 .stat-value{
-  font-size:21px;
-  font-weight:700;
-  color:#123d72;
+  font-size:20px;
+  font-weight:800;
+  color:#123f82;
 }
 
 .section{
-  background:white;
-  border-radius:16px;
-  padding:16px;
-  box-shadow:0 4px 14px rgba(0,0,0,.06);
+  background:#fff;
+  border-radius:18px;
+  padding:17px;
+  box-shadow:0 5px 20px rgba(25,55,100,.07);
 }
 
 .section-title{
   font-size:18px;
-  font-weight:700;
+  font-weight:800;
   margin-bottom:14px;
 }
 
-.loading{
-  text-align:center;
-  padding:30px 10px;
-  color:#7b8798;
-}
-
-.withdrawal{
-  border:1px solid #e7ebf1;
-  border-radius:14px;
+.withdrawal-card{
+  border:1px solid #e7edf5;
+  border-radius:16px;
   padding:15px;
   margin-bottom:12px;
+  background:#fff;
 }
 
-.withdrawal:last-child{
+.withdrawal-card:last-child{
   margin-bottom:0;
 }
 
-.top-row{
+.card-top{
   display:flex;
   justify-content:space-between;
+  align-items:flex-start;
   gap:10px;
-  align-items:center;
-  margin-bottom:12px;
+  margin-bottom:13px;
 }
 
 .amount{
   font-size:21px;
-  font-weight:700;
-  color:#123d72;
+  font-weight:800;
+  color:#123f82;
 }
 
 .status{
-  font-size:11px;
-  font-weight:700;
-  padding:6px 9px;
-  border-radius:20px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.4px;
 }
 
 .status.pending{
   background:#fff4d6;
-  color:#996b00;
+  color:#9a6800;
 }
 
 .status.approved{
-  background:#e7f8ee;
-  color:#168047;
+  background:#e5f8ed;
+  color:#167542;
 }
 
 .status.rejected{
   background:#ffe8e8;
-  color:#c43b3b;
+  color:#b42323;
 }
 
 .info{
+  display:grid;
+  gap:7px;
   font-size:13px;
-  line-height:1.7;
-  color:#536174;
+  color:#596579;
 }
 
-.info strong{
-  color:#202b3b;
+.info-row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.info-row span:first-child{
+  color:#8a94a6;
+}
+
+.info-row strong{
+  color:#273449;
+  text-align:right;
+  word-break:break-word;
 }
 
 .actions{
   display:flex;
   gap:9px;
-  margin-top:13px;
+  margin-top:15px;
 }
 
-.btn{
+button{
+  flex:1;
   border:0;
-  border-radius:9px;
-  padding:10px 15px;
+  border-radius:11px;
+  padding:12px 10px;
   font-size:13px;
-  font-weight:700;
+  font-weight:800;
   cursor:pointer;
 }
 
-.approve{
-  background:#168047;
-  color:white;
+.approve-btn{
+  background:#16834a;
+  color:#fff;
 }
 
-.reject{
-  background:#c43b3b;
-  color:white;
+.reject-btn{
+  background:#e34b4b;
+  color:#fff;
 }
 
-.btn:disabled{
+button:disabled{
   opacity:.55;
   cursor:not-allowed;
 }
 
 .empty{
   text-align:center;
-  padding:35px 10px;
-  color:#7b8798;
+  padding:30px 15px;
+  color:#7d8797;
   font-size:14px;
 }
 
 .error{
   background:#fff0f0;
-  color:#b32626;
-  border:1px solid #ffd0d0;
-  padding:14px;
-  border-radius:12px;
-  font-size:13px;
+  border:1px solid #ffcaca;
+  color:#a62222;
+  border-radius:14px;
+  padding:16px;
+  text-align:center;
+  font-size:14px;
   line-height:1.5;
 }
 
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:25px;
-  transform:translateX(-50%);
-  background:#172033;
-  color:white;
-  padding:12px 18px;
-  border-radius:10px;
-  font-size:13px;
-  opacity:0;
-  pointer-events:none;
-  transition:.25s;
-  z-index:99999;
-}
-
-.toast.show{
-  opacity:1;
+.loading{
+  text-align:center;
+  padding:30px 15px;
+  color:#738096;
+  font-size:14px;
 }
 
 @media(max-width:600px){
+  body{
+    padding:12px 10px 30px;
+  }
+
+  .header{
+    padding:19px 16px;
+    border-radius:17px;
+  }
+
+  .logo{
+    font-size:22px;
+  }
 
   .stats{
-    grid-template-columns:1fr;
+    gap:7px;
   }
 
   .stat{
-    padding:13px;
+    padding:13px 7px;
+    border-radius:13px;
+  }
+
+  .stat-label{
+    font-size:9px;
   }
 
   .stat-value{
-    font-size:19px;
+    font-size:17px;
   }
 
-  .top-row{
-    align-items:flex-start;
+  .section{
+    padding:13px;
+    border-radius:16px;
+  }
+
+  .withdrawal-card{
+    padding:13px;
   }
 
   .amount{
     font-size:19px;
   }
 
-  .actions{
-    flex-direction:column;
+  .info-row{
+    align-items:flex-start;
   }
 
-  .btn{
-    width:100%;
+  .info-row span:first-child{
+    flex-shrink:0;
   }
 }
 </style>
@@ -247,74 +285,51 @@ body{
 
 <body>
 
-<div class="header">
-  <h1>Novarise Admin</h1>
-  <p>Withdrawal Management</p>
-</div>
-
 <div class="container">
 
-  <div class="stats">
+  <div class="header">
+    <div class="logo">Novarise</div>
+    <div class="subtitle">Withdrawal Administration</div>
+  </div>
 
+  <div class="stats">
     <div class="stat">
-      <div class="stat-label">Pending Requests</div>
+      <div class="stat-label">PENDING</div>
       <div class="stat-value" id="pendingCount">0</div>
     </div>
 
     <div class="stat">
-      <div class="stat-label">Pending Amount</div>
+      <div class="stat-label">PENDING AMOUNT</div>
       <div class="stat-value" id="pendingAmount">₱0.00</div>
     </div>
 
     <div class="stat">
-      <div class="stat-label">Total Requests</div>
+      <div class="stat-label">TOTAL REQUESTS</div>
       <div class="stat-value" id="totalCount">0</div>
     </div>
-
   </div>
 
   <div class="section">
-
-    <div class="section-title">
-      Withdrawal Requests
-    </div>
+    <div class="section-title">Withdrawal Requests</div>
 
     <div id="withdrawals">
       <div class="loading">
-        Loading withdrawals...
+        Checking administrator access...
       </div>
     </div>
-
   </div>
 
 </div>
 
-<div class="toast" id="toast"></div>
 
-<script type="module">
-
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getAuth,
-  onAuthStateChanged
-} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  doc,
-  runTransaction
-} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<!-- Firebase Compat SDK
+     SAME AUTH SYSTEM AS login.html -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 
-/* =========================
-   FIREBASE CONFIG
-========================= */
+<script>
 
 const firebaseConfig = {
   apiKey:
@@ -340,35 +355,44 @@ const firebaseConfig = {
 };
 
 
-/* =========================
-   INITIALIZE FIREBASE
-========================= */
+/*
+  IMPORTANT:
+  This is the same Firebase Auth system
+  used by login.html.
+*/
 
-const app = initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-const db = getFirestore(app);
 
+/*
+  ADMIN ACCOUNT
 
-/* =========================
-   ADMIN ACCOUNT
-========================= */
+  Phone:
+  9999999999
+
+  Existing login system converts it to:
+  639999999999@novarise.local
+*/
 
 const ADMIN_EMAIL =
   "639999999999@novarise.local";
 
 
-/* =========================
-   HELPERS
-========================= */
+const $ = id => document.getElementById(id);
 
-function $(id){
-  return document.getElementById(id);
-}
 
-function money(value){
-  return "₱" + Number(value || 0).toLocaleString(
+/* -----------------------------------------
+   MONEY FORMAT
+----------------------------------------- */
+
+function formatMoney(value){
+
+  const amount = Number(value || 0);
+
+  return "₱" + amount.toLocaleString(
     "en-PH",
     {
       minimumFractionDigits:2,
@@ -377,25 +401,12 @@ function money(value){
   );
 }
 
-function toast(message){
 
-  const el = $("toast");
-
-  el.textContent = message;
-
-  el.classList.add("show");
-
-  setTimeout(()=>{
-    el.classList.remove("show");
-  },2500);
-}
-
-
-/* =========================
+/* -----------------------------------------
    AUTH CHECK
-========================= */
+----------------------------------------- */
 
-onAuthStateChanged(auth, async (user)=>{
+auth.onAuthStateChanged(async (user) => {
 
   if(!user){
 
@@ -405,67 +416,74 @@ onAuthStateChanged(auth, async (user)=>{
       </div>
     `;
 
+    $("pendingCount").textContent = "0";
+    $("pendingAmount").textContent = "₱0.00";
+    $("totalCount").textContent = "0";
+
     return;
   }
 
 
   /*
-    Only the admin account can use
-    this page.
+    Only the selected administrator account
+    can access this page.
   */
 
   if(user.email !== ADMIN_EMAIL){
 
     $("withdrawals").innerHTML = `
       <div class="error">
-        Access denied. This page is for the withdrawal administrator only.
+        Access denied.<br><br>
+        This page is for the withdrawal administrator only.
       </div>
     `;
+
+    $("pendingCount").textContent = "0";
+    $("pendingAmount").textContent = "₱0.00";
+    $("totalCount").textContent = "0";
 
     return;
   }
 
-
-  /*
-    Authorized admin
-  */
 
   await loadWithdrawals();
 
 });
 
 
-/* =========================
-   LOAD WITHDRAWALS
-========================= */
+/* -----------------------------------------
+   LOAD ALL WITHDRAWAL REQUESTS
+----------------------------------------- */
 
 async function loadWithdrawals(){
 
   $("withdrawals").innerHTML = `
     <div class="loading">
-      Loading withdrawals...
+      Loading withdrawal requests...
     </div>
   `;
 
+
   try{
 
-    const usersSnapshot =
-      await getDocs(collection(db,"Users"));
+    const snapshot =
+      await db.collection("Users").get();
+
 
     const requests = [];
 
 
-    usersSnapshot.forEach(userDoc=>{
+    snapshot.forEach(userDoc => {
 
-      const userData = userDoc.data();
+      const userData = userDoc.data() || {};
 
       const transactions =
         Array.isArray(userData.transactions)
-        ? userData.transactions
-        : [];
+          ? userData.transactions
+          : [];
 
 
-      transactions.forEach((transaction,index)=>{
+      transactions.forEach((transaction, index) => {
 
         if(
           transaction &&
@@ -474,17 +492,14 @@ async function loadWithdrawals(){
 
           requests.push({
 
-            uid:userDoc.id,
+            userId:userDoc.id,
 
             transactionIndex:index,
 
-            name:
+            userName:
               userData.name ||
               userData.displayName ||
               "Member",
-
-            balance:
-              Number(userData.balance || 0),
 
             ...transaction
 
@@ -498,10 +513,10 @@ async function loadWithdrawals(){
 
 
     /*
-      Newest requests first
+      Newest requests first.
     */
 
-    requests.sort((a,b)=>{
+    requests.sort((a,b) => {
 
       const dateA =
         new Date(a.date || 0).getTime();
@@ -516,16 +531,36 @@ async function loadWithdrawals(){
 
     updateStats(requests);
 
-    renderRequests(requests);
+
+    if(requests.length === 0){
+
+      $("withdrawals").innerHTML = `
+        <div class="empty">
+          No withdrawal requests found.
+        </div>
+      `;
+
+      return;
+    }
+
+
+    $("withdrawals").innerHTML =
+      requests.map((request, index) =>
+        renderWithdrawal(request,index)
+      ).join("");
+
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Load withdrawals error:",
+      error
+    );
 
     $("withdrawals").innerHTML = `
       <div class="error">
-        Failed to load withdrawal requests.
-        Please check your Firebase connection.
+        Failed to load withdrawal requests.<br>
+        Please check your Firebase permissions.
       </div>
     `;
 
@@ -534,29 +569,35 @@ async function loadWithdrawals(){
 }
 
 
-/* =========================
-   STATISTICS
-========================= */
+/* -----------------------------------------
+   STATS
+----------------------------------------- */
 
 function updateStats(requests){
 
   const pending =
     requests.filter(
-      item => item.status === "PENDING"
+      request =>
+        String(request.status || "")
+          .toUpperCase() === "PENDING"
     );
+
 
   const pendingAmount =
     pending.reduce(
-      (total,item)=>
-        total + Number(item.amount || 0),
+      (sum,request) =>
+        sum + Number(request.amount || 0),
       0
     );
+
 
   $("pendingCount").textContent =
     pending.length;
 
+
   $("pendingAmount").textContent =
-    money(pendingAmount);
+    formatMoney(pendingAmount);
+
 
   $("totalCount").textContent =
     requests.length;
@@ -564,318 +605,304 @@ function updateStats(requests){
 }
 
 
-/* =========================
-   RENDER REQUESTS
-========================= */
+/* -----------------------------------------
+   RENDER REQUEST
+----------------------------------------- */
 
-function renderRequests(requests){
+function renderWithdrawal(request,index){
 
-  const container =
-    $("withdrawals");
+  const status =
+    String(
+      request.status || "PENDING"
+    ).toUpperCase();
 
 
-  if(!requests.length){
+  let statusClass =
+    "pending";
 
-    container.innerHTML = `
-      <div class="empty">
-        No withdrawal requests yet.
-      </div>
-    `;
+  if(status === "APPROVED"){
+    statusClass = "approved";
+  }
 
-    return;
+  if(status === "REJECTED"){
+    statusClass = "rejected";
   }
 
 
-  container.innerHTML =
-    requests.map((item)=>{
-
-      const status =
-        item.status || "PENDING";
-
-      const safeStatus =
-        String(status).toLowerCase();
+  const date =
+    request.date
+      ? new Date(request.date)
+          .toLocaleString("en-PH")
+      : "—";
 
 
-      const date =
-        item.date
-        ? new Date(item.date).toLocaleString(
-            "en-PH",
-            {
-              dateStyle:"medium",
-              timeStyle:"short"
-            }
-          )
-        : "Unknown";
+  const amount =
+    formatMoney(request.amount);
 
 
-      const isPending =
-        status === "PENDING";
+  const requestId =
+    request.requestId || "—";
 
 
-      return `
+  const method =
+    request.method || "—";
 
-        <div class="withdrawal">
 
-          <div class="top-row">
+  const accountName =
+    request.accountName || "—";
 
-            <div class="amount">
-              ${money(item.amount)}
-            </div>
 
-            <div class="status ${safeStatus}">
-              ${status}
-            </div>
+  const accountNumber =
+    request.accountNumber || "—";
 
+
+  let actions = "";
+
+
+  if(status === "PENDING"){
+
+    actions = `
+      <div class="actions">
+
+        <button
+          class="approve-btn"
+          id="approve-${index}"
+          onclick="approveWithdrawal(
+            '${escapeAttribute(request.userId)}',
+            '${escapeAttribute(request.requestId || "")}',
+            ${Number(request.amount || 0)},
+            ${index}
+          )">
+          APPROVE
+        </button>
+
+        <button
+          class="reject-btn"
+          id="reject-${index}"
+          onclick="rejectWithdrawal(
+            '${escapeAttribute(request.userId)}',
+            '${escapeAttribute(request.requestId || "")}',
+            ${Number(request.amount || 0)},
+            ${index}
+          )">
+          REJECT
+        </button>
+
+      </div>
+    `;
+
+  }else{
+
+    actions = "";
+
+  }
+
+
+  return `
+    <div class="withdrawal-card">
+
+      <div class="card-top">
+
+        <div>
+          <div class="amount">
+            ${amount}
           </div>
-
-
-          <div class="info">
-
-            <div>
-              <strong>Member:</strong>
-              ${escapeHtml(item.name)}
-            </div>
-
-            <div>
-              <strong>Method:</strong>
-              ${escapeHtml(item.method || "—")}
-            </div>
-
-            <div>
-              <strong>Account Name:</strong>
-              ${escapeHtml(item.accountName || "—")}
-            </div>
-
-            <div>
-              <strong>Account Number:</strong>
-              ${escapeHtml(item.accountNumber || "—")}
-            </div>
-
-            <div>
-              <strong>Request ID:</strong>
-              ${escapeHtml(item.requestId || "—")}
-            </div>
-
-            <div>
-              <strong>Date:</strong>
-              ${escapeHtml(date)}
-            </div>
-
-          </div>
-
-
-          ${
-            isPending
-            ? `
-
-              <div class="actions">
-
-                <button
-                  class="btn approve"
-                  onclick="processWithdrawal(
-                    '${escapeAttr(item.uid)}',
-                    '${escapeAttr(item.requestId)}',
-                    'APPROVED'
-                  )"
-                >
-                  APPROVE
-                </button>
-
-                <button
-                  class="btn reject"
-                  onclick="processWithdrawal(
-                    '${escapeAttr(item.uid)}',
-                    '${escapeAttr(item.requestId)}',
-                    'REJECTED'
-                  )"
-                >
-                  REJECT
-                </button>
-
-              </div>
-
-            `
-            : ""
-          }
-
         </div>
 
-      `;
+        <div class="status ${statusClass}">
+          ${status}
+        </div>
 
-    }).join("");
+      </div>
+
+
+      <div class="info">
+
+        <div class="info-row">
+          <span>Member</span>
+          <strong>
+            ${escapeHtml(request.userName)}
+          </strong>
+        </div>
+
+
+        <div class="info-row">
+          <span>Method</span>
+          <strong>
+            ${escapeHtml(method)}
+          </strong>
+        </div>
+
+
+        <div class="info-row">
+          <span>Account Name</span>
+          <strong>
+            ${escapeHtml(accountName)}
+          </strong>
+        </div>
+
+
+        <div class="info-row">
+          <span>Account Number</span>
+          <strong>
+            ${escapeHtml(accountNumber)}
+          </strong>
+        </div>
+
+
+        <div class="info-row">
+          <span>Request ID</span>
+          <strong>
+            ${escapeHtml(requestId)}
+          </strong>
+        </div>
+
+
+        <div class="info-row">
+          <span>Date</span>
+          <strong>
+            ${escapeHtml(date)}
+          </strong>
+        </div>
+
+      </div>
+
+
+      ${actions}
+
+    </div>
+  `;
 
 }
 
 
-/* =========================
-   APPROVE / REJECT
-========================= */
+/* -----------------------------------------
+   APPROVE WITHDRAWAL
+----------------------------------------- */
 
-window.processWithdrawal =
-async function(uid,requestId,action){
+async function approveWithdrawal(
+  userId,
+  requestId,
+  amount,
+  index
+){
 
-  if(!auth.currentUser){
-    toast("Admin login required.");
-    return;
-  }
+  const approveButton =
+    $("approve-" + index);
 
-
-  if(auth.currentUser.email !== ADMIN_EMAIL){
-    toast("Access denied.");
-    return;
-  }
-
-
-  const message =
-    action === "APPROVED"
-    ? "Approve this withdrawal?"
-    : "Reject this withdrawal and refund the member?";
+  const rejectButton =
+    $("reject-" + index);
 
 
-  if(!confirm(message)){
-    return;
-  }
+  if(approveButton)
+    approveButton.disabled = true;
+
+  if(rejectButton)
+    rejectButton.disabled = true;
 
 
   try{
 
     const userRef =
-      doc(db,"Users",uid);
+      db.collection("Users").doc(userId);
 
 
-    await runTransaction(
-      db,
-      async(transaction)=>{
+    await db.runTransaction(
+      async transaction => {
 
         const snap =
           await transaction.get(userRef);
 
 
-        if(!snap.exists()){
-          throw new Error("USER_NOT_FOUND");
+        if(!snap.exists){
+
+          throw new Error(
+            "USER_NOT_FOUND"
+          );
+
         }
 
 
         const data =
-          snap.data();
+          snap.data() || {};
 
 
         const transactions =
           Array.isArray(data.transactions)
-          ? [...data.transactions]
-          : [];
+            ? [...data.transactions]
+            : [];
 
 
-        const index =
+        const transactionIndex =
           transactions.findIndex(
             item =>
               item &&
-              item.type === "Withdrawal Request" &&
+              item.type ===
+                "Withdrawal Request" &&
               item.requestId === requestId
           );
 
 
-        if(index === -1){
-          throw new Error("REQUEST_NOT_FOUND");
+        if(transactionIndex === -1){
+
+          throw new Error(
+            "REQUEST_NOT_FOUND"
+          );
+
         }
 
 
         const request =
-          transactions[index];
+          transactions[transactionIndex];
+
+
+        const currentStatus =
+          String(
+            request.status || "PENDING"
+          ).toUpperCase();
 
 
         /*
-          Prevent processing twice.
+          Prevent double approval/rejection.
         */
 
-        if(request.status !== "PENDING"){
+        if(currentStatus !== "PENDING"){
 
-          throw new Error("ALREADY_PROCESSED");
-
-        }
-
-
-        if(action === "APPROVED"){
-
-          /*
-            Balance was already deducted
-            when the member submitted
-            the withdrawal.
-
-            Therefore:
-            DO NOT deduct again.
-          */
-
-          transactions[index] = {
-
-            ...request,
-
-            status:"APPROVED",
-
-            approvedAt:
-              new Date().toISOString()
-
-          };
-
-
-          transaction.update(
-            userRef,
-            {
-              transactions
-            }
+          throw new Error(
+            "ALREADY_PROCESSED"
           );
 
         }
 
 
-        if(action === "REJECTED"){
+        transactions[transactionIndex] = {
 
-          const currentBalance =
-            Number(data.balance || 0);
+          ...request,
 
+          status:"APPROVED",
 
-          /*
-            Refund the original amount.
-          */
+          approvedAt:
+            new Date().toISOString()
 
-          const newBalance =
-            currentBalance +
-            Number(request.amount || 0);
+        };
 
 
-          transactions[index] = {
+        /*
+          IMPORTANT:
+          APPROVE DOES NOT DEDUCT BALANCE AGAIN.
 
-            ...request,
+          The balance was already deducted
+          when the member submitted the request.
+        */
 
-            status:"REJECTED",
-
-            rejectedAt:
-              new Date().toISOString()
-
-          };
-
-
-          transaction.update(
-            userRef,
-            {
-
-              balance:newBalance,
-
-              transactions
-
-            }
-          );
-
-        }
+        transaction.update(
+          userRef,
+          {
+            transactions
+          }
+        );
 
       }
-    );
-
-
-    toast(
-      action === "APPROVED"
-      ? "Withdrawal approved."
-      : "Withdrawal rejected and refunded."
     );
 
 
@@ -884,43 +911,214 @@ async function(uid,requestId,action){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Approve error:",
+      error
+    );
 
 
     if(error.message === "ALREADY_PROCESSED"){
 
-      toast(
-        "This withdrawal has already been processed."
-      );
-
-    }else if(error.message === "REQUEST_NOT_FOUND"){
-
-      toast(
-        "Withdrawal request was not found."
-      );
-
-    }else if(error.message === "USER_NOT_FOUND"){
-
-      toast(
-        "Member account was not found."
+      alert(
+        "This withdrawal request has already been processed."
       );
 
     }else{
 
-      toast(
-        "Something went wrong. Please try again."
+      alert(
+        "Failed to approve this withdrawal request."
       );
 
     }
 
+
+    await loadWithdrawals();
+
   }
 
-};
+}
 
 
-/* =========================
-   HTML SAFETY
-========================= */
+/* -----------------------------------------
+   REJECT WITHDRAWAL
+----------------------------------------- */
+
+async function rejectWithdrawal(
+  userId,
+  requestId,
+  amount,
+  index
+){
+
+  const approveButton =
+    $("approve-" + index);
+
+  const rejectButton =
+    $("reject-" + index);
+
+
+  if(approveButton)
+    approveButton.disabled = true;
+
+  if(rejectButton)
+    rejectButton.disabled = true;
+
+
+  try{
+
+    const userRef =
+      db.collection("Users").doc(userId);
+
+
+    await db.runTransaction(
+      async transaction => {
+
+        const snap =
+          await transaction.get(userRef);
+
+
+        if(!snap.exists){
+
+          throw new Error(
+            "USER_NOT_FOUND"
+          );
+
+        }
+
+
+        const data =
+          snap.data() || {};
+
+
+        const transactions =
+          Array.isArray(data.transactions)
+            ? [...data.transactions]
+            : [];
+
+
+        const transactionIndex =
+          transactions.findIndex(
+            item =>
+              item &&
+              item.type ===
+                "Withdrawal Request" &&
+              item.requestId === requestId
+          );
+
+
+        if(transactionIndex === -1){
+
+          throw new Error(
+            "REQUEST_NOT_FOUND"
+          );
+
+        }
+
+
+        const request =
+          transactions[transactionIndex];
+
+
+        const currentStatus =
+          String(
+            request.status || "PENDING"
+          ).toUpperCase();
+
+
+        /*
+          Prevent double processing.
+        */
+
+        if(currentStatus !== "PENDING"){
+
+          throw new Error(
+            "ALREADY_PROCESSED"
+          );
+
+        }
+
+
+        const currentBalance =
+          Number(data.balance || 0);
+
+
+        const refundAmount =
+          Number(
+            request.amount || amount || 0
+          );
+
+
+        /*
+          Change request status to REJECTED
+          and refund the amount that was
+          deducted when the request was made.
+        */
+
+        transactions[transactionIndex] = {
+
+          ...request,
+
+          status:"REJECTED",
+
+          rejectedAt:
+            new Date().toISOString()
+
+        };
+
+
+        transaction.update(
+          userRef,
+          {
+
+            balance:
+              currentBalance +
+              refundAmount,
+
+            transactions
+
+          }
+        );
+
+      }
+    );
+
+
+    await loadWithdrawals();
+
+
+  }catch(error){
+
+    console.error(
+      "Reject error:",
+      error
+    );
+
+
+    if(error.message === "ALREADY_PROCESSED"){
+
+      alert(
+        "This withdrawal request has already been processed."
+      );
+
+    }else{
+
+      alert(
+        "Failed to reject this withdrawal request."
+      );
+
+    }
+
+
+    await loadWithdrawals();
+
+  }
+
+}
+
+
+/* -----------------------------------------
+   SECURITY / DISPLAY HELPERS
+----------------------------------------- */
 
 function escapeHtml(value){
 
@@ -933,7 +1131,8 @@ function escapeHtml(value){
 
 }
 
-function escapeAttr(value){
+
+function escapeAttribute(value){
 
   return String(value ?? "")
     .replace(/\\/g,"\\\\")
