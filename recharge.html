@@ -1802,70 +1802,31 @@
 
 
       sessionStorage.setItem(
-        "novariseRechargeOrder",
-        orderId
-      );
+  "novariseRechargeOrder",
+  orderId
+);
 
 
-      displayPaymentQR(
-        qrCode
-      );
+sessionStorage.setItem(
+  "novariseRechargePayment",
+  JSON.stringify({
+    qrCode: qrCode,
+    orderId: orderId,
+    amount: amount,
+    contentExpireTime:
+      result.contentExpireTime || ""
+  })
+);
 
 
-      $("qrPaymentBox")
-        .classList
-        .add("show");
+/*
+ * Open the separate GCash payment page.
+ */
 
+window.location.href =
+  "gcash-payment.html";
 
-      $("qrOrderText")
-        .textContent =
-        `Order: ${orderId}`;
-
-
-      if(result.contentExpireTime){
-
-        $("qrExpireText")
-          .textContent =
-          `QR expires: ${result.contentExpireTime}`;
-
-      }else{
-
-        $("qrExpireText")
-          .textContent =
-          "Complete the payment before the QR expires.";
-
-      }
-
-
-      $("paymentStatusBox")
-        .classList
-        .remove("error");
-
-
-      $("paymentStatusBox")
-        .classList
-        .add("show");
-
-
-      $("paymentStatusText")
-        .textContent =
-        "Scan the QR with GCash and complete the payment.";
-
-
-      button.disabled = true;
-
-      buttonText.textContent =
-        "Waiting for Payment…";
-
-
-      /*
-       * Start background status polling
-       */
-
-      pollRechargePayment(
-        orderId
-      );
-
+return;
     }catch(error){
 
       console.error(
