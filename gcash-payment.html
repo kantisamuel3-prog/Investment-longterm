@@ -1,1 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Novarise — GCash Payment</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--blue:#0869ed;--navy:#103653;--bg:#f4f9fc;--line:#dce8f5}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--navy);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{padding-bottom:28px}
+.app{width:100%;max-width:560px;margin:0 auto;min-height:100vh}
+.top{position:relative;overflow:hidden;padding:22px 18px 78px;background:radial-gradient(circle at 82% 16%,rgba(180,213,26,.20),transparent 23%),radial-gradient(circle at 8% 90%,rgba(8,165,227,.18),transparent 30%),linear-gradient(135deg,#063454 0%,#075d8f 54%,#0786bf 100%);box-shadow:0 12px 30px rgba(7,83,127,.14)}
+.top:before{content:"";position:absolute;width:190px;height:190px;right:-75px;bottom:-105px;border:1px solid rgba(255,255,255,.12);border-radius:50%;box-shadow:0 0 0 28px rgba(255,255,255,.025),0 0 0 56px rgba(255,255,255,.018)}
+.top:after{content:"";position:absolute;width:270px;height:270px;right:-120px;top:-150px;border-radius:50%;background:rgba(180,213,26,.09)}
+.topbar{position:relative;z-index:2;display:flex;align-items:center;gap:12px}
+.back{width:43px;height:43px;border:1px solid rgba(255,255,255,.20);border-radius:14px;background:rgba(255,255,255,.10);color:#fff;display:grid;place-items:center;cursor:pointer;font-size:23px}
+.brand{display:flex;align-items:center;gap:11px;color:#fff}.brand-icon{width:45px;height:45px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.20)}.brand-icon svg{width:28px;height:28px}.brand strong{display:block;font-size:20px;line-height:1.05}.brand small{display:block;margin-top:4px;color:rgba(255,255,255,.78);font-size:8px;font-weight:800;letter-spacing:1.3px}
+.title{position:relative;z-index:2;margin:27px 0 0;color:#fff;font-size:27px;line-height:1.1;font-weight:800;letter-spacing:-.5px}.title:after{content:"";display:block;width:42px;height:3px;margin-top:10px;border-radius:99px;background:linear-gradient(90deg,#b4d51a,rgba(180,213,26,.15))}
+.subtitle{position:relative;z-index:2;margin:9px 0 0;color:rgba(255,255,255,.80);font-size:13px}
+.content{position:relative;z-index:5;margin:-55px 14px 0}
+.payment-card{background:#fff;border:1px solid rgba(214,231,242,.95);border-radius:27px;padding:18px 14px 18px;box-shadow:0 18px 45px rgba(8,72,112,.11);text-align:center}
+.gcash-brand{display:flex;align-items:center;justify-content:center;gap:9px;color:#1260d9;font-size:25px;font-weight:900;letter-spacing:-.6px;margin-top:4px}
+.gmark{width:39px;height:39px;border-radius:50%;display:grid;place-items:center;border:4px solid #1260d9;color:#1260d9;font-size:18px;font-weight:900}
+.secure{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:7px;color:#14a889;font-size:13px;font-weight:900}
+.main-title{margin:14px auto 7px;max-width:360px;color:#173b6d;font-size:18px;font-weight:900;line-height:1.3}
+.note{margin:0 auto 14px;max-width:350px;color:#71809a;font-size:12px;line-height:1.45}
+.amount{display:inline-flex;align-items:center;gap:5px;margin:0 auto 14px;padding:7px 13px;border-radius:99px;background:#f3f8ff;border:1px solid #dce8f5;color:#173b6d;font-size:13px;font-weight:900}
+#qrCodeContainer{width:250px;max-width:100%;min-height:250px;margin:0 auto 14px;padding:9px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #dce8f5;border-radius:16px;box-shadow:0 6px 18px rgba(23,59,109,.08)}
+#qrCodeContainer img,#qrCodeContainer canvas{display:block!important;width:230px!important;height:230px!important;max-width:100%;object-fit:contain}
+.open-gcash-btn{width:100%;max-width:330px;height:50px;margin:0 auto 10px;border:0;border-radius:25px;background:#0969ed;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:900;cursor:pointer;box-shadow:0 9px 20px rgba(9,105,237,.20)}
+.open-gcash-icon{width:23px;height:23px;border:2px solid rgba(255,255,255,.9);border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:900}
+.expire{color:#7888a0;font-size:10px;line-height:1.4;margin-top:4px}.order{margin-top:4px;color:#91a0b4;font-size:9px;word-break:break-all}.help{margin:8px auto 0;color:#728198;font-size:10px;line-height:1.45;max-width:360px}
+.status{display:flex;align-items:center;gap:10px;margin:14px 0 0;padding:12px 14px;border:1px solid #dbe7f5;border-radius:13px;background:#f7fbff;color:#31516f;font-size:12px;font-weight:700;line-height:1.4;text-align:left}.dot{width:9px;height:9px;flex:none;border-radius:50%;background:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.10)}.status.success{border-color:#ccefe2;background:#f2fcf8;color:#147b63}.status.success .dot{background:#14a889;box-shadow:0 0 0 4px rgba(20,168,137,.10)}.status.error{border-color:#f1d8dd;background:#fff8f9;color:#b53d50}.status.error .dot{background:#d84a5b;box-shadow:0 0 0 4px rgba(216,74,91,.10)}
+.back-link{width:100%;height:49px;margin-top:14px;border:1px solid #dfeaf1;border-radius:15px;background:#fff;color:#526b7d;font-size:13px;font-weight:800;cursor:pointer}.back-link:active,.open-gcash-btn:active{transform:scale(.985)}
+.footer{text-align:center;margin:18px 0;color:#9aabb8;font-size:9px;letter-spacing:.8px}
+@media(max-width:390px){.content{margin-left:11px;margin-right:11px}.payment-card{padding:15px 10px 15px}.main-title{font-size:15px}#qrCodeContainer{width:238px;min-height:238px}#qrCodeContainer img,#qrCodeContainer canvas{width:218px!important;height:218px!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+<div class="topbar">
+<button class="back" id="backBtn" type="button" aria-label="Back">‹</button>
+<div class="brand">
+<div class="brand-icon" aria-hidden="true">
+<svg viewBox="0 0 48 48" fill="none">
+<path d="M8 31.5C12.2 15.2 23.7 8.8 39.5 8.5C39.2 24.3 32.8 35.8 16.5 40" stroke="#B4D51A" stroke-width="4.2" stroke-linecap="round"/>
+<path d="M10 38C16.2 28.8 23.5 22.2 33.5 16.5" stroke="#08A5E3" stroke-width="4.2" stroke-linecap="round"/>
+<path d="M25.8 12.2C30.7 14.4 34.1 18.1 35.8 23" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".85"/>
+</svg>
+</div>
+<div><strong>Novarise</strong><small>BUILD • INVEST • GROW</small></div>
+</div>
+</div>
+<h1 class="title">GCash Payment</h1>
+<p class="subtitle">Complete your recharge securely using GCash.</p>
+</header>
 
+<main class="content">
+<section class="payment-card">
+<div class="gcash-brand"><span class="gmark">G</span><span>GCash</span></div>
+<div class="secure">✓ Secure Payment</div>
+<div class="main-title">Scan the QR code below with your GCash app to complete your payment.</div>
+<div class="note">Use the GCash QR Scanner and complete the exact payment shown in your GCash app.</div>
+<div class="amount" id="amountText">Recharge amount: —</div>
+<div id="qrCodeContainer"></div>
+<button class="open-gcash-btn" id="openGcashBtn" type="button"><span class="open-gcash-icon">G</span><span>Go to GCash</span></button>
+<div class="expire" id="expireText">Complete the payment before the QR expires.</div>
+<div class="order" id="orderText"></div>
+<div class="help">After you complete the payment, Novarise will verify the payment status before updating your balance.</div>
+<div class="status" id="statusBox"><span class="dot"></span><span id="statusText">Waiting for GCash payment confirmation…</span></div>
+<button class="back-link" id="backBtnBottom" type="button">Back to Recharge</button>
+</section>
+<div class="footer">Novarise • BUILD • INVEST • GROW</div>
+</main>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+  authDomain:"investpro-2dafb.firebaseapp.com",
+  projectId:"investpro-2dafb.firebasestorage.app",
+  storageBucket:"investpro-2dafb.firebasestorage.app",
+  messagingSenderId:"135092039764",
+  appId:"1:135092039764:web:c4c71eef0c904346a77dc1"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const WORKER="https://novarise-payermax.kantisamuel3.workers.dev";
+const $=id=>document.getElementById(id);
+let currentUser=null;
+let pollToken=0;
+
+function setStatus(text,type=""){
+  $("statusBox").classList.remove("success","error");
+  if(type) $("statusBox").classList.add(type);
+  $("statusText").textContent=text;
+  $("statusBox").style.display="flex";
+}
+
+function loadScript(src,check,message){
+  if(check()) return Promise.resolve();
+  return new Promise((resolve,reject)=>{
+    const existing=document.querySelector(`script[src="${src}"]`);
+    if(existing){
+      existing.addEventListener("load",resolve,{once:true});
+      existing.addEventListener("error",()=>reject(new Error(message)),{once:true});
+      return;
+    }
+    const script=document.createElement("script");
+    script.src=src;
+    script.async=true;
+    script.onload=resolve;
+    script.onerror=()=>reject(new Error(message));
+    document.head.appendChild(script);
+  });
+}
+
+async function displayPaymentQR(qrCode){
+  const container=$("qrCodeContainer");
+  container.innerHTML="";
+  try{
+    await loadScript("https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js",()=>!!window.jsQR,"Unable to load QR decoder.");
+    await loadScript("https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js",()=>!!window.QRCode,"Unable to load QR generator.");
+
+    const image=new Image();
+    image.src=String(qrCode);
+    await new Promise((resolve,reject)=>{
+      image.onload=resolve;
+      image.onerror=()=>reject(new Error("Unable to read PayMongo QR image."));
+    });
+
+    const canvas=document.createElement("canvas");
+    const width=image.naturalWidth||image.width;
+    const height=image.naturalHeight||image.height;
+    canvas.width=width;
+    canvas.height=height;
+    const context=canvas.getContext("2d",{willReadFrequently:true});
+    context.drawImage(image,0,0,width,height);
+
+    const imageData=context.getImageData(0,0,width,height);
+    const decoded=window.jsQR(imageData.data,width,height,{inversionAttempts:"attemptBoth"});
+
+    if(!decoded||!decoded.data) throw new Error("QR decoder could not read the PayMongo QR.");
+
+    new window.QRCode(container,{
+      text:decoded.data,
+      width:230,
+      height:230,
+      correctLevel:window.QRCode.CorrectLevel.M
+    });
+  }catch(error){
+    console.error("QR rebuild error:",error);
+    container.innerHTML="";
+    const fallback=document.createElement("img");
+    fallback.src=String(qrCode);
+    fallback.alt="GCash payment QR";
+    fallback.width=230;
+    fallback.height=230;
+    fallback.style.display="block";
+    fallback.style.width="230px";
+    fallback.style.height="230px";
+    fallback.style.maxWidth="100%";
+    fallback.style.objectFit="contain";
+    container.appendChild(fallback);
+  }
+}
+
+async function getStatus(orderId){
+  if(!currentUser) throw new Error("Please log in again.");
+  const idToken=await currentUser.getIdToken(true);
+  const response=await fetch(`${WORKER}/recharge-status?orderId=${encodeURIComponent(orderId)}`,{
+    method:"GET",
+    headers:{Authorization:`Bearer ${idToken}`}
+  });
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok) throw new Error(data.message||data.error||"Unable to check payment status.");
+  return data;
+}
+
+async function pollPayment(orderId){
+  const myToken=++pollToken;
+  for(let i=0;i<60;i++){
+    if(myToken!==pollToken) return;
+    try{
+      const result=await getStatus(orderId);
+      const status=String(result.status||result.data?.status||"PENDING").toUpperCase();
+
+      if(status==="SUCCESS"){
+        setStatus("Payment successful. Your Novarise balance has been updated.","success");
+        sessionStorage.removeItem("novariseRechargePayment");
+        sessionStorage.removeItem("novariseRechargeOrder");
+        return;
+      }
+
+      if(["FAILED","CANCELLED","EXPIRED","CLOSED"].includes(status)){
+        setStatus("Payment was not completed. No balance was added.","error");
+        return;
+      }
+
+      setStatus("Waiting for GCash payment confirmation…");
+    }catch(error){
+      console.error("Payment status error:",error);
+      setStatus("Waiting for payment confirmation…");
+    }
+
+    await new Promise(resolve=>setTimeout(resolve,2500));
+  }
+
+  if(myToken===pollToken) setStatus("Payment is still pending. Keep this page open or check again later.");
+}
+
+async function initPayment(){
+  const raw=sessionStorage.getItem("novariseRechargePayment");
+
+  if(!raw){
+    setStatus("No active payment was found. Please return to Recharge and create a new QR.","error");
+    return;
+  }
+
+  let payment;
+  try{
+    payment=JSON.parse(raw);
+  }catch(error){
+    console.error(error);
+    setStatus("The payment information is invalid. Please create a new QR.","error");
+    return;
+  }
+
+  if(!payment.qrCode||!payment.orderId){
+    setStatus("The payment QR information is incomplete. Please create a new QR.","error");
+    return;
+  }
+
+  $("amountText").textContent=payment.amount ? `Recharge amount: ₱${Number(payment.amount).toFixed(2)}` : "Recharge payment";
+  $("orderText").textContent=`Order: ${payment.orderId}`;
+  $("expireText").textContent=payment.contentExpireTime ? `QR expires: ${payment.contentExpireTime}` : "Complete the payment before the QR expires.";
+
+  await displayPaymentQR(payment.qrCode);
+  setStatus("Scan the QR with GCash and complete the payment.");
+  pollPayment(payment.orderId);
+}
+
+$("backBtn").addEventListener("click",()=>window.location.href="recharge.html");
+$("backBtnBottom").addEventListener("click",()=>window.location.href="recharge.html");
+$("openGcashBtn").addEventListener("click",()=>{window.location.href="https://payments.gcash.com/";});
+
+onAuthStateChanged(auth,async user=>{
+  if(!user){
+    window.location.href="login.html";
+    return;
+  }
+  currentUser=user;
+  await initPayment();
+});
+</script>
+</body>
+</html>
