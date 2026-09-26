@@ -1282,26 +1282,45 @@ document
 
 
       auth
-        .signInWithEmailAndPassword(
-          firebaseEmail,
-          password
-        )
+  .setPersistence(
+    firebase.auth.Auth.Persistence.LOCAL
+  )
 
-        .then(() => {
+  .then(() => {
 
-  if (firebaseEmail === "639999999999@novarise.local") {
+    return auth.signInWithEmailAndPassword(
+      firebaseEmail,
+      password
+    );
 
-    window.location.href =
-      "admin-withdraw.html";
+  })
 
-  } else {
+  .then((userCredential) => {
 
-    window.location.href =
-      "dashboard.html";
+    const user =
+      userCredential.user;
 
-  }
+    console.log(
+      "LOGIN SUCCESS:",
+      user.email
+    );
 
-})
+    if (
+      user.email ===
+      "639999999999@novarise.local"
+    ) {
+
+      window.location.href =
+        "admin-withdraw.html";
+
+    } else {
+
+      window.location.href =
+        "dashboard.html";
+
+    }
+
+  })
 
 
         .catch((error) => {
