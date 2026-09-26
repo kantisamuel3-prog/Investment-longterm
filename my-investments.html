@@ -1,0 +1,3126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>Novarise — My Investments</title>
+
+<style>
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(96,165,250,.18),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 30%,
+      rgba(59,130,246,.12),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #f3f9ff,
+      #eef7ff 45%,
+      #f8fcff
+    );
+
+  color:#123567;
+
+  padding-bottom:95px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header{
+
+  background:
+    linear-gradient(
+      135deg,
+      #0b2852,
+      #0d4f91
+    );
+
+  color:white;
+
+  padding:14px 5%;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  box-shadow:
+    0 5px 22px
+    rgba(15,72,125,.18);
+
+  position:relative;
+
+  z-index:10;
+
+}
+
+.logo{
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:flex-start;
+
+}
+
+.logo strong{
+
+  font-size:22px;
+
+  letter-spacing:.2px;
+
+}
+
+.logo small{
+
+  margin-top:3px;
+
+  font-size:8px;
+
+  letter-spacing:1.25px;
+
+  font-weight:700;
+
+  color:
+    rgba(255,255,255,.9);
+
+}
+
+.logout{
+
+  border:
+    1px solid
+    rgba(255,255,255,.22);
+
+  background:
+    rgba(255,255,255,.12);
+
+  color:white;
+
+  padding:9px 14px;
+
+  border-radius:10px;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main{
+
+  max-width:850px;
+
+  margin:25px auto;
+
+  padding:0 18px;
+
+}
+
+
+/* =====================================================
+   PAGE TITLE
+===================================================== */
+
+.page-title{
+
+  margin-bottom:20px;
+
+}
+
+.page-title h1{
+
+  margin:0 0 6px;
+
+  font-size:29px;
+
+  color:#123b70;
+
+}
+
+.page-title p{
+
+  margin:0;
+
+  color:#71839a;
+
+  font-size:13px;
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.summary{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+  gap:12px;
+
+  margin-bottom:18px;
+
+}
+
+.summary-card{
+
+  background:
+    rgba(255,255,255,.95);
+
+  border:
+    1px solid
+    rgba(148,190,225,.28);
+
+  border-radius:17px;
+
+  padding:15px;
+
+  box-shadow:
+    0 8px 25px
+    rgba(20,83,140,.08);
+
+}
+
+.summary-label{
+
+  display:block;
+
+  color:#71839a;
+
+  font-size:10px;
+
+  margin-bottom:6px;
+
+  font-weight:700;
+
+}
+
+.summary-value{
+
+  display:block;
+
+  color:#123b70;
+
+  font-size:20px;
+
+  font-weight:800;
+
+}
+
+
+/* =====================================================
+   INVESTMENT LIST
+===================================================== */
+
+#investmentList{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:15px;
+
+}
+
+
+/* =====================================================
+   INVESTMENT CARD
+===================================================== */
+
+.investment-card{
+
+  background:
+    rgba(255,255,255,.97);
+
+  border:
+    1px solid
+    rgba(148,190,225,.28);
+
+  border-radius:20px;
+
+  padding:18px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(20,83,140,.09);
+
+}
+
+
+/* =====================================================
+   CARD TOP
+===================================================== */
+
+.investment-top{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
+  gap:12px;
+
+  margin-bottom:15px;
+
+}
+
+.product-name{
+
+  margin:0;
+
+  color:#123b70;
+
+  font-size:18px;
+
+  font-weight:800;
+
+}
+
+.investment-number{
+
+  margin-top:4px;
+
+  color:#8293a8;
+
+  font-size:10px;
+
+}
+
+.status{
+
+  flex-shrink:0;
+
+  padding:6px 9px;
+
+  border-radius:999px;
+
+  font-size:9px;
+
+  font-weight:800;
+
+  letter-spacing:.2px;
+
+}
+
+.status-active{
+
+  background:#e8f8ef;
+
+  color:#16834b;
+
+}
+
+.status-ready{
+
+  background:#eaf3ff;
+
+  color:#1768b3;
+
+}
+
+.status-complete{
+
+  background:#eef1f5;
+
+  color:#667384;
+
+}
+
+
+/* =====================================================
+   INFO GRID
+===================================================== */
+
+.info-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+  gap:9px;
+
+  margin-bottom:14px;
+
+}
+
+.info-box{
+
+  background:#f7faff;
+
+  border:
+    1px solid
+    #e5edf7;
+
+  border-radius:12px;
+
+  padding:10px;
+
+}
+
+.info-label{
+
+  display:block;
+
+  color:#7b8da2;
+
+  font-size:9px;
+
+  margin-bottom:4px;
+
+  font-weight:700;
+
+}
+
+.info-value{
+
+  display:block;
+
+  color:#173e70;
+
+  font-size:13px;
+
+  font-weight:800;
+
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+.progress-area{
+
+  margin-top:3px;
+
+  margin-bottom:15px;
+
+}
+
+.progress-head{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:7px;
+
+}
+
+.progress-head span{
+
+  color:#6f8196;
+
+  font-size:10px;
+
+  font-weight:700;
+
+}
+
+.progress-head strong{
+
+  color:#17477d;
+
+  font-size:11px;
+
+}
+
+.progress-track{
+
+  width:100%;
+
+  height:8px;
+
+  background:#e8eef6;
+
+  border-radius:999px;
+
+  overflow:hidden;
+
+}
+
+.progress-bar{
+
+  height:100%;
+
+  width:0%;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #21c87a,
+      #2b9cff
+    );
+
+  transition:
+    width .3s ease;
+
+}
+
+
+/* =====================================================
+   CLAIM AREA
+===================================================== */
+
+.claim-area{
+
+  border-top:
+    1px solid #edf1f6;
+
+  padding-top:14px;
+
+}
+
+.claim-message{
+
+  color:#6f8196;
+
+  font-size:11px;
+
+  line-height:1.5;
+
+  margin-bottom:10px;
+
+}
+
+.claim-message strong{
+
+  color:#17477d;
+
+}
+
+.claim-button{
+
+  width:100%;
+
+  min-height:45px;
+
+  border:0;
+
+  border-radius:13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #18b96e,
+      #1cae7b
+    );
+
+  color:white;
+
+  font-size:13px;
+
+  font-weight:800;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 7px 16px
+    rgba(24,185,110,.18);
+
+}
+
+.claim-button:disabled{
+
+  cursor:not-allowed;
+
+  background:#dce4ed;
+
+  color:#78899d;
+
+  box-shadow:none;
+
+}
+
+.claim-button.claim-ready{
+
+  background:
+    linear-gradient(
+      135deg,
+      #1689e8,
+      #176fc8
+    );
+
+  box-shadow:
+    0 7px 16px
+    rgba(23,111,200,.18);
+
+}
+
+.claim-button.claimed{
+
+  background:#eef3f7;
+
+  color:#607286;
+
+  box-shadow:none;
+
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.empty-state{
+
+  background:
+    rgba(255,255,255,.95);
+
+  border:
+    1px solid
+    rgba(148,190,225,.28);
+
+  border-radius:20px;
+
+  padding:35px 20px;
+
+  text-align:center;
+
+  box-shadow:
+    0 10px 30px
+    rgba(20,83,140,.08);
+
+}
+
+.empty-icon{
+
+  width:54px;
+
+  height:54px;
+
+  margin:0 auto 12px;
+
+  border-radius:16px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:#edf5ff;
+
+  color:#2375c7;
+
+  font-size:24px;
+
+}
+
+.empty-state h3{
+
+  margin:0 0 6px;
+
+  color:#173e70;
+
+  font-size:17px;
+
+}
+
+.empty-state p{
+
+  margin:0;
+
+  color:#7a8da3;
+
+  font-size:12px;
+
+  line-height:1.5;
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading{
+
+  text-align:center;
+
+  padding:40px 20px;
+
+  color:#71839a;
+
+  font-size:13px;
+
+}
+
+
+/* =====================================================
+   BOTTOM NAVIGATION
+===================================================== */
+
+.bottom-nav{
+
+  position:fixed;
+
+  left:0;
+
+  right:0;
+
+  bottom:0;
+
+  height:78px;
+
+  background:
+    rgba(255,253,246,.97);
+
+  border-top:
+    1px solid #e7e2d7;
+
+  display:flex;
+
+  justify-content:space-around;
+
+  align-items:center;
+
+  padding:
+    7px 8px
+    env(safe-area-inset-bottom);
+
+  backdrop-filter:blur(12px);
+
+  -webkit-backdrop-filter:blur(12px);
+
+  z-index:99999;
+
+}
+
+.nav-item{
+
+  flex:1;
+
+  max-width:150px;
+
+  height:100%;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:4px;
+
+  text-decoration:none;
+
+  color:#66758a;
+
+  font-size:13px;
+
+  font-weight:700;
+
+}
+
+.nav-item svg{
+
+  width:27px;
+
+  height:27px;
+
+  fill:none;
+
+  stroke:currentColor;
+
+  stroke-width:1.8;
+
+  stroke-linecap:round;
+
+  stroke-linejoin:round;
+
+}
+
+.nav-item.active{
+
+  color:#2563eb;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:600px){
+
+  header{
+
+    padding:
+      11px 14px;
+
+  }
+
+  .logo strong{
+
+    font-size:19px;
+
+  }
+
+  .logo small{
+
+    font-size:7px;
+
+  }
+
+  .logout{
+
+    padding:8px 11px;
+
+    font-size:11px;
+
+  }
+
+  main{
+
+    margin:
+      21px auto
+      25px;
+
+    padding:
+      0 13px;
+
+  }
+
+  .page-title h1{
+
+    font-size:25px;
+
+  }
+
+  .page-title p{
+
+    font-size:12px;
+
+  }
+
+  .summary{
+
+    gap:9px;
+
+  }
+
+  .summary-card{
+
+    padding:13px;
+
+  }
+
+  .summary-value{
+
+    font-size:18px;
+
+  }
+
+  .investment-card{
+
+    padding:15px;
+
+    border-radius:17px;
+
+  }
+
+  .product-name{
+
+    font-size:16px;
+
+  }
+
+  .info-box{
+
+    padding:9px;
+
+  }
+
+  .info-label{
+
+    font-size:8px;
+
+  }
+
+  .info-value{
+
+    font-size:12px;
+
+  }
+
+  .nav-item{
+
+    font-size:12px;
+
+  }
+
+  .nav-item svg{
+
+    width:26px;
+
+    height:26px;
+
+  }
+
+}
+
+
+/* =====================================================
+   SMALL PHONE
+===================================================== */
+
+@media(max-width:390px){
+
+  .summary{
+
+    grid-template-columns:
+      1fr 1fr;
+
+  }
+
+  .summary-card{
+
+    padding:11px;
+
+  }
+
+  .summary-label{
+
+    font-size:9px;
+
+  }
+
+  .summary-value{
+
+    font-size:16px;
+
+  }
+
+  .investment-card{
+
+    padding:13px;
+
+  }
+
+  .product-name{
+
+    font-size:15px;
+
+  }
+
+  .status{
+
+    font-size:8px;
+
+    padding:5px 7px;
+
+  }
+
+  .info-value{
+
+    font-size:11px;
+
+  }
+
+  .claim-button{
+
+    min-height:43px;
+
+    font-size:12px;
+
+  }
+
+  .nav-item{
+
+    font-size:11px;
+
+  }
+
+  .nav-item svg{
+
+    width:24px;
+
+    height:24px;
+
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL PHONE
+===================================================== */
+
+@media(max-width:340px){
+
+  .page-title h1{
+
+    font-size:22px;
+
+  }
+
+  .investment-top{
+
+    gap:7px;
+
+  }
+
+  .product-name{
+
+    font-size:14px;
+
+  }
+
+  .info-grid{
+
+    gap:7px;
+
+  }
+
+  .info-box{
+
+    padding:8px;
+
+  }
+
+  .info-label{
+
+    font-size:7px;
+
+  }
+
+  .info-value{
+
+    font-size:10px;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+  <div class="logo">
+
+    <strong>
+      Novarise
+    </strong>
+
+    <small>
+      BUILD INVEST GROW
+    </small>
+
+  </div>
+
+
+  <button
+    class="logout"
+    id="logoutButton"
+  >
+    Logout
+  </button>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main>
+
+
+  <section class="page-title">
+
+    <h1>
+      My Investments
+    </h1>
+
+    <p>
+      Manage your investments and claim eligible daily income.
+    </p>
+
+  </section>
+
+
+
+  <!-- ===================================================
+       SUMMARY
+  ==================================================== -->
+
+  <section class="summary">
+
+    <div class="summary-card">
+
+      <span class="summary-label">
+        Active Investments
+      </span>
+
+      <span
+        class="summary-value"
+        id="activeCount"
+      >
+        0
+      </span>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <span class="summary-label">
+        Available Claims
+      </span>
+
+      <span
+        class="summary-value"
+        id="claimCount"
+      >
+        0
+      </span>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ===================================================
+       INVESTMENT LIST
+  ==================================================== -->
+
+  <section id="investmentList">
+
+    <div class="loading">
+      Loading your investments...
+    </div>
+
+  </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     BOTTOM NAVIGATION
+===================================================== -->
+
+<nav class="bottom-nav">
+
+
+  <a
+    href="dashboard.html#home"
+    class="nav-item"
+  >
+
+    <svg viewBox="0 0 24 24">
+
+      <path d="M3 10.5L12 3l9 7.5"/>
+
+      <path d="M5 9.5V21h14V9.5"/>
+
+      <path d="M9 21v-6h6v6"/>
+
+    </svg>
+
+    <span>
+      Home
+    </span>
+
+  </a>
+
+
+
+  <a
+    href="dashboard.html#products"
+    class="nav-item"
+  >
+
+    <svg viewBox="0 0 24 24">
+
+      <path d="M4 7h16"/>
+
+      <path d="M6 7l1-3h10l1 3"/>
+
+      <rect
+        x="4"
+        y="7"
+        width="16"
+        height="13"
+        rx="2"
+      />
+
+      <path d="M9 12h6"/>
+
+    </svg>
+
+    <span>
+      Product
+    </span>
+
+  </a>
+
+
+
+  <a
+    href="my-investment.html"
+    class="nav-item active"
+  >
+
+    <svg viewBox="0 0 24 24">
+
+      <rect
+        x="4"
+        y="4"
+        width="16"
+        height="16"
+        rx="3"
+      />
+
+      <path d="M8 8h8"/>
+
+      <path d="M8 12h8"/>
+
+      <path d="M8 16h5"/>
+
+    </svg>
+
+    <span>
+      Investments
+    </span>
+
+  </a>
+
+
+
+  <a
+    href="team.html"
+    class="nav-item"
+  >
+
+    <svg viewBox="0 0 24 24">
+
+      <circle
+        cx="9"
+        cy="8"
+        r="3"
+      />
+
+      <circle
+        cx="17"
+        cy="9"
+        r="2.5"
+      />
+
+      <path
+        d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"
+      />
+
+      <path
+        d="M15 14c3.2 0 6 2.2 6 5"
+      />
+
+    </svg>
+
+    <span>
+      Team
+    </span>
+
+  </a>
+
+
+
+  <a
+    href="my.html"
+    class="nav-item"
+  >
+
+    <svg viewBox="0 0 24 24">
+
+      <circle
+        cx="12"
+        cy="8"
+        r="4"
+      />
+
+      <path
+        d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"
+      />
+
+    </svg>
+
+    <span>
+      My
+    </span>
+
+  </a>
+
+
+</nav>
+
+
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
+
+<script type="module">
+
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  runTransaction,
+  Timestamp
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+
+  authDomain:
+    "investpro-2dafb.firebaseapp.com",
+
+  projectId:
+    "investpro-2dafb",
+
+  storageBucket:
+    "investpro-2dafb.firebasestorage.app",
+
+  messagingSenderId:
+    "135092039764",
+
+  appId:
+    "1:135092039764:web:c4c71eef0c904346a77dc1"
+
+};
+
+
+
+/* =====================================================
+   FIREBASE INIT
+===================================================== */
+
+const app =
+  initializeApp(
+    firebaseConfig
+  );
+
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
+
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const investmentList =
+  document.getElementById(
+    "investmentList"
+  );
+
+const activeCount =
+  document.getElementById(
+    "activeCount"
+  );
+
+const claimCount =
+  document.getElementById(
+    "claimCount"
+  );
+
+const logoutButton =
+  document.getElementById(
+    "logoutButton"
+  );
+
+
+
+/* =====================================================
+   LOCAL INVESTMENT DATA
+===================================================== */
+
+let currentInvestments = [];
+
+let countdownTimer = null;
+
+
+
+/* =====================================================
+   MONEY FORMAT
+===================================================== */
+
+function formatMoney(amount){
+
+  return "₱" +
+
+    Number(
+      amount || 0
+    ).toLocaleString(
+      "en-PH",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
+}
+
+
+
+/* =====================================================
+   CONVERT FIRESTORE DATE
+===================================================== */
+
+function getDateValue(value){
+
+  if(!value){
+
+    return null;
+
+  }
+
+
+  if(
+    typeof value.toMillis ===
+    "function"
+  ){
+
+    return new Date(
+      value.toMillis()
+    );
+
+  }
+
+
+  if(
+    value instanceof Date
+  ){
+
+    return value;
+
+  }
+
+
+  if(
+    typeof value === "string"
+  ){
+
+    const parsed =
+      new Date(value);
+
+    if(
+      !Number.isNaN(
+        parsed.getTime()
+      )
+    ){
+
+      return parsed;
+
+    }
+
+  }
+
+
+  return null;
+
+}
+
+
+
+/* =====================================================
+   FORMAT DATE
+===================================================== */
+
+function formatDate(date){
+
+  if(!date){
+
+    return "—";
+
+  }
+
+  return date.toLocaleString(
+    "en-PH",
+    {
+      month:"short",
+      day:"numeric",
+      year:"numeric",
+      hour:"numeric",
+      minute:"2-digit"
+    }
+  );
+
+}
+
+
+
+/* =====================================================
+   FORMAT COUNTDOWN
+===================================================== */
+
+function formatRemaining(ms){
+
+  if(ms <= 0){
+
+    return "Claim available";
+
+  }
+
+  const totalSeconds =
+    Math.floor(
+      ms / 1000
+    );
+
+  const days =
+    Math.floor(
+      totalSeconds /
+      86400
+    );
+
+  const hours =
+    Math.floor(
+      (totalSeconds % 86400) /
+      3600
+    );
+
+  const minutes =
+    Math.floor(
+      (totalSeconds % 3600) /
+      60
+    );
+
+  const seconds =
+    totalSeconds % 60;
+
+
+  if(days > 0){
+
+    return (
+      days +
+      "d " +
+      hours +
+      "h " +
+      minutes +
+      "m"
+    );
+
+  }
+
+
+  return (
+    String(hours).padStart(2,"0") +
+    ":" +
+    String(minutes).padStart(2,"0") +
+    ":" +
+    String(seconds).padStart(2,"0")
+  );
+
+}
+
+
+
+/* =====================================================
+   GET LAST CLAIM TIME
+===================================================== */
+
+function getLastClaimDate(
+  investment,
+  startDate
+){
+
+  const lastClaim =
+    getDateValue(
+      investment.lastClaimDate
+    );
+
+  if(lastClaim){
+
+    return lastClaim;
+
+  }
+
+
+  return startDate;
+
+}
+
+
+
+/* =====================================================
+   GET CLAIM INFORMATION
+===================================================== */
+
+function getClaimInfo(
+  investment,
+  now
+){
+
+  const startDate =
+    getDateValue(
+      investment.date
+    );
+
+  const cycleDays =
+    Number(
+      investment.cycleDays || 30
+    );
+
+  const claimedDays =
+    Number(
+      investment.incomeDaysCredited || 0
+    );
+
+
+  if(!startDate){
+
+    return {
+
+      valid:false,
+
+      complete:false,
+
+      ready:false,
+
+      remaining:0,
+
+      nextClaim:null,
+
+      claimedDays:claimedDays,
+
+      cycleDays:cycleDays
+
+    };
+
+  }
+
+
+  if(
+    claimedDays >=
+    cycleDays
+  ){
+
+    return {
+
+      valid:true,
+
+      complete:true,
+
+      ready:false,
+
+      remaining:0,
+
+      nextClaim:null,
+
+      claimedDays:cycleDays,
+
+      cycleDays:cycleDays
+
+    };
+
+  }
+
+
+  const lastClaimDate =
+    getLastClaimDate(
+      investment,
+      startDate
+    );
+
+
+  if(!lastClaimDate){
+
+    return {
+
+      valid:false,
+
+      complete:false,
+
+      ready:false,
+
+      remaining:0,
+
+      nextClaim:null,
+
+      claimedDays:claimedDays,
+
+      cycleDays:cycleDays
+
+    };
+
+  }
+
+
+  const nextClaim =
+    new Date(
+      lastClaimDate.getTime() +
+      24 * 60 * 60 * 1000
+    );
+
+
+  const remaining =
+    nextClaim.getTime() -
+    now;
+
+
+  return {
+
+    valid:true,
+
+    complete:false,
+
+    ready:
+      remaining <= 0,
+
+    remaining:
+      Math.max(
+        0,
+        remaining
+      ),
+
+    nextClaim:nextClaim,
+
+    claimedDays:claimedDays,
+
+    cycleDays:cycleDays
+
+  };
+
+}
+
+
+
+/* =====================================================
+   LOAD INVESTMENTS
+===================================================== */
+
+async function loadInvestments(){
+
+  if(!auth.currentUser){
+
+    return;
+
+  }
+
+
+  investmentList.innerHTML =
+
+    `<div class="loading">
+      Loading your investments...
+    </div>`;
+
+
+  try{
+
+    const userRef =
+      doc(
+        db,
+        "Users",
+        auth.currentUser.uid
+      );
+
+
+    const snapshot =
+      await getDoc(
+        userRef
+      );
+
+
+    if(!snapshot.exists()){
+
+      currentInvestments = [];
+
+      showEmptyState();
+
+      return;
+
+    }
+
+
+    const data =
+      snapshot.data();
+
+
+    const transactions =
+      Array.isArray(
+        data.transactions
+      )
+        ? data.transactions
+        : [];
+
+
+    const investments =
+      transactions.filter(
+        transaction =>
+          transaction.type ===
+          "Investment"
+      );
+
+
+    currentInvestments =
+      investments;
+
+
+    if(
+      investments.length === 0
+    ){
+
+      showEmptyState();
+
+      return;
+
+    }
+
+
+    renderInvestments(
+      investments
+    );
+
+
+    startCountdown();
+
+  }catch(error){
+
+    console.error(
+      "Load investments error:",
+      error
+    );
+
+
+    investmentList.innerHTML =
+
+      `<div class="empty-state">
+
+        <div class="empty-icon">
+          !
+        </div>
+
+        <h3>
+          Unable to load investments
+        </h3>
+
+        <p>
+          Please refresh the page and try again.
+        </p>
+
+      </div>`;
+
+  }
+
+}
+
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+function showEmptyState(){
+
+  activeCount.textContent =
+    "0";
+
+  claimCount.textContent =
+    "0";
+
+
+  stopCountdown();
+
+
+  investmentList.innerHTML =
+
+    `<div class="empty-state">
+
+      <div class="empty-icon">
+        📊
+      </div>
+
+      <h3>
+        No investments yet
+      </h3>
+
+      <p>
+        Your purchased investment products
+        will appear here.
+      </p>
+
+    </div>`;
+
+}
+
+
+
+/* =====================================================
+   RENDER INVESTMENTS
+===================================================== */
+
+function renderInvestments(
+  investments
+){
+
+  investmentList.innerHTML = "";
+
+  let active = 0;
+
+  let availableClaims = 0;
+
+  const now =
+    Date.now();
+
+
+  investments.forEach(
+    (
+      investment,
+      index
+    ) => {
+
+      const card =
+        createInvestmentCard(
+          investment,
+          index,
+          now
+        );
+
+
+      investmentList.appendChild(
+        card
+      );
+
+
+      const info =
+        getClaimInfo(
+          investment,
+          now
+        );
+
+
+      if(
+        !info.complete
+      ){
+
+        active++;
+
+      }
+
+
+      if(
+        info.ready
+      ){
+
+        availableClaims++;
+
+      }
+
+    }
+  );
+
+
+  activeCount.textContent =
+    active;
+
+  claimCount.textContent =
+    availableClaims;
+
+}
+
+
+
+/* =====================================================
+   CREATE INVESTMENT CARD
+===================================================== */
+
+function createInvestmentCard(
+  investment,
+  index,
+  now
+){
+
+  const card =
+    document.createElement(
+      "article"
+    );
+
+  card.className =
+    "investment-card";
+
+  card.dataset.index =
+    index;
+
+
+  const startDate =
+    getDateValue(
+      investment.date
+    );
+
+
+  const daily =
+    Number(
+      investment.dailyReturn || 0
+    );
+
+
+  const amount =
+    Number(
+      investment.amount || 0
+    );
+
+
+  const cycleDays =
+    Number(
+      investment.cycleDays || 30
+    );
+
+
+  const claimedDays =
+    Number(
+      investment.incomeDaysCredited || 0
+    );
+
+
+  const totalIncome =
+    Number(
+      investment.totalIncome || 0
+    );
+
+
+  const info =
+    getClaimInfo(
+      investment,
+      now
+    );
+
+
+  let statusText =
+    "ACTIVE";
+
+  let statusClass =
+    "status-active";
+
+
+  if(
+    info.complete
+  ){
+
+    statusText =
+      "COMPLETED";
+
+    statusClass =
+      "status-complete";
+
+  }else if(
+    info.ready
+  ){
+
+    statusText =
+      "CLAIM READY";
+
+    statusClass =
+      "status-ready";
+
+  }
+
+
+  const progress =
+    Math.min(
+      100,
+      (
+        claimedDays /
+        cycleDays
+      ) * 100
+    );
+
+
+  let claimHTML = "";
+
+
+  if(
+    info.complete
+  ){
+
+    claimHTML =
+
+      `<div class="claim-area">
+
+        <div class="claim-message">
+          This investment has completed its
+          ${cycleDays}-day claim cycle.
+        </div>
+
+        <button
+          class="claim-button claimed"
+          disabled
+        >
+          ✓ CYCLE COMPLETED
+        </button>
+
+      </div>`;
+
+  }else if(
+    info.ready
+  ){
+
+    claimHTML =
+
+      `<div class="claim-area">
+
+        <div class="claim-message">
+          Your 24-hour claim is ready.
+          Claim your daily income to continue
+          to the next cycle.
+        </div>
+
+        <button
+          class="claim-button claim-ready"
+          data-index="${index}"
+        >
+          CLAIM ${formatMoney(daily)}
+        </button>
+
+      </div>`;
+
+  }else{
+
+    claimHTML =
+
+      `<div
+        class="claim-area"
+        data-claim-area="${index}"
+      >
+
+        <div class="claim-message">
+          Next claim available in
+          <strong
+            class="countdown"
+            data-index="${index}"
+            data-next-claim="${
+              info.nextClaim
+                ? info.nextClaim.getTime()
+                : 0
+            }"
+          >
+            ${formatRemaining(
+              info.remaining
+            )}
+          </strong>
+        </div>
+
+        <button
+          class="claim-button"
+          disabled
+        >
+          CLAIM NOT READY
+        </button>
+
+      </div>`;
+
+  }
+
+
+  card.innerHTML =
+
+    `<div class="investment-top">
+
+      <div>
+
+        <h2 class="product-name">
+          ${escapeHTML(
+            investment.product ||
+            "Investment"
+          )}
+        </h2>
+
+        <div class="investment-number">
+          Investment #${index + 1}
+        </div>
+
+      </div>
+
+      <span
+        class="status ${statusClass}"
+        data-status="${index}"
+      >
+        ${statusText}
+      </span>
+
+    </div>
+
+
+    <div class="info-grid">
+
+      <div class="info-box">
+
+        <span class="info-label">
+          INVESTED
+        </span>
+
+        <span class="info-value">
+          ${formatMoney(amount)}
+        </span>
+
+      </div>
+
+
+      <div class="info-box">
+
+        <span class="info-label">
+          DAILY INCOME
+        </span>
+
+        <span class="info-value">
+          ${formatMoney(daily)}
+        </span>
+
+      </div>
+
+
+      <div class="info-box">
+
+        <span class="info-label">
+          STARTED
+        </span>
+
+        <span class="info-value">
+          ${formatDate(startDate)}
+        </span>
+
+      </div>
+
+
+      <div class="info-box">
+
+        <span class="info-label">
+          TOTAL CLAIMED
+        </span>
+
+        <span class="info-value">
+          ${formatMoney(totalIncome)}
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="progress-area">
+
+      <div class="progress-head">
+
+        <span>
+          Cycle Progress
+        </span>
+
+        <strong>
+          ${Math.min(
+            claimedDays,
+            cycleDays
+          )} / ${cycleDays}
+        </strong>
+
+      </div>
+
+      <div class="progress-track">
+
+        <div
+          class="progress-bar"
+          style="width:${progress}%"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    ${claimHTML}`;
+
+
+  attachClaimButton(
+    card
+  );
+
+
+  return card;
+
+}
+
+
+
+/* =====================================================
+   ATTACH CLAIM BUTTON
+===================================================== */
+
+function attachClaimButton(
+  card
+){
+
+  const claimButton =
+    card.querySelector(
+      ".claim-button.claim-ready"
+    );
+
+
+  if(!claimButton){
+
+    return;
+
+  }
+
+
+  claimButton.addEventListener(
+    "click",
+    async () => {
+
+      claimButton.disabled =
+        true;
+
+      claimButton.textContent =
+        "CLAIMING...";
+
+
+      await claimInvestment(
+        Number(
+          claimButton.dataset.index
+        )
+      );
+
+    }
+  );
+
+}
+
+
+
+/* =====================================================
+   MAKE CLAIM READY
+===================================================== */
+
+function makeClaimReady(
+  index
+){
+
+  const card =
+    document.querySelector(
+      `.investment-card[data-index="${index}"]`
+    );
+
+
+  if(!card){
+
+    return;
+
+  }
+
+
+  const investment =
+    currentInvestments[index];
+
+
+  if(!investment){
+
+    return;
+
+  }
+
+
+  const daily =
+    Number(
+      investment.dailyReturn || 0
+    );
+
+
+  const cycleDays =
+    Number(
+      investment.cycleDays || 30
+    );
+
+
+  const claimedDays =
+    Number(
+      investment.incomeDaysCredited || 0
+    );
+
+
+  if(
+    claimedDays >=
+    cycleDays
+  ){
+
+    return;
+
+  }
+
+
+  const status =
+    card.querySelector(
+      `[data-status="${index}"]`
+    );
+
+
+  if(status){
+
+    status.textContent =
+      "CLAIM READY";
+
+    status.className =
+      "status status-ready";
+
+  }
+
+
+  const claimArea =
+    card.querySelector(
+      `[data-claim-area="${index}"]`
+    );
+
+
+  if(!claimArea){
+
+    return;
+
+  }
+
+
+  claimArea.innerHTML =
+
+    `<div class="claim-message">
+      Your 24-hour claim is ready.
+      Claim your daily income to continue
+      to the next cycle.
+    </div>
+
+    <button
+      class="claim-button claim-ready"
+      data-index="${index}"
+    >
+      CLAIM ${formatMoney(daily)}
+    </button>`;
+
+
+  attachClaimButton(
+    card
+  );
+
+
+  updateClaimCount();
+
+}
+
+
+
+/* =====================================================
+   UPDATE COUNTDOWN
+===================================================== */
+
+function updateCountdowns(){
+
+  if(!auth.currentUser){
+
+    return;
+
+  }
+
+
+  const now =
+    Date.now();
+
+
+  const countdowns =
+    document.querySelectorAll(
+      ".countdown"
+    );
+
+
+  countdowns.forEach(
+    countdown => {
+
+      const nextClaim =
+        Number(
+          countdown.dataset.nextClaim
+        );
+
+
+      const remaining =
+        nextClaim -
+        now;
+
+
+      if(
+        remaining <= 0
+      ){
+
+        const index =
+          Number(
+            countdown.dataset.index
+          );
+
+
+        makeClaimReady(
+          index
+        );
+
+        return;
+
+      }
+
+
+      countdown.textContent =
+        formatRemaining(
+          remaining
+        );
+
+    }
+  );
+
+}
+
+
+
+/* =====================================================
+   START COUNTDOWN
+===================================================== */
+
+function startCountdown(){
+
+  stopCountdown();
+
+
+  countdownTimer =
+    setInterval(
+      updateCountdowns,
+      1000
+    );
+
+}
+
+
+
+/* =====================================================
+   STOP COUNTDOWN
+===================================================== */
+
+function stopCountdown(){
+
+  if(countdownTimer){
+
+    clearInterval(
+      countdownTimer
+    );
+
+    countdownTimer =
+      null;
+
+  }
+
+}
+
+
+
+/* =====================================================
+   UPDATE AVAILABLE CLAIM COUNT
+===================================================== */
+
+function updateClaimCount(){
+
+  let count = 0;
+
+
+  currentInvestments.forEach(
+    investment => {
+
+      const info =
+        getClaimInfo(
+          investment,
+          Date.now()
+        );
+
+
+      if(
+        info.ready
+      ){
+
+        count++;
+
+      }
+
+    }
+  );
+
+
+  const readyButtons =
+    document.querySelectorAll(
+      ".claim-button.claim-ready"
+    );
+
+
+  /*
+     Use visible ready cards as the
+     immediate UI count.
+  */
+
+  if(
+    readyButtons.length >
+    count
+  ){
+
+    count =
+      readyButtons.length;
+
+  }
+
+
+  claimCount.textContent =
+    count;
+
+}
+
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(
+  value
+){
+
+  return String(
+    value
+  )
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+
+/* =====================================================
+   CLAIM INVESTMENT
+===================================================== */
+
+async function claimInvestment(
+  investmentIndex
+){
+
+  const user =
+    auth.currentUser;
+
+
+  if(!user){
+
+    alert(
+      "Please login first."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    const userRef =
+      doc(
+        db,
+        "Users",
+        user.uid
+      );
+
+
+    await runTransaction(
+      db,
+      async transaction => {
+
+        const snapshot =
+          await transaction.get(
+            userRef
+          );
+
+
+        if(
+          !snapshot.exists()
+        ){
+
+          throw new Error(
+            "User account not found."
+          );
+
+        }
+
+
+        const data =
+          snapshot.data();
+
+
+        const transactions =
+          Array.isArray(
+            data.transactions
+          )
+            ? data.transactions
+            : [];
+
+
+        const investmentIndexes =
+          [];
+
+
+        transactions.forEach(
+          (
+            transactionItem,
+            transactionIndex
+          ) => {
+
+            if(
+              transactionItem.type ===
+              "Investment"
+            ){
+
+              investmentIndexes.push(
+                transactionIndex
+              );
+
+            }
+
+          }
+        );
+
+
+        const actualIndex =
+          investmentIndexes[
+            investmentIndex
+          ];
+
+
+        if(
+          actualIndex === undefined
+        ){
+
+          throw new Error(
+            "Investment not found."
+          );
+
+        }
+
+
+        const investment =
+          transactions[
+            actualIndex
+          ];
+
+
+        const daily =
+          Number(
+            investment.dailyReturn || 0
+          );
+
+
+        const cycleDays =
+          Number(
+            investment.cycleDays || 30
+          );
+
+
+        const claimedDays =
+          Number(
+            investment.incomeDaysCredited || 0
+          );
+
+
+        if(
+          !daily ||
+          daily <= 0
+        ){
+
+          throw new Error(
+            "Invalid daily income."
+          );
+
+        }
+
+
+        if(
+          claimedDays >=
+          cycleDays
+        ){
+
+          throw new Error(
+            "Investment cycle completed."
+          );
+
+        }
+
+
+        const startDate =
+          getDateValue(
+            investment.date
+          );
+
+
+        if(!startDate){
+
+          throw new Error(
+            "Investment start date is invalid."
+          );
+
+        }
+
+
+        const lastClaimDate =
+          getLastClaimDate(
+            investment,
+            startDate
+          );
+
+
+        if(!lastClaimDate){
+
+          throw new Error(
+            "Investment claim date is invalid."
+          );
+
+        }
+
+
+        const nextClaim =
+          new Date(
+            lastClaimDate.getTime() +
+            24 * 60 * 60 * 1000
+          );
+
+
+        const now =
+          new Date();
+
+
+        if(
+          now.getTime() <
+          nextClaim.getTime()
+        ){
+
+          throw new Error(
+            "Claim is not available yet."
+          );
+
+        }
+
+
+        const oldBalance =
+          Number(
+            data.balance || 0
+          );
+
+
+        const newBalance =
+          oldBalance +
+          daily;
+
+
+        const newClaimedDays =
+          claimedDays +
+          1;
+
+
+        const oldTotalIncome =
+          Number(
+            investment.totalIncome || 0
+          );
+
+
+        transactions[
+          actualIndex
+        ] = {
+
+          ...investment,
+
+          incomeDaysCredited:
+            newClaimedDays,
+
+          totalIncome:
+            oldTotalIncome +
+            daily,
+
+          lastClaimDate:
+            Timestamp.fromDate(
+              now
+            )
+
+        };
+
+
+        transaction.set(
+
+          userRef,
+
+          {
+
+            balance:
+              newBalance,
+
+            transactions:
+              transactions
+
+          },
+
+          {
+
+            merge:true
+
+          }
+
+        );
+
+      }
+    );
+
+
+    alert(
+      "Income claimed successfully."
+    );
+
+
+    await loadInvestments();
+
+
+  }catch(error){
+
+    console.error(
+      "Claim income error:",
+      error
+    );
+
+
+    if(
+      error.message ===
+      "Claim is not available yet."
+    ){
+
+      alert(
+        "Your 24-hour claim is not ready yet."
+      );
+
+    }else if(
+      error.message ===
+      "Investment cycle completed."
+    ){
+
+      alert(
+        "This investment has already completed its 30-day cycle."
+      );
+
+    }else if(
+      error.message ===
+      "Investment not found."
+    ){
+
+      alert(
+        "Investment not found. Please refresh the page."
+      );
+
+    }else if(
+      error.message ===
+      "Invalid daily income."
+    ){
+
+      alert(
+        "This investment has an invalid daily income."
+      );
+
+    }else{
+
+      alert(
+        "Unable to claim income. Please try again."
+      );
+
+    }
+
+
+    await loadInvestments();
+
+  }
+
+}
+
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    if(!user){
+
+      stopCountdown();
+
+      window.location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    await loadInvestments();
+
+  }
+);
+
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+logoutButton.addEventListener(
+  "click",
+  async () => {
+
+    try{
+
+      stopCountdown();
+
+
+      await signOut(
+        auth
+      );
+
+
+      window.location.href =
+        "index.html";
+
+    }catch(error){
+
+      console.error(
+        "Logout error:",
+        error
+      );
+
+
+      alert(
+        "Logout failed. Please try again."
+      );
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+
+</html>
