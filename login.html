@@ -1297,30 +1297,21 @@ document
 
   .then((userCredential) => {
 
-    const user =
-      userCredential.user;
+  console.log("LOGIN SUCCESS:", userCredential.user);
 
-    console.log(
-      "LOGIN SUCCESS:",
-      user.email
-    );
+  if (firebaseEmail === "639999999999@novarise.local") {
 
-    if (
-      user.email ===
-      "639999999999@novarise.local"
-    ) {
+    window.location.href =
+      "admin-withdraw.html";
 
-      window.location.href =
-        "admin-withdraw.html";
+  } else {
 
-    } else {
+    window.location.href =
+      "dashboard.html";
 
-      window.location.href =
-        "dashboard.html";
+  }
 
-    }
-
-  })
+})
 
 
         .catch((error) => {
