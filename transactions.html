@@ -1056,20 +1056,35 @@
   </main>
 
 
-
   <!-- =========================
-       FIREBASE COMPAT
-       SAME AUTH SYSTEM AS LOGIN
+       FIREBASE MODULAR
        ========================= -->
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script type="module">
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    import {
+      initializeApp
+    } from
+      "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    import {
+      initializeAuth,
+      indexedDBLocalPersistence,
+      browserLocalPersistence,
+      browserSessionPersistence,
+      onAuthStateChanged,
+      signOut
+    } from
+      "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
-  <script>
+    import {
+      getFirestore,
+      doc,
+      getDoc
+    } from
+      "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
     /* =========================
@@ -1106,21 +1121,38 @@
        FIREBASE START
        ========================= */
 
-    if (!firebase.apps.length) {
-
-      firebase.initializeApp(
+    const app =
+      initializeApp(
         firebaseConfig
       );
 
-    }
 
+    /*
+      Explicitly use IndexedDB
+      for the saved Firebase login.
+
+      This is important because
+      your browser already has the
+      saved Firebase session there.
+    */
 
     const auth =
-      firebase.auth();
+      initializeAuth(
+        app,
+        {
+          persistence: [
+            indexedDBLocalPersistence,
+            browserLocalPersistence,
+            browserSessionPersistence
+          ]
+        }
+      );
 
 
     const db =
-      firebase.firestore();
+      getFirestore(
+        app
+      );
 
 
     /* =========================
@@ -1177,7 +1209,6 @@
 
     function getTransactionDetails(type) {
 
-
       if (
         type === "Deposit"
       ) {
@@ -1201,8 +1232,7 @@
 
       /*
         Withdrawal Request and
-        Withdraw both use the
-        withdrawal style.
+        Withdraw use withdrawal style.
       */
 
       if (
@@ -1226,6 +1256,11 @@
 
       }
 
+
+      /*
+        Investment and other
+        transaction types.
+      */
 
       return {
 
@@ -1253,17 +1288,21 @@
       try {
 
         const userRef =
-          db
-            .collection("Users")
-            .doc(user.uid);
+          doc(
+            db,
+            "Users",
+            user.uid
+          );
 
 
         const snapshot =
-          await userRef.get();
+          await getDoc(
+            userRef
+          );
 
 
         if (
-          !snapshot.exists
+          !snapshot.exists()
         ) {
 
           showEmpty();
@@ -1301,7 +1340,7 @@
 
 
         /*
-          Newest transaction first
+          Newest transaction first.
         */
 
         const sortedTransactions =
@@ -1397,7 +1436,7 @@
 
 
             /*
-              Show a cleaner title for
+              Cleaner title for
               withdrawal requests.
             */
 
@@ -1489,9 +1528,9 @@
             );
 
 
-            /*
-              Withdrawal status
-            */
+            /* =====================
+               WITHDRAWAL STATUS
+               ===================== */
 
             if (
               type === "Withdrawal Request"
@@ -1670,7 +1709,9 @@
 
         try {
 
-          await auth.signOut();
+          await signOut(
+            auth
+          );
 
 
           window.location.href =
@@ -1699,132 +1740,53 @@
        AUTH RESTORE
        ========================= */
 
-    async function startTransactionPage() {
-
-      try {
-
-        /*
-          Use exactly the same LOCAL
-          persistence system as login.html.
-        */
-
-        await auth.setPersistence(
-          firebase.auth.Auth.Persistence.LOCAL
-        );
+    let authFinished = false;
 
 
-        /*
-          Wait for Firebase to finish
-          restoring the saved account.
-        */
+    /*
+      Wait until Firebase has
+      finished restoring Auth.
+    */
+
+    if (
+      typeof auth.authStateReady ===
+      "function"
+    ) {
+
+      await auth.authStateReady();
+
+    }
+
+
+    /*
+      Listen for restored account.
+    */
+
+    onAuthStateChanged(
+      auth,
+      async user => {
 
         if (
-          typeof auth.authStateReady ===
-          "function"
+          authFinished
         ) {
 
-          await auth.authStateReady();
+          return;
 
         }
 
 
-        /*
-          First check the already-restored
-          user.
-        */
+        if (
+          user
+        ) {
 
-        let user =
-          auth.currentUser;
+          authFinished = true;
 
 
-        /*
-          If Firebase still has no user,
-          wait for authStateChanged.
+          console.log(
+            "TRANSACTION AUTH RESTORED:",
+            user.email
+          );
 
-          IMPORTANT:
-          We DO NOT redirect to login.html.
-        */
-
-        if (!user) {
-
-          user =
-            await new Promise(
-              resolve => {
-
-                let finished = false;
-
-
-                const unsubscribe =
-                  auth.onAuthStateChanged(
-                    currentUser => {
-
-                      if (finished) {
-                        return;
-                      }
-
-
-                      /*
-                        If Firebase gives us
-                        a user, use it immediately.
-                      */
-
-                      if (currentUser) {
-
-                        finished = true;
-
-                        unsubscribe();
-
-                        resolve(
-                          currentUser
-                        );
-
-                      }
-
-                    }
-                  );
-
-
-                /*
-                  Give Firebase enough time
-                  to restore the session.
-
-                  We stay on transaction.html
-                  even if there is no session.
-                */
-
-                setTimeout(
-                  () => {
-
-                    if (finished) {
-                      return;
-                    }
-
-
-                    finished = true;
-
-                    unsubscribe();
-
-
-                    resolve(
-                      auth.currentUser ||
-                      null
-                    );
-
-                  },
-                  8000
-                );
-
-              }
-            );
-
-        }
-
-
-        /* =========================
-           USER FOUND
-           ========================= */
-
-        if (user) {
 
           emailElement.textContent =
             user.email ||
@@ -1840,14 +1802,63 @@
 
         }
 
+      }
+    );
 
-        /* =========================
-           NO USER
-           =========================
 
-           IMPORTANT:
-           NEVER redirect to
-           login.html here.
+    /*
+      Final check after Firebase
+      has had enough time to restore.
+    */
+
+    setTimeout(
+      () => {
+
+        if (
+          authFinished
+        ) {
+
+          return;
+
+        }
+
+
+        const user =
+          auth.currentUser;
+
+
+        if (
+          user
+        ) {
+
+          authFinished = true;
+
+
+          console.log(
+            "TRANSACTION AUTH FOUND:",
+            user.email
+          );
+
+
+          emailElement.textContent =
+            user.email ||
+            "Logged in";
+
+
+          loadTransactions(
+            user
+          );
+
+
+          return;
+
+        }
+
+
+        /*
+          IMPORTANT:
+          Stay on transaction.html.
+          Never redirect to login.html.
         */
 
         emailElement.textContent =
@@ -1876,56 +1887,9 @@
 
         `;
 
-
-      } catch (error) {
-
-        console.error(
-          "Transaction auth restore error:",
-          error
-        );
-
-
-        /*
-          Stay on transaction.html.
-          Never force the user to login.html.
-        */
-
-        emailElement.textContent =
-          "Unable to restore account session";
-
-
-        transactionsElement.innerHTML = `
-
-          <div class="message">
-
-            <div class="message-icon">
-              ⚠️
-            </div>
-
-            <h3>
-              Unable to load account
-            </h3>
-
-            <p>
-              Please refresh this page
-              and try again.
-            </p>
-
-          </div>
-
-        `;
-
-      }
-
-    }
-
-
-    /* =========================
-       START
-       ========================= */
-
-    startTransactionPage();
-
+      },
+      10000
+    );
 
   </script>
 
