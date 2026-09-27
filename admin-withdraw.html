@@ -373,17 +373,18 @@ auth.setPersistence(
 )
 .then(()=>{
 
-  auth.onAuthStateChanged((user)=>{
+  auth.onAuthStateChanged(async (user) => {
 
     console.log(
-      "ADMIN PAGE USER:",
+      "CURRENT FIREBASE USER:",
       user
     );
+
+    await checkUser(user);
 
   });
 
 });
-
 /*
   ADMIN ACCOUNT
 
