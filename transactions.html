@@ -1677,6 +1677,16 @@
       "click",
       async () => {
 
+        const confirmed =
+          confirm(
+            "Are you sure you want to logout?"
+          );
+
+        if (!confirmed) {
+          return;
+        }
+
+
         try {
 
           await signOut(
@@ -1708,17 +1718,128 @@
 
 
     /* =========================
-       LOGIN CHECK
+       LOGIN / SESSION CHECK
        ========================= */
 
-    onAuthStateChanged(
-      auth,
-      async user => {
+    async function checkLoginAndLoad() {
+
+      try {
+
+        /*
+          Firebase can take a moment to restore
+          the saved login session after navigation.
+          Wait for that restoration before checking
+          currentUser.
+        */
+
+        if (
+          typeof auth.authStateReady === "function"
+        ) {
+
+          await auth.authStateReady();
+
+        }
+
+
+        const user =
+          auth.currentUser;
+
 
         if (!user) {
 
-          window.location.href =
-            "login.html";
+          /*
+            If there is genuinely no logged-in user,
+            listen once for Firebase's auth state.
+          */
+
+          const restoredUser =
+            await new Promise(
+              resolve => {
+
+                let finished =
+                  false;
+
+
+                const unsubscribe =
+                  onAuthStateChanged(
+                    auth,
+                    currentUser => {
+
+                      if (
+                        finished
+                      ) {
+
+                        return;
+
+                      }
+
+
+                      finished =
+                        true;
+
+
+                      unsubscribe();
+
+
+                      resolve(
+                        currentUser ||
+                        null
+                      );
+
+                    }
+                  );
+
+
+                setTimeout(
+                  () => {
+
+                    if (
+                      finished
+                    ) {
+
+                      return;
+
+                    }
+
+
+                    finished =
+                      true;
+
+
+                    unsubscribe();
+
+
+                    resolve(
+                      auth.currentUser ||
+                      null
+                    );
+
+                  },
+                  3000
+                );
+
+              }
+            );
+
+
+          if (!restoredUser) {
+
+            window.location.href =
+              "login.html";
+
+            return;
+
+          }
+
+
+          emailElement.textContent =
+            restoredUser.email ||
+            "Logged in";
+
+
+          await loadTransactions(
+            restoredUser
+          );
 
           return;
 
@@ -1734,8 +1855,42 @@
           user
         );
 
+
+      } catch (error) {
+
+        console.error(
+          "Authentication/session error:",
+          error
+        );
+
+
+        transactionsElement.innerHTML = `
+
+          <div class="message">
+
+            <div class="message-icon">
+              ⚠️
+            </div>
+
+            <h3>
+              Unable to restore your session
+            </h3>
+
+            <p>
+              Please refresh the page
+              and try again.
+            </p>
+
+          </div>
+
+        `;
+
       }
-    );
+
+    }
+
+
+    checkLoginAndLoad();
 
 
   </script>
