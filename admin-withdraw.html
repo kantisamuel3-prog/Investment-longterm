@@ -439,71 +439,53 @@ function formatMoney(value){
       firebase.auth.Auth.Persistence.LOCAL
     );
 
-
-    if(
-      typeof auth.authStateReady ===
-      "function"
-    ){
-
-      await auth.authStateReady();
-
-    }
-
-
-    let user =
-      auth.currentUser;
-
+    let user = auth.currentUser;
 
     if(!user){
 
-      user =
-        await new Promise(resolve => {
+      user = await new Promise(resolve => {
 
-          let finished = false;
+        let finished = false;
 
+        const unsubscribe =
+          auth.onAuthStateChanged(
+            currentUser => {
 
-          const unsubscribe =
-            auth.onAuthStateChanged(
-              currentUser => {
+              if(finished) return;
 
-                if(finished)
-                  return;
+              finished = true;
 
-                finished = true;
+              unsubscribe();
 
-                unsubscribe();
+              resolve(
+                currentUser || null
+              );
 
-                resolve(
-                  currentUser || null
-                );
+            }
+          );
 
-              }
-            );
+        setTimeout(() => {
 
+          if(finished) return;
 
-          setTimeout(() => {
+          finished = true;
 
-            if(finished)
-              return;
+          unsubscribe();
 
-            finished = true;
+          resolve(
+            auth.currentUser || null
+          );
 
-            unsubscribe();
+        },8000);
 
-            resolve(
-              auth.currentUser || null
-            );
-
-          },3000);
-
-        });
+      });
 
     }
 
-
-    /* ---------------------------------------
-       NO LOGIN SESSION
-    --------------------------------------- */
+    console.log(
+      "ADMIN AUTH USER:",
+      user
+    );
 
     if(!user){
 
@@ -527,10 +509,12 @@ function formatMoney(value){
 
     }
 
+    await user.getIdToken(true);
 
-    /* ---------------------------------------
-       ADMIN AUTHORIZATION
-    --------------------------------------- */
+    console.log(
+      "ADMIN EMAIL:",
+      user.email
+    );
 
     if(
       user.email !==
@@ -558,13 +542,11 @@ function formatMoney(value){
 
     }
 
-
-    /* ---------------------------------------
-       ADMIN VERIFIED
-    --------------------------------------- */
+    console.log(
+      "ADMIN VERIFIED"
+    );
 
     await loadWithdrawals();
-
 
   }catch(error){
 
@@ -572,7 +554,6 @@ function formatMoney(value){
       "Firebase Auth restore error:",
       error
     );
-
 
     $("withdrawals").innerHTML = `
       <div class="error">
@@ -588,7 +569,6 @@ function formatMoney(value){
       </div>
     `;
 
-
     $("pendingCount").textContent = "0";
     $("pendingAmount").textContent = "₱0.00";
     $("totalCount").textContent = "0";
@@ -596,7 +576,6 @@ function formatMoney(value){
   }
 
 })();
-
 
 /* -----------------------------------------
    LOAD ALL REQUESTS
