@@ -1071,6 +1071,181 @@ async function approveWithdrawal(
 
 }
 
+/* -----------------------------------------
+   APPROVE RECHARGE
+----------------------------------------- */
+
+async function approveRecharge(
+  UserId,
+  orderId,
+  amount,
+  index
+){
+
+  if(!UserId || !orderId){
+    alert("Invalid recharge request.");
+    return;
+  }
+
+  const rechargeAmount =
+    Number(amount);
+
+  if(
+    !Number.isFinite(rechargeAmount) ||
+    rechargeAmount <= 0
+  ){
+    alert("Invalid recharge amount.");
+    return;
+  }
+
+  const userRef =
+    db.collection("Users")
+      .doc(UserId);
+
+  try{
+
+    await db.runTransaction(
+      async transaction => {
+
+        const snap =
+          await transaction.get(
+            userRef
+          );
+
+        if(!snap.exists){
+          throw new Error(
+            "USER_NOT_FOUND"
+          );
+        }
+
+        const data =
+          snap.data() || {};
+
+        const transactions =
+          Array.isArray(
+            data.transactions
+          )
+            ? [...data.transactions]
+            : [];
+
+        const rechargeIndex =
+          transactions.findIndex(
+            transaction =>
+              transaction &&
+              transaction.type ===
+                "Recharge" &&
+              transaction.orderId ===
+                orderId
+          );
+
+        if(rechargeIndex === -1){
+          throw new Error(
+            "RECHARGE_NOT_FOUND"
+          );
+        }
+
+        const recharge =
+          transactions[
+            rechargeIndex
+          ];
+
+        const currentStatus =
+          String(
+            recharge.status ||
+            "PENDING"
+          ).toUpperCase();
+
+        if(
+          currentStatus !==
+          "PENDING"
+        ){
+          throw new Error(
+            "RECHARGE_ALREADY_PROCESSED"
+          );
+        }
+
+        const currentBalance =
+          Number(
+            data.balance || 0
+          );
+
+        transactions[
+          rechargeIndex
+        ] = {
+          ...recharge,
+
+          status:
+            "APPROVED",
+
+          approvedAt:
+            new Date().toISOString()
+        };
+
+        transaction.update(
+          userRef,
+          {
+            balance:
+              currentBalance +
+              rechargeAmount,
+
+            transactions
+          }
+        );
+
+      }
+    );
+
+    await loadWithdrawals();
+
+    alert(
+      "Recharge approved successfully."
+    );
+
+  }catch(error){
+
+    console.error(
+      "Approve recharge error:",
+      error
+    );
+
+    if(
+      error.message ===
+      "RECHARGE_ALREADY_PROCESSED"
+    ){
+
+      alert(
+        "This recharge has already been processed."
+      );
+
+    }else if(
+      error.message ===
+      "RECHARGE_NOT_FOUND"
+    ){
+
+      alert(
+        "Recharge request was not found."
+      );
+
+    }else if(
+      error.message ===
+      "USER_NOT_FOUND"
+    ){
+
+      alert(
+        "Member account was not found."
+      );
+
+    }else{
+
+      alert(
+        "Unable to approve recharge."
+      );
+
+    }
+
+  }
+
+}
 
 /* -----------------------------------------
    REJECT WITHDRAWAL
