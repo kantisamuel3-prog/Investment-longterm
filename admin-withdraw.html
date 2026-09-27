@@ -1824,7 +1824,149 @@ async function approveRecharge(
 
 }
 
+/* -----------------------------------------
+   REJECT RECHARGE
+----------------------------------------- */
 
+async function rejectRecharge(
+  UserId,
+  orderId,
+  index
+){
+
+  try{
+
+    const UserRef =
+      db.collection("Users")
+        .doc(UserId);
+
+
+    await db.runTransaction(
+      async transaction => {
+
+        const snap =
+          await transaction.get(
+            UserRef
+          );
+
+
+        if(!snap.exists){
+
+          throw new Error(
+            "USER_NOT_FOUND"
+          );
+
+        }
+
+
+        const data =
+          snap.data() || {};
+
+
+        const transactions =
+          Array.isArray(
+            data.transactions
+          )
+            ? [...data.transactions]
+            : [];
+
+
+        const rechargeIndex =
+          transactions.findIndex(
+            item =>
+              item &&
+              item.type === "Recharge" &&
+              item.orderId === orderId
+          );
+
+
+        if(
+          rechargeIndex === -1
+        ){
+
+          throw new Error(
+            "RECHARGE_NOT_FOUND"
+          );
+
+        }
+
+
+        const recharge =
+          transactions[
+            rechargeIndex
+          ];
+
+
+        const status =
+          String(
+            recharge.status ||
+            "PENDING"
+          ).toUpperCase();
+
+
+        if(
+          status !== "PENDING"
+        ){
+
+          throw new Error(
+            "ALREADY_PROCESSED"
+          );
+
+        }
+
+
+        transactions[
+          rechargeIndex
+        ] = {
+
+          ...recharge,
+
+          status:
+            "REJECTED",
+
+          rejectedAt:
+            new Date()
+              .toISOString()
+
+        };
+
+
+        transaction.update(
+          UserRef,
+          {
+            transactions
+          }
+        );
+
+
+      }
+    );
+
+
+    await loadWithdrawals();
+
+
+    alert(
+      "Recharge rejected successfully."
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Reject recharge error:",
+      error
+    );
+
+
+    alert(
+      "Unable to reject recharge."
+    );
+
+  }
+
+}
+      
 /* -----------------------------------------
    REJECT WITHDRAWAL
 ----------------------------------------- */
