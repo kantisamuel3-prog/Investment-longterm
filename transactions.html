@@ -1052,43 +1052,17 @@
 
 
   <!-- =========================
-       FIREBASE
+       FIREBASE COMPAT
        ========================= -->
 
-  <script type="module">
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 
-    import {
-
-      initializeApp
-
-    } from
-      "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-
-    import {
-
-      getAuth,
-
-      onAuthStateChanged,
-
-      signOut
-
-    } from
-      "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
-
-    import {
-
-      getFirestore,
-
-      doc,
-
-      getDoc
-
-    } from
-      "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
+  <script>
 
 
     /* =========================
@@ -1118,24 +1092,21 @@
     };
 
 
-
     /* =========================
        FIREBASE START
        ========================= */
 
-    const app =
-      initializeApp(
-        firebaseConfig
-      );
+    firebase.initializeApp(
+      firebaseConfig
+    );
 
 
     const auth =
-      getAuth(app);
+      firebase.auth();
 
 
     const db =
-      getFirestore(app);
-
+      firebase.firestore();
 
 
     /* =========================
@@ -1166,7 +1137,6 @@
       );
 
 
-
     /* =========================
        MONEY FORMAT
        ========================= */
@@ -1187,13 +1157,11 @@
     }
 
 
-
     /* =========================
        TRANSACTION TYPE
        ========================= */
 
     function getTransactionDetails(type) {
-
 
       if (type === "Deposit") {
 
@@ -1253,7 +1221,6 @@
     }
 
 
-
     /* =========================
        LOAD TRANSACTIONS
        ========================= */
@@ -1263,20 +1230,16 @@
       try {
 
         const userRef =
-          doc(
-            db,
-            "Users",
-            user.uid
-          );
+          db
+            .collection("Users")
+            .doc(user.uid);
 
 
         const snapshot =
-          await getDoc(
-            userRef
-          );
+          await userRef.get();
 
 
-        if (!snapshot.exists()) {
+        if (!snapshot.exists) {
 
           showEmpty();
 
@@ -1350,7 +1313,6 @@
               );
 
 
-
             /* =====================
                TRANSACTION CONTAINER
                ===================== */
@@ -1365,7 +1327,6 @@
               "transaction";
 
 
-
             /* =====================
                LEFT SIDE
                ===================== */
@@ -1378,7 +1339,6 @@
 
             left.className =
               "transaction-left";
-
 
 
             /* ICON */
@@ -1396,7 +1356,6 @@
 
             icon.textContent =
               details.icon;
-
 
 
             /* INFO */
@@ -1421,7 +1380,6 @@
               type;
 
 
-
             const dateElement =
               document.createElement(
                 "div"
@@ -1436,7 +1394,6 @@
               date;
 
 
-
             info.appendChild(
               title
             );
@@ -1445,7 +1402,6 @@
             info.appendChild(
               dateElement
             );
-
 
 
             /* =====================
@@ -1530,7 +1486,6 @@
             }
 
 
-
             left.appendChild(
               icon
             );
@@ -1539,7 +1494,6 @@
             left.appendChild(
               info
             );
-
 
 
             /* =====================
@@ -1562,7 +1516,6 @@
               formatMoney(
                 amount
               );
-
 
 
             /* =====================
@@ -1621,7 +1574,6 @@
     }
 
 
-
     /* =========================
        EMPTY TRANSACTIONS
        ========================= */
@@ -1652,7 +1604,6 @@
     }
 
 
-
     /* =========================
        HOME
        ========================= */
@@ -1666,7 +1617,6 @@
 
       }
     );
-
 
 
     /* =========================
@@ -1689,9 +1639,7 @@
 
         try {
 
-          await signOut(
-            auth
-          );
+          await auth.signOut();
 
 
           window.location.href =
@@ -1716,24 +1664,32 @@
     );
 
 
-
     /* =========================
-       LOGIN / SESSION CHECK
+       AUTH SESSION RESTORE
        ========================= */
 
-    async function checkLoginAndLoad() {
+    async function getLoggedInUser() {
 
       try {
 
         /*
-          Firebase can take a moment to restore
-          the saved login session after navigation.
-          Wait for that restoration before checking
-          currentUser.
+          Use the same LOCAL persistence
+          as the existing Novarise login.
+        */
+
+        await auth.setPersistence(
+          firebase.auth.Auth.Persistence.LOCAL
+        );
+
+
+        /*
+          Firebase 10.12.2 may support
+          authStateReady().
         */
 
         if (
-          typeof auth.authStateReady === "function"
+          typeof auth.authStateReady ===
+          "function"
         ) {
 
           await auth.authStateReady();
@@ -1741,115 +1697,145 @@
         }
 
 
-        const user =
+        /*
+          First check the restored user.
+        */
+
+        let user =
           auth.currentUser;
 
 
-        if (!user) {
+        if (user) {
 
-          /*
-            If there is genuinely no logged-in user,
-            listen once for Firebase's auth state.
-          */
+          return user;
 
-          const restoredUser =
-            await new Promise(
-              resolve => {
-
-                let finished =
-                  false;
+        }
 
 
-                const unsubscribe =
-                  onAuthStateChanged(
-                    auth,
-                    currentUser => {
+        /*
+          If Firebase is still restoring,
+          wait for the auth state once.
+        */
 
-                      if (
-                        finished
-                      ) {
+        return await new Promise(
+          resolve => {
 
-                        return;
-
-                      }
+            let finished =
+              false;
 
 
-                      finished =
-                        true;
+            const unsubscribe =
+              auth.onAuthStateChanged(
+                currentUser => {
+
+                  if (finished) {
+                    return;
+                  }
 
 
-                      unsubscribe();
+                  finished =
+                    true;
 
 
-                      resolve(
-                        currentUser ||
-                        null
-                      );
+                  unsubscribe();
 
-                    }
+
+                  resolve(
+                    currentUser ||
+                    null
                   );
 
-
-                setTimeout(
-                  () => {
-
-                    if (
-                      finished
-                    ) {
-
-                      return;
-
-                    }
+                }
+              );
 
 
-                    finished =
-                      true;
+            /*
+              Do not wait forever.
+            */
+
+            setTimeout(
+              () => {
+
+                if (finished) {
+                  return;
+                }
 
 
-                    unsubscribe();
+                finished =
+                  true;
 
 
-                    resolve(
-                      auth.currentUser ||
-                      null
-                    );
+                unsubscribe();
 
-                  },
-                  3000
+
+                resolve(
+                  auth.currentUser ||
+                  null
                 );
 
-              }
+              },
+              3000
             );
 
-
-          if (!restoredUser) {
-
-            window.location.href =
-              "login.html";
-
-            return;
-
           }
+        );
 
 
-          emailElement.textContent =
-            restoredUser.email ||
-            "Logged in";
+      } catch (error) {
+
+        console.error(
+          "Auth restore error:",
+          error
+        );
 
 
-          await loadTransactions(
-            restoredUser
-          );
+        return null;
+
+      }
+
+    }
+
+
+    /* =========================
+       START TRANSACTION PAGE
+       ========================= */
+
+    async function startTransactionPage() {
+
+      try {
+
+        const user =
+          await getLoggedInUser();
+
+
+        /*
+          Only redirect to login when
+          there is genuinely no session.
+        */
+
+        if (!user) {
+
+          window.location.href =
+            "login.html";
 
           return;
 
         }
 
 
+        /*
+          Show logged-in account.
+        */
+
         emailElement.textContent =
           user.email ||
           "Logged in";
 
+
+        /*
+          Load the same Users/{uid}
+          document as before.
+        */
 
         await loadTransactions(
           user
@@ -1859,7 +1845,7 @@
       } catch (error) {
 
         console.error(
-          "Authentication/session error:",
+          "Transaction page error:",
           error
         );
 
@@ -1890,7 +1876,11 @@
     }
 
 
-    checkLoginAndLoad();
+    /*
+      Start the page.
+    */
+
+    startTransactionPage();
 
 
   </script>
