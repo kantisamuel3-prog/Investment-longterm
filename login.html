@@ -1307,16 +1307,20 @@ document
     user.email
   );
 
-
   return auth.setPersistence(
     firebase.auth.Auth.Persistence.LOCAL
-  ).then(() => {
+  )
+  .then(() => {
+
+    return user.getIdToken(true);
+
+  })
+  .then(() => {
 
     console.log(
       "SESSION SAVED:",
       auth.currentUser
     );
-
 
     if (
       user.email ===
@@ -1336,7 +1340,6 @@ document
   });
 
 })
-
         .catch((error) => {
 
           console.error(
