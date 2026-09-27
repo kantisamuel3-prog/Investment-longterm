@@ -309,34 +309,6 @@ button:hover{
 }
 
 
-/* LOGOUT */
-
-#logoutButton{
-  background:
-    linear-gradient(
-      135deg,
-      #ef4444,
-      #f43f5e
-    );
-
-  color:white;
-
-  box-shadow:
-    0 6px 18px
-    rgba(239,68,68,.22);
-}
-
-
-#logoutButton:hover{
-  background:
-    linear-gradient(
-      135deg,
-      #dc2626,
-      #e11d48
-    );
-}
-
-
 /* =========================
    MAIN
    ========================= */
@@ -1341,11 +1313,6 @@ main{
       🏠 Home
     </button>
 
-
-    <button id="logoutButton">
-      Logout
-    </button>
-
   </div>
 
 </header>
@@ -1490,9 +1457,6 @@ main{
 
   const homeButton =
     document.getElementById("homeButton");
-
-  const logoutButton =
-    document.getElementById("logoutButton");
 
 
   /* =========================
@@ -1887,40 +1851,6 @@ main{
 
     }
   );
-
-
-  /* =========================
-     LOGOUT
-     ========================= */
-
-  logoutButton.addEventListener(
-    "click",
-    async () => {
-
-      try {
-
-        await auth.signOut();
-
-        window.location.href =
-          "index.html";
-
-
-      } catch (error) {
-
-        console.error(
-          "Logout error:",
-          error
-        );
-
-        alert(
-          "Logout failed. Please try again."
-        );
-
-      }
-
-    }
-  );
-
 
   /* =========================
      AUTH RESTORE
