@@ -6,9 +6,9 @@
   <meta charset="UTF-8">
 
   <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
 
   <meta name="theme-color" content="#101827">
 
@@ -464,6 +464,51 @@
     }
 
 
+    /* =========================
+       WITHDRAWAL STATUS
+       ========================= */
+
+    .transaction-status {
+      display: inline-flex;
+
+      align-items: center;
+
+      width: fit-content;
+
+      margin-top: 6px;
+
+      padding: 4px 9px;
+
+      border-radius: 999px;
+
+      font-size: 11px;
+
+      font-weight: bold;
+
+      line-height: 1;
+
+      letter-spacing: 0.2px;
+    }
+
+
+    .status-pending {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+
+    .status-approved {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+
+    .status-rejected {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+
     .transaction-amount {
       flex: 0 0 auto;
 
@@ -686,6 +731,16 @@
       }
 
 
+      .transaction-status {
+        font-size: 10px;
+
+        padding:
+          4px 8px;
+
+        margin-top: 5px;
+      }
+
+
       .transaction-amount {
         font-size: 13px;
       }
@@ -823,6 +878,14 @@
 
       .transaction-date {
         font-size: 10px;
+      }
+
+
+      .transaction-status {
+        font-size: 9px;
+
+        padding:
+          3px 7px;
       }
 
 
@@ -1035,7 +1098,7 @@
     const firebaseConfig = {
 
       apiKey:
-        "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+        "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqGk",
 
       authDomain:
         "investpro-2dafb.firebaseapp.com",
@@ -1151,7 +1214,10 @@
       }
 
 
-      if (type === "Withdraw") {
+      if (
+        type === "Withdraw" ||
+        type === "Withdrawal Request"
+      ) {
 
         return {
 
@@ -1273,10 +1339,16 @@
               "Date unavailable";
 
 
+            const status =
+              transaction.status ||
+              "";
+
+
             const details =
               getTransactionDetails(
                 type
               );
+
 
 
             /* =====================
@@ -1293,6 +1365,7 @@
               "transaction";
 
 
+
             /* =====================
                LEFT SIDE
                ===================== */
@@ -1305,6 +1378,7 @@
 
             left.className =
               "transaction-left";
+
 
 
             /* ICON */
@@ -1322,6 +1396,7 @@
 
             icon.textContent =
               details.icon;
+
 
 
             /* INFO */
@@ -1346,6 +1421,7 @@
               type;
 
 
+
             const dateElement =
               document.createElement(
                 "div"
@@ -1360,6 +1436,7 @@
               date;
 
 
+
             info.appendChild(
               title
             );
@@ -1370,6 +1447,90 @@
             );
 
 
+
+            /* =====================
+               WITHDRAWAL STATUS
+               ===================== */
+
+            if (
+              type === "Withdrawal Request" &&
+              status
+            ) {
+
+              const statusElement =
+                document.createElement(
+                  "div"
+                );
+
+
+              const normalizedStatus =
+                String(status)
+                  .toUpperCase();
+
+
+              statusElement.className =
+                "transaction-status";
+
+
+              if (
+                normalizedStatus ===
+                "PENDING"
+              ) {
+
+                statusElement.classList.add(
+                  "status-pending"
+                );
+
+                statusElement.textContent =
+                  "PENDING";
+
+              }
+
+
+              else if (
+                normalizedStatus ===
+                "APPROVED"
+              ) {
+
+                statusElement.classList.add(
+                  "status-approved"
+                );
+
+                statusElement.textContent =
+                  "APPROVED";
+
+              }
+
+
+              else if (
+                normalizedStatus ===
+                "REJECTED"
+              ) {
+
+                statusElement.classList.add(
+                  "status-rejected"
+                );
+
+                statusElement.textContent =
+                  "REJECTED";
+
+              }
+
+
+              if (
+                statusElement.textContent
+              ) {
+
+                info.appendChild(
+                  statusElement
+                );
+
+              }
+
+            }
+
+
+
             left.appendChild(
               icon
             );
@@ -1378,6 +1539,7 @@
             left.appendChild(
               info
             );
+
 
 
             /* =====================
@@ -1400,6 +1562,7 @@
               formatMoney(
                 amount
               );
+
 
 
             /* =====================
