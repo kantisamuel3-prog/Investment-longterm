@@ -963,23 +963,31 @@ function renderRecharge(
 
     actions = `
 
-      <div class="actions">
+<div class="actions">
 
-        <button
-          type="button"
-          class="approve-btn approve-recharge-btn"
-          data-userid="${escapeHtml(request.UserId)}"
-          data-orderid="${escapeHtml(request.orderId || "")}"
-          data-amount="${Number(request.amount || 0)}"
-          data-index="${index}">
-          APPROVE
-        </button>
+<button
+type="button"
+class="approve-btn approve-recharge-btn"
+data-userid="${escapeHtml(request.UserId)}"
+data-orderid="${escapeHtml(request.orderId || "")}"
+data-amount="${Number(request.amount || 0)}"
+data-index="${index}">
+APPROVE
+</button>
 
-      </div>
 
-    `;
+<button
+type="button"
+class="reject-btn reject-recharge-btn"
+data-userid="${escapeHtml(request.UserId)}"
+data-orderid="${escapeHtml(request.orderId || "")}"
+data-index="${index}">
+REJECT
+</button>
 
-  }
+</div>
+
+`;
 
 
   return `
@@ -1080,14 +1088,31 @@ $("recharges").addEventListener(
   "click",
   function(event){
 
-    const button =
+
+    const approveButton =
       event.target.closest(
         ".approve-recharge-btn"
       );
 
 
-    if(!button)
+    const rejectButton =
+      event.target.closest(
+        ".reject-recharge-btn"
+      );
+
+
+    if(
+      !approveButton &&
+      !rejectButton
+    )
       return;
+
+
+
+    const button =
+      approveButton ||
+      rejectButton;
+
 
 
     const UserId =
@@ -1100,7 +1125,7 @@ $("recharges").addEventListener(
 
     const amount =
       Number(
-        button.dataset.amount
+        button.dataset.amount || 0
       );
 
 
@@ -1110,12 +1135,30 @@ $("recharges").addEventListener(
       );
 
 
-    approveRecharge(
-      UserId,
-      orderId,
-      amount,
-      index
-    );
+
+    if(approveButton){
+
+      approveRecharge(
+        UserId,
+        orderId,
+        amount,
+        index
+      );
+
+    }
+
+
+
+    if(rejectButton){
+
+      rejectRecharge(
+        UserId,
+        orderId,
+        index
+      );
+
+    }
+
 
   }
 );
