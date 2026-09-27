@@ -424,78 +424,78 @@ function formatMoney(value){
    AUTH CHECK
 ----------------------------------------- */
 
-/*
-  Wait for Firebase to finish restoring the existing
-  LOCAL authentication session before checking the user.
-
-  This does NOT change the login system. It only waits
-  for Firebase Auth to finish restoring the session here.
-*/
-(async function(){
-
-  try{
-
-    if(typeof auth.authStateReady === "function"){
-      await auth.authStateReady();
-    }
-
-    const checkUser = async (user) => {
-
-      if(!user){
-        $("withdrawals").innerHTML = `
-          <div class="error">
-            Please login first using the existing Novarise login page.
-          </div>
-        `;
-        $("pendingCount").textContent = "0";
-        $("pendingAmount").textContent = "₱0.00";
-        $("totalCount").textContent = "0";
-        return;
-      }
-
-      if(user.email !== ADMIN_EMAIL){
-        $("withdrawals").innerHTML = `
-          <div class="error">
-            Access denied.<br><br>
-            This page is for the withdrawal administrator only.
-          </div>
-        `;
-        $("pendingCount").textContent = "0";
-        $("pendingAmount").textContent = "₱0.00";
-        $("totalCount").textContent = "0";
-        return;
-      }
-
-      await loadWithdrawals();
-    };
-
-    auth.onAuthStateChanged(async (user) => {
+auth.onAuthStateChanged(async (user) => {
 
   console.log(
     "CURRENT FIREBASE USER:",
     user
   );
 
-  if(user){
-    await checkUser(user);
-  }
 
-});
+  /* ---------------------------------------
+     NO LOGIN SESSION
+  --------------------------------------- */
 
-  }catch(error){
+  if (!user) {
 
-    console.error("Firebase Auth restore error:", error);
+    console.log(
+      "NO FIREBASE AUTH SESSION FOUND"
+    );
 
     $("withdrawals").innerHTML = `
       <div class="error">
-        Unable to restore the administrator login session.<br>
-        Please refresh the page.
+        Please login first using the existing Novarise login page.
       </div>
     `;
 
+    $("pendingCount").textContent = "0";
+    $("pendingAmount").textContent = "₱0.00";
+    $("totalCount").textContent = "0";
+
+    return;
   }
 
-})();
+
+  /* ---------------------------------------
+     ADMIN AUTHORIZATION
+  --------------------------------------- */
+
+  console.log(
+    "FIREBASE USER EMAIL:",
+    user.email
+  );
+
+
+  if (user.email !== ADMIN_EMAIL) {
+
+    $("withdrawals").innerHTML = `
+      <div class="error">
+        Access denied.<br><br>
+        This page is for the withdrawal administrator only.
+      </div>
+    `;
+
+    $("pendingCount").textContent = "0";
+    $("pendingAmount").textContent = "₱0.00";
+    $("totalCount").textContent = "0";
+
+    return;
+  }
+
+
+  /* ---------------------------------------
+     ADMIN VERIFIED
+  --------------------------------------- */
+
+  console.log(
+    "ADMIN AUTHORIZED:",
+    user.email
+  );
+
+
+  await loadWithdrawals();
+
+});
 
 
 /* -----------------------------------------
