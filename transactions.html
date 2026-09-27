@@ -464,51 +464,6 @@
     }
 
 
-    /* =========================
-       WITHDRAWAL STATUS
-       ========================= */
-
-    .transaction-status {
-      display: inline-flex;
-
-      align-items: center;
-
-      width: fit-content;
-
-      margin-top: 6px;
-
-      padding: 4px 9px;
-
-      border-radius: 999px;
-
-      font-size: 11px;
-
-      font-weight: bold;
-
-      line-height: 1;
-
-      letter-spacing: 0.2px;
-    }
-
-
-    .status-pending {
-      background: #fef3c7;
-      color: #b45309;
-    }
-
-
-    .status-approved {
-      background: #dcfce7;
-      color: #15803d;
-    }
-
-
-    .status-rejected {
-      background: #fee2e2;
-      color: #dc2626;
-    }
-
-
     .transaction-amount {
       flex: 0 0 auto;
 
@@ -534,6 +489,51 @@
 
     .investment-amount {
       color: #2563eb;
+    }
+
+
+    /* =========================
+       WITHDRAWAL STATUS
+       ========================= */
+
+    .transaction-status {
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      margin-top: 7px;
+
+      padding: 4px 9px;
+
+      border-radius: 999px;
+
+      font-size: 10px;
+
+      font-weight: 800;
+
+      letter-spacing: .4px;
+
+      line-height: 1;
+    }
+
+
+    .status-pending {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+
+    .status-approved {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+
+    .status-rejected {
+      background: #fee2e2;
+      color: #dc2626;
     }
 
 
@@ -731,18 +731,16 @@
       }
 
 
-      .transaction-status {
-        font-size: 10px;
-
-        padding:
-          4px 8px;
-
-        margin-top: 5px;
+      .transaction-amount {
+        font-size: 13px;
       }
 
 
-      .transaction-amount {
-        font-size: 13px;
+      .transaction-status {
+        font-size: 9px;
+
+        padding:
+          4px 7px;
       }
 
 
@@ -878,14 +876,6 @@
 
       .transaction-date {
         font-size: 10px;
-      }
-
-
-      .transaction-status {
-        font-size: 9px;
-
-        padding:
-          3px 7px;
       }
 
 
@@ -1096,9 +1086,13 @@
        FIREBASE START
        ========================= */
 
-    firebase.initializeApp(
-      firebaseConfig
-    );
+    if (!firebase.apps.length) {
+
+      firebase.initializeApp(
+        firebaseConfig
+      );
+
+    }
 
 
     const auth =
@@ -1163,7 +1157,10 @@
 
     function getTransactionDetails(type) {
 
-      if (type === "Deposit") {
+
+      if (
+        type === "Deposit"
+      ) {
 
         return {
 
@@ -1222,6 +1219,126 @@
 
 
     /* =========================
+       AUTH RESTORE
+       ========================= */
+
+    async function getLoggedInUser() {
+
+      /*
+        Use the same LOCAL persistence
+        as the existing Novarise login.
+      */
+
+      await auth.setPersistence(
+        firebase.auth.Auth.Persistence.LOCAL
+      );
+
+
+      /*
+        Firebase 10.12.2 may provide
+        authStateReady().
+      */
+
+      if (
+        typeof auth.authStateReady ===
+        "function"
+      ) {
+
+        await auth.authStateReady();
+
+      }
+
+
+      /*
+        Check immediately first.
+      */
+
+      let user =
+        auth.currentUser;
+
+
+      if (user) {
+
+        return user;
+
+      }
+
+
+      /*
+        If Firebase is still restoring
+        the saved login session,
+        wait for it instead of
+        immediately sending the user
+        to login.html.
+      */
+
+      return await new Promise(
+        resolve => {
+
+          let finished = false;
+
+
+          const unsubscribe =
+            auth.onAuthStateChanged(
+              currentUser => {
+
+                if (finished) {
+                  return;
+                }
+
+
+                finished = true;
+
+
+                unsubscribe();
+
+
+                resolve(
+                  currentUser || null
+                );
+
+              }
+            );
+
+
+          /*
+            Safety timeout.
+
+            This does NOT logout the user.
+            It only prevents the page from
+            waiting forever.
+          */
+
+          setTimeout(
+            () => {
+
+              if (finished) {
+                return;
+              }
+
+
+              finished = true;
+
+
+              unsubscribe();
+
+
+              resolve(
+                auth.currentUser ||
+                null
+              );
+
+            },
+            5000
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================
        LOAD TRANSACTIONS
        ========================= */
 
@@ -1239,7 +1356,9 @@
           await userRef.get();
 
 
-        if (!snapshot.exists) {
+        if (
+          !snapshot.exists
+        ) {
 
           showEmpty();
 
@@ -1276,7 +1395,7 @@
 
 
         /*
-          Newest transaction first
+          Newest transaction first.
         */
 
         const sortedTransactions =
@@ -1285,6 +1404,7 @@
 
         sortedTransactions.forEach(
           transaction => {
+
 
             const type =
               transaction.type ||
@@ -1300,11 +1420,6 @@
             const date =
               transaction.date ||
               "Date unavailable";
-
-
-            const status =
-              transaction.status ||
-              "";
 
 
             const details =
@@ -1404,24 +1519,31 @@
             );
 
 
-            /* =====================
-               WITHDRAWAL STATUS
-               ===================== */
+            /*
+              Withdrawal status
+              PENDING / APPROVED / REJECTED
+            */
 
             if (
-              type === "Withdrawal Request" &&
-              status
+              type ===
+              "Withdrawal Request"
             ) {
+
+              const rawStatus =
+                transaction.status ||
+                "PENDING";
+
+
+              const status =
+                String(
+                  rawStatus
+                ).toUpperCase();
+
 
               const statusElement =
                 document.createElement(
-                  "div"
+                  "span"
                 );
-
-
-              const normalizedStatus =
-                String(status)
-                  .toUpperCase();
 
 
               statusElement.className =
@@ -1429,59 +1551,41 @@
 
 
               if (
-                normalizedStatus ===
-                "PENDING"
-              ) {
-
-                statusElement.classList.add(
-                  "status-pending"
-                );
-
-                statusElement.textContent =
-                  "PENDING";
-
-              }
-
-
-              else if (
-                normalizedStatus ===
-                "APPROVED"
+                status === "APPROVED"
               ) {
 
                 statusElement.classList.add(
                   "status-approved"
                 );
 
-                statusElement.textContent =
-                  "APPROVED";
-
-              }
-
-
-              else if (
-                normalizedStatus ===
-                "REJECTED"
+              } else if (
+                status === "REJECTED"
               ) {
 
                 statusElement.classList.add(
                   "status-rejected"
                 );
 
-                statusElement.textContent =
-                  "REJECTED";
+              } else {
 
-              }
-
-
-              if (
-                statusElement.textContent
-              ) {
-
-                info.appendChild(
-                  statusElement
+                statusElement.classList.add(
+                  "status-pending"
                 );
 
               }
+
+
+              statusElement.textContent =
+                status === "APPROVED"
+                  ? "APPROVED"
+                  : status === "REJECTED"
+                    ? "REJECTED"
+                    : "PENDING";
+
+
+              info.appendChild(
+                statusElement
+              );
 
             }
 
@@ -1627,17 +1731,12 @@
       "click",
       async () => {
 
-        const confirmed =
-          confirm(
-            "Are you sure you want to logout?"
-          );
-
-        if (!confirmed) {
-          return;
-        }
-
-
         try {
+
+          /*
+            ONLY THIS BUTTON
+            performs sign out.
+          */
 
           await auth.signOut();
 
@@ -1665,152 +1764,29 @@
 
 
     /* =========================
-       AUTH SESSION RESTORE
+       START PAGE
        ========================= */
 
-    async function getLoggedInUser() {
+    async function startPage() {
 
       try {
 
         /*
-          Use the same LOCAL persistence
-          as the existing Novarise login.
+          Restore existing Firebase
+          login session first.
         */
-
-        await auth.setPersistence(
-          firebase.auth.Auth.Persistence.LOCAL
-        );
-
-
-        /*
-          Firebase 10.12.2 may support
-          authStateReady().
-        */
-
-        if (
-          typeof auth.authStateReady ===
-          "function"
-        ) {
-
-          await auth.authStateReady();
-
-        }
-
-
-        /*
-          First check the restored user.
-        */
-
-        let user =
-          auth.currentUser;
-
-
-        if (user) {
-
-          return user;
-
-        }
-
-
-        /*
-          If Firebase is still restoring,
-          wait for the auth state once.
-        */
-
-        return await new Promise(
-          resolve => {
-
-            let finished =
-              false;
-
-
-            const unsubscribe =
-              auth.onAuthStateChanged(
-                currentUser => {
-
-                  if (finished) {
-                    return;
-                  }
-
-
-                  finished =
-                    true;
-
-
-                  unsubscribe();
-
-
-                  resolve(
-                    currentUser ||
-                    null
-                  );
-
-                }
-              );
-
-
-            /*
-              Do not wait forever.
-            */
-
-            setTimeout(
-              () => {
-
-                if (finished) {
-                  return;
-                }
-
-
-                finished =
-                  true;
-
-
-                unsubscribe();
-
-
-                resolve(
-                  auth.currentUser ||
-                  null
-                );
-
-              },
-              3000
-            );
-
-          }
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          "Auth restore error:",
-          error
-        );
-
-
-        return null;
-
-      }
-
-    }
-
-
-    /* =========================
-       START TRANSACTION PAGE
-       ========================= */
-
-    async function startTransactionPage() {
-
-      try {
 
         const user =
           await getLoggedInUser();
 
 
         /*
-          Only redirect to login when
-          there is genuinely no session.
+          IMPORTANT:
+
+          We DO NOT call signOut here.
+
+          Only redirect if there is
+          genuinely no logged-in user.
         */
 
         if (!user) {
@@ -1823,19 +1799,10 @@
         }
 
 
-        /*
-          Show logged-in account.
-        */
-
         emailElement.textContent =
           user.email ||
           "Logged in";
 
-
-        /*
-          Load the same Users/{uid}
-          document as before.
-        */
 
         await loadTransactions(
           user
@@ -1845,7 +1812,7 @@
       } catch (error) {
 
         console.error(
-          "Transaction page error:",
+          "Transaction page startup error:",
           error
         );
 
@@ -1859,7 +1826,7 @@
             </div>
 
             <h3>
-              Unable to restore your session
+              Unable to restore account
             </h3>
 
             <p>
@@ -1877,10 +1844,10 @@
 
 
     /*
-      Start the page.
+      START
     */
 
-    startTransactionPage();
+    startPage();
 
 
   </script>
