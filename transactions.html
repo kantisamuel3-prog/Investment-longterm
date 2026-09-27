@@ -6,9 +6,9 @@
   <meta charset="UTF-8">
 
   <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
 
   <meta name="theme-color" content="#101827">
 
@@ -493,6 +493,61 @@
 
 
     /* =========================
+       WITHDRAWAL STATUS
+       ========================= */
+
+    .transaction-right {
+      flex: 0 0 auto;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: flex-end;
+
+      gap: 6px;
+    }
+
+
+    .status {
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 4px 9px;
+
+      border-radius: 999px;
+
+      font-size: 10px;
+
+      font-weight: bold;
+
+      letter-spacing: .3px;
+
+      white-space: nowrap;
+    }
+
+
+    .status-pending {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+
+    .status-approved {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+
+    .status-rejected {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+
+    /* =========================
        MESSAGE
        ========================= */
 
@@ -691,6 +746,13 @@
       }
 
 
+      .status {
+        font-size: 9px;
+
+        padding: 3px 7px;
+      }
+
+
       .message {
         padding:
           32px 8px;
@@ -828,6 +890,13 @@
 
       .transaction-amount {
         font-size: 12px;
+      }
+
+
+      .status {
+        font-size: 8px;
+
+        padding: 3px 6px;
       }
 
     }
@@ -989,43 +1058,18 @@
 
 
   <!-- =========================
-       FIREBASE
+       FIREBASE COMPAT
+       SAME AUTH SYSTEM AS LOGIN
        ========================= -->
 
-  <script type="module">
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 
-    import {
-
-      initializeApp
-
-    } from
-      "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-
-    import {
-
-      getAuth,
-
-      onAuthStateChanged,
-
-      signOut
-
-    } from
-      "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
-
-    import {
-
-      getFirestore,
-
-      doc,
-
-      getDoc
-
-    } from
-      "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
+  <script>
 
 
     /* =========================
@@ -1035,7 +1079,7 @@
     const firebaseConfig = {
 
       apiKey:
-        "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+        "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqGk",
 
       authDomain:
         "investpro-2dafb.firebaseapp.com",
@@ -1050,29 +1094,33 @@
         "135092039764",
 
       appId:
-        "1:135092039764:web:c4c71eef0c904346a77dc1"
+        "1:135092039764:web:c4c71eef0c904346a77dc1",
+
+      measurementId:
+        "G-0L77SFTC4F"
 
     };
-
 
 
     /* =========================
        FIREBASE START
        ========================= */
 
-    const app =
-      initializeApp(
+    if (!firebase.apps.length) {
+
+      firebase.initializeApp(
         firebaseConfig
       );
 
+    }
+
 
     const auth =
-      getAuth(app);
+      firebase.auth();
 
 
     const db =
-      getFirestore(app);
-
+      firebase.firestore();
 
 
     /* =========================
@@ -1103,7 +1151,6 @@
       );
 
 
-
     /* =========================
        MONEY FORMAT
        ========================= */
@@ -1124,7 +1171,6 @@
     }
 
 
-
     /* =========================
        TRANSACTION TYPE
        ========================= */
@@ -1132,7 +1178,9 @@
     function getTransactionDetails(type) {
 
 
-      if (type === "Deposit") {
+      if (
+        type === "Deposit"
+      ) {
 
         return {
 
@@ -1151,7 +1199,16 @@
       }
 
 
-      if (type === "Withdraw") {
+      /*
+        Withdrawal Request and
+        Withdraw both use the
+        withdrawal style.
+      */
+
+      if (
+        type === "Withdraw" ||
+        type === "Withdrawal Request"
+      ) {
 
         return {
 
@@ -1187,7 +1244,6 @@
     }
 
 
-
     /* =========================
        LOAD TRANSACTIONS
        ========================= */
@@ -1197,20 +1253,18 @@
       try {
 
         const userRef =
-          doc(
-            db,
-            "Users",
-            user.uid
-          );
+          db
+            .collection("Users")
+            .doc(user.uid);
 
 
         const snapshot =
-          await getDoc(
-            userRef
-          );
+          await userRef.get();
 
 
-        if (!snapshot.exists()) {
+        if (
+          !snapshot.exists
+        ) {
 
           showEmpty();
 
@@ -1342,8 +1396,24 @@
               );
 
 
-            title.textContent =
-              type;
+            /*
+              Show a cleaner title for
+              withdrawal requests.
+            */
+
+            if (
+              type === "Withdrawal Request"
+            ) {
+
+              title.textContent =
+                "Withdrawal";
+
+            } else {
+
+              title.textContent =
+                type;
+
+            }
 
 
             const dateElement =
@@ -1384,6 +1454,18 @@
                RIGHT SIDE
                ===================== */
 
+            const right =
+              document.createElement(
+                "div"
+              );
+
+
+            right.className =
+              "transaction-right";
+
+
+            /* AMOUNT */
+
             const amountElement =
               document.createElement(
                 "div"
@@ -1402,6 +1484,81 @@
               );
 
 
+            right.appendChild(
+              amountElement
+            );
+
+
+            /*
+              Withdrawal status
+            */
+
+            if (
+              type === "Withdrawal Request"
+            ) {
+
+              const status =
+                String(
+                  transaction.status ||
+                  "PENDING"
+                ).toUpperCase();
+
+
+              const statusElement =
+                document.createElement(
+                  "div"
+                );
+
+
+              statusElement.className =
+                "status";
+
+
+              if (
+                status === "APPROVED"
+              ) {
+
+                statusElement.classList.add(
+                  "status-approved"
+                );
+
+                statusElement.textContent =
+                  "APPROVED";
+
+              }
+
+              else if (
+                status === "REJECTED"
+              ) {
+
+                statusElement.classList.add(
+                  "status-rejected"
+                );
+
+                statusElement.textContent =
+                  "REJECTED";
+
+              }
+
+              else {
+
+                statusElement.classList.add(
+                  "status-pending"
+                );
+
+                statusElement.textContent =
+                  "PENDING";
+
+              }
+
+
+              right.appendChild(
+                statusElement
+              );
+
+            }
+
+
             /* =====================
                ADD TO PAGE
                ===================== */
@@ -1412,7 +1569,7 @@
 
 
             transactionDiv.appendChild(
-              amountElement
+              right
             );
 
 
@@ -1458,7 +1615,6 @@
     }
 
 
-
     /* =========================
        EMPTY TRANSACTIONS
        ========================= */
@@ -1489,7 +1645,6 @@
     }
 
 
-
     /* =========================
        HOME
        ========================= */
@@ -1505,7 +1660,6 @@
     );
 
 
-
     /* =========================
        LOGOUT
        ========================= */
@@ -1516,9 +1670,7 @@
 
         try {
 
-          await signOut(
-            auth
-          );
+          await auth.signOut();
 
 
           window.location.href =
@@ -1543,44 +1695,236 @@
     );
 
 
-
     /* =========================
-       LOGIN CHECK
+       AUTH RESTORE
        ========================= */
 
-    onAuthStateChanged(
-      auth,
-      async user => {
+    async function startTransactionPage() {
 
-        if (!user) {
-  console.warn("Firebase session is still restoring. Staying on transaction.html.");
+      try {
 
-  $("transactionList").innerHTML = `
-    <div style="
-      text-align:center;
-      padding:30px 15px;
-      color:#64748b;
-      font-size:14px;
-    ">
-      Loading your transactions...
-    </div>
-  `;
+        /*
+          Use exactly the same LOCAL
+          persistence system as login.html.
+        */
 
-  return;
-}
-
-
-        emailElement.textContent =
-          user.email ||
-          "Logged in";
-
-
-        await loadTransactions(
-          user
+        await auth.setPersistence(
+          firebase.auth.Auth.Persistence.LOCAL
         );
 
+
+        /*
+          Wait for Firebase to finish
+          restoring the saved account.
+        */
+
+        if (
+          typeof auth.authStateReady ===
+          "function"
+        ) {
+
+          await auth.authStateReady();
+
+        }
+
+
+        /*
+          First check the already-restored
+          user.
+        */
+
+        let user =
+          auth.currentUser;
+
+
+        /*
+          If Firebase still has no user,
+          wait for authStateChanged.
+
+          IMPORTANT:
+          We DO NOT redirect to login.html.
+        */
+
+        if (!user) {
+
+          user =
+            await new Promise(
+              resolve => {
+
+                let finished = false;
+
+
+                const unsubscribe =
+                  auth.onAuthStateChanged(
+                    currentUser => {
+
+                      if (finished) {
+                        return;
+                      }
+
+
+                      /*
+                        If Firebase gives us
+                        a user, use it immediately.
+                      */
+
+                      if (currentUser) {
+
+                        finished = true;
+
+                        unsubscribe();
+
+                        resolve(
+                          currentUser
+                        );
+
+                      }
+
+                    }
+                  );
+
+
+                /*
+                  Give Firebase enough time
+                  to restore the session.
+
+                  We stay on transaction.html
+                  even if there is no session.
+                */
+
+                setTimeout(
+                  () => {
+
+                    if (finished) {
+                      return;
+                    }
+
+
+                    finished = true;
+
+                    unsubscribe();
+
+
+                    resolve(
+                      auth.currentUser ||
+                      null
+                    );
+
+                  },
+                  8000
+                );
+
+              }
+            );
+
+        }
+
+
+        /* =========================
+           USER FOUND
+           ========================= */
+
+        if (user) {
+
+          emailElement.textContent =
+            user.email ||
+            "Logged in";
+
+
+          await loadTransactions(
+            user
+          );
+
+
+          return;
+
+        }
+
+
+        /* =========================
+           NO USER
+           =========================
+
+           IMPORTANT:
+           NEVER redirect to
+           login.html here.
+        */
+
+        emailElement.textContent =
+          "No active login session";
+
+
+        transactionsElement.innerHTML = `
+
+          <div class="message">
+
+            <div class="message-icon">
+              🔐
+            </div>
+
+            <h3>
+              Please login first
+            </h3>
+
+            <p>
+              Your transaction history
+              will appear here after
+              you are logged in.
+            </p>
+
+          </div>
+
+        `;
+
+
+      } catch (error) {
+
+        console.error(
+          "Transaction auth restore error:",
+          error
+        );
+
+
+        /*
+          Stay on transaction.html.
+          Never force the user to login.html.
+        */
+
+        emailElement.textContent =
+          "Unable to restore account session";
+
+
+        transactionsElement.innerHTML = `
+
+          <div class="message">
+
+            <div class="message-icon">
+              ⚠️
+            </div>
+
+            <h3>
+              Unable to load account
+            </h3>
+
+            <p>
+              Please refresh this page
+              and try again.
+            </p>
+
+          </div>
+
+        `;
+
       }
-    );
+
+    }
+
+
+    /* =========================
+       START
+       ========================= */
+
+    startTransactionPage();
 
 
   </script>
