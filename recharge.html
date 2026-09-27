@@ -789,7 +789,7 @@
 
         <strong>How to recharge:</strong><br>
 
-        1. Enter the amount you want to add.<br>
+        1. The minimum top-up amount is 300 PHP.<br>
         2. Tap <strong>Pay with GCash</strong>.<br>
         3. Wait for the secure QR code.<br>
         4. Scan the QR code using GCash.<br>
@@ -1728,15 +1728,17 @@
     }
 
 
-    if(amount < 1){
+    if(amount < 300){
 
-      toast(
-        "Minimum recharge amount is ₱1."
-      );
+  toast(
+    "Minimum recharge amount is ₱300."
+  );
 
-      return;
+  $("moneyAmount").focus();
 
-    }
+  return;
+
+}
 
 
     const button =
