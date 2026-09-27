@@ -683,6 +683,27 @@ const rechargeRequests = [];
 
 }
 
+/* -----------------------------------------
+   RENDER RECHARGE REQUESTS
+----------------------------------------- */
+
+if(rechargeRequests.length === 0){
+
+  $("recharges").innerHTML = `
+    <div class="empty">
+      No recharge requests found.
+    </div>
+  `;
+
+}else{
+
+  $("recharges").innerHTML =
+    rechargeRequests.map((request,index) =>
+      renderRecharge(request,index)
+    ).join("");
+
+}          
+         
   }catch(error){
 
     console.error(
@@ -737,6 +758,127 @@ function updateStats(requests){
 
 }
 
+/* -----------------------------------------
+   RENDER RECHARGE
+----------------------------------------- */
+
+function renderRecharge(request,index){
+
+  const status =
+    String(
+      request.status || "PENDING"
+    ).toUpperCase();
+
+
+  let statusClass =
+    "pending";
+
+  if(status === "APPROVED"){
+    statusClass = "approved";
+  }
+
+  if(status === "REJECTED"){
+    statusClass = "rejected";
+  }
+
+
+  const date =
+    request.date
+      ? new Date(request.date)
+          .toLocaleString("en-PH")
+      : "—";
+
+
+  const amount =
+    formatMoney(request.amount);
+
+
+  const orderId =
+    request.orderId || "—";
+
+
+  const method =
+    request.method || "GCash";
+
+
+  let actions = "";
+
+
+  if(status === "PENDING"){
+
+    actions = `
+      <div class="actions">
+
+        <button
+          class="approve-btn"
+          id="approve-recharge-${index}"
+          onclick="approveRecharge(
+            '${escapeAttribute(request.UserId)}',
+            '${escapeAttribute(request.orderId || "")}',
+            ${Number(request.amount || 0)},
+            ${index}
+          )">
+          APPROVE
+        </button>
+
+      </div>
+    `;
+
+  }else{
+
+    actions = "";
+
+  }
+
+
+  return `
+    <div class="request-card">
+
+      <div class="request-header">
+
+        <div>
+          <strong>
+            ${escapeHtml(request.UserName || "Member")}
+          </strong>
+        </div>
+
+        <span class="status ${statusClass}">
+          ${escapeHtml(status)}
+        </span>
+
+      </div>
+
+
+      <div class="request-details">
+
+        <div>
+          <span>Amount</span>
+          <strong>${amount}</strong>
+        </div>
+
+        <div>
+          <span>Method</span>
+          <strong>${escapeHtml(method)}</strong>
+        </div>
+
+        <div>
+          <span>Order ID</span>
+          <strong>${escapeHtml(orderId)}</strong>
+        </div>
+
+        <div>
+          <span>Date</span>
+          <strong>${escapeHtml(date)}</strong>
+        </div>
+
+      </div>
+
+
+      ${actions}
+
+    </div>
+  `;
+}
 
 /* -----------------------------------------
    RENDER REQUEST
