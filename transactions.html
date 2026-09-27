@@ -1553,13 +1553,21 @@
       async user => {
 
         if (!user) {
+  console.warn("Firebase session is still restoring. Staying on transaction.html.");
 
-          window.location.href =
-            "login.html";
+  $("transactionList").innerHTML = `
+    <div style="
+      text-align:center;
+      padding:30px 15px;
+      color:#64748b;
+      font-size:14px;
+    ">
+      Loading your transactions...
+    </div>
+  `;
 
-          return;
-
-        }
+  return;
+}
 
 
         emailElement.textContent =
