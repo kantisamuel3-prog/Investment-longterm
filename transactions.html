@@ -299,10 +299,16 @@ button:hover{
     rgba(37,99,235,.28);
 }
 
-.home-icon{
-  font-size:21px;
-  line-height:1;
-  font-weight:normal;
+.home-svg{
+  width:19px;
+  height:19px;
+  flex:0 0 19px;
+  stroke:currentColor;
+  transition:
+    transform .2s ease;
+}
+
+#homeButton:hover .home-svg{
   transform:translateY(-1px);
 }
 
@@ -1307,8 +1313,28 @@ main{
   <div class="header-buttons">
 
     <button id="homeButton">
-  <span class="home-icon">⌂</span>
-  Home
+  <svg
+    class="home-svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path
+      d="M3 10.8L12 3L21 10.8V20C21 20.55 20.55 21 20 21H4C3.45 21 3 20.55 3 20V10.8Z"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M9 21V14H15V21"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linejoin="round"
+    />
+  </svg>
+
+  <span>Home</span>
 </button>
 
   </div>
