@@ -6,9 +6,9 @@
   <meta charset="UTF-8">
 
   <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  >
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
   <meta name="theme-color" content="#101827">
 
@@ -493,51 +493,6 @@
 
 
     /* =========================
-       WITHDRAWAL STATUS
-       ========================= */
-
-    .transaction-status {
-      display: inline-flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      margin-top: 7px;
-
-      padding: 4px 9px;
-
-      border-radius: 999px;
-
-      font-size: 10px;
-
-      font-weight: 800;
-
-      letter-spacing: .4px;
-
-      line-height: 1;
-    }
-
-
-    .status-pending {
-      background: #fef3c7;
-      color: #b45309;
-    }
-
-
-    .status-approved {
-      background: #dcfce7;
-      color: #15803d;
-    }
-
-
-    .status-rejected {
-      background: #fee2e2;
-      color: #dc2626;
-    }
-
-
-    /* =========================
        MESSAGE
        ========================= */
 
@@ -733,14 +688,6 @@
 
       .transaction-amount {
         font-size: 13px;
-      }
-
-
-      .transaction-status {
-        font-size: 9px;
-
-        padding:
-          4px 7px;
       }
 
 
@@ -1042,17 +989,43 @@
 
 
   <!-- =========================
-       FIREBASE COMPAT
+       FIREBASE
        ========================= -->
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script type="module">
 
 
-  <script>
+    import {
+
+      initializeApp
+
+    } from
+      "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+    import {
+
+      getAuth,
+
+      onAuthStateChanged,
+
+      signOut
+
+    } from
+      "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+    import {
+
+      getFirestore,
+
+      doc,
+
+      getDoc
+
+    } from
+      "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
 
 
     /* =========================
@@ -1062,7 +1035,7 @@
     const firebaseConfig = {
 
       apiKey:
-        "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqGk",
+        "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
 
       authDomain:
         "investpro-2dafb.firebaseapp.com",
@@ -1082,25 +1055,24 @@
     };
 
 
+
     /* =========================
        FIREBASE START
        ========================= */
 
-    if (!firebase.apps.length) {
-
-      firebase.initializeApp(
+    const app =
+      initializeApp(
         firebaseConfig
       );
 
-    }
-
 
     const auth =
-      firebase.auth();
+      getAuth(app);
 
 
     const db =
-      firebase.firestore();
+      getFirestore(app);
+
 
 
     /* =========================
@@ -1131,6 +1103,7 @@
       );
 
 
+
     /* =========================
        MONEY FORMAT
        ========================= */
@@ -1151,6 +1124,7 @@
     }
 
 
+
     /* =========================
        TRANSACTION TYPE
        ========================= */
@@ -1158,9 +1132,7 @@
     function getTransactionDetails(type) {
 
 
-      if (
-        type === "Deposit"
-      ) {
+      if (type === "Deposit") {
 
         return {
 
@@ -1179,10 +1151,7 @@
       }
 
 
-      if (
-        type === "Withdraw" ||
-        type === "Withdrawal Request"
-      ) {
+      if (type === "Withdraw") {
 
         return {
 
@@ -1218,125 +1187,6 @@
     }
 
 
-    /* =========================
-       AUTH RESTORE
-       ========================= */
-
-    async function getLoggedInUser() {
-
-      /*
-        Use the same LOCAL persistence
-        as the existing Novarise login.
-      */
-
-      await auth.setPersistence(
-        firebase.auth.Auth.Persistence.LOCAL
-      );
-
-
-      /*
-        Firebase 10.12.2 may provide
-        authStateReady().
-      */
-
-      if (
-        typeof auth.authStateReady ===
-        "function"
-      ) {
-
-        await auth.authStateReady();
-
-      }
-
-
-      /*
-        Check immediately first.
-      */
-
-      let user =
-        auth.currentUser;
-
-
-      if (user) {
-
-        return user;
-
-      }
-
-
-      /*
-        If Firebase is still restoring
-        the saved login session,
-        wait for it instead of
-        immediately sending the user
-        to login.html.
-      */
-
-      return await new Promise(
-        resolve => {
-
-          let finished = false;
-
-
-          const unsubscribe =
-            auth.onAuthStateChanged(
-              currentUser => {
-
-                if (finished) {
-                  return;
-                }
-
-
-                finished = true;
-
-
-                unsubscribe();
-
-
-                resolve(
-                  currentUser || null
-                );
-
-              }
-            );
-
-
-          /*
-            Safety timeout.
-
-            This does NOT logout the user.
-            It only prevents the page from
-            waiting forever.
-          */
-
-          setTimeout(
-            () => {
-
-              if (finished) {
-                return;
-              }
-
-
-              finished = true;
-
-
-              unsubscribe();
-
-
-              resolve(
-                auth.currentUser ||
-                null
-              );
-
-            },
-            5000
-          );
-
-        }
-      );
-
-    }
-
 
     /* =========================
        LOAD TRANSACTIONS
@@ -1347,18 +1197,20 @@
       try {
 
         const userRef =
-          db
-            .collection("Users")
-            .doc(user.uid);
+          doc(
+            db,
+            "Users",
+            user.uid
+          );
 
 
         const snapshot =
-          await userRef.get();
+          await getDoc(
+            userRef
+          );
 
 
-        if (
-          !snapshot.exists
-        ) {
+        if (!snapshot.exists()) {
 
           showEmpty();
 
@@ -1395,7 +1247,7 @@
 
 
         /*
-          Newest transaction first.
+          Newest transaction first
         */
 
         const sortedTransactions =
@@ -1404,7 +1256,6 @@
 
         sortedTransactions.forEach(
           transaction => {
-
 
             const type =
               transaction.type ||
@@ -1519,77 +1370,6 @@
             );
 
 
-            /*
-              Withdrawal status
-              PENDING / APPROVED / REJECTED
-            */
-
-            if (
-              type ===
-              "Withdrawal Request"
-            ) {
-
-              const rawStatus =
-                transaction.status ||
-                "PENDING";
-
-
-              const status =
-                String(
-                  rawStatus
-                ).toUpperCase();
-
-
-              const statusElement =
-                document.createElement(
-                  "span"
-                );
-
-
-              statusElement.className =
-                "transaction-status";
-
-
-              if (
-                status === "APPROVED"
-              ) {
-
-                statusElement.classList.add(
-                  "status-approved"
-                );
-
-              } else if (
-                status === "REJECTED"
-              ) {
-
-                statusElement.classList.add(
-                  "status-rejected"
-                );
-
-              } else {
-
-                statusElement.classList.add(
-                  "status-pending"
-                );
-
-              }
-
-
-              statusElement.textContent =
-                status === "APPROVED"
-                  ? "APPROVED"
-                  : status === "REJECTED"
-                    ? "REJECTED"
-                    : "PENDING";
-
-
-              info.appendChild(
-                statusElement
-              );
-
-            }
-
-
             left.appendChild(
               icon
             );
@@ -1678,6 +1458,7 @@
     }
 
 
+
     /* =========================
        EMPTY TRANSACTIONS
        ========================= */
@@ -1708,6 +1489,7 @@
     }
 
 
+
     /* =========================
        HOME
        ========================= */
@@ -1723,6 +1505,7 @@
     );
 
 
+
     /* =========================
        LOGOUT
        ========================= */
@@ -1733,12 +1516,9 @@
 
         try {
 
-          /*
-            ONLY THIS BUTTON
-            performs sign out.
-          */
-
-          await auth.signOut();
+          await signOut(
+            auth
+          );
 
 
           window.location.href =
@@ -1763,31 +1543,14 @@
     );
 
 
+
     /* =========================
-       START PAGE
+       LOGIN CHECK
        ========================= */
 
-    async function startPage() {
-
-      try {
-
-        /*
-          Restore existing Firebase
-          login session first.
-        */
-
-        const user =
-          await getLoggedInUser();
-
-
-        /*
-          IMPORTANT:
-
-          We DO NOT call signOut here.
-
-          Only redirect if there is
-          genuinely no logged-in user.
-        */
+    onAuthStateChanged(
+      auth,
+      async user => {
 
         if (!user) {
 
@@ -1808,46 +1571,8 @@
           user
         );
 
-
-      } catch (error) {
-
-        console.error(
-          "Transaction page startup error:",
-          error
-        );
-
-
-        transactionsElement.innerHTML = `
-
-          <div class="message">
-
-            <div class="message-icon">
-              ⚠️
-            </div>
-
-            <h3>
-              Unable to restore account
-            </h3>
-
-            <p>
-              Please refresh the page
-              and try again.
-            </p>
-
-          </div>
-
-        `;
-
       }
-
-    }
-
-
-    /*
-      START
-    */
-
-    startPage();
+    );
 
 
   </script>
