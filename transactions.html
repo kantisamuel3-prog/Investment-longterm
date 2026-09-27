@@ -280,11 +280,16 @@ button:hover{
 /* HOME */
 
 #homeButton{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+
   background:
     linear-gradient(
       135deg,
       #2563eb,
-      #3b82f6
+      #0ea5e9
     );
 
   color:white;
@@ -294,20 +299,12 @@ button:hover{
     rgba(37,99,235,.28);
 }
 
-
-#homeButton:hover{
-  background:
-    linear-gradient(
-      135deg,
-      #1d4ed8,
-      #2563eb
-    );
-
-  box-shadow:
-    0 8px 22px
-    rgba(37,99,235,.38);
+.home-icon{
+  font-size:21px;
+  line-height:1;
+  font-weight:normal;
+  transform:translateY(-1px);
 }
-
 
 /* =========================
    MAIN
@@ -1310,8 +1307,9 @@ main{
   <div class="header-buttons">
 
     <button id="homeButton">
-      🏠 Home
-    </button>
+  <span class="home-icon">⌂</span>
+  Home
+</button>
 
   </div>
 
