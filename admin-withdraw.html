@@ -668,21 +668,20 @@ const rechargeRequests = [];
 
     if(requests.length === 0){
 
-      $("withdrawals").innerHTML = `
-        <div class="empty">
-          No withdrawal requests found.
-        </div>
-      `;
+  $("withdrawals").innerHTML = `
+    <div class="empty">
+      No withdrawal requests found.
+    </div>
+  `;
 
-      return;
-    }
+}else{
 
+  $("withdrawals").innerHTML =
+    requests.map((request, index) =>
+      renderWithdrawal(request,index)
+    ).join("");
 
-    $("withdrawals").innerHTML =
-      requests.map((request, index) =>
-        renderWithdrawal(request,index)
-      ).join("");
-
+}
 
   }catch(error){
 
