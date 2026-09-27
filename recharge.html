@@ -898,11 +898,17 @@
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
   import {
-    getAuth,
-    onAuthStateChanged
-  }
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  getAuth,
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+  getFirestore,
+  doc,
+  runTransaction
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   /*
    * Firebase configuration
@@ -937,7 +943,9 @@
 
   const auth =
     getAuth(app);
-
+  
+  const db =
+    getFirestore(app);
 
   /*
    * PayMongo Worker
@@ -1796,14 +1804,85 @@
 
       if(!orderId){
 
-        throw new Error(
-          "Payment order ID was not returned."
-        );
+  throw new Error(
+    "Payment order ID was not returned."
+  );
 
+}
+
+
+/*
+ * Save Recharge as PENDING
+ *
+ * No balance is added here.
+ * Admin approval will handle the balance later.
+ */
+
+const userRef =
+  doc(
+    db,
+    "Users",
+    currentUser.uid
+  );
+
+await runTransaction(
+  db,
+  async transaction => {
+
+    const snap =
+      await transaction.get(
+        userRef
+      );
+
+    const data =
+      snap.exists()
+        ? snap.data()
+        : {};
+
+    const transactions =
+      Array.isArray(
+        data.transactions
+      )
+        ? [...data.transactions]
+        : [];
+
+    transactions.push({
+
+      type:
+        "Recharge",
+
+      status:
+        "PENDING",
+
+      amount:
+        Number(amount),
+
+      method:
+        "GCash",
+
+      orderId:
+        orderId,
+
+      date:
+        new Date().toISOString()
+
+    });
+
+    transaction.set(
+      userRef,
+      {
+        transactions
+      },
+      {
+        merge:true
       }
+    );
+
+  }
+);
 
 
-      sessionStorage.setItem(
+sessionStorage.setItem(
   "novariseRechargeOrder",
   orderId
 );
