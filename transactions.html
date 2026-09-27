@@ -1060,217 +1060,124 @@
        FIREBASE MODULAR
        ========================= -->
 
-  <script type="module">
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
-    import {
-      initializeApp
-    } from
-      "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+<script>
 
+  /* =========================
+     FIREBASE CONFIG
+     ========================= */
 
-    import {
-      initializeAuth,
-      indexedDBLocalPersistence,
-      browserLocalPersistence,
-      browserSessionPersistence,
-      onAuthStateChanged,
-      signOut
-    } from
-      "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+  const firebaseConfig = {
 
+    apiKey:
+      "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqGk",
 
-    import {
-      getFirestore,
-      doc,
-      getDoc
-    } from
-      "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    authDomain:
+      "investpro-2dafb.firebaseapp.com",
 
+    projectId:
+      "investpro-2dafb",
 
-    /* =========================
-       FIREBASE CONFIG
-       ========================= */
+    storageBucket:
+      "investpro-2dafb.firebasestorage.app",
 
-    const firebaseConfig = {
+    messagingSenderId:
+      "135092039764",
 
-      apiKey:
-        "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqGk",
+    appId:
+      "1:135092039764:web:c4c71eef0c904346a77dc1",
 
-      authDomain:
-        "investpro-2dafb.firebaseapp.com",
+    measurementId:
+      "G-0L77SFTC4F"
 
-      projectId:
-        "investpro-2dafb",
-
-      storageBucket:
-        "investpro-2dafb.firebasestorage.app",
-
-      messagingSenderId:
-        "135092039764",
-
-      appId:
-        "1:135092039764:web:c4c71eef0c904346a77dc1",
-
-      measurementId:
-        "G-0L77SFTC4F"
-
-    };
+  };
 
 
-    /* =========================
-       FIREBASE START
-       ========================= */
+  /* =========================
+     FIREBASE START
+     ========================= */
 
-    const app =
-      initializeApp(
-        firebaseConfig
-      );
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
 
-    /*
-      Explicitly use IndexedDB
-      for the saved Firebase login.
+  /* =========================
+     ELEMENTS
+     ========================= */
 
-      This is important because
-      your browser already has the
-      saved Firebase session there.
-    */
+  const emailElement =
+    document.getElementById("userEmail");
 
-    const auth =
-      initializeAuth(
-        app,
+  const transactionsElement =
+    document.getElementById("transactions");
+
+  const homeButton =
+    document.getElementById("homeButton");
+
+  const logoutButton =
+    document.getElementById("logoutButton");
+
+
+  /* =========================
+     MONEY FORMAT
+     ========================= */
+
+  function formatMoney(amount) {
+
+    return "₱" +
+      Number(amount || 0).toLocaleString(
+        "en-PH",
         {
-          persistence: [
-            indexedDBLocalPersistence,
-            browserLocalPersistence,
-            browserSessionPersistence
-          ]
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
         }
       );
 
-
-    const db =
-      getFirestore(
-        app
-      );
+  }
 
 
-    /* =========================
-       ELEMENTS
-       ========================= */
+  /* =========================
+     TRANSACTION TYPE
+     ========================= */
 
-    const emailElement =
-      document.getElementById(
-        "userEmail"
-      );
+  function getTransactionDetails(type) {
 
+    if (type === "Deposit") {
 
-    const transactionsElement =
-      document.getElementById(
-        "transactions"
-      );
+      return {
 
+        icon: "↓",
 
-    const homeButton =
-      document.getElementById(
-        "homeButton"
-      );
+        iconClass: "deposit-icon",
 
+        amountClass: "deposit-amount",
 
-    const logoutButton =
-      document.getElementById(
-        "logoutButton"
-      );
+        sign: "+"
 
-
-    /* =========================
-       MONEY FORMAT
-       ========================= */
-
-    function formatMoney(amount) {
-
-      return "₱" +
-        Number(
-          amount || 0
-        ).toLocaleString(
-          "en-PH",
-          {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }
-        );
+      };
 
     }
 
 
-    /* =========================
-       TRANSACTION TYPE
-       ========================= */
-
-    function getTransactionDetails(type) {
-
-      if (
-        type === "Deposit"
-      ) {
-
-        return {
-
-          icon: "↓",
-
-          iconClass:
-            "deposit-icon",
-
-          amountClass:
-            "deposit-amount",
-
-          sign: "+"
-
-        };
-
-      }
-
-
-      /*
-        Withdrawal Request and
-        Withdraw use withdrawal style.
-      */
-
-      if (
-        type === "Withdraw" ||
-        type === "Withdrawal Request"
-      ) {
-
-        return {
-
-          icon: "↑",
-
-          iconClass:
-            "withdraw-icon",
-
-          amountClass:
-            "withdraw-amount",
-
-          sign: "-"
-
-        };
-
-      }
-
-
-      /*
-        Investment and other
-        transaction types.
-      */
+    if (
+      type === "Withdraw" ||
+      type === "Withdrawal Request"
+    ) {
 
       return {
 
-        icon: "📈",
+        icon: "↑",
 
-        iconClass:
-          "investment-icon",
+        iconClass: "withdraw-icon",
 
-        amountClass:
-          "investment-amount",
+        amountClass: "withdraw-amount",
 
         sign: "-"
 
@@ -1279,402 +1186,283 @@
     }
 
 
-    /* =========================
-       LOAD TRANSACTIONS
-       ========================= */
+    return {
 
-    async function loadTransactions(user) {
+      icon: "📈",
 
-      try {
+      iconClass: "investment-icon",
 
-        const userRef =
-          doc(
-            db,
-            "Users",
-            user.uid
-          );
+      amountClass: "investment-amount",
 
+      sign: "-"
 
-        const snapshot =
-          await getDoc(
-            userRef
-          );
+    };
 
+  }
 
-        if (
-          !snapshot.exists()
-        ) {
 
-          showEmpty();
+  /* =========================
+     LOAD TRANSACTIONS
+     ========================= */
 
-          return;
+  async function loadTransactions(user) {
 
-        }
+    try {
 
+      const userRef =
+        db.collection("Users").doc(user.uid);
 
-        const data =
-          snapshot.data();
 
+      const snapshot =
+        await userRef.get();
 
-        const transactions =
-          Array.isArray(
-            data.transactions
-          )
-            ? data.transactions
-            : [];
 
+      if (!snapshot.exists) {
 
-        if (
-          transactions.length === 0
-        ) {
+        showEmpty();
 
-          showEmpty();
-
-          return;
-
-        }
-
-
-        transactionsElement.innerHTML =
-          "";
-
-
-        /*
-          Newest transaction first.
-        */
-
-        const sortedTransactions =
-          [...transactions].reverse();
-
-
-        sortedTransactions.forEach(
-          transaction => {
-
-            const type =
-              transaction.type ||
-              "Transaction";
-
-
-            const amount =
-              Number(
-                transaction.amount || 0
-              );
-
-
-            const date =
-              transaction.date ||
-              "Date unavailable";
-
-
-            const details =
-              getTransactionDetails(
-                type
-              );
-
-
-            /* =====================
-               TRANSACTION CONTAINER
-               ===================== */
-
-            const transactionDiv =
-              document.createElement(
-                "div"
-              );
-
-
-            transactionDiv.className =
-              "transaction";
-
-
-            /* =====================
-               LEFT SIDE
-               ===================== */
-
-            const left =
-              document.createElement(
-                "div"
-              );
-
-
-            left.className =
-              "transaction-left";
-
-
-            /* ICON */
-
-            const icon =
-              document.createElement(
-                "div"
-              );
-
-
-            icon.className =
-              "transaction-type-icon " +
-              details.iconClass;
-
-
-            icon.textContent =
-              details.icon;
-
-
-            /* INFO */
-
-            const info =
-              document.createElement(
-                "div"
-              );
-
-
-            info.className =
-              "transaction-info";
-
-
-            const title =
-              document.createElement(
-                "strong"
-              );
-
-
-            /*
-              Cleaner title for
-              withdrawal requests.
-            */
-
-            if (
-              type === "Withdrawal Request"
-            ) {
-
-              title.textContent =
-                "Withdrawal";
-
-            } else {
-
-              title.textContent =
-                type;
-
-            }
-
-
-            const dateElement =
-              document.createElement(
-                "div"
-              );
-
-
-            dateElement.className =
-              "transaction-date";
-
-
-            dateElement.textContent =
-              date;
-
-
-            info.appendChild(
-              title
-            );
-
-
-            info.appendChild(
-              dateElement
-            );
-
-
-            left.appendChild(
-              icon
-            );
-
-
-            left.appendChild(
-              info
-            );
-
-
-            /* =====================
-               RIGHT SIDE
-               ===================== */
-
-            const right =
-              document.createElement(
-                "div"
-              );
-
-
-            right.className =
-              "transaction-right";
-
-
-            /* AMOUNT */
-
-            const amountElement =
-              document.createElement(
-                "div"
-              );
-
-
-            amountElement.className =
-              "transaction-amount " +
-              details.amountClass;
-
-
-            amountElement.textContent =
-              details.sign +
-              formatMoney(
-                amount
-              );
-
-
-            right.appendChild(
-              amountElement
-            );
-
-
-            /* =====================
-               WITHDRAWAL STATUS
-               ===================== */
-
-            if (
-              type === "Withdrawal Request"
-            ) {
-
-              const status =
-                String(
-                  transaction.status ||
-                  "PENDING"
-                ).toUpperCase();
-
-
-              const statusElement =
-                document.createElement(
-                  "div"
-                );
-
-
-              statusElement.className =
-                "status";
-
-
-              if (
-                status === "APPROVED"
-              ) {
-
-                statusElement.classList.add(
-                  "status-approved"
-                );
-
-                statusElement.textContent =
-                  "APPROVED";
-
-              }
-
-              else if (
-                status === "REJECTED"
-              ) {
-
-                statusElement.classList.add(
-                  "status-rejected"
-                );
-
-                statusElement.textContent =
-                  "REJECTED";
-
-              }
-
-              else {
-
-                statusElement.classList.add(
-                  "status-pending"
-                );
-
-                statusElement.textContent =
-                  "PENDING";
-
-              }
-
-
-              right.appendChild(
-                statusElement
-              );
-
-            }
-
-
-            /* =====================
-               ADD TO PAGE
-               ===================== */
-
-            transactionDiv.appendChild(
-              left
-            );
-
-
-            transactionDiv.appendChild(
-              right
-            );
-
-
-            transactionsElement.appendChild(
-              transactionDiv
-            );
-
-          }
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          "Transaction loading error:",
-          error
-        );
-
-
-        transactionsElement.innerHTML = `
-
-          <div class="message">
-
-            <div class="message-icon">
-              ⚠️
-            </div>
-
-            <h3>
-              Unable to load account data
-            </h3>
-
-            <p>
-              Please refresh the page
-              and try again.
-            </p>
-
-          </div>
-
-        `;
+        return;
 
       }
 
-    }
+
+      const data =
+        snapshot.data();
 
 
-    /* =========================
-       EMPTY TRANSACTIONS
-       ========================= */
+      const transactions =
+        Array.isArray(data.transactions)
+          ? data.transactions
+          : [];
 
-    function showEmpty() {
+
+      if (transactions.length === 0) {
+
+        showEmpty();
+
+        return;
+
+      }
+
+
+      transactionsElement.innerHTML = "";
+
+
+      const sortedTransactions =
+        [...transactions].reverse();
+
+
+      sortedTransactions.forEach(
+        transaction => {
+
+          const type =
+            transaction.type ||
+            "Transaction";
+
+
+          const amount =
+            Number(
+              transaction.amount || 0
+            );
+
+
+          const date =
+            transaction.date ||
+            "Date unavailable";
+
+
+          const details =
+            getTransactionDetails(type);
+
+
+          const transactionDiv =
+            document.createElement("div");
+
+          transactionDiv.className =
+            "transaction";
+
+
+          /* LEFT */
+
+          const left =
+            document.createElement("div");
+
+          left.className =
+            "transaction-left";
+
+
+          const icon =
+            document.createElement("div");
+
+          icon.className =
+            "transaction-type-icon " +
+            details.iconClass;
+
+          icon.textContent =
+            details.icon;
+
+
+          const info =
+            document.createElement("div");
+
+          info.className =
+            "transaction-info";
+
+
+          const title =
+            document.createElement("strong");
+
+
+          if (
+            type === "Withdrawal Request"
+          ) {
+
+            title.textContent =
+              "Withdrawal";
+
+          } else {
+
+            title.textContent =
+              type;
+
+          }
+
+
+          const dateElement =
+            document.createElement("div");
+
+          dateElement.className =
+            "transaction-date";
+
+          dateElement.textContent =
+            date;
+
+
+          info.appendChild(title);
+          info.appendChild(dateElement);
+
+          left.appendChild(icon);
+          left.appendChild(info);
+
+
+          /* RIGHT */
+
+          const right =
+            document.createElement("div");
+
+          right.className =
+            "transaction-right";
+
+
+          const amountElement =
+            document.createElement("div");
+
+          amountElement.className =
+            "transaction-amount " +
+            details.amountClass;
+
+          amountElement.textContent =
+            details.sign +
+            formatMoney(amount);
+
+          right.appendChild(amountElement);
+
+
+          /* WITHDRAWAL STATUS */
+
+          if (
+            type === "Withdrawal Request"
+          ) {
+
+            const status =
+              String(
+                transaction.status ||
+                "PENDING"
+              ).toUpperCase();
+
+
+            const statusElement =
+              document.createElement("div");
+
+            statusElement.className =
+              "status";
+
+
+            if (status === "APPROVED") {
+
+              statusElement.classList.add(
+                "status-approved"
+              );
+
+              statusElement.textContent =
+                "APPROVED";
+
+            }
+
+            else if (status === "REJECTED") {
+
+              statusElement.classList.add(
+                "status-rejected"
+              );
+
+              statusElement.textContent =
+                "REJECTED";
+
+            }
+
+            else {
+
+              statusElement.classList.add(
+                "status-pending"
+              );
+
+              statusElement.textContent =
+                "PENDING";
+
+            }
+
+
+            right.appendChild(
+              statusElement
+            );
+
+          }
+
+
+          transactionDiv.appendChild(left);
+          transactionDiv.appendChild(right);
+
+          transactionsElement.appendChild(
+            transactionDiv
+          );
+
+        }
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "Transaction loading error:",
+        error
+      );
+
 
       transactionsElement.innerHTML = `
 
         <div class="message">
 
           <div class="message-icon">
-            📭
+            ⚠️
           </div>
 
           <h3>
-            No transactions yet
+            Unable to load account data
           </h3>
 
           <p>
-            Your deposits, withdrawals,
-            and investments will appear here.
+            Please refresh the page
+            and try again.
           </p>
 
         </div>
@@ -1683,215 +1471,322 @@
 
     }
 
-
-    /* =========================
-       HOME
-       ========================= */
-
-    homeButton.addEventListener(
-      "click",
-      () => {
-
-        window.location.href =
-          "dashboard.html";
-
-      }
-    );
+  }
 
 
-    /* =========================
-       LOGOUT
-       ========================= */
+  /* =========================
+     EMPTY
+     ========================= */
 
-    logoutButton.addEventListener(
-      "click",
-      async () => {
+  function showEmpty() {
 
-        try {
+    transactionsElement.innerHTML = `
 
-          await signOut(
-            auth
-          );
+      <div class="message">
 
+        <div class="message-icon">
+          📭
+        </div>
 
-          window.location.href =
-            "index.html";
+        <h3>
+          No transactions yet
+        </h3>
 
+        <p>
+          Your deposits, withdrawals,
+          and investments will appear here.
+        </p>
 
-        } catch (error) {
+      </div>
 
-          console.error(
-            "Logout error:",
-            error
-          );
+    `;
 
-
-          alert(
-            "Logout failed. Please try again."
-          );
-
-        }
-
-      }
-    );
+  }
 
 
-    /* =========================
-       AUTH RESTORE
-       ========================= */
+  /* =========================
+     HOME
+     ========================= */
 
-    let authFinished = false;
+  homeButton.addEventListener(
+    "click",
+    () => {
 
-
-    /*
-      Wait until Firebase has
-      finished restoring Auth.
-    */
-
-    if (
-      typeof auth.authStateReady ===
-      "function"
-    ) {
-
-      await auth.authStateReady();
+      window.location.href =
+        "dashboard.html";
 
     }
+  );
 
 
-    /*
-      Listen for restored account.
-    */
+  /* =========================
+     LOGOUT
+     ========================= */
 
-    onAuthStateChanged(
-      auth,
-      async user => {
+  logoutButton.addEventListener(
+    "click",
+    async () => {
 
-        if (
-          authFinished
-        ) {
+      try {
 
-          return;
+        await auth.signOut();
 
-        }
-
-
-        if (
-          user
-        ) {
-
-          authFinished = true;
+        window.location.href =
+          "index.html";
 
 
-          console.log(
-            "TRANSACTION AUTH RESTORED:",
-            user.email
-          );
+      } catch (error) {
 
+        console.error(
+          "Logout error:",
+          error
+        );
 
-          emailElement.textContent =
-            user.email ||
-            "Logged in";
-
-
-          await loadTransactions(
-            user
-          );
-
-
-          return;
-
-        }
+        alert(
+          "Logout failed. Please try again."
+        );
 
       }
-    );
+
+    }
+  );
 
 
-    /*
-      Final check after Firebase
-      has had enough time to restore.
-    */
+  /* =========================
+     AUTH RESTORE
+     ========================= */
 
-    setTimeout(
-      () => {
+  auth.setPersistence(
+    firebase.auth.Auth.Persistence.LOCAL
+  )
+  .then(() => {
 
-        if (
-          authFinished
-        ) {
+    return new Promise(resolve => {
 
+      let finished = false;
+
+
+      const unsubscribe =
+        auth.onAuthStateChanged(
+          async user => {
+
+            if (finished) {
+              return;
+            }
+
+
+            if (user) {
+
+              finished = true;
+
+              unsubscribe();
+
+
+              console.log(
+                "TRANSACTION AUTH RESTORED:",
+                user.email
+              );
+
+
+              emailElement.textContent =
+                user.email ||
+                "Logged in";
+
+
+              try {
+
+                /*
+                  Force Firebase to refresh/
+                  validate the saved session.
+                */
+
+                await user.getIdToken(true);
+
+                console.log(
+                  "TRANSACTION AUTH TOKEN READY"
+                );
+
+
+                await loadTransactions(
+                  user
+                );
+
+              } catch (error) {
+
+                console.error(
+                  "AUTH TOKEN ERROR:",
+                  error
+                );
+
+
+                transactionsElement.innerHTML = `
+
+                  <div class="message">
+
+                    <div class="message-icon">
+                      ⚠️
+                    </div>
+
+                    <h3>
+                      Unable to verify login
+                    </h3>
+
+                    <p>
+                      Please refresh the page.
+                    </p>
+
+                  </div>
+
+                `;
+
+              }
+
+
+              resolve();
+
+            }
+
+          }
+        );
+
+
+      /*
+        Give Firebase enough time to
+        restore the saved local session.
+      */
+
+      setTimeout(() => {
+
+        if (finished) {
           return;
-
         }
 
 
-        const user =
+        finished = true;
+
+        unsubscribe();
+
+
+        const currentUser =
           auth.currentUser;
 
 
-        if (
-          user
-        ) {
-
-          authFinished = true;
-
+        if (currentUser) {
 
           console.log(
             "TRANSACTION AUTH FOUND:",
-            user.email
+            currentUser.email
           );
 
 
           emailElement.textContent =
-            user.email ||
+            currentUser.email ||
             "Logged in";
 
 
-          loadTransactions(
-            user
+          currentUser
+            .getIdToken(true)
+            .then(() => {
+
+              return loadTransactions(
+                currentUser
+              );
+
+            })
+            .catch(error => {
+
+              console.error(
+                "AUTH TOKEN ERROR:",
+                error
+              );
+
+            });
+
+
+        } else {
+
+          console.log(
+            "TRANSACTION AUTH NOT FOUND"
           );
 
 
-          return;
+          /*
+            IMPORTANT:
+            Stay on transaction.html.
+            Never redirect to login.html.
+          */
+
+          emailElement.textContent =
+            "No active login session";
+
+
+          transactionsElement.innerHTML = `
+
+            <div class="message">
+
+              <div class="message-icon">
+                🔐
+              </div>
+
+              <h3>
+                Please login first
+              </h3>
+
+              <p>
+                Your transaction history
+                will appear here after
+                you are logged in.
+              </p>
+
+            </div>
+
+          `;
 
         }
 
+        resolve();
 
-        /*
-          IMPORTANT:
-          Stay on transaction.html.
-          Never redirect to login.html.
-        */
+      }, 10000);
 
-        emailElement.textContent =
-          "No active login session";
+    });
 
+  })
+  .catch(error => {
 
-        transactionsElement.innerHTML = `
-
-          <div class="message">
-
-            <div class="message-icon">
-              🔐
-            </div>
-
-            <h3>
-              Please login first
-            </h3>
-
-            <p>
-              Your transaction history
-              will appear here after
-              you are logged in.
-            </p>
-
-          </div>
-
-        `;
-
-      },
-      10000
+    console.error(
+      "Firebase Auth initialization error:",
+      error
     );
 
-  </script>
+
+    emailElement.textContent =
+      "Unable to restore login";
+
+
+    transactionsElement.innerHTML = `
+
+      <div class="message">
+
+        <div class="message-icon">
+          ⚠️
+        </div>
+
+        <h3>
+          Unable to restore login
+        </h3>
+
+        <p>
+          Please refresh the page
+          and try again.
+        </p>
+
+      </div>
+
+    `;
+
+  });
+
+</script>
 
 
 </body>
