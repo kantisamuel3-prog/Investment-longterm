@@ -1547,6 +1547,21 @@ main{
 
     }
 
+    if (type === "Recharge") {
+
+  return {
+
+    icon: "↓",
+
+    iconClass: "deposit-icon",
+
+    amountClass: "deposit-amount",
+
+    sign: "+"
+
+  };
+
+}
 
     return {
 
@@ -1733,8 +1748,9 @@ main{
           /* WITHDRAWAL STATUS */
 
           if (
-            type === "Withdrawal Request"
-          ) {
+           type === "Withdrawal Request" ||
+           type === "Recharge"
+         ) {
 
             const status =
               String(
