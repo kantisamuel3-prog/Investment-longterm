@@ -7,7 +7,7 @@
       content="width=device-width,
       initial-scale=1.0,
       maximum-scale=1.0,
-      User-scalable=no">
+      user-scalable=no">
 
 <title>Novarise — Admin Withdrawals</title>
 
@@ -88,6 +88,7 @@ body{
   background:#fff;
   border-radius:18px;
   padding:17px;
+  margin-bottom:14px;
   box-shadow:0 5px 20px rgba(25,55,100,.07);
 }
 
@@ -229,6 +230,7 @@ button:disabled{
 }
 
 @media(max-width:600px){
+
   body{
     padding:12px 10px 30px;
   }
@@ -293,6 +295,7 @@ button:disabled{
   </div>
 
   <div class="stats">
+
     <div class="stat">
       <div class="stat-label">PENDING</div>
       <div class="stat-value" id="pendingCount">0</div>
@@ -307,22 +310,47 @@ button:disabled{
       <div class="stat-label">TOTAL REQUESTS</div>
       <div class="stat-value" id="totalCount">0</div>
     </div>
+
   </div>
+
 
   <!-- =========================
-     RECHARGE REQUESTS
-========================= -->
+       RECHARGE REQUESTS
+  ========================= -->
 
-<div class="section">
+  <div class="section">
 
-  <div class="section-title">
-    Recharge Requests
+    <div class="section-title">
+      Recharge Requests
+    </div>
+
+    <div id="recharges">
+
+      <div class="loading">
+        Loading recharge requests...
+      </div>
+
+    </div>
+
   </div>
 
-  <div id="recharges">
 
-    <div class="loading">
-      Loading recharge requests...
+  <!-- =========================
+       WITHDRAWAL REQUESTS
+  ========================= -->
+
+  <div class="section">
+
+    <div class="section-title">
+      Withdrawal Requests
+    </div>
+
+    <div id="withdrawals">
+
+      <div class="loading">
+        Loading withdrawal requests...
+      </div>
+
     </div>
 
   </div>
@@ -330,28 +358,7 @@ button:disabled{
 </div>
 
 
-<!-- =========================
-     WITHDRAWAL REQUESTS
-========================= -->
-
-<div class="section">
-
-  <div class="section-title">
-    Withdrawal Requests
-  </div>
-
-  <div id="withdrawals">
-
-    <div class="loading">
-      Loading withdrawal requests...
-    </div>
-
-  </div>
-
-</div>
-
-<!-- Firebase Compat SDK
-     SAME AUTH SYSTEM AS login.html -->
+<!-- Firebase Compat SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -360,8 +367,9 @@ button:disabled{
 <script>
 
 const firebaseConfig = {
+
   apiKey:
-    "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDqGk",
+    "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqGk",
 
   authDomain:
     "investpro-2dafb.firebaseapp.com",
@@ -380,14 +388,9 @@ const firebaseConfig = {
 
   measurementId:
     "G-0L77SFTC4F"
+
 };
 
-
-/*
-  IMPORTANT: 
-  This is the same Firebase Auth system
-  used by login.html.
-*/
 
 firebase.initializeApp(firebaseConfig);
 
@@ -395,21 +398,12 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 
-/*
-  ADMIN ACCOUNT
-
-  Phone:
-  9999999999
-
-  Existing login system converts it to:
-  639999999999@novarise.local
-*/
-
 const ADMIN_EMAIL =
   "639999999999@novarise.local";
 
 
-const $ = id => document.getElementById(id);
+const $ = id =>
+  document.getElementById(id);
 
 
 /* -----------------------------------------
@@ -418,15 +412,18 @@ const $ = id => document.getElementById(id);
 
 function formatMoney(value){
 
-  const amount = Number(value || 0);
+  const amount =
+    Number(value || 0);
 
-  return "₱" + amount.toLocaleString(
-    "en-PH",
-    {
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
-    }
-  );
+  return "₱" +
+    amount.toLocaleString(
+      "en-PH",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
 }
 
 
@@ -434,10 +431,6 @@ function formatMoney(value){
    AUTH CHECK
 ----------------------------------------- */
 
-/*
-  Restore the existing Novarise Firebase Auth
-  session. This does NOT change the login system.
-*/
 (async function(){
 
   try{
@@ -446,50 +439,64 @@ function formatMoney(value){
       firebase.auth.Auth.Persistence.LOCAL
     );
 
-    /*
-      Wait for Firebase to finish restoring the
-      saved browser Auth session.
-    */
-    if(typeof auth.authStateReady === "function"){
+
+    if(
+      typeof auth.authStateReady ===
+      "function"
+    ){
+
       await auth.authStateReady();
+
     }
 
-    let user = auth.currentUser;
 
-    /*
-      Give Firebase one more chance to deliver the
-      restored Auth user before showing the error.
-    */
+    let user =
+      auth.currentUser;
+
+
     if(!user){
 
-      user = await new Promise(resolve => {
+      user =
+        await new Promise(resolve => {
 
-        let finished = false;
+          let finished = false;
 
-        const unsubscribe =
-          auth.onAuthStateChanged(currentUser => {
 
-            if(finished) return;
+          const unsubscribe =
+            auth.onAuthStateChanged(
+              currentUser => {
+
+                if(finished)
+                  return;
+
+                finished = true;
+
+                unsubscribe();
+
+                resolve(
+                  currentUser || null
+                );
+
+              }
+            );
+
+
+          setTimeout(() => {
+
+            if(finished)
+              return;
 
             finished = true;
+
             unsubscribe();
 
-            resolve(currentUser || null);
+            resolve(
+              auth.currentUser || null
+            );
 
-          });
+          },3000);
 
-        setTimeout(() => {
-
-          if(finished) return;
-
-          finished = true;
-          unsubscribe();
-
-          resolve(auth.currentUser || null);
-
-        }, 3000);
-
-      });
+        });
 
     }
 
@@ -506,24 +513,9 @@ function formatMoney(value){
         </div>
       `;
 
-      $("pendingCount").textContent = "0";
-      $("pendingAmount").textContent = "₱0.00";
-      $("totalCount").textContent = "0";
-
-      return;
-    }
-
-
-    /* ---------------------------------------
-       ADMIN AUTHORIZATION
-    --------------------------------------- */
-
-    if(user.email !== ADMIN_EMAIL){
-
-      $("withdrawals").innerHTML = `
+      $("recharges").innerHTML = `
         <div class="error">
-          Access denied.<br><br>
-          This page is for the withdrawal administrator only.
+          Please login first using the existing Novarise login page.
         </div>
       `;
 
@@ -532,6 +524,38 @@ function formatMoney(value){
       $("totalCount").textContent = "0";
 
       return;
+
+    }
+
+
+    /* ---------------------------------------
+       ADMIN AUTHORIZATION
+    --------------------------------------- */
+
+    if(
+      user.email !==
+      ADMIN_EMAIL
+    ){
+
+      $("withdrawals").innerHTML = `
+        <div class="error">
+          Access denied.<br><br>
+          This page is for the withdrawal administrator only.
+        </div>
+      `;
+
+      $("recharges").innerHTML = `
+        <div class="error">
+          Access denied.
+        </div>
+      `;
+
+      $("pendingCount").textContent = "0";
+      $("pendingAmount").textContent = "₱0.00";
+      $("totalCount").textContent = "0";
+
+      return;
+
     }
 
 
@@ -549,12 +573,21 @@ function formatMoney(value){
       error
     );
 
+
     $("withdrawals").innerHTML = `
       <div class="error">
         Unable to restore the administrator login session.
         Please refresh the page.
       </div>
     `;
+
+    $("recharges").innerHTML = `
+      <div class="error">
+        Unable to restore the administrator login session.
+        Please refresh the page.
+      </div>
+    `;
+
 
     $("pendingCount").textContent = "0";
     $("pendingAmount").textContent = "₱0.00";
@@ -566,7 +599,7 @@ function formatMoney(value){
 
 
 /* -----------------------------------------
-   LOAD ALL WITHDRAWAL REQUESTS
+   LOAD ALL REQUESTS
 ----------------------------------------- */
 
 async function loadWithdrawals(){
@@ -578,142 +611,237 @@ async function loadWithdrawals(){
   `;
 
 
+  $("recharges").innerHTML = `
+    <div class="loading">
+      Loading recharge requests...
+    </div>
+  `;
+
+
   try{
 
     const snapshot =
-      await db.collection("Users").get();
+      await db
+        .collection("Users")
+        .get();
 
 
     const requests = [];
-const rechargeRequests = [];
+
+    const rechargeRequests = [];
 
 
-    snapshot.forEach(UserDoc => {
+    snapshot.forEach(
+      UserDoc => {
 
-      const UserData = UserDoc.data() || {};
-
-      const transactions =
-        Array.isArray(UserData.transactions)
-          ? UserData.transactions
-          : [];
+        const UserData =
+          UserDoc.data() || {};
 
 
-      transactions.forEach((transaction, index) => {
+        const transactions =
+          Array.isArray(
+            UserData.transactions
+          )
+            ? UserData.transactions
+            : [];
 
-  if(
-    transaction &&
-    transaction.type === "Withdrawal Request"
-  ){
 
-    requests.push({
+        transactions.forEach(
+          (transaction,index) => {
 
-      UserId:UserDoc.id,
 
-      transactionIndex:index,
+            if(
+              transaction &&
+              transaction.type ===
+                "Withdrawal Request"
+            ){
 
-      UserName:
-        UserData.name ||
-        UserData.displayName ||
-        "Member",
+              requests.push({
 
-      ...transaction
+                UserId:
+                  UserDoc.id,
 
-    });
+                transactionIndex:
+                  index,
 
-  }
+                UserName:
+                  UserData.name ||
+                  UserData.displayName ||
+                  "Member",
 
-  if(
-    transaction &&
-    transaction.type === "Recharge"
-  ){
+                ...transaction
 
-    rechargeRequests.push({
+              });
 
-      UserId:UserDoc.id,
+            }
 
-      transactionIndex:index,
 
-      UserName:
-        UserData.name ||
-        UserData.displayName ||
-        "Member",
+            if(
+              transaction &&
+              transaction.type ===
+                "Recharge"
+            ){
 
-      ...transaction
+              rechargeRequests.push({
 
-    });
+                UserId:
+                  UserDoc.id,
 
-  }
+                transactionIndex:
+                  index,
 
-});
+                UserName:
+                  UserData.name ||
+                  UserData.displayName ||
+                  "Member",
+
+                ...transaction
+
+              });
+
+            }
+
+          }
+        );
+
+      }
+    );
+
 
     /*
-      Newest requests first.
+      Newest withdrawals first.
     */
 
-    requests.sort((a,b) => {
+    requests.sort(
+      (a,b) => {
 
-      const dateA =
-        new Date(a.date || 0).getTime();
-
-      const dateB =
-        new Date(b.date || 0).getTime();
-
-      return dateB - dateA;
-
-    });
+        const dateA =
+          new Date(
+            a.date || 0
+          ).getTime();
 
 
-    updateStats(requests);
+        const dateB =
+          new Date(
+            b.date || 0
+          ).getTime();
 
 
-    if(requests.length === 0){
+        return dateB - dateA;
 
-  $("withdrawals").innerHTML = `
-    <div class="empty">
-      No withdrawal requests found.
-    </div>
-  `;
+      }
+    );
 
-}else{
 
-  $("withdrawals").innerHTML =
-    requests.map((request, index) =>
-      renderWithdrawal(request,index)
-    ).join("");
+    /*
+      Newest recharge requests first.
+    */
 
-}
+    rechargeRequests.sort(
+      (a,b) => {
 
-/* -----------------------------------------
-   RENDER RECHARGE REQUESTS
------------------------------------------ */
+        const dateA =
+          new Date(
+            a.date || 0
+          ).getTime();
 
-if(rechargeRequests.length === 0){
 
-  $("recharges").innerHTML = `
-    <div class="empty">
-      No recharge requests found.
-    </div>
-  `;
+        const dateB =
+          new Date(
+            b.date || 0
+          ).getTime();
 
-}else{
 
-  $("recharges").innerHTML =
-    rechargeRequests.map((request,index) =>
-      renderRecharge(request,index)
-    ).join("");
+        return dateB - dateA;
 
-}          
-         
+      }
+    );
+
+
+    updateStats(
+      requests
+    );
+
+
+    /* ---------------------------------------
+       RENDER WITHDRAWALS
+    --------------------------------------- */
+
+    if(
+      requests.length === 0
+    ){
+
+      $("withdrawals").innerHTML = `
+        <div class="empty">
+          No withdrawal requests found.
+        </div>
+      `;
+
+    }else{
+
+      $("withdrawals").innerHTML =
+        requests
+          .map(
+            (request,index) =>
+              renderWithdrawal(
+                request,
+                index
+              )
+          )
+          .join("");
+
+    }
+
+
+    /* ---------------------------------------
+       RENDER RECHARGES
+    --------------------------------------- */
+
+    if(
+      rechargeRequests.length === 0
+    ){
+
+      $("recharges").innerHTML = `
+        <div class="empty">
+          No recharge requests found.
+        </div>
+      `;
+
+    }else{
+
+      $("recharges").innerHTML =
+        rechargeRequests
+          .map(
+            (request,index) =>
+              renderRecharge(
+                request,
+                index
+              )
+          )
+          .join("");
+
+    }
+
+
   }catch(error){
 
     console.error(
-      "Load withdrawals error:",
+      "Load requests error:",
       error
     );
+
 
     $("withdrawals").innerHTML = `
       <div class="error">
         Failed to load withdrawal requests.<br>
+        Please check your Firebase permissions.
+      </div>
+    `;
+
+
+    $("recharges").innerHTML = `
+      <div class="error">
+        Failed to load recharge requests.<br>
         Please check your Firebase permissions.
       </div>
     `;
@@ -732,15 +860,20 @@ function updateStats(requests){
   const pending =
     requests.filter(
       request =>
-        String(request.status || "")
-          .toUpperCase() === "PENDING"
+        String(
+          request.status || ""
+        ).toUpperCase() ===
+        "PENDING"
     );
 
 
   const pendingAmount =
     pending.reduce(
       (sum,request) =>
-        sum + Number(request.amount || 0),
+        sum +
+        Number(
+          request.amount || 0
+        ),
       0
     );
 
@@ -750,7 +883,9 @@ function updateStats(requests){
 
 
   $("pendingAmount").textContent =
-    formatMoney(pendingAmount);
+    formatMoney(
+      pendingAmount
+    );
 
 
   $("totalCount").textContent =
@@ -758,117 +893,181 @@ function updateStats(requests){
 
 }
 
+
 /* -----------------------------------------
    RENDER RECHARGE
 ----------------------------------------- */
 
-function renderRecharge(request,index){
+function renderRecharge(
+  request,
+  index
+){
 
   const status =
     String(
-      request.status || "PENDING"
+      request.status ||
+      "PENDING"
     ).toUpperCase();
 
 
   let statusClass =
     "pending";
 
-  if(status === "APPROVED"){
-    statusClass = "approved";
+
+  if(
+    status ===
+    "APPROVED"
+  ){
+
+    statusClass =
+      "approved";
+
   }
 
-  if(status === "REJECTED"){
-    statusClass = "rejected";
+
+  if(
+    status ===
+    "REJECTED"
+  ){
+
+    statusClass =
+      "rejected";
+
   }
 
 
   const date =
     request.date
-      ? new Date(request.date)
-          .toLocaleString("en-PH")
+      ? new Date(
+          request.date
+        ).toLocaleString(
+          "en-PH"
+        )
       : "—";
 
 
   const amount =
-    formatMoney(request.amount);
+    formatMoney(
+      request.amount
+    );
 
 
   const orderId =
-    request.orderId || "—";
+    request.orderId ||
+    "—";
 
 
   const method =
-    request.method || "GCash";
+    request.method ||
+    "GCash";
 
 
-  let actions = "";
+  let actions =
+    "";
 
 
-  if(status === "PENDING"){
+  if(
+    status ===
+    "PENDING"
+  ){
 
     actions = `
+
       <div class="actions">
 
         <button
-          class="approve-btn"
-          id="approve-recharge-${index}"
-          onclick="approveRecharge(
-            '${escapeAttribute(request.UserId)}',
-            '${escapeAttribute(request.orderId || "")}',
-            ${Number(request.amount || 0)},
-            ${index}
-          )">
+          type="button"
+          class="approve-btn approve-recharge-btn"
+          data-userid="${escapeHtml(request.UserId)}"
+          data-orderid="${escapeHtml(request.orderId || "")}"
+          data-amount="${Number(request.amount || 0)}"
+          data-index="${index}">
           APPROVE
         </button>
 
       </div>
+
     `;
-
-  }else{
-
-    actions = "";
 
   }
 
 
   return `
-    <div class="request-card">
 
-      <div class="request-header">
+    <div class="withdrawal-card">
+
+      <div class="card-top">
 
         <div>
-          <strong>
-            ${escapeHtml(request.UserName || "Member")}
-          </strong>
+
+          <div class="amount">
+            ${amount}
+          </div>
+
         </div>
 
-        <span class="status ${statusClass}">
+
+        <div class="status ${statusClass}">
           ${escapeHtml(status)}
-        </span>
+        </div>
 
       </div>
 
 
-      <div class="request-details">
+      <div class="info">
 
-        <div>
-          <span>Amount</span>
-          <strong>${amount}</strong>
+        <div class="info-row">
+
+          <span>
+            Member
+          </span>
+
+          <strong>
+            ${escapeHtml(
+              request.UserName ||
+              "Member"
+            )}
+          </strong>
+
         </div>
 
-        <div>
-          <span>Method</span>
-          <strong>${escapeHtml(method)}</strong>
+
+        <div class="info-row">
+
+          <span>
+            Method
+          </span>
+
+          <strong>
+            ${escapeHtml(method)}
+          </strong>
+
         </div>
 
-        <div>
-          <span>Order ID</span>
-          <strong>${escapeHtml(orderId)}</strong>
+
+        <div class="info-row">
+
+          <span>
+            Order ID
+          </span>
+
+          <strong>
+            ${escapeHtml(orderId)}
+          </strong>
+
         </div>
 
-        <div>
-          <span>Date</span>
-          <strong>${escapeHtml(date)}</strong>
+
+        <div class="info-row">
+
+          <span>
+            Date
+          </span>
+
+          <strong>
+            ${escapeHtml(date)}
+          </strong>
+
         </div>
 
       </div>
@@ -877,69 +1076,154 @@ function renderRecharge(request,index){
       ${actions}
 
     </div>
+
   `;
+
 }
 
+
 /* -----------------------------------------
-   RENDER REQUEST
+   RECHARGE BUTTON HANDLER
 ----------------------------------------- */
 
-function renderWithdrawal(request,index){
+$("recharges").addEventListener(
+  "click",
+  function(event){
+
+    const button =
+      event.target.closest(
+        ".approve-recharge-btn"
+      );
+
+
+    if(!button)
+      return;
+
+
+    const UserId =
+      button.dataset.userid;
+
+
+    const orderId =
+      button.dataset.orderid;
+
+
+    const amount =
+      Number(
+        button.dataset.amount
+      );
+
+
+    const index =
+      Number(
+        button.dataset.index
+      );
+
+
+    approveRecharge(
+      UserId,
+      orderId,
+      amount,
+      index
+    );
+
+  }
+);
+
+
+/* -----------------------------------------
+   RENDER WITHDRAWAL
+----------------------------------------- */
+
+function renderWithdrawal(
+  request,
+  index
+){
 
   const status =
     String(
-      request.status || "PENDING"
+      request.status ||
+      "PENDING"
     ).toUpperCase();
 
 
   let statusClass =
     "pending";
 
-  if(status === "APPROVED"){
-    statusClass = "approved";
+
+  if(
+    status ===
+    "APPROVED"
+  ){
+
+    statusClass =
+      "approved";
+
   }
 
-  if(status === "REJECTED"){
-    statusClass = "rejected";
+
+  if(
+    status ===
+    "REJECTED"
+  ){
+
+    statusClass =
+      "rejected";
+
   }
 
 
   const date =
     request.date
-      ? new Date(request.date)
-          .toLocaleString("en-PH")
+      ? new Date(
+          request.date
+        ).toLocaleString(
+          "en-PH"
+        )
       : "—";
 
 
   const amount =
-    formatMoney(request.amount);
+    formatMoney(
+      request.amount
+    );
 
 
   const requestId =
-    request.requestId || "—";
+    request.requestId ||
+    "—";
 
 
   const method =
-    request.method || "—";
+    request.method ||
+    "—";
 
 
   const accountName =
-    request.accountName || "—";
+    request.accountName ||
+    "—";
 
 
   const accountNumber =
-    request.accountNumber || "—";
+    request.accountNumber ||
+    "—";
 
 
-  let actions = "";
+  let actions =
+    "";
 
 
-  if(status === "PENDING"){
+  if(
+    status ===
+    "PENDING"
+  ){
 
     actions = `
+
       <div class="actions">
 
         <button
+          type="button"
           class="approve-btn"
           id="approve-${index}"
           onclick="approveWithdrawal(
@@ -951,7 +1235,9 @@ function renderWithdrawal(request,index){
           APPROVE
         </button>
 
+
         <button
+          type="button"
           class="reject-btn"
           id="reject-${index}"
           onclick="rejectWithdrawal(
@@ -964,25 +1250,26 @@ function renderWithdrawal(request,index){
         </button>
 
       </div>
+
     `;
-
-  }else{
-
-    actions = "";
 
   }
 
 
   return `
+
     <div class="withdrawal-card">
 
       <div class="card-top">
 
         <div>
+
           <div class="amount">
             ${amount}
           </div>
+
         </div>
+
 
         <div class="status ${statusClass}">
           ${status}
@@ -994,50 +1281,92 @@ function renderWithdrawal(request,index){
       <div class="info">
 
         <div class="info-row">
-          <span>Member</span>
+
+          <span>
+            Member
+          </span>
+
           <strong>
-            ${escapeHtml(request.UserName)}
+            ${escapeHtml(
+              request.UserName
+            )}
           </strong>
+
         </div>
 
 
         <div class="info-row">
-          <span>Method</span>
+
+          <span>
+            Method
+          </span>
+
           <strong>
-            ${escapeHtml(method)}
+            ${escapeHtml(
+              method
+            )}
           </strong>
+
         </div>
 
 
         <div class="info-row">
-          <span>Account Name</span>
+
+          <span>
+            Account Name
+          </span>
+
           <strong>
-            ${escapeHtml(accountName)}
+            ${escapeHtml(
+              accountName
+            )}
           </strong>
+
         </div>
 
 
         <div class="info-row">
-          <span>Account Number</span>
+
+          <span>
+            Account Number
+          </span>
+
           <strong>
-            ${escapeHtml(accountNumber)}
+            ${escapeHtml(
+              accountNumber
+            )}
           </strong>
+
         </div>
 
 
         <div class="info-row">
-          <span>Request ID</span>
+
+          <span>
+            Request ID
+          </span>
+
           <strong>
-            ${escapeHtml(requestId)}
+            ${escapeHtml(
+              requestId
+            )}
           </strong>
+
         </div>
 
 
         <div class="info-row">
-          <span>Date</span>
+
+          <span>
+            Date
+          </span>
+
           <strong>
-            ${escapeHtml(date)}
+            ${escapeHtml(
+              date
+            )}
           </strong>
+
         </div>
 
       </div>
@@ -1046,6 +1375,7 @@ function renderWithdrawal(request,index){
       ${actions}
 
     </div>
+
   `;
 
 }
@@ -1065,28 +1395,35 @@ async function approveWithdrawal(
   const approveButton =
     $("approve-" + index);
 
+
   const rejectButton =
     $("reject-" + index);
 
 
   if(approveButton)
-    approveButton.disabled = true;
+    approveButton.disabled =
+      true;
+
 
   if(rejectButton)
-    rejectButton.disabled = true;
+    rejectButton.disabled =
+      true;
 
 
   try{
 
     const UserRef =
-      db.collection("Users").doc(UserId);
+      db.collection("Users")
+        .doc(UserId);
 
 
     await db.runTransaction(
       async transaction => {
 
         const snap =
-          await transaction.get(UserRef);
+          await transaction.get(
+            UserRef
+          );
 
 
         if(!snap.exists){
@@ -1103,7 +1440,9 @@ async function approveWithdrawal(
 
 
         const transactions =
-          Array.isArray(data.transactions)
+          Array.isArray(
+            data.transactions
+          )
             ? [...data.transactions]
             : [];
 
@@ -1114,11 +1453,15 @@ async function approveWithdrawal(
               item &&
               item.type ===
                 "Withdrawal Request" &&
-              item.requestId === requestId
+              item.requestId ===
+                requestId
           );
 
 
-        if(transactionIndex === -1){
+        if(
+          transactionIndex ===
+          -1
+        ){
 
           throw new Error(
             "REQUEST_NOT_FOUND"
@@ -1128,20 +1471,22 @@ async function approveWithdrawal(
 
 
         const request =
-          transactions[transactionIndex];
+          transactions[
+            transactionIndex
+          ];
 
 
         const currentStatus =
           String(
-            request.status || "PENDING"
+            request.status ||
+            "PENDING"
           ).toUpperCase();
 
 
-        /*
-          Prevent double approval/rejection.
-        */
-
-        if(currentStatus !== "PENDING"){
+        if(
+          currentStatus !==
+          "PENDING"
+        ){
 
           throw new Error(
             "ALREADY_PROCESSED"
@@ -1150,14 +1495,18 @@ async function approveWithdrawal(
         }
 
 
-        transactions[transactionIndex] = {
+        transactions[
+          transactionIndex
+        ] = {
 
           ...request,
 
-          status:"APPROVED",
+          status:
+            "APPROVED",
 
           approvedAt:
-            new Date().toISOString()
+            new Date()
+              .toISOString()
 
         };
 
@@ -1166,8 +1515,9 @@ async function approveWithdrawal(
           IMPORTANT:
           APPROVE DOES NOT DEDUCT BALANCE AGAIN.
 
-          The balance was already deducted
-          when the member submitted the request.
+          Balance was already deducted
+          when the withdrawal request
+          was submitted.
         */
 
         transaction.update(
@@ -1192,7 +1542,10 @@ async function approveWithdrawal(
     );
 
 
-    if(error.message === "ALREADY_PROCESSED"){
+    if(
+      error.message ===
+      "ALREADY_PROCESSED"
+    ){
 
       alert(
         "This withdrawal request has already been processed."
@@ -1213,6 +1566,7 @@ async function approveWithdrawal(
 
 }
 
+
 /* -----------------------------------------
    APPROVE RECHARGE
 ----------------------------------------- */
@@ -1224,25 +1578,44 @@ async function approveRecharge(
   index
 ){
 
-  if(!UserId || !orderId){
-    alert("Invalid recharge request.");
+  if(
+    !UserId ||
+    !orderId
+  ){
+
+    alert(
+      "Invalid recharge request."
+    );
+
     return;
+
   }
+
 
   const rechargeAmount =
     Number(amount);
 
+
   if(
-    !Number.isFinite(rechargeAmount) ||
+    !Number.isFinite(
+      rechargeAmount
+    ) ||
     rechargeAmount <= 0
   ){
-    alert("Invalid recharge amount.");
+
+    alert(
+      "Invalid recharge amount."
+    );
+
     return;
+
   }
+
 
   const userRef =
     db.collection("Users")
       .doc(UserId);
+
 
   try{
 
@@ -1254,14 +1627,19 @@ async function approveRecharge(
             userRef
           );
 
+
         if(!snap.exists){
+
           throw new Error(
             "USER_NOT_FOUND"
           );
+
         }
+
 
         const data =
           snap.data() || {};
+
 
         const transactions =
           Array.isArray(
@@ -1270,26 +1648,35 @@ async function approveRecharge(
             ? [...data.transactions]
             : [];
 
+
         const rechargeIndex =
           transactions.findIndex(
-            transaction =>
-              transaction &&
-              transaction.type ===
+            item =>
+              item &&
+              item.type ===
                 "Recharge" &&
-              transaction.orderId ===
+              item.orderId ===
                 orderId
           );
 
-        if(rechargeIndex === -1){
+
+        if(
+          rechargeIndex ===
+          -1
+        ){
+
           throw new Error(
             "RECHARGE_NOT_FOUND"
           );
+
         }
+
 
         const recharge =
           transactions[
             rechargeIndex
           ];
+
 
         const currentStatus =
           String(
@@ -1297,51 +1684,65 @@ async function approveRecharge(
             "PENDING"
           ).toUpperCase();
 
+
         if(
           currentStatus !==
           "PENDING"
         ){
+
           throw new Error(
             "RECHARGE_ALREADY_PROCESSED"
           );
+
         }
+
 
         const currentBalance =
           Number(
             data.balance || 0
           );
 
+
         transactions[
           rechargeIndex
         ] = {
+
           ...recharge,
 
           status:
             "APPROVED",
 
           approvedAt:
-            new Date().toISOString()
+            new Date()
+              .toISOString()
+
         };
+
 
         transaction.update(
           userRef,
           {
+
             balance:
               currentBalance +
               rechargeAmount,
 
             transactions
+
           }
         );
 
       }
     );
 
+
     await loadWithdrawals();
+
 
     alert(
       "Recharge approved successfully."
     );
+
 
   }catch(error){
 
@@ -1349,6 +1750,7 @@ async function approveRecharge(
       "Approve recharge error:",
       error
     );
+
 
     if(
       error.message ===
@@ -1389,6 +1791,7 @@ async function approveRecharge(
 
 }
 
+
 /* -----------------------------------------
    REJECT WITHDRAWAL
 ----------------------------------------- */
@@ -1403,28 +1806,35 @@ async function rejectWithdrawal(
   const approveButton =
     $("approve-" + index);
 
+
   const rejectButton =
     $("reject-" + index);
 
 
   if(approveButton)
-    approveButton.disabled = true;
+    approveButton.disabled =
+      true;
+
 
   if(rejectButton)
-    rejectButton.disabled = true;
+    rejectButton.disabled =
+      true;
 
 
   try{
 
     const UserRef =
-      db.collection("Users").doc(UserId);
+      db.collection("Users")
+        .doc(UserId);
 
 
     await db.runTransaction(
       async transaction => {
 
         const snap =
-          await transaction.get(UserRef);
+          await transaction.get(
+            UserRef
+          );
 
 
         if(!snap.exists){
@@ -1441,7 +1851,9 @@ async function rejectWithdrawal(
 
 
         const transactions =
-          Array.isArray(data.transactions)
+          Array.isArray(
+            data.transactions
+          )
             ? [...data.transactions]
             : [];
 
@@ -1452,11 +1864,15 @@ async function rejectWithdrawal(
               item &&
               item.type ===
                 "Withdrawal Request" &&
-              item.requestId === requestId
+              item.requestId ===
+                requestId
           );
 
 
-        if(transactionIndex === -1){
+        if(
+          transactionIndex ===
+          -1
+        ){
 
           throw new Error(
             "REQUEST_NOT_FOUND"
@@ -1466,20 +1882,22 @@ async function rejectWithdrawal(
 
 
         const request =
-          transactions[transactionIndex];
+          transactions[
+            transactionIndex
+          ];
 
 
         const currentStatus =
           String(
-            request.status || "PENDING"
+            request.status ||
+            "PENDING"
           ).toUpperCase();
 
 
-        /*
-          Prevent double processing.
-        */
-
-        if(currentStatus !== "PENDING"){
+        if(
+          currentStatus !==
+          "PENDING"
+        ){
 
           throw new Error(
             "ALREADY_PROCESSED"
@@ -1489,29 +1907,31 @@ async function rejectWithdrawal(
 
 
         const currentBalance =
-          Number(data.balance || 0);
+          Number(
+            data.balance || 0
+          );
 
 
         const refundAmount =
           Number(
-            request.amount || amount || 0
+            request.amount ||
+            amount ||
+            0
           );
 
 
-        /*
-          Change request status to REJECTED
-          and refund the amount that was
-          deducted when the request was made.
-        */
-
-        transactions[transactionIndex] = {
+        transactions[
+          transactionIndex
+        ] = {
 
           ...request,
 
-          status:"REJECTED",
+          status:
+            "REJECTED",
 
           rejectedAt:
-            new Date().toISOString()
+            new Date()
+              .toISOString()
 
         };
 
@@ -1544,7 +1964,10 @@ async function rejectWithdrawal(
     );
 
 
-    if(error.message === "ALREADY_PROCESSED"){
+    if(
+      error.message ===
+      "ALREADY_PROCESSED"
+    ){
 
       alert(
         "This withdrawal request has already been processed."
@@ -1572,21 +1995,46 @@ async function rejectWithdrawal(
 
 function escapeHtml(value){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return String(
+    value ?? ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
 function escapeAttribute(value){
 
-  return String(value ?? "")
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'");
+  return String(
+    value ?? ""
+  )
+    .replace(
+      /\\/g,
+      "\\\\"
+    )
+    .replace(
+      /'/g,
+      "\\'"
+    );
 
 }
 
