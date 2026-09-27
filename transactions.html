@@ -16,931 +16,1299 @@
 
   <style>
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  width:100%;
+  min-width:0;
+  overflow-x:hidden;
+}
+
+body{
+  width:100%;
+  min-width:0;
+  min-height:100vh;
+  margin:0;
+  padding:0;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 8% 20%,
+      rgba(37,99,235,.10),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 92% 80%,
+      rgba(34,197,94,.09),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #f4f8ff 0%,
+      #edf5ff 50%,
+      #f9fcff 100%
+    );
 
-    html {
-      width: 100%;
-      min-width: 0;
-      overflow-x: hidden;
-    }
+  color:#14213d;
+  overflow-x:hidden;
+}
 
-    body {
-      width: 100%;
-      min-width: 0;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
+
+/* =========================
+   HEADER
+   ========================= */
+
+header{
+  width:100%;
+  min-width:0;
+  min-height:88px;
 
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+  background:
+    linear-gradient(
+      110deg,
+      #061538 0%,
+      #0b2866 48%,
+      #071a46 100%
+    );
 
-      background:
-        linear-gradient(
-          135deg,
-          #f3f7ff 0%,
-          #eef4ff 100%
-        );
+  color:white;
 
-      color: #14213d;
+  padding:
+    10px 5%;
 
-      overflow-x: hidden;
-    }
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 
+  gap:18px;
 
-    /* =========================
-       HEADER
-       ========================= */
+  position:relative;
+  overflow:hidden;
 
-    header {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
+  border-bottom:
+    1px solid
+    rgba(96,165,250,.25);
 
-      background:
-        linear-gradient(
-          135deg,
-          #101827,
-          #172554
-        );
+  box-shadow:
+    0 7px 25px
+    rgba(10,35,90,.22);
+}
 
-      color: white;
 
-      padding: 16px 5%;
+/* blue/green light decoration */
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+header::before{
+  content:"";
 
-      gap: 12px;
+  position:absolute;
 
-      box-shadow:
-        0 4px 18px
-        rgba(0,0,0,0.15);
-    }
+  width:48%;
+  height:170px;
 
+  right:-10%;
+  top:-105px;
 
-    .logo {
-      min-width: 0;
+  background:
+    linear-gradient(
+      135deg,
+      transparent 20%,
+      rgba(37,99,235,.35),
+      rgba(34,197,94,.28)
+    );
 
-      display: flex;
-      align-items: center;
+  transform:skewX(-28deg);
 
-      gap: 9px;
+  pointer-events:none;
+}
 
-      font-size: 22px;
-      font-weight: bold;
 
-      white-space: nowrap;
-    }
+header::after{
+  content:"";
 
+  position:absolute;
 
-    .logo-icon {
-      width: 38px;
-      height: 38px;
+  width:45%;
+  height:2px;
 
-      flex: 0 0 38px;
+  right:8%;
+  bottom:7px;
 
-      border-radius: 11px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #20b8ff,
+      #55e85a,
+      transparent
+    );
 
-      background:
-        linear-gradient(
-          135deg,
-          #2563eb,
-          #60a5fa
-        );
+  opacity:.8;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  pointer-events:none;
+}
 
-      font-size: 21px;
-    }
 
+/* =========================
+   NOVARISE LOGO
+   ========================= */
 
-    .header-buttons {
-      min-width: 0;
+.logo{
+  min-width:0;
 
-      display: flex;
-      align-items: center;
+  display:flex;
+  align-items:center;
 
-      gap: 8px;
+  gap:11px;
 
-      flex-shrink: 0;
-    }
+  font-size:24px;
+  font-weight:bold;
 
+  white-space:nowrap;
 
-    button {
-      border: 0;
+  position:relative;
+  z-index:2;
+}
 
-      padding: 10px 15px;
 
-      border-radius: 9px;
+.logo-icon{
+  width:58px;
+  height:58px;
 
-      cursor: pointer;
+  flex:0 0 58px;
 
-      font-weight: bold;
+  border-radius:17px;
 
-      font-size: 14px;
+  background:
+    linear-gradient(
+      145deg,
+      #0b7cff,
+      #1539c9
+    );
 
-      white-space: nowrap;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-      transition:
-        transform .2s ease,
-        background .2s ease;
-    }
+  overflow:hidden;
 
+  box-shadow:
+    0 0 0 2px
+    rgba(96,165,250,.25),
 
-    button:hover {
-      transform: translateY(-1px);
-    }
+    0 8px 22px
+    rgba(0,132,255,.30);
+}
 
 
-    #homeButton {
-      background:
-        linear-gradient(
-          135deg,
-          #2563eb,
-          #3b82f6
-        );
+/*
+  Kung gagamit ka ng actual Novarise logo
+  image, pangalanan ito:
 
-      color: white;
-    }
+  novarise-logo.png
+*/
 
+.logo-icon img{
+  width:100%;
+  height:100%;
 
-    #homeButton:hover {
-      background:
-        linear-gradient(
-          135deg,
-          #1d4ed8,
-          #2563eb
-        );
-    }
+  object-fit:contain;
 
+  padding:2px;
 
-    #logoutButton {
-      background: #ef4444;
-      color: white;
-    }
+  display:block;
 
+  mix-blend-mode:screen;
+}
 
-    #logoutButton:hover {
-      background: #dc2626;
-    }
 
+/* =========================
+   HEADER BUTTONS
+   ========================= */
 
-    /* =========================
-       MAIN
-       ========================= */
+.header-buttons{
+  min-width:0;
 
-    main {
-      width: 100%;
-      max-width: 950px;
+  display:flex;
+  align-items:center;
 
-      margin:
-        32px auto;
+  gap:10px;
 
-      padding:
-        0 20px;
-    }
+  flex-shrink:0;
 
+  position:relative;
+  z-index:3;
+}
 
-    .page-title {
-      width: 100%;
 
-      margin-bottom: 22px;
-    }
+button{
+  border:0;
 
+  padding:
+    11px 17px;
 
-    .page-title h2 {
-      margin:
-        0 0 8px;
+  border-radius:12px;
 
-      font-size: 32px;
+  cursor:pointer;
 
-      line-height: 1.2;
+  font-weight:bold;
 
-      color: #14213d;
-    }
+  font-size:14px;
 
+  white-space:nowrap;
 
-    #userEmail {
-      color: #64748b;
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
+}
 
-      font-size: 15px;
 
-      overflow-wrap: anywhere;
-    }
+button:hover{
+  transform:
+    translateY(-2px);
+}
 
 
-    /* =========================
-       CARD
-       ========================= */
+/* HOME */
 
-    .card {
-      width: 100%;
-      min-width: 0;
+#homeButton{
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #3b82f6
+    );
 
-      background:
-        rgba(
-          255,
-          255,
-          255,
-          0.97
-        );
+  color:white;
 
-      border-radius: 20px;
+  box-shadow:
+    0 6px 18px
+    rgba(37,99,235,.28);
+}
 
-      padding: 28px;
 
-      box-shadow:
-        0 8px 30px
-        rgba(
-          37,
-          99,
-          235,
-          0.08
-        );
+#homeButton:hover{
+  background:
+    linear-gradient(
+      135deg,
+      #1d4ed8,
+      #2563eb
+    );
 
-      border:
-        1px solid
-        rgba(
-          148,
-          163,
-          184,
-          0.18
-        );
-    }
+  box-shadow:
+    0 8px 22px
+    rgba(37,99,235,.38);
+}
 
 
-    .card-header {
-      width: 100%;
-      min-width: 0;
+/* LOGOUT */
 
-      display: flex;
-      align-items: center;
+#logoutButton{
+  background:
+    linear-gradient(
+      135deg,
+      #ef4444,
+      #f43f5e
+    );
 
-      gap: 14px;
+  color:white;
 
-      margin-bottom: 20px;
-    }
+  box-shadow:
+    0 6px 18px
+    rgba(239,68,68,.22);
+}
 
 
-    .transaction-icon {
-      width: 55px;
-      height: 55px;
+#logoutButton:hover{
+  background:
+    linear-gradient(
+      135deg,
+      #dc2626,
+      #e11d48
+    );
+}
 
-      flex: 0 0 55px;
 
-      border-radius: 16px;
+/* =========================
+   MAIN
+   ========================= */
 
-      background:
-        linear-gradient(
-          135deg,
-          #2563eb,
-          #6366f1
-        );
+main{
+  width:100%;
+  max-width:1080px;
 
-      color: white;
+  margin:
+    34px auto;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  padding:
+    0 20px;
+}
 
-      font-size: 26px;
 
-      box-shadow:
-        0 7px 18px
-        rgba(
-          37,
-          99,
-          235,
-          0.22
-        );
-    }
+/* =========================
+   PAGE TITLE
+   ========================= */
 
+.page-title{
+  width:100%;
 
-    .card-header > div:last-child {
-      min-width: 0;
-    }
+  margin-bottom:22px;
 
+  position:relative;
+}
 
-    .card-header h3 {
-      margin:
-        0 0 5px;
 
-      font-size: 21px;
+.page-title::after{
+  content:"";
 
-      line-height: 1.25;
-    }
+  display:block;
 
+  width:150px;
+  height:3px;
 
-    .card-header p {
-      margin: 0;
+  margin-top:12px;
 
-      color: #64748b;
+  border-radius:99px;
 
-      font-size: 14px;
+  background:
+    linear-gradient(
+      90deg,
+      #20b8ff,
+      #55e85a
+    );
 
-      line-height: 1.45;
-    }
+  opacity:.75;
+}
 
 
-    /* =========================
-       TRANSACTIONS
-       ========================= */
+.page-title h2{
+  margin:
+    0 0 7px;
 
-    #transactions {
-      width: 100%;
-      min-width: 0;
-    }
+  font-size:35px;
 
+  line-height:1.15;
 
-    .transaction {
-      width: 100%;
-      min-width: 0;
+  letter-spacing:-.7px;
 
-      display: flex;
+  background:
+    linear-gradient(
+      90deg,
+      #102a63,
+      #1677e8
+    );
 
-      justify-content:
-        space-between;
+  -webkit-background-clip:text;
+  background-clip:text;
 
-      align-items: center;
+  color:transparent;
+}
 
-      gap: 15px;
 
-      padding:
-        17px 0;
+#userEmail{
+  color:#64748b;
 
-      border-bottom:
-        1px solid #e5e7eb;
-    }
+  font-size:15px;
 
+  overflow-wrap:anywhere;
+}
 
-    .transaction:last-child {
-      border-bottom: 0;
-    }
 
+/* =========================
+   MAIN CARD
+   ========================= */
 
-    .transaction-left {
-      min-width: 0;
+.card{
+  width:100%;
+  min-width:0;
 
-      flex: 1 1 auto;
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .95
+    );
 
-      display: flex;
+  border-radius:26px;
 
-      align-items: center;
+  padding:28px;
 
-      gap: 12px;
-    }
+  position:relative;
 
+  overflow:hidden;
 
-    .transaction-type-icon {
-      width: 46px;
-      height: 46px;
+  border:
+    1px solid
+    rgba(96,165,250,.22);
 
-      flex: 0 0 46px;
+  box-shadow:
+    0 18px 50px
+    rgba(30,82,170,.12);
+}
 
-      border-radius: 13px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+/* top green-blue line */
 
-      font-size: 20px;
-    }
+.card::before{
+  content:"";
 
+  position:absolute;
 
-    .deposit-icon {
-      background: #dcfce7;
-      color: #16a34a;
-    }
+  left:0;
+  right:0;
+  top:0;
 
+  height:5px;
 
-    .withdraw-icon {
-      background: #fef3c7;
-      color: #d97706;
-    }
+  background:
+    linear-gradient(
+      90deg,
+      #2563eb,
+      #12bdf2,
+      #4ade80
+    );
+}
 
 
-    .investment-icon {
-      background: #dbeafe;
-      color: #2563eb;
-    }
+/* =========================
+   YOUR TRANSACTIONS HEADER
+   ========================= */
 
+.card-header{
+  width:100%;
+  min-width:0;
 
-    .transaction-info {
-      min-width: 0;
+  display:flex;
+  align-items:center;
 
-      flex: 1 1 auto;
-    }
+  gap:15px;
 
+  margin-bottom:20px;
 
-    .transaction-info strong {
-      display: block;
+  padding:
+    14px 16px;
 
-      font-size: 16px;
+  border-radius:19px;
 
-      margin-bottom: 5px;
+  background:
+    linear-gradient(
+      110deg,
+      #071d52 0%,
+      #0d3f91 62%,
+      #0b58a9 100%
+    );
 
-      line-height: 1.25;
+  color:white;
 
-      overflow-wrap: anywhere;
-    }
+  box-shadow:
+    0 10px 25px
+    rgba(10,52,130,.18);
 
+  position:relative;
 
-    .transaction-date {
-      color: #64748b;
+  overflow:hidden;
+}
 
-      font-size: 13px;
 
-      line-height: 1.35;
+.card-header::after{
+  content:"";
 
-      overflow-wrap: anywhere;
-    }
+  position:absolute;
 
+  right:-30px;
+  bottom:-45px;
 
-    .transaction-amount {
-      flex: 0 0 auto;
+  width:200px;
+  height:125px;
 
-      font-size: 17px;
+  border-radius:50%;
 
-      font-weight: bold;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(37,211,102,.65),
+      rgba(37,99,235,.05)
+    );
 
-      white-space: nowrap;
+  transform:rotate(-12deg);
+}
 
-      text-align: right;
-    }
 
+/* transaction icon */
 
-    .deposit-amount {
-      color: #16a34a;
-    }
+.transaction-icon{
+  width:59px;
+  height:59px;
 
+  flex:0 0 59px;
 
-    .withdraw-amount {
-      color: #dc2626;
-    }
+  border-radius:18px;
 
+  background:
+    linear-gradient(
+      145deg,
+      #13bdf2,
+      #2563eb 58%,
+      #4ade80
+    );
 
-    .investment-amount {
-      color: #2563eb;
-    }
+  color:white;
 
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-    /* =========================
-       WITHDRAWAL STATUS
-       ========================= */
+  font-size:27px;
 
-    .transaction-right {
-      flex: 0 0 auto;
+  box-shadow:
+    0 7px 20px
+    rgba(0,180,255,.30);
 
-      display: flex;
+  position:relative;
 
-      flex-direction: column;
+  z-index:2;
+}
 
-      align-items: flex-end;
 
-      gap: 6px;
-    }
+.transaction-icon::after{
+  content:"";
 
+  position:absolute;
 
-    .status {
-      display: inline-flex;
+  inset:4px;
 
-      align-items: center;
-      justify-content: center;
+  border-radius:14px;
 
-      padding: 4px 9px;
+  border:
+    1px solid
+    rgba(255,255,255,.35);
+}
 
-      border-radius: 999px;
 
-      font-size: 10px;
+.card-header > div:last-child{
+  min-width:0;
 
-      font-weight: bold;
+  position:relative;
 
-      letter-spacing: .3px;
+  z-index:2;
+}
 
-      white-space: nowrap;
-    }
 
+.card-header h3{
+  margin:
+    0 0 4px;
 
-    .status-pending {
-      background: #fef3c7;
-      color: #b45309;
-    }
+  font-size:22px;
 
+  line-height:1.25;
 
-    .status-approved {
-      background: #dcfce7;
-      color: #15803d;
-    }
+  color:white;
+}
 
 
-    .status-rejected {
-      background: #fee2e2;
-      color: #dc2626;
-    }
+.card-header p{
+  margin:0;
 
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      .80
+    );
 
-    /* =========================
-       MESSAGE
-       ========================= */
+  font-size:14px;
 
-    .message {
-      width: 100%;
+  line-height:1.45;
+}
 
-      text-align: center;
 
-      padding:
-        45px 20px;
+/* =========================
+   TRANSACTIONS
+   ========================= */
 
-      color: #64748b;
-    }
+#transactions{
+  width:100%;
+  min-width:0;
+}
 
 
-    .message-icon {
-      font-size: 45px;
+.transaction{
+  width:100%;
+  min-width:0;
 
-      margin-bottom: 12px;
-    }
+  display:flex;
 
+  justify-content:
+    space-between;
 
-    .message h3 {
-      margin:
-        0 0 8px;
+  align-items:center;
 
-      color: #334155;
+  gap:15px;
 
-      font-size: 19px;
-    }
+  padding:
+    16px;
 
+  margin-top:11px;
 
-    .message p {
-      margin: 0;
+  border:
+    1px solid
+    rgba(148,163,184,.18);
 
-      line-height: 1.5;
+  border-radius:18px;
 
-      font-size: 14px;
-    }
+  background:
+    linear-gradient(
+      100deg,
+      rgba(255,255,255,.98),
+      rgba(247,251,255,.96)
+    );
 
+  box-shadow:
+    0 6px 18px
+    rgba(37,99,235,.055);
 
-    /* =========================
-       TABLET / MOBILE
-       ========================= */
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    border-color .2s ease;
+}
 
-    @media (max-width: 600px) {
 
-      header {
-        padding:
-          13px 12px;
+.transaction:hover{
+  transform:
+    translateY(-2px);
 
-        gap: 8px;
-      }
+  border-color:
+    rgba(37,99,235,.22);
 
+  box-shadow:
+    0 10px 24px
+    rgba(37,99,235,.10);
+}
 
-      .logo {
-        font-size: 18px;
 
-        gap: 7px;
+.transaction:last-child{
+  border-bottom:
+    1px solid
+    rgba(148,163,184,.18);
+}
 
-        flex: 1 1 auto;
 
-        min-width: 0;
-      }
+.transaction-left{
+  min-width:0;
 
+  flex:1 1 auto;
 
-      .logo-icon {
-        width: 34px;
-        height: 34px;
+  display:flex;
 
-        flex-basis: 34px;
+  align-items:center;
 
-        border-radius: 10px;
+  gap:12px;
+}
 
-        font-size: 18px;
-      }
 
+.transaction-type-icon{
+  width:49px;
+  height:49px;
 
-      .header-buttons {
-        gap: 5px;
-      }
+  flex:0 0 49px;
 
+  border-radius:15px;
 
-      .header-buttons button {
-        padding:
-          9px 9px;
+  display:flex;
 
-        font-size: 11px;
-      }
+  align-items:center;
+  justify-content:center;
 
+  font-size:21px;
 
-      main {
-        width: 100%;
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(255,255,255,.5);
+}
 
-        margin:
-          23px auto;
 
-        padding:
-          0 12px;
-      }
+/* DEPOSIT */
 
+.deposit-icon{
+  background:
+    linear-gradient(
+      145deg,
+      #dcfce7,
+      #bbf7d0
+    );
 
-      .page-title {
-        margin-bottom: 18px;
-      }
+  color:#16a34a;
 
+  box-shadow:
+    0 5px 14px
+    rgba(22,163,74,.12);
+}
 
-      .page-title h2 {
-        font-size: 26px;
-      }
 
+/* WITHDRAW */
 
-      #userEmail {
-        font-size: 13px;
-      }
+.withdraw-icon{
+  background:
+    linear-gradient(
+      145deg,
+      #fff7cf,
+      #fde68a
+    );
 
+  color:#d97706;
 
-      .card {
-        padding:
-          18px;
+  box-shadow:
+    0 5px 14px
+    rgba(217,119,6,.12);
+}
 
-        border-radius: 17px;
-      }
 
+/* INVESTMENT */
 
-      .card-header {
-        gap: 10px;
+.investment-icon{
+  background:
+    linear-gradient(
+      145deg,
+      #dbeafe,
+      #bfdbfe
+    );
 
-        margin-bottom: 14px;
+  color:#2563eb;
 
-        align-items: flex-start;
-      }
+  box-shadow:
+    0 5px 14px
+    rgba(37,99,235,.12);
+}
 
 
-      .transaction-icon {
-        width: 47px;
-        height: 47px;
+.transaction-info{
+  min-width:0;
 
-        flex-basis: 47px;
+  flex:1 1 auto;
+}
 
-        border-radius: 13px;
 
-        font-size: 22px;
-      }
+.transaction-info strong{
+  display:block;
 
+  font-size:16px;
 
-      .card-header h3 {
-        font-size: 17px;
-      }
+  margin-bottom:5px;
 
+  line-height:1.25;
 
-      .card-header p {
-        font-size: 12px;
-      }
+  overflow-wrap:anywhere;
 
+  color:#102a63;
+}
 
-      .transaction {
-        gap: 8px;
 
-        padding:
-          15px 0;
-      }
+.transaction-date{
+  color:#64748b;
 
+  font-size:13px;
 
-      .transaction-left {
-        gap: 9px;
-      }
+  line-height:1.35;
 
+  overflow-wrap:anywhere;
+}
 
-      .transaction-type-icon {
-        width: 40px;
-        height: 40px;
 
-        flex-basis: 40px;
+.transaction-amount{
+  flex:0 0 auto;
 
-        border-radius: 11px;
+  font-size:17px;
 
-        font-size: 17px;
-      }
+  font-weight:bold;
 
+  white-space:nowrap;
 
-      .transaction-info strong {
-        font-size: 14px;
+  text-align:right;
+}
 
-        margin-bottom: 4px;
-      }
 
+.deposit-amount{
+  color:#16a34a;
+}
 
-      .transaction-date {
-        font-size: 11px;
-      }
 
+.withdraw-amount{
+  color:#dc2626;
+}
 
-      .transaction-amount {
-        font-size: 13px;
-      }
 
+.investment-amount{
+  color:#2563eb;
+}
 
-      .status {
-        font-size: 9px;
 
-        padding: 3px 7px;
-      }
+/* =========================
+   STATUS
+   ========================= */
 
+.transaction-right{
+  flex:0 0 auto;
 
-      .message {
-        padding:
-          32px 8px;
-      }
+  display:flex;
 
+  flex-direction:column;
 
-      .message-icon {
-        font-size: 40px;
-      }
+  align-items:flex-end;
 
+  gap:6px;
+}
 
-      .message h3 {
-        font-size: 17px;
-      }
 
+.status{
+  display:inline-flex;
 
-      .message p {
-        font-size: 13px;
-      }
+  align-items:center;
+  justify-content:center;
 
-    }
+  padding:
+    5px 10px;
 
+  border-radius:999px;
 
-    /* =========================
-       SMALL PHONES
-       ========================= */
+  font-size:10px;
 
-    @media (max-width: 380px) {
+  font-weight:bold;
 
-      header {
-        padding:
-          11px 9px;
-      }
+  letter-spacing:.35px;
 
+  white-space:nowrap;
 
-      .logo {
-        font-size: 16px;
-      }
+  border:
+    1px solid
+    transparent;
+}
 
 
-      .logo-icon {
-        width: 31px;
-        height: 31px;
+.status-pending{
+  background:#fff7d6;
+  color:#b45309;
+  border-color:#fde68a;
+}
 
-        flex-basis: 31px;
 
-        font-size: 16px;
-      }
+.status-approved{
+  background:#dcfce7;
+  color:#15803d;
+  border-color:#86efac;
 
+  box-shadow:
+    0 3px 10px
+    rgba(34,197,94,.10);
+}
 
-      .header-buttons {
-        gap: 4px;
-      }
 
+.status-rejected{
+  background:#fee2e2;
+  color:#dc2626;
+  border-color:#fecaca;
 
-      .header-buttons button {
-        padding:
-          8px 7px;
+  box-shadow:
+    0 3px 10px
+    rgba(239,68,68,.08);
+}
 
-        font-size: 10px;
-      }
 
+/* =========================
+   MESSAGE
+   ========================= */
 
-      main {
-        padding:
-          0 9px;
-      }
+.message{
+  width:100%;
 
+  text-align:center;
 
-      .page-title h2 {
-        font-size: 24px;
-      }
+  padding:
+    45px 20px;
 
+  color:#64748b;
+}
 
-      .card {
-        padding:
-          15px;
-      }
 
+.message-icon{
+  font-size:45px;
 
-      .card-header {
-        gap: 8px;
-      }
+  margin-bottom:12px;
+}
 
 
-      .transaction-icon {
-        width: 43px;
-        height: 43px;
+.message h3{
+  margin:
+    0 0 8px;
 
-        flex-basis: 43px;
+  color:#334155;
 
-        font-size: 20px;
-      }
+  font-size:19px;
+}
 
 
-      .card-header h3 {
-        font-size: 16px;
-      }
+.message p{
+  margin:0;
 
+  line-height:1.5;
 
-      .card-header p {
-        font-size: 11px;
-      }
+  font-size:14px;
+}
 
 
-      .transaction {
-        gap: 5px;
-      }
+/* =========================
+   MOBILE
+   ========================= */
 
+@media (max-width:600px){
 
-      .transaction-left {
-        gap: 7px;
-      }
+  header{
+    min-height:68px;
 
+    padding:
+      8px 12px;
 
-      .transaction-type-icon {
-        width: 37px;
-        height: 37px;
+    gap:8px;
+  }
 
-        flex-basis: 37px;
 
-        font-size: 16px;
-      }
+  .logo{
+    font-size:18px;
 
+    gap:7px;
 
-      .transaction-info strong {
-        font-size: 13px;
-      }
+    flex:1 1 auto;
 
+    min-width:0;
+  }
 
-      .transaction-date {
-        font-size: 10px;
-      }
 
+  .logo-icon{
+    width:42px;
+    height:42px;
 
-      .transaction-amount {
-        font-size: 12px;
-      }
+    flex-basis:42px;
 
+    border-radius:12px;
+  }
 
-      .status {
-        font-size: 8px;
 
-        padding: 3px 6px;
-      }
+  .header-buttons{
+    gap:5px;
+  }
 
-    }
 
+  .header-buttons button{
+    padding:
+      9px 9px;
 
-    /* =========================
-       EXTRA SMALL PHONES
-       ========================= */
+    font-size:11px;
+  }
 
-    @media (max-width: 330px) {
 
-      .logo {
-        font-size: 14px;
-      }
+  main{
+    width:100%;
 
+    margin:
+      23px auto;
 
-      .header-buttons button {
-        padding:
-          7px 6px;
+    padding:
+      0 12px;
+  }
 
-        font-size: 9px;
-      }
 
+  .page-title{
+    margin-bottom:18px;
+  }
 
-      main {
-        padding:
-          0 7px;
-      }
 
+  .page-title h2{
+    font-size:27px;
+  }
 
-      .card {
-        padding:
-          13px;
-      }
 
+  .page-title::after{
+    width:100px;
+  }
 
-      .transaction-amount {
-        font-size: 11px;
-      }
 
-    }
+  #userEmail{
+    font-size:13px;
+  }
 
-  </style>
 
+  .card{
+    padding:17px;
+
+    border-radius:19px;
+  }
+
+
+  .card-header{
+    gap:10px;
+
+    margin-bottom:13px;
+
+    padding:12px;
+
+    border-radius:15px;
+  }
+
+
+  .transaction-icon{
+    width:45px;
+    height:45px;
+
+    flex-basis:45px;
+
+    border-radius:13px;
+
+    font-size:21px;
+  }
+
+
+  .card-header h3{
+    font-size:17px;
+  }
+
+
+  .card-header p{
+    font-size:11px;
+  }
+
+
+  .transaction{
+    gap:8px;
+
+    padding:
+      13px 10px;
+
+    margin-top:9px;
+
+    border-radius:15px;
+  }
+
+
+  .transaction-left{
+    gap:9px;
+  }
+
+
+  .transaction-type-icon{
+    width:39px;
+    height:39px;
+
+    flex-basis:39px;
+
+    border-radius:11px;
+
+    font-size:17px;
+  }
+
+
+  .transaction-info strong{
+    font-size:14px;
+
+    margin-bottom:4px;
+  }
+
+
+  .transaction-date{
+    font-size:11px;
+  }
+
+
+  .transaction-amount{
+    font-size:13px;
+  }
+
+
+  .status{
+    font-size:9px;
+
+    padding:
+      4px 7px;
+  }
+
+}
+
+
+@media (max-width:380px){
+
+  header{
+    padding:
+      7px 9px;
+  }
+
+
+  .logo{
+    font-size:16px;
+  }
+
+
+  .logo-icon{
+    width:37px;
+    height:37px;
+
+    flex-basis:37px;
+
+    border-radius:11px;
+  }
+
+
+  .header-buttons{
+    gap:4px;
+  }
+
+
+  .header-buttons button{
+    padding:
+      8px 7px;
+
+    font-size:10px;
+  }
+
+
+  main{
+    padding:
+      0 9px;
+  }
+
+
+  .page-title h2{
+    font-size:24px;
+  }
+
+
+  .card{
+    padding:14px;
+  }
+
+
+  .card-header{
+    gap:8px;
+  }
+
+
+  .transaction-icon{
+    width:41px;
+    height:41px;
+
+    flex-basis:41px;
+
+    font-size:19px;
+  }
+
+
+  .card-header h3{
+    font-size:16px;
+  }
+
+
+  .card-header p{
+    font-size:10px;
+  }
+
+
+  .transaction{
+    gap:5px;
+
+    padding:
+      12px 8px;
+  }
+
+
+  .transaction-left{
+    gap:7px;
+  }
+
+
+  .transaction-type-icon{
+    width:36px;
+    height:36px;
+
+    flex-basis:36px;
+
+    font-size:16px;
+  }
+
+
+  .transaction-info strong{
+    font-size:13px;
+  }
+
+
+  .transaction-date{
+    font-size:10px;
+  }
+
+
+  .transaction-amount{
+    font-size:12px;
+  }
+
+
+  .status{
+    font-size:8px;
+
+    padding:
+      3px 6px;
+  }
+
+}
+
+
+@media (max-width:330px){
+
+  .logo{
+    font-size:14px;
+  }
+
+
+  .logo-icon{
+    width:34px;
+    height:34px;
+
+    flex-basis:34px;
+  }
+
+
+  .header-buttons button{
+    padding:
+      7px 6px;
+
+    font-size:9px;
+  }
+
+
+  main{
+    padding:
+      0 7px;
+  }
+
+
+  .card{
+    padding:12px;
+  }
+
+
+  .transaction-amount{
+    font-size:11px;
+  }
+
+}
+
+</style>
 </head>
 
 
@@ -953,32 +1321,34 @@
 
   <header>
 
-    <div class="logo">
+  <div class="logo">
 
-      <div class="logo-icon">
-        📈
-      </div>
+    <div class="logo-icon">
+  <img
+    src="novarise-logo.png.avif"
+    alt="Novarise"
+  >
+</div>
 
-      Novarise
+    <span>Novarise</span>
 
-    </div>
-
-
-    <div class="header-buttons">
-
-      <button id="homeButton">
-        🏠 Home
-      </button>
+  </div>
 
 
-      <button id="logoutButton">
-        Logout
-      </button>
+  <div class="header-buttons">
 
-    </div>
+    <button id="homeButton">
+      🏠 Home
+    </button>
 
-  </header>
 
+    <button id="logoutButton">
+      Logout
+    </button>
+
+  </div>
+
+</header>
 
 
   <!-- =========================
