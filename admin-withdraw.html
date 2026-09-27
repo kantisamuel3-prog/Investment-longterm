@@ -585,6 +585,7 @@ async function loadWithdrawals(){
 
 
     const requests = [];
+const rechargeRequests = [];
 
 
     snapshot.forEach(UserDoc => {
@@ -599,32 +600,51 @@ async function loadWithdrawals(){
 
       transactions.forEach((transaction, index) => {
 
-        if(
-          transaction &&
-          transaction.type === "Withdrawal Request"
-        ){
+  if(
+    transaction &&
+    transaction.type === "Withdrawal Request"
+  ){
 
-          requests.push({
+    requests.push({
 
-            UserId:UserDoc.id,
+      UserId:UserDoc.id,
 
-            transactionIndex:index,
+      transactionIndex:index,
 
-            UserName:
-              UserData.name ||
-              UserData.displayName ||
-              "Member",
+      UserName:
+        UserData.name ||
+        UserData.displayName ||
+        "Member",
 
-            ...transaction
-
-          });
-
-        }
-
-      });
+      ...transaction
 
     });
 
+  }
+
+  if(
+    transaction &&
+    transaction.type === "Recharge"
+  ){
+
+    rechargeRequests.push({
+
+      UserId:UserDoc.id,
+
+      transactionIndex:index,
+
+      UserName:
+        UserData.name ||
+        UserData.displayName ||
+        "Member",
+
+      ...transaction
+
+    });
+
+  }
+
+});
 
     /*
       Newest requests first.
