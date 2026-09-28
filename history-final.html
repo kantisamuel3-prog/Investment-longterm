@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Novarise — History</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#f4f7fb;color:#172033}
+body{padding:20px 14px 40px}
+.container{width:100%;max-width:900px;margin:0 auto}
+.header{background:linear-gradient(135deg,#0b2a5b,#1557b0);color:#fff;border-radius:20px;padding:20px;margin-bottom:18px;box-shadow:0 10px 30px rgba(20,65,130,.15)}
+.topbar{display:flex;align-items:center;gap:12px}
+.back{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.14);color:#fff;text-decoration:none;font-size:22px;font-weight:800}
+.logo{font-size:24px;font-weight:800}
+.subtitle{margin-top:4px;font-size:13px;opacity:.82}
+.section{background:#fff;border-radius:18px;padding:17px;margin-bottom:14px;box-shadow:0 5px 20px rgba(25,55,100,.07)}
+.section-title{font-size:18px;font-weight:800;margin-bottom:14px}
+.card{border:1px solid #e7edf5;border-radius:16px;padding:15px;margin-bottom:12px;background:#fff}
+.card:last-child{margin-bottom:0}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:13px}
+.amount{font-size:21px;font-weight:800;color:#123f82}
+.status{display:inline-flex;align-items:center;justify-content:center;padding:6px 10px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.4px}
+.status.approved{background:#e5f8ed;color:#167542}
+.status.rejected{background:#ffe8e8;color:#b42323}
+.info{display:grid;gap:7px;font-size:13px;color:#596579}
+.info-row{display:flex;justify-content:space-between;gap:12px}
+.info-row span:first-child{color:#8a94a6}
+.info-row strong{color:#273449;text-align:right;word-break:break-word}
+.empty{text-align:center;padding:30px 15px;color:#7d8797;font-size:14px}
+.loading{text-align:center;padding:30px 15px;color:#738096;font-size:14px}
+.error{background:#fff0f0;border:1px solid #ffcaca;color:#a62222;border-radius:14px;padding:16px;text-align:center;font-size:14px;line-height:1.5}
+@media(max-width:600px){body{padding:12px 10px 30px}.header{padding:17px 15px;border-radius:17px}.logo{font-size:22px}.section{padding:13px;border-radius:16px}.card{padding:13px}.amount{font-size:19px}.info-row{align-items:flex-start}.info-row span:first-child{flex-shrink:0}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header"><div class="topbar"><a href="admin-withdraw.html" class="back" aria-label="Back to admin">‹</a><div><div class="logo">Novarise</div><div class="subtitle">Approved &amp; Rejected History</div></div></div></div>
+<div class="section"><div class="section-title">Recharge History</div><div id="rechargeHistory"><div class="loading">Loading history...</div></div></div>
+<div class="section"><div class="section-title">Withdrawal History</div><div id="withdrawalHistory"><div class="loading">Loading history...</div></div></div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig={apiKey:"AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqGk",authDomain:"investpro-2dafb.firebaseapp.com",projectId:"investpro-2dafb",storageBucket:"investpro-2dafb.firebasestorage.app",messagingSenderId:"135092039764",appId:"1:135092039764:web:c4c71eef0c904346a77dc1",measurementId:"G-0L77SFTC4F"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(),db=firebase.firestore(),ADMIN_EMAIL="639999999999@novarise.local";
+const $=id=>document.getElementById(id);
+const money=v=>"₱"+Number(v||0).toLocaleString("en-PH",{minimumFractionDigits:2,maximumFractionDigits:2});
+function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function dateText(v){if(!v)return"—";const d=new Date(v);return isNaN(d)?"—":d.toLocaleString("en-PH")}
+function card(r,isWithdrawal){
+ const s=String(r.status||"").toUpperCase(),c=s==="APPROVED"?"approved":"rejected";
+ let extra=isWithdrawal
+ ? `<div class="info-row"><span>Account Name</span><strong>${esc(r.accountName||"—")}</strong></div><div class="info-row"><span>Account Number</span><strong>${esc(r.accountNumber||"—")}</strong></div><div class="info-row"><span>Request ID</span><strong>${esc(r.requestId||"—")}</strong></div>`
+ : `<div class="info-row"><span>Method</span><strong>${esc(r.method||"GCash")}</strong></div><div class="info-row"><span>Order ID</span><strong>${esc(r.orderId||"—")}</strong></div>`;
+ return `<div class="card"><div class="card-top"><div class="amount">${money(r.amount)}</div><div class="status ${c}">${esc(s)}</div></div><div class="info"><div class="info-row"><span>Member</span><strong>${esc(r.UserName||"Member")}</strong></div>${extra}<div class="info-row"><span>Date</span><strong>${esc(dateText(r.date))}</strong></div>${r.approvedAt?`<div class="info-row"><span>Approved</span><strong>${esc(dateText(r.approvedAt))}</strong></div>`:""}${r.rejectedAt?`<div class="info-row"><span>Rejected</span><strong>${esc(dateText(r.rejectedAt))}</strong></div>`:""}</div></div>`;
+}
+async function loadHistory(){
+ try{
+  await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+  let user=auth.currentUser;
+  if(!user){user=await new Promise(resolve=>{let done=false;const unsub=auth.onAuthStateChanged(u=>{if(done)return;done=true;unsub();resolve(u||null)});setTimeout(()=>{if(done)return;done=true;unsub();resolve(auth.currentUser||null)},8000)})}
+  if(!user){$("rechargeHistory").innerHTML='<div class="error">Please login first.</div>';$("withdrawalHistory").innerHTML='<div class="error">Please login first.</div>';return}
+  await user.getIdToken(true);
+  if(user.email!==ADMIN_EMAIL){$("rechargeHistory").innerHTML='<div class="error">Access denied.</div>';$("withdrawalHistory").innerHTML='<div class="error">Access denied.</div>';return}
+  const snap=await db.collection("Users").get(),recharge=[],withdrawal=[];
+  snap.forEach(doc=>{const data=doc.data()||{},txs=Array.isArray(data.transactions)?data.transactions:[];txs.forEach((tx,index)=>{if(!tx)return;const s=String(tx.status||"").toUpperCase(),item={UserId:doc.id,transactionIndex:index,UserName:data.name||data.displayName||"Member",...tx};if(tx.type==="Recharge"&&(s==="APPROVED"||s==="REJECTED"))recharge.push(item);if(tx.type==="Withdrawal Request"&&(s==="APPROVED"||s==="REJECTED"))withdrawal.push(item)})});
+  const sort=(a,b)=>new Date(b.approvedAt||b.rejectedAt||b.date||0)-new Date(a.approvedAt||a.rejectedAt||a.date||0);recharge.sort(sort);withdrawal.sort(sort);
+  $("rechargeHistory").innerHTML=recharge.length?recharge.map(r=>card(r,false)).join(""):'<div class="empty">No processed recharge requests yet.</div>';
+  $("withdrawalHistory").innerHTML=withdrawal.length?withdrawal.map(r=>card(r,true)).join(""):'<div class="empty">No processed withdrawal requests yet.</div>';
+ }catch(e){console.error(e);$("rechargeHistory").innerHTML='<div class="error">Unable to load history. Please refresh.</div>';$("withdrawalHistory").innerHTML='<div class="error">Unable to load history. Please refresh.</div>'}
+}
+loadHistory();
+</script>
+</body>
+</html>
