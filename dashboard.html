@@ -3213,7 +3213,7 @@ async function deposit(){
           snapshot.exists()
             ? snapshot.data()
             : {};
-
+        
         const oldBalance =
           Number(data.balance || 0);
 
@@ -3335,7 +3335,7 @@ async function withdraw(){
         const oldBalance =
           Number(data.balance || 0);
 
-        if(amount > oldBalance){
+        if(oldBalance < amount){
 
           throw new Error(
             "Insufficient balance."
@@ -3374,6 +3374,137 @@ async function withdraw(){
         );
 
         showBalance(newBalance);
+
+      }
+    );
+
+    alert(
+      "Withdrawal request recorded successfully."
+    );
+
+  }catch(error){
+
+    console.error(
+      "Withdrawal error:",
+      error
+    );
+
+    if(
+      error.message ===
+      "Insufficient balance."
+    ){
+
+      alert(
+        "Insufficient balance."
+      );
+
+    }else{
+
+      alert(
+        "Withdrawal failed. Please try again."
+      );
+
+    }
+
+  }
+
+}
+
+// COMMISSION TRANSACTION
+if(
+  referrerRef &&
+  referrerData &&
+  !commissionAlreadyCredited
+){
+
+  const commissionTransaction = {
+
+    transactionId:
+      `commission_${purchaseId}`,
+
+    type:
+      "Commission Received",
+
+    amount:
+      commission,
+
+    status:
+      "COMPLETED",
+
+    sourcePurchaseId:
+      purchaseId,
+
+    referredUserId:
+      currentUser.uid,
+
+    product:
+      name,
+
+    description:
+      `Referral commission from ₱${Number(price).toLocaleString(
+        "en-PH",
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      )} product purchase`,
+
+    date:
+      Timestamp.now()
+
+  };
+
+  referrerTransactions.push(
+    commissionTransaction
+  );
+
+}
+
+// CREDIT REFERRER BALANCE
+if(
+  referrerRef &&
+  referrerData &&
+  !commissionAlreadyCredited
+){
+
+  const oldReferrerBalance =
+    Number(
+      referrerData.balance || 0
+    );
+
+  const newReferrerBalance =
+    oldReferrerBalance + commission;
+
+  const oldTotalCommission =
+    Number(
+      referrerData.totalCommission ??
+      referrerData.commission ??
+      0
+    );
+
+  const newTotalCommission =
+    oldTotalCommission + commission;
+
+  transaction.set(
+    referrerRef,
+    {
+      balance:
+        newReferrerBalance,
+
+      totalCommission:
+        newTotalCommission,
+
+      transactions:
+        referrerTransactions
+    },
+    {
+      merge:true
+    }
+  );
+
+}        
+
+showBalance(newBalance);
 
       }
     );
@@ -3421,10 +3552,17 @@ function openInvestmentModal(
   daily
 ){
 
+  const purchaseId =
+    (typeof crypto !== "undefined" &&
+     typeof crypto.randomUUID === "function")
+      ? crypto.randomUUID()
+      : `purchase_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+
   selectedInvestment = {
     price,
     name,
-    daily
+    daily,
+    purchaseId
   };
 
   modalProductName.textContent =
@@ -3469,7 +3607,8 @@ function closeInvestmentModal(){
 async function buyProduct(
   price,
   name,
-  daily
+  daily,
+  purchaseId
 ){
 
   if(!currentUser){
@@ -3493,6 +3632,10 @@ async function buyProduct(
       db,
       async transaction => {
 
+        /* =============================================
+           GET BUYER
+        ============================================= */
+
         const snapshot =
           await transaction.get(userRef);
 
@@ -3506,6 +3649,11 @@ async function buyProduct(
 
         const data =
           snapshot.data();
+
+
+        /* =============================================
+           CHECK BUYER BALANCE
+        ============================================= */
 
         const oldBalance =
           Number(data.balance || 0);
@@ -3521,38 +3669,155 @@ async function buyProduct(
         const newBalance =
           oldBalance - price;
 
+
+        /* =============================================
+           BUYER TRANSACTIONS
+        ============================================= */
+
         const transactions =
           Array.isArray(data.transactions)
-            ? data.transactions
+            ? [...data.transactions]
             : [];
 
-       transactions.push({
 
-  type:"Investment",
+        /* =============================================
+           ADD INVESTMENT
+        ============================================= */
 
-  amount:price,
+        transactions.push({
 
-  product:name,
+          type:"Investment",
 
-  dailyReturn:daily,
+          amount:price,
 
-  cycleDays:30,
+          purchaseId:purchaseId,
 
-  incomeDaysCredited:0,
+          product:name,
 
-  totalIncome:0,
-         
-  lastClaimDate:null,   
-         
-  date:
-    Timestamp.now()
+          dailyReturn:daily,
 
-});
+          cycleDays:30,
+
+          incomeDaysCredited:0,
+
+          totalIncome:0,
+
+          lastClaimDate:null,
+
+          date:
+            Timestamp.now()
+
+        });
+
+
+        /* =============================================
+           FIND DIRECT REFERRER
+        ============================================= */
+
+        const referrerUid =
+          data.referredBy ||
+          data.sponsorId ||
+          null;
+
+        let referrerRef = null;
+
+        let referrerSnapshot = null;
+
+        if(
+          referrerUid &&
+          referrerUid !== currentUser.uid
+        ){
+
+          referrerRef =
+            doc(
+              db,
+              "Users",
+              referrerUid
+            );
+
+          referrerSnapshot =
+            await transaction.get(
+              referrerRef
+            );
+
+        }
+
+
+        /* =============================================
+           REFERRER DATA
+        ============================================= */
+
+        let referrerData = null;
+
+        let referrerTransactions = [];
+
+        if(
+          referrerSnapshot &&
+          referrerSnapshot.exists()
+        ){
+
+          referrerData =
+            referrerSnapshot.data();
+
+          referrerTransactions =
+            Array.isArray(
+              referrerData.transactions
+            )
+              ? [
+                  ...referrerData.transactions
+                ]
+              : [];
+
+        }
+
+
+        /* =============================================
+           25% REFERRAL COMMISSION
+        ============================================= */
+
+        const commission =
+          Math.round(
+            Number(price) * 0.25 * 100
+          ) / 100;
+
+
+        /* =============================================
+           PREVENT DUPLICATE COMMISSION
+        ============================================= */
+
+        let commissionAlreadyCredited =
+          false;
+
+        if(
+          referrerData &&
+          purchaseId
+        ){
+
+          commissionAlreadyCredited =
+            referrerTransactions.some(
+              transactionItem =>
+                transactionItem &&
+                (
+                  transactionItem.sourcePurchaseId ===
+                    purchaseId ||
+
+                  transactionItem.transactionId ===
+                    `commission_${purchaseId}`
+                )
+            );
+
+        }
+
+
+        /* =============================================
+           SAVE BUYER
+        ============================================= */
 
         transaction.set(
           userRef,
           {
             balance:newBalance,
+
             transactions:transactions
           },
           {
@@ -3560,10 +3825,124 @@ async function buyProduct(
           }
         );
 
+
+        /* =============================================
+           CREDIT DIRECT REFERRER
+        ============================================= */
+
+        if(
+          referrerRef &&
+          referrerData &&
+          !commissionAlreadyCredited
+        ){
+
+          const oldReferrerBalance =
+            Number(
+              referrerData.balance || 0
+            );
+
+          const newReferrerBalance =
+            oldReferrerBalance +
+            commission;
+
+
+          const oldTotalCommission =
+            Number(
+              referrerData.totalCommission ??
+              referrerData.commission ??
+              0
+            );
+
+          const newTotalCommission =
+            oldTotalCommission +
+            commission;
+
+
+          /* =========================================
+             COMMISSION TRANSACTION
+          ========================================= */
+
+          const commissionTransaction = {
+
+            transactionId:
+              `commission_${purchaseId}`,
+
+            type:
+              "Commission Received",
+
+            amount:
+              commission,
+
+            status:
+              "COMPLETED",
+
+            sourcePurchaseId:
+              purchaseId,
+
+            referredUserId:
+              currentUser.uid,
+
+            product:
+              name,
+
+            description:
+              `Referral commission from ₱${Number(
+                price
+              ).toLocaleString(
+                "en-PH",
+                {
+                  minimumFractionDigits:2,
+
+                  maximumFractionDigits:2
+                }
+              )} product purchase`,
+
+            date:
+              Timestamp.now()
+
+          };
+
+
+          referrerTransactions.push(
+            commissionTransaction
+          );
+
+
+          /* =========================================
+             UPDATE REFERRER
+          ========================================= */
+
+          transaction.set(
+            referrerRef,
+            {
+
+              balance:
+                newReferrerBalance,
+
+              totalCommission:
+                newTotalCommission,
+
+              transactions:
+                referrerTransactions
+
+            },
+            {
+              merge:true
+            }
+          );
+
+        }
+
+
+        /* =============================================
+           UPDATE UI BALANCE
+        ============================================= */
+
         showBalance(newBalance);
 
       }
     );
+
 
     closeInvestmentModal();
 
@@ -3571,12 +3950,14 @@ async function buyProduct(
       "Investment recorded successfully."
     );
 
+
   }catch(error){
 
     console.error(
       "Investment error:",
       error
     );
+
 
     if(
       error.message ===
@@ -3598,7 +3979,6 @@ async function buyProduct(
   }
 
 }
-
 
 /* =====================================================
    LOGOUT
@@ -3723,19 +4103,37 @@ investModal.addEventListener(
 
 confirmInvest.addEventListener(
   "click",
-  () => {
+  async () => {
 
-    if(!selectedInvestment){
+    if(
+      !selectedInvestment ||
+      confirmInvest.disabled
+    ){
 
       return;
 
     }
 
-    buyProduct(
-      selectedInvestment.price,
-      selectedInvestment.name,
-      selectedInvestment.daily
-    );
+    confirmInvest.disabled = true;
+
+    const purchase = {
+      ...selectedInvestment
+    };
+
+    try {
+
+      await buyProduct(
+        purchase.price,
+        purchase.name,
+        purchase.daily,
+        purchase.purchaseId
+      );
+
+    } finally {
+
+      confirmInvest.disabled = false;
+
+    }
 
   }
 );
