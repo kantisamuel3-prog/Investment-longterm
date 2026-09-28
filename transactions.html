@@ -1504,6 +1504,151 @@ main{
 
   }
 
+    /* =========================
+     PHILIPPINE DATE / TIME
+     ========================= */
+
+  function formatPhilippineDate(value) {
+
+    if (!value) {
+      return "Date unavailable";
+    }
+
+    let dateValue = null;
+
+
+    /* FIREBASE TIMESTAMP */
+
+    if (
+      value &&
+      typeof value.toDate === "function"
+    ) {
+
+      dateValue =
+        value.toDate();
+
+    }
+
+
+    /* FIRESTORE TIMESTAMP */
+
+    else if (
+      value &&
+      value.seconds !== undefined
+    ) {
+
+      const seconds =
+        Number(value.seconds);
+
+      if (Number.isFinite(seconds)) {
+
+        dateValue =
+          new Date(seconds * 1000);
+
+      }
+
+    }
+
+
+    /* SERIALIZED FIRESTORE TIMESTAMP */
+
+    else if (
+      value &&
+      value._seconds !== undefined
+    ) {
+
+      const seconds =
+        Number(value._seconds);
+
+      if (Number.isFinite(seconds)) {
+
+        dateValue =
+          new Date(seconds * 1000);
+
+      }
+
+    }
+
+
+    /* JAVASCRIPT DATE */
+
+    else if (
+      value instanceof Date
+    ) {
+
+      dateValue = value;
+
+    }
+
+
+    /* NUMBER TIMESTAMP */
+
+    else if (
+      typeof value === "number"
+    ) {
+
+      dateValue =
+        new Date(value);
+
+    }
+
+
+    /* STRING DATE */
+
+    else if (
+      typeof value === "string"
+    ) {
+
+      const parsed =
+        new Date(value);
+
+      if (
+        !Number.isNaN(
+          parsed.getTime()
+        )
+      ) {
+
+        dateValue = parsed;
+
+      }
+
+    }
+
+
+    /* INVALID DATE */
+
+    if (
+      !dateValue ||
+      Number.isNaN(
+        dateValue.getTime()
+      )
+    ) {
+
+      return "Date unavailable";
+
+    }
+
+
+    /* PHILIPPINE DATE + TIME */
+
+    return dateValue.toLocaleString(
+      "en-PH",
+      {
+        timeZone: "Asia/Manila",
+
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+
+        hour12: true
+      }
+    );
+
+  }
 
   /* =========================
      TRANSACTION TYPE
@@ -1511,71 +1656,94 @@ main{
 
   function getTransactionDetails(type) {
 
-    if (type === "Deposit") {
+  /* =========================
+     COMMISSION RECEIVED
+     ========================= */
 
-      return {
-
-        icon: "↓",
-
-        iconClass: "deposit-icon",
-
-        amountClass: "deposit-amount",
-
-        sign: "+"
-
-      };
-
-    }
-
-
-    if (
-      type === "Withdraw" ||
-      type === "Withdrawal Request"
-    ) {
-
-      return {
-
-        icon: "↑",
-
-        iconClass: "withdraw-icon",
-
-        amountClass: "withdraw-amount",
-
-        sign: "-"
-
-      };
-
-    }
-
-    if (type === "Recharge") {
-
-  return {
-
-    icon: "↓",
-
-    iconClass: "deposit-icon",
-
-    amountClass: "deposit-amount",
-
-    sign: "+"
-
-  };
-
-}
+  if (type === "Commission Received") {
 
     return {
 
       icon: "📈",
 
-      iconClass: "investment-icon",
+      iconClass: "deposit-icon",
 
-      amountClass: "investment-amount",
+      amountClass: "deposit-amount",
+
+      sign: "+"
+
+    };
+
+  }
+
+
+  if (type === "Deposit") {
+
+    return {
+
+      icon: "↓",
+
+      iconClass: "deposit-icon",
+
+      amountClass: "deposit-amount",
+
+      sign: "+"
+
+    };
+
+  }
+
+
+  if (
+    type === "Withdraw" ||
+    type === "Withdrawal Request"
+  ) {
+
+    return {
+
+      icon: "↑",
+
+      iconClass: "withdraw-icon",
+
+      amountClass: "withdraw-amount",
 
       sign: "-"
 
     };
 
   }
+
+
+  if (type === "Recharge") {
+
+    return {
+
+      icon: "↓",
+
+      iconClass: "deposit-icon",
+
+      amountClass: "deposit-amount",
+
+      sign: "+"
+
+    };
+
+  }
+
+
+  return {
+
+    icon: "📈",
+
+    iconClass: "investment-icon",
+
+    amountClass: "investment-amount",
+
+    sign: "-"
+
+  };
+
+}
 
 
   /* =========================
@@ -1644,23 +1812,9 @@ main{
 
 
           const date =
-  transaction.date
-    ? new Date(
-        transaction.date
-      ).toLocaleString(
-        "en-PH",
-        {
-          timeZone: "Asia/Manila",
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: true
-        }
-      )
-    : "Date unavailable";
+            formatPhilippineDate(
+              transaction.date
+            );
 
 
           const details =
