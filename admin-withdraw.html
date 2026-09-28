@@ -341,7 +341,7 @@ button:disabled{
   </div>
 
   <div class="history-toolbar">
-    <a href="history.html" class="history-toggle">
+    <a href="history.html" class="history-toggle" onclick="openHistory(); return false;">
       <span class="history-icon">↻</span>
       <span>VIEW HISTORY</span>
       <span class="history-arrow">→</span>
@@ -634,6 +634,32 @@ function formatMoney(value){
 })();
 
 /* -----------------------------------------
+   HISTORY DATA
+----------------------------------------- */
+
+let adminHistoryRecharge = [];
+let adminHistoryWithdrawal = [];
+
+function openHistory(){
+
+  try{
+
+    sessionStorage.setItem(
+      "novariseAdminHistory",
+      JSON.stringify({
+        recharge: adminHistoryRecharge,
+        withdrawal: adminHistoryWithdrawal
+      })
+    );
+
+  }catch(error){
+    console.error("Unable to prepare history data:", error);
+  }
+
+  window.location.href = "history.html";
+}
+
+/* -----------------------------------------
    LOAD ALL REQUESTS
 ----------------------------------------- */
 
@@ -805,6 +831,9 @@ async function loadWithdrawals(){
     const processedRecharges = rechargeRequests.filter(request =>
       ["APPROVED", "REJECTED"].includes(String(request.status || "").toUpperCase())
     );
+
+    adminHistoryWithdrawal = processedWithdrawals;
+    adminHistoryRecharge = processedRecharges;
 
     updateStats(requests);
 
