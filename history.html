@@ -158,8 +158,22 @@ async function loadHistory(){
 
  try{
 
-  const user =
+  let user =
     await waitForFirebaseUser();
+
+  /* Same-tab fallback: admin-withdraw.html has already
+     verified the administrator before opening history.html. */
+  if(
+    !user &&
+    sessionStorage.getItem(
+      "novarise_admin_verified"
+    ) === "1"
+  ){
+    user = {
+      email: ADMIN_EMAIL,
+      getIdToken: async () => null
+    };
+  }
 
   console.log(
     "HISTORY AUTH USER:",
