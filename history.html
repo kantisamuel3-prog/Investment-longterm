@@ -2,348 +2,896 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Novarise — History</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=no">
+<title>Novarise — Request History</title>
+
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#f4f7fb;color:#172033}
-body{padding:20px 14px 40px}
-.container{width:100%;max-width:980px;margin:0 auto}
-.header{background:linear-gradient(135deg,#0b2a5b,#1557b0);color:#fff;border-radius:20px;padding:18px 20px;margin-bottom:18px;box-shadow:0 10px 30px rgba(20,65,130,.15)}
-.topbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px}
-.back{display:inline-flex;align-items:center;justify-content:center;justify-self:start;min-width:92px;height:42px;padding:0 14px;border-radius:12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16);color:#fff;text-decoration:none;font-size:13px;font-weight:800;letter-spacing:.2px}
-.back:hover{background:rgba(255,255,255,.2)}
-.title-wrap{text-align:center}
-.logo{font-size:25px;font-weight:800;line-height:1.15}
-.subtitle{margin-top:5px;font-size:14px;font-weight:600;opacity:.88}
-.section{background:#fff;border-radius:18px;padding:17px;margin-bottom:14px;box-shadow:0 5px 20px rgba(25,55,100,.07)}
-.section-title{font-size:18px;font-weight:800;margin-bottom:14px;color:#123f82}
-.card{border:1px solid #e7edf5;border-radius:16px;padding:15px;margin-bottom:12px;background:#fff}
-.card:last-child{margin-bottom:0}
-.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:13px}
-.amount{font-size:21px;font-weight:800;color:#123f82}
-.status{display:inline-flex;align-items:center;justify-content:center;padding:6px 10px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.4px}
-.status.approved{background:#e5f8ed;color:#167542}
-.status.rejected{background:#ffe8e8;color:#b42323}
-.info{display:grid;gap:7px;font-size:13px;color:#596579}
-.info-row{display:flex;justify-content:space-between;gap:12px}
-.info-row span:first-child{color:#8a94a6}
-.info-row strong{color:#273449;text-align:right;word-break:break-word}
-.empty{text-align:center;padding:30px 15px;color:#7d8797;font-size:14px}
-.loading{text-align:center;padding:30px 15px;color:#738096;font-size:14px}
-.error{background:#fff0f0;border:1px solid #ffcaca;color:#a62222;border-radius:14px;padding:16px;text-align:center;font-size:14px;line-height:1.5}
-@media(max-width:700px){
-body{padding:12px 10px 30px}
-.header{padding:15px 12px;border-radius:17px}
-.topbar{grid-template-columns:auto 1fr auto}
-.back{min-width:76px;height:40px;padding:0 10px;font-size:12px}
-.title-wrap{text-align:center}
-.logo{font-size:22px}
-.subtitle{font-size:12px}
-.section{padding:13px;border-radius:16px}
-.card{padding:13px}
-.amount{font-size:19px}
-.info-row{align-items:flex-start}
-.info-row span:first-child{flex-shrink:0}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
-@media(min-width:760px){
-.history-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.history-grid .section{margin-bottom:0}
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+}
+
+body{
+  padding:20px 14px 40px;
+}
+
+.container{
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
+}
+
+.header{
+  background:linear-gradient(135deg,#0b2a5b,#1557b0);
+  color:#fff;
+  border-radius:20px;
+  padding:18px 20px 22px;
+  margin-bottom:18px;
+  box-shadow:0 10px 30px rgba(20,65,130,.15);
+}
+
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  border:0;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  border-radius:11px;
+  padding:8px 12px;
+  margin-bottom:15px;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:800;
+  text-align:center;
+}
+
+.subtitle{
+  margin-top:5px;
+  font-size:13px;
+  opacity:.82;
+  text-align:center;
+}
+
+.history-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.section{
+  background:#fff;
+  border-radius:18px;
+  padding:17px;
+  box-shadow:0 5px 20px rgba(25,55,100,.07);
+}
+
+.section-title{
+  font-size:18px;
+  font-weight:800;
+  margin-bottom:14px;
+  color:#123f82;
+}
+
+.withdrawal-card{
+  border:1px solid #e7edf5;
+  border-radius:16px;
+  padding:15px;
+  margin-bottom:12px;
+  background:#fff;
+}
+
+.withdrawal-card:last-child{
+  margin-bottom:0;
+}
+
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+  margin-bottom:13px;
+}
+
+.amount{
+  font-size:21px;
+  font-weight:800;
+  color:#123f82;
+}
+
+.status{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.4px;
+}
+
+.status.approved{
+  background:#e5f8ed;
+  color:#167542;
+}
+
+.status.rejected{
+  background:#ffe8e8;
+  color:#b42323;
+}
+
+.info{
+  display:grid;
+  gap:7px;
+  font-size:13px;
+}
+
+.info-row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.info-row span:first-child{
+  color:#8a94a6;
+}
+
+.info-row strong{
+  color:#273449;
+  text-align:right;
+  word-break:break-word;
+}
+
+.empty{
+  text-align:center;
+  padding:30px 15px;
+  color:#7d8797;
+  font-size:14px;
+}
+
+.error{
+  background:#fff0f0;
+  border:1px solid #ffcaca;
+  color:#a62222;
+  border-radius:14px;
+  padding:16px;
+  text-align:center;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.loading{
+  text-align:center;
+  padding:30px 15px;
+  color:#738096;
+  font-size:14px;
+}
+
+@media(max-width:600px){
+  body{
+    padding:12px 10px 30px;
+  }
+
+  .header{
+    padding:17px 16px;
+    border-radius:17px;
+  }
+
+  .logo{
+    font-size:22px;
+  }
+
+  .history-grid{
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+  }
+
+  .section{
+    padding:11px;
+    border-radius:15px;
+  }
+
+  .section-title{
+    font-size:15px;
+  }
+
+  .withdrawal-card{
+    padding:11px;
+  }
+
+  .amount{
+    font-size:18px;
+  }
+
+  .info{
+    font-size:12px;
+  }
 }
 </style>
 </head>
+
 <body>
+
 <div class="container">
-<div class="header">
-  <div class="topbar">
-    <a href="admin-withdraw.html" class="back" aria-label="Back to admin">← BACK</a>
-    <div class="title-wrap">
-      <div class="logo">Novarise</div>
-      <div class="subtitle">Request History</div>
+
+  <div class="header">
+
+    <button
+      type="button"
+      class="back-link"
+      onclick="window.location.href='admin-withdraw.html'">
+      ← BACK
+    </button>
+
+    <div class="logo">
+      Novarise
     </div>
-    <div></div>
-  </div>
-</div>
 
-<div class="history-grid">
-  <div class="section">
-    <div class="section-title">Recharge History</div>
-    <div id="rechargeHistory"><div class="loading">Loading history...</div></div>
+    <div class="subtitle">
+      Request History
+    </div>
+
   </div>
 
-  <div class="section">
-    <div class="section-title">Withdrawal History</div>
-    <div id="withdrawalHistory"><div class="loading">Loading history...</div></div>
+  <div class="history-grid">
+
+    <div class="section">
+
+      <div class="section-title">
+        Recharge History
+      </div>
+
+      <div id="rechargeHistory">
+        <div class="loading">
+          Loading recharge history...
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="section-title">
+        Withdrawal History
+      </div>
+
+      <div id="withdrawalHistory">
+        <div class="loading">
+          Loading withdrawal history...
+        </div>
+      </div>
+
+    </div>
+
   </div>
+
 </div>
-</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 <script>
-const firebaseConfig={apiKey:"AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqGk",authDomain:"investpro-2dafb.firebaseapp.com",projectId:"investpro-2dafb",storageBucket:"investpro-2dafb.firebasestorage.app",messagingSenderId:"135092039764",appId:"1:135092039764:web:c4c71eef0c904346a77dc1",measurementId:"G-0L77SFTC4F"};
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyCIBDQOIiCOgfV4pMCUr0oUCNZoIDYDgKqGk",
+
+  authDomain:
+    "investpro-2dafb.firebaseapp.com",
+
+  projectId:
+    "investpro-2dafb",
+
+  storageBucket:
+    "investpro-2dafb.firebasestorage.app",
+
+  messagingSenderId:
+    "135092039764",
+
+  appId:
+    "1:135092039764:web:c4c71eef0c904346a77dc1",
+
+  measurementId:
+    "G-0L77SFTC4F"
+
+};
+
 firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth(),db=firebase.firestore(),ADMIN_EMAIL="639999999999@novarise.local";
-const $=id=>document.getElementById(id);
-const money=v=>"₱"+Number(v||0).toLocaleString("en-PH",{minimumFractionDigits:2,maximumFractionDigits:2});
-function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-function dateText(v){if(!v)return"—";const d=new Date(v);return isNaN(d)?"—":d.toLocaleString("en-PH")}
-function card(r,isWithdrawal){
- const s=String(r.status||"").toUpperCase(),c=s==="APPROVED"?"approved":"rejected";
- let extra=isWithdrawal
- ? `<div class="info-row"><span>Account Name</span><strong>${esc(r.accountName||"—")}</strong></div><div class="info-row"><span>Account Number</span><strong>${esc(r.accountNumber||"—")}</strong></div><div class="info-row"><span>Request ID</span><strong>${esc(r.requestId||"—")}</strong></div>`
- : `<div class="info-row"><span>Method</span><strong>${esc(r.method||"GCash")}</strong></div><div class="info-row"><span>Order ID</span><strong>${esc(r.orderId||"—")}</strong></div>`;
- return `<div class="card"><div class="card-top"><div class="amount">${money(r.amount)}</div><div class="status ${c}">${esc(s)}</div></div><div class="info"><div class="info-row"><span>Member</span><strong>${esc(r.UserName||"Member")}</strong></div>${extra}<div class="info-row"><span>Date</span><strong>${esc(dateText(r.date))}</strong></div>${r.approvedAt?`<div class="info-row"><span>Approved</span><strong>${esc(dateText(r.approvedAt))}</strong></div>`:""}${r.rejectedAt?`<div class="info-row"><span>Rejected</span><strong>${esc(dateText(r.rejectedAt))}</strong></div>`:""}</div></div>`;
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+const ADMIN_EMAIL =
+  "639999999999@novarise.local";
+
+const $ = id =>
+  document.getElementById(id);
+
+function formatMoney(value){
+
+  const amount =
+    Number(value || 0);
+
+  return "₱" +
+    amount.toLocaleString(
+      "en-PH",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
 }
-async function waitForFirebaseUser(){
 
-  await auth.setPersistence(
-    firebase.auth.Auth.Persistence.LOCAL
-  );
+function escapeHtml(value){
 
-  if(auth.currentUser){
-    return auth.currentUser;
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+/*
+  AUTH CHECK
+
+  This is intentionally the same Firebase
+  LOCAL persistence + auth-state restore pattern
+  used by the working admin-withdraw.html.
+*/
+
+(async function(){
+
+  try{
+
+    await auth.setPersistence(
+      firebase.auth.Auth.Persistence.LOCAL
+    );
+
+    let user =
+      auth.currentUser;
+
+    if(!user){
+
+      user = await new Promise(resolve => {
+
+        let finished = false;
+
+        const unsubscribe =
+          auth.onAuthStateChanged(
+            currentUser => {
+
+              if(finished) return;
+
+              /*
+                Do not immediately treat the first
+                null state as logged out.
+                Give Firebase time to restore the
+                persisted administrator session.
+              */
+              if(!currentUser){
+                return;
+              }
+
+              finished = true;
+
+              unsubscribe();
+
+              resolve(
+                currentUser
+              );
+
+            }
+          );
+
+        setTimeout(() => {
+
+          if(finished) return;
+
+          finished = true;
+
+          unsubscribe();
+
+          resolve(
+            auth.currentUser || null
+          );
+
+        },8000);
+
+      });
+
+    }
+
+    console.log(
+      "HISTORY AUTH USER:",
+      user
+    );
+
+    if(!user){
+
+      showLoginMessage();
+
+      return;
+
+    }
+
+    await user.getIdToken(true);
+
+    console.log(
+      "HISTORY ADMIN EMAIL:",
+      user.email
+    );
+
+    if(
+      user.email !==
+      ADMIN_EMAIL
+    ){
+
+      showAccessDenied();
+
+      return;
+
+    }
+
+    console.log(
+      "HISTORY ADMIN VERIFIED"
+    );
+
+    await loadHistory();
+
+  }catch(error){
+
+    console.error(
+      "History Auth restore error:",
+      error
+    );
+
+    showError(
+      "Unable to restore the administrator login session.<br>Please refresh the page."
+    );
+
   }
 
-  return await new Promise(resolve => {
-
-    let finished = false;
-    let unsubscribe = null;
-
-    const finish = user => {
-
-      if(finished) return;
-
-      finished = true;
-
-      if(typeof unsubscribe === "function"){
-        unsubscribe();
-      }
-
-      resolve(
-        user ||
-        auth.currentUser ||
-        null
-      );
-    };
-
-    unsubscribe =
-      auth.onAuthStateChanged(
-        user => {
-
-          /*
-            Firebase can fire an initial null state
-            while restoring the existing LOCAL session.
-            Do NOT treat that first null as logout.
-          */
-          if(user){
-            finish(user);
-          }
-
-        }
-      );
-
-    setTimeout(() => {
-
-      finish(
-        auth.currentUser ||
-        null
-      );
-
-    },10000);
-
-  });
-}
+})();
 
 function showLoginMessage(){
 
-  $("rechargeHistory").innerHTML =
-    '<div class="error">Please login first.</div>';
+  $("rechargeHistory").innerHTML = `
+    <div class="error">
+      Please login first.
+    </div>
+  `;
 
-  $("withdrawalHistory").innerHTML =
-    '<div class="error">Please login first.</div>';
+  $("withdrawalHistory").innerHTML = `
+    <div class="error">
+      Please login first.
+    </div>
+  `;
+
 }
 
 function showAccessDenied(){
 
+  $("rechargeHistory").innerHTML = `
+    <div class="error">
+      Access denied.<br><br>
+      This page is for the withdrawal administrator only.
+    </div>
+  `;
+
+  $("withdrawalHistory").innerHTML = `
+    <div class="error">
+      Access denied.
+    </div>
+  `;
+
+}
+
+function showError(message){
+
   $("rechargeHistory").innerHTML =
-    '<div class="error">Access denied.</div>';
+    `<div class="error">${message}</div>`;
 
   $("withdrawalHistory").innerHTML =
-    '<div class="error">Access denied.</div>';
+    `<div class="error">${message}</div>`;
+
 }
 
 async function loadHistory(){
 
- try{
+  $("rechargeHistory").innerHTML = `
+    <div class="loading">
+      Loading recharge history...
+    </div>
+  `;
 
-  const user =
-    await waitForFirebaseUser();
+  $("withdrawalHistory").innerHTML = `
+    <div class="loading">
+      Loading withdrawal history...
+    </div>
+  `;
 
-  console.log(
-    "HISTORY AUTH USER:",
-    user
-  );
+  try{
 
-  if(!user){
+    const snapshot =
+      await db
+        .collection("Users")
+        .get();
 
-    showLoginMessage();
+    const rechargeHistory = [];
+    const withdrawalHistory = [];
 
-    return;
-  }
+    snapshot.forEach(
+      UserDoc => {
 
-  await user.getIdToken(true);
+        const UserData =
+          UserDoc.data() || {};
 
-  console.log(
-    "HISTORY ADMIN EMAIL:",
-    user.email
-  );
-
-  if(
-    user.email !==
-    ADMIN_EMAIL
-  ){
-
-    showAccessDenied();
-
-    return;
-  }
-
-  const snap =
-    await db
-      .collection("Users")
-      .get();
-
-  const recharge = [];
-  const withdrawal = [];
-
-  snap.forEach(doc => {
-
-    const data =
-      doc.data() || {};
-
-    const txs =
-      Array.isArray(
-        data.transactions
-      )
-        ? data.transactions
-        : [];
-
-    txs.forEach(
-      (tx,index) => {
-
-        if(!tx) return;
-
-        const status =
-          String(
-            tx.status || ""
-          ).toUpperCase();
-
-        const item = {
-
-          UserId:
-            doc.id,
-
-          transactionIndex:
-            index,
-
-          UserName:
-            data.name ||
-            data.displayName ||
-            "Member",
-
-          ...tx
-
-        };
-
-        if(
-          tx.type === "Recharge" &&
-          (
-            status === "APPROVED" ||
-            status === "REJECTED"
+        const transactions =
+          Array.isArray(
+            UserData.transactions
           )
-        ){
+            ? UserData.transactions
+            : [];
 
-          recharge.push(item);
+        transactions.forEach(
+          transaction => {
 
-        }
+            if(!transaction){
+              return;
+            }
 
-        if(
-          tx.type ===
-            "Withdrawal Request" &&
-          (
-            status === "APPROVED" ||
-            status === "REJECTED"
-          )
-        ){
+            const status =
+              String(
+                transaction.status || ""
+              ).toUpperCase();
 
-          withdrawal.push(item);
+            const base = {
 
-        }
+              UserId:
+                UserDoc.id,
+
+              UserName:
+                UserData.name ||
+                UserData.displayName ||
+                "Member",
+
+              ...transaction
+
+            };
+
+            if(
+              transaction.type ===
+                "Recharge" &&
+              (
+                status === "APPROVED" ||
+                status === "REJECTED"
+              )
+            ){
+
+              rechargeHistory.push(
+                base
+              );
+
+            }
+
+            if(
+              transaction.type ===
+                "Withdrawal Request" &&
+              (
+                status === "APPROVED" ||
+                status === "REJECTED"
+              )
+            ){
+
+              withdrawalHistory.push(
+                base
+              );
+
+            }
+
+          }
+        );
 
       }
     );
 
-  });
+    const newestFirst =
+      (a,b) =>
+        new Date(
+          b.date || 0
+        ).getTime() -
+        new Date(
+          a.date || 0
+        ).getTime();
 
-  const sort =
-    (a,b) =>
-      new Date(
-        b.approvedAt ||
-        b.rejectedAt ||
-        b.date ||
-        0
-      ) -
-      new Date(
-        a.approvedAt ||
-        a.rejectedAt ||
-        a.date ||
-        0
-      );
+    rechargeHistory.sort(
+      newestFirst
+    );
 
-  recharge.sort(sort);
-  withdrawal.sort(sort);
+    withdrawalHistory.sort(
+      newestFirst
+    );
 
-  $("rechargeHistory").innerHTML =
-    recharge.length
-      ? recharge
-          .map(
-            r => card(
-              r,
-              false
-            )
-          )
-          .join("")
-      : '<div class="empty">No processed recharge requests yet.</div>';
+    renderRechargeHistory(
+      rechargeHistory
+    );
 
-  $("withdrawalHistory").innerHTML =
-    withdrawal.length
-      ? withdrawal
-          .map(
-            r => card(
-              r,
-              true
-            )
-          )
-          .join("")
-      : '<div class="empty">No processed withdrawal requests yet.</div>';
+    renderWithdrawalHistory(
+      withdrawalHistory
+    );
 
- }catch(e){
+  }catch(error){
 
-  console.error(
-    "History load error:",
-    e
-  );
+    console.error(
+      "Load history error:",
+      error
+    );
 
-  $("rechargeHistory").innerHTML =
-    '<div class="error">Unable to load history. Please refresh.</div>';
+    showError(
+      "Unable to load request history.<br>Please refresh the page."
+    );
 
-  $("withdrawalHistory").innerHTML =
-    '<div class="error">Unable to load history. Please refresh.</div>';
+  }
 
- }
 }
-loadHistory();
+
+function renderRechargeHistory(items){
+
+  if(items.length === 0){
+
+    $("rechargeHistory").innerHTML = `
+      <div class="empty">
+        No recharge history found.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  $("rechargeHistory").innerHTML =
+    items
+      .map(
+        renderRechargeCard
+      )
+      .join("");
+
+}
+
+function renderWithdrawalHistory(items){
+
+  if(items.length === 0){
+
+    $("withdrawalHistory").innerHTML = `
+      <div class="empty">
+        No withdrawal history found.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  $("withdrawalHistory").innerHTML =
+    items
+      .map(
+        renderWithdrawalCard
+      )
+      .join("");
+
+}
+
+function statusClass(status){
+
+  return status === "APPROVED"
+    ? "approved"
+    : "rejected";
+
+}
+
+function renderRechargeCard(request){
+
+  const status =
+    String(
+      request.status || ""
+    ).toUpperCase();
+
+  const date =
+    request.date
+      ? new Date(
+          request.date
+        ).toLocaleString(
+          "en-PH"
+        )
+      : "—";
+
+  return `
+
+    <div class="withdrawal-card">
+
+      <div class="card-top">
+
+        <div class="amount">
+          ${formatMoney(
+            request.amount
+          )}
+        </div>
+
+        <div class="status ${statusClass(status)}">
+          ${escapeHtml(status)}
+        </div>
+
+      </div>
+
+      <div class="info">
+
+        <div class="info-row">
+          <span>Member</span>
+          <strong>
+            ${escapeHtml(
+              request.UserName ||
+              "Member"
+            )}
+          </strong>
+        </div>
+
+        <div class="info-row">
+          <span>Method</span>
+          <strong>
+            ${escapeHtml(
+              request.method ||
+              "GCash"
+            )}
+          </strong>
+        </div>
+
+        <div class="info-row">
+          <span>Order ID</span>
+          <strong>
+            ${escapeHtml(
+              request.orderId ||
+              "—"
+            )}
+          </strong>
+        </div>
+
+        <div class="info-row">
+          <span>Date</span>
+          <strong>
+            ${escapeHtml(date)}
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+function renderWithdrawalCard(request){
+
+  const status =
+    String(
+      request.status || ""
+    ).toUpperCase();
+
+  const date =
+    request.date
+      ? new Date(
+          request.date
+        ).toLocaleString(
+          "en-PH"
+        )
+      : "—";
+
+  return `
+
+    <div class="withdrawal-card">
+
+      <div class="card-top">
+
+        <div class="amount">
+          ${formatMoney(
+            request.amount
+          )}
+        </div>
+
+        <div class="status ${statusClass(status)}">
+          ${escapeHtml(status)}
+        </div>
+
+      </div>
+
+      <div class="info">
+
+        <div class="info-row">
+          <span>Member</span>
+          <strong>
+            ${escapeHtml(
+              request.UserName ||
+              "Member"
+            )}
+          </strong>
+        </div>
+
+        <div class="info-row">
+          <span>Method</span>
+          <strong>
+            ${escapeHtml(
+              request.method ||
+              "—"
+            )}
+          </strong>
+        </div>
+
+        <div class="info-row">
+          <span>Account Name</span>
+          <strong>
+            ${escapeHtml(
+              request.accountName ||
+              "—"
+            )}
+          </strong>
+        </div>
+
+        <div class="info-row">
+          <span>Account Number</span>
+          <strong>
+            ${escapeHtml(
+              request.accountNumber ||
+              "—"
+            )}
+          </strong>
+        </div>
+
+        <div class="info-row">
+          <span>Request ID</span>
+          <strong>
+            ${escapeHtml(
+              request.requestId ||
+              "—"
+            )}
+          </strong>
+        </div>
+
+        <div class="info-row">
+          <span>Date</span>
+          <strong>
+            ${escapeHtml(date)}
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
 </script>
+
 </body>
 </html>
