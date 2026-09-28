@@ -3072,8 +3072,53 @@ async function processInvestmentIncome(user){
               return investment;
             }
 
-            const startTime =
-              investment.date.toMillis();
+            let startTime;
+
+if (
+  investment.date &&
+  typeof investment.date.toMillis === "function"
+) {
+  // Firestore Timestamp
+  startTime = investment.date.toMillis();
+
+} else if (
+  investment.date &&
+  typeof investment.date.toDate === "function"
+) {
+  // Firestore Timestamp-like object
+  startTime = investment.date.toDate().getTime();
+
+} else if (
+  investment.date instanceof Date
+) {
+  // JavaScript Date
+  startTime = investment.date.getTime();
+
+} else if (
+  typeof investment.date === "string" ||
+  typeof investment.date === "number"
+) {
+  // Existing string/number date
+  startTime = new Date(investment.date).getTime();
+
+} else {
+  // Invalid date — skip this investment
+  console.warn(
+    "Invalid investment date:",
+    investment
+  );
+
+  return investment;
+}
+
+if (!Number.isFinite(startTime)) {
+  console.warn(
+    "Invalid investment start time:",
+    investment.date
+  );
+
+  return investment;
+}
 
             const elapsedDays =
               Math.floor(
