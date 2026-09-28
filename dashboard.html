@@ -3859,9 +3859,16 @@ async function buyProduct(
 
     closeInvestmentModal();
 
-    alert(
-      "Investment recorded successfully."
-    );
+const successMessage =
+  document.getElementById("successMessage");
+
+if (successMessage) {
+  successMessage.classList.add("show");
+
+  setTimeout(() => {
+    successMessage.classList.remove("show");
+  }, 2200);
+}
 
 
   }catch(error){
@@ -4150,5 +4157,86 @@ await loadUserData(user);
 
 </script>
 
+<!-- NOVARISE SUCCESS MESSAGE -->
+<div id="successMessage" class="success-message">
+  <div class="success-message-box">
+    <div class="success-icon">✓</div>
+
+    <div class="success-title">
+      Investment Successful
+    </div>
+
+    <div class="success-text">
+      Your investment has been recorded successfully.
+    </div>
+  </div>
+</div>
+
+<style>
+  .success-message {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+    padding: 20px;
+  }
+
+  .success-message.show {
+    display: flex;
+  }
+
+  .success-message-box {
+    width: min(380px, 100%);
+    background: #fff;
+    border-radius: 22px;
+    padding: 28px 24px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    animation: successPop 0.25s ease;
+  }
+
+  .success-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: #e9f9f1;
+    color: #16a765;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 800;
+  }
+
+  .success-title {
+    font-size: 21px;
+    font-weight: 800;
+    color: #123567;
+    margin-bottom: 8px;
+  }
+
+  .success-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #6b7280;
+  }
+
+  @keyframes successPop {
+    from {
+      opacity: 0;
+      transform: scale(0.92);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
+  
 </body>
 </html>
