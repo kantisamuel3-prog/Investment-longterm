@@ -95,20 +95,234 @@ function card(r,isWithdrawal){
  : `<div class="info-row"><span>Method</span><strong>${esc(r.method||"GCash")}</strong></div><div class="info-row"><span>Order ID</span><strong>${esc(r.orderId||"—")}</strong></div>`;
  return `<div class="card"><div class="card-top"><div class="amount">${money(r.amount)}</div><div class="status ${c}">${esc(s)}</div></div><div class="info"><div class="info-row"><span>Member</span><strong>${esc(r.UserName||"Member")}</strong></div>${extra}<div class="info-row"><span>Date</span><strong>${esc(dateText(r.date))}</strong></div>${r.approvedAt?`<div class="info-row"><span>Approved</span><strong>${esc(dateText(r.approvedAt))}</strong></div>`:""}${r.rejectedAt?`<div class="info-row"><span>Rejected</span><strong>${esc(dateText(r.rejectedAt))}</strong></div>`:""}</div></div>`;
 }
+async function waitForFirebaseUser(){
+
+  await auth.setPersistence(
+    firebase.auth.Auth.Persistence.LOCAL
+  );
+
+  if(auth.currentUser){
+    return auth.currentUser;
+  }
+
+  return await new Promise(resolve => {
+
+    let finished = false;
+
+    const finish = user => {
+
+      if(finished) return;
+
+      finished = true;
+
+      if(typeof unsubscribe === "function"){
+        unsubscribe();
+      }
+
+      resolve(user || null);
+    };
+
+    const unsubscribe =
+      auth.onAuthStateChanged(
+        user => {
+          finish(user);
+        }
+      );
+
+    setTimeout(() => {
+      finish(auth.currentUser || null);
+    },10000);
+
+  });
+}
+
+function showLoginMessage(){
+
+  $("rechargeHistory").innerHTML =
+    '<div class="error">Please login first.</div>';
+
+  $("withdrawalHistory").innerHTML =
+    '<div class="error">Please login first.</div>';
+}
+
+function showAccessDenied(){
+
+  $("rechargeHistory").innerHTML =
+    '<div class="error">Access denied.</div>';
+
+  $("withdrawalHistory").innerHTML =
+    '<div class="error">Access denied.</div>';
+}
+
 async function loadHistory(){
+
  try{
-  await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-  let user=auth.currentUser;
-  if(!user){user=await new Promise(resolve=>{let done=false;const unsub=auth.onAuthStateChanged(u=>{if(done)return;done=true;unsub();resolve(u||null)});setTimeout(()=>{if(done)return;done=true;unsub();resolve(auth.currentUser||null)},8000)})}
-  if(!user){$("rechargeHistory").innerHTML='<div class="error">Please login first.</div>';$("withdrawalHistory").innerHTML='<div class="error">Please login first.</div>';return}
+
+  const user =
+    await waitForFirebaseUser();
+
+  console.log(
+    "HISTORY AUTH USER:",
+    user
+  );
+
+  if(!user){
+
+    showLoginMessage();
+
+    return;
+  }
+
   await user.getIdToken(true);
-  if(user.email!==ADMIN_EMAIL){$("rechargeHistory").innerHTML='<div class="error">Access denied.</div>';$("withdrawalHistory").innerHTML='<div class="error">Access denied.</div>';return}
-  const snap=await db.collection("Users").get(),recharge=[],withdrawal=[];
-  snap.forEach(doc=>{const data=doc.data()||{},txs=Array.isArray(data.transactions)?data.transactions:[];txs.forEach((tx,index)=>{if(!tx)return;const s=String(tx.status||"").toUpperCase(),item={UserId:doc.id,transactionIndex:index,UserName:data.name||data.displayName||"Member",...tx};if(tx.type==="Recharge"&&(s==="APPROVED"||s==="REJECTED"))recharge.push(item);if(tx.type==="Withdrawal Request"&&(s==="APPROVED"||s==="REJECTED"))withdrawal.push(item)})});
-  const sort=(a,b)=>new Date(b.approvedAt||b.rejectedAt||b.date||0)-new Date(a.approvedAt||a.rejectedAt||a.date||0);recharge.sort(sort);withdrawal.sort(sort);
-  $("rechargeHistory").innerHTML=recharge.length?recharge.map(r=>card(r,false)).join(""):'<div class="empty">No processed recharge requests yet.</div>';
-  $("withdrawalHistory").innerHTML=withdrawal.length?withdrawal.map(r=>card(r,true)).join(""):'<div class="empty">No processed withdrawal requests yet.</div>';
- }catch(e){console.error(e);$("rechargeHistory").innerHTML='<div class="error">Unable to load history. Please refresh.</div>';$("withdrawalHistory").innerHTML='<div class="error">Unable to load history. Please refresh.</div>'}
+
+  console.log(
+    "HISTORY ADMIN EMAIL:",
+    user.email
+  );
+
+  if(
+    user.email !==
+    ADMIN_EMAIL
+  ){
+
+    showAccessDenied();
+
+    return;
+  }
+
+  const snap =
+    await db
+      .collection("Users")
+      .get();
+
+  const recharge = [];
+  const withdrawal = [];
+
+  snap.forEach(doc => {
+
+    const data =
+      doc.data() || {};
+
+    const txs =
+      Array.isArray(
+        data.transactions
+      )
+        ? data.transactions
+        : [];
+
+    txs.forEach(
+      (tx,index) => {
+
+        if(!tx) return;
+
+        const status =
+          String(
+            tx.status || ""
+          ).toUpperCase();
+
+        const item = {
+
+          UserId:
+            doc.id,
+
+          transactionIndex:
+            index,
+
+          UserName:
+            data.name ||
+            data.displayName ||
+            "Member",
+
+          ...tx
+
+        };
+
+        if(
+          tx.type === "Recharge" &&
+          (
+            status === "APPROVED" ||
+            status === "REJECTED"
+          )
+        ){
+
+          recharge.push(item);
+
+        }
+
+        if(
+          tx.type ===
+            "Withdrawal Request" &&
+          (
+            status === "APPROVED" ||
+            status === "REJECTED"
+          )
+        ){
+
+          withdrawal.push(item);
+
+        }
+
+      }
+    );
+
+  });
+
+  const sort =
+    (a,b) =>
+      new Date(
+        b.approvedAt ||
+        b.rejectedAt ||
+        b.date ||
+        0
+      ) -
+      new Date(
+        a.approvedAt ||
+        a.rejectedAt ||
+        a.date ||
+        0
+      );
+
+  recharge.sort(sort);
+  withdrawal.sort(sort);
+
+  $("rechargeHistory").innerHTML =
+    recharge.length
+      ? recharge
+          .map(
+            r => card(
+              r,
+              false
+            )
+          )
+          .join("")
+      : '<div class="empty">No processed recharge requests yet.</div>';
+
+  $("withdrawalHistory").innerHTML =
+    withdrawal.length
+      ? withdrawal
+          .map(
+            r => card(
+              r,
+              true
+            )
+          )
+          .join("")
+      : '<div class="empty">No processed withdrawal requests yet.</div>';
+
+ }catch(e){
+
+  console.error(
+    "History load error:",
+    e
+  );
+
+  $("rechargeHistory").innerHTML =
+    '<div class="error">Unable to load history. Please refresh.</div>';
+
+  $("withdrawalHistory").innerHTML =
+    '<div class="error">Unable to load history. Please refresh.</div>';
+
+ }
 }
 loadHistory();
 </script>
