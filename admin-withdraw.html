@@ -92,6 +92,43 @@ body{
 
 }
 
+.history-toolbar{
+  display:flex;
+  justify-content:center;
+  margin:0 0 18px;
+}
+.history-toggle{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  max-width:300px;
+  min-height:52px;
+  padding:12px 18px;
+  border:1px solid #cbdaf0;
+  border-radius:15px;
+  background:#fff;
+  color:#164b91;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:.2px;
+  box-shadow:0 5px 18px rgba(25,55,100,.08);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.history-toggle:active{
+  transform:scale(.98);
+}
+.history-icon{
+  font-size:22px;
+  line-height:1;
+}
+.history-arrow{
+  font-size:21px;
+  line-height:1;
+  margin-left:2px;
+}
 .section{
 
   background:#fff;
@@ -301,6 +338,14 @@ button:disabled{
   <div class="header">
     <div class="logo">Novarise</div>
     <div class="subtitle">Withdrawal Administration</div>
+  </div>
+
+  <div class="history-toolbar">
+    <a href="history.html" class="history-toggle">
+      <span class="history-icon">↻</span>
+      <span>VIEW HISTORY</span>
+      <span class="history-arrow">→</span>
+    </a>
   </div>
 
   <div class="stats">
@@ -748,70 +793,50 @@ async function loadWithdrawals(){
     );
 
 
-    updateStats(
-      requests
+    const pendingWithdrawals = requests.filter(request =>
+      String(request.status || "PENDING").toUpperCase() === "PENDING"
+    );
+    const pendingRecharges = rechargeRequests.filter(request =>
+      String(request.status || "PENDING").toUpperCase() === "PENDING"
+    );
+    const processedWithdrawals = requests.filter(request =>
+      ["APPROVED", "REJECTED"].includes(String(request.status || "").toUpperCase())
+    );
+    const processedRecharges = rechargeRequests.filter(request =>
+      ["APPROVED", "REJECTED"].includes(String(request.status || "").toUpperCase())
     );
 
+    updateStats(requests);
+    $("historyCount").textContent =
+      processedWithdrawals.length + processedRecharges.length;
 
-    /* ---------------------------------------
-       RENDER WITHDRAWALS
-    --------------------------------------- */
-
-    if(
-      requests.length === 0
-    ){
-
-      $("withdrawals").innerHTML = `
-        <div class="empty">
-          No withdrawal requests found.
-        </div>
-      `;
-
+    if(pendingWithdrawals.length === 0){
+      $("withdrawals").innerHTML = '<div class="empty">No pending withdrawal requests.</div>';
     }else{
-
-      $("withdrawals").innerHTML =
-        requests
-          .map(
-            (request,index) =>
-              renderWithdrawal(
-                request,
-                index
-              )
-          )
-          .join("");
-
+      $("withdrawals").innerHTML = pendingWithdrawals
+        .map((request,index) => renderWithdrawal(request,index)).join("");
     }
 
-
-    /* ---------------------------------------
-       RENDER RECHARGES
-    --------------------------------------- */
-
-    if(
-      rechargeRequests.length === 0
-    ){
-
-      $("recharges").innerHTML = `
-        <div class="empty">
-          No recharge requests found.
-        </div>
-      `;
-
+    if(pendingRecharges.length === 0){
+      $("recharges").innerHTML = '<div class="empty">No pending recharge requests.</div>';
     }else{
-
-      $("recharges").innerHTML =
-        rechargeRequests
-          .map(
-            (request,index) =>
-              renderRecharge(
-                request,
-                index
-              )
-          )
-          .join("");
-
+      $("recharges").innerHTML = pendingRecharges
+        .map((request,index) => renderRecharge(request,index)).join("");
     }
 
+    if(processedRecharges.length === 0){
+      $("rechargeHistory").innerHTML = '<div class="empty">No processed recharge requests.</div>';
+    }else{
+      $("rechargeHistory").innerHTML = processedRecharges
+        .map((request,index) => renderRecharge(request,index)).join("");
+    }
+
+    if(processedWithdrawals.length === 0){
+      $("withdrawalHistory").innerHTML = '<div class="empty">No processed withdrawal requests.</div>';
+    }else{
+      $("withdrawalHistory").innerHTML = processedWithdrawals
+        .map((request,index) => renderWithdrawal(request,index)).join("");
+    }
 
   }catch(error){
 
