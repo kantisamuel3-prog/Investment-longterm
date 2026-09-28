@@ -807,8 +807,6 @@ async function loadWithdrawals(){
     );
 
     updateStats(requests);
-    $("historyCount").textContent =
-      processedWithdrawals.length + processedRecharges.length;
 
     if(pendingWithdrawals.length === 0){
       $("withdrawals").innerHTML = '<div class="empty">No pending withdrawal requests.</div>';
@@ -822,20 +820,6 @@ async function loadWithdrawals(){
     }else{
       $("recharges").innerHTML = pendingRecharges
         .map((request,index) => renderRecharge(request,index)).join("");
-    }
-
-    if(processedRecharges.length === 0){
-      $("rechargeHistory").innerHTML = '<div class="empty">No processed recharge requests.</div>';
-    }else{
-      $("rechargeHistory").innerHTML = processedRecharges
-        .map((request,index) => renderRecharge(request,index)).join("");
-    }
-
-    if(processedWithdrawals.length === 0){
-      $("withdrawalHistory").innerHTML = '<div class="empty">No processed withdrawal requests.</div>';
-    }else{
-      $("withdrawalHistory").innerHTML = processedWithdrawals
-        .map((request,index) => renderWithdrawal(request,index)).join("");
     }
 
   }catch(error){
