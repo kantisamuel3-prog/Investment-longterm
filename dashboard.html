@@ -3512,7 +3512,53 @@ function closeInvestmentModal(){
 
 }
 
+/* =============================================
+   INVESTMENT MESSAGE
+============================================= */
 
+function showInvestmentMessage(
+  title,
+  message,
+  type = "success"
+) {
+
+  const successMessage =
+    document.getElementById("successMessage");
+
+  if (!successMessage) {
+    return;
+  }
+
+  const titleElement =
+    successMessage.querySelector(".success-title");
+
+  const textElement =
+    successMessage.querySelector(".success-text");
+
+  const iconElement =
+    successMessage.querySelector(".success-icon");
+
+  if (titleElement) {
+    titleElement.textContent = title;
+  }
+
+  if (textElement) {
+    textElement.textContent = message;
+  }
+
+  if (iconElement) {
+    iconElement.textContent =
+      type === "error" ? "!" : "✓";
+  }
+
+  successMessage.classList.add("show");
+
+  setTimeout(() => {
+    successMessage.classList.remove("show");
+  }, 2200);
+}
+
+  
 /* =====================================================
    BUY PRODUCT
 ===================================================== */
@@ -3884,21 +3930,25 @@ if (successMessage) {
       "Insufficient balance."
     ){
 
-      alert(
-        "Insufficient balance for this investment."
-      );
+      showInvestmentMessage(
+  "Insufficient Balance",
+  "You do not have enough balance for this investment.",
+  "error"
+);
 
-    }else{
+     }else{
 
-      alert(
-        "Investment failed. Please try again."
-      );
+       showInvestmentMessage(
+       "Investment Failed",
+       "Something went wrong. Please try again.",
+       "error"
+     );
 
-    }
+   }
 
-  }
+ }
 
-}
+}  
 
 /* =====================================================
    LOGOUT
