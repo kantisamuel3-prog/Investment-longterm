@@ -108,6 +108,7 @@ async function waitForFirebaseUser(){
   return await new Promise(resolve => {
 
     let finished = false;
+    let unsubscribe = null;
 
     const finish = user => {
 
@@ -119,18 +120,36 @@ async function waitForFirebaseUser(){
         unsubscribe();
       }
 
-      resolve(user || null);
+      resolve(
+        user ||
+        auth.currentUser ||
+        null
+      );
     };
 
-    const unsubscribe =
+    unsubscribe =
       auth.onAuthStateChanged(
         user => {
-          finish(user);
+
+          /*
+            Firebase can fire an initial null state
+            while restoring the existing LOCAL session.
+            Do NOT treat that first null as logout.
+          */
+          if(user){
+            finish(user);
+          }
+
         }
       );
 
     setTimeout(() => {
-      finish(auth.currentUser || null);
+
+      finish(
+        auth.currentUser ||
+        null
+      );
+
     },10000);
 
   });
@@ -158,22 +177,8 @@ async function loadHistory(){
 
  try{
 
-  let user =
+  const user =
     await waitForFirebaseUser();
-
-  /* Same-tab fallback: admin-withdraw.html has already
-     verified the administrator before opening history.html. */
-  if(
-    !user &&
-    sessionStorage.getItem(
-      "novarise_admin_verified"
-    ) === "1"
-  ){
-    user = {
-      email: ADMIN_EMAIL,
-      getIdToken: async () => null
-    };
-  }
 
   console.log(
     "HISTORY AUTH USER:",
