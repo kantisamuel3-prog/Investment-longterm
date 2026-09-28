@@ -3408,139 +3408,6 @@ async function withdraw(){
 
   }
 
-}
-
-// COMMISSION TRANSACTION
-if(
-  referrerRef &&
-  referrerData &&
-  !commissionAlreadyCredited
-){
-
-  const commissionTransaction = {
-
-    transactionId:
-      `commission_${purchaseId}`,
-
-    type:
-      "Commission Received",
-
-    amount:
-      commission,
-
-    status:
-      "COMPLETED",
-
-    sourcePurchaseId:
-      purchaseId,
-
-    referredUserId:
-      currentUser.uid,
-
-    product:
-      name,
-
-    description:
-      `Referral commission from ₱${Number(price).toLocaleString(
-        "en-PH",
-        {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }
-      )} product purchase`,
-
-    date:
-      Timestamp.now()
-
-  };
-
-  referrerTransactions.push(
-    commissionTransaction
-  );
-
-}
-
-// CREDIT REFERRER BALANCE
-if(
-  referrerRef &&
-  referrerData &&
-  !commissionAlreadyCredited
-){
-
-  const oldReferrerBalance =
-    Number(
-      referrerData.balance || 0
-    );
-
-  const newReferrerBalance =
-    oldReferrerBalance + commission;
-
-  const oldTotalCommission =
-    Number(
-      referrerData.totalCommission ??
-      referrerData.commission ??
-      0
-    );
-
-  const newTotalCommission =
-    oldTotalCommission + commission;
-
-  transaction.set(
-    referrerRef,
-    {
-      balance:
-        newReferrerBalance,
-
-      totalCommission:
-        newTotalCommission,
-
-      transactions:
-        referrerTransactions
-    },
-    {
-      merge:true
-    }
-  );
-
-}        
-
-showBalance(newBalance);
-
-      }
-    );
-
-    alert(
-      "Withdrawal recorded successfully."
-    );
-
-  }catch(error){
-
-    console.error(
-      "Withdraw error:",
-      error
-    );
-
-    if(
-      error.message ===
-      "Insufficient balance."
-    ){
-
-      alert(
-        "Insufficient balance."
-      );
-
-    }else{
-
-      alert(
-        "Withdrawal failed. Please try again."
-      );
-
-    }
-
-  }
-
-}
-
 
 /* =====================================================
    OPEN INVESTMENT MODAL
@@ -3562,7 +3429,7 @@ function openInvestmentModal(
     price,
     name,
     daily,
-    purchaseId,
+    purchaseId
   };
 
   modalProductName.textContent =
@@ -3608,7 +3475,7 @@ async function buyProduct(
   price,
   name,
   daily,
-  purchaseId
+  purchaseId,
 ){
 
   if(!currentUser){
@@ -4126,7 +3993,7 @@ confirmInvest.addEventListener(
         purchase.price,
         purchase.name,
         purchase.daily,
-        purchase.purchaseId
+        purchase.purchaseId,
       );
 
     } finally {
