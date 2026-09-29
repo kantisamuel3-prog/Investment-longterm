@@ -3356,6 +3356,72 @@ document
     "click",
     closeRewardCodeModal
   );
+
+document
+  .getElementById("confirmRewardCode")
+  ?.addEventListener(
+    "click",
+    async () => {
+
+      const input =
+        document.getElementById("rewardCodeInput");
+
+      const code =
+        input?.value.trim();
+
+      if(!code){
+
+        alert("Please enter your reward code.");
+
+        input?.focus();
+
+        return;
+      }
+
+      if(!currentUser){
+
+        alert("Please login first.");
+
+        return;
+      }
+
+      const button =
+        document.getElementById("confirmRewardCode");
+
+      if(button){
+        button.disabled = true;
+        button.textContent = "Redeeming...";
+      }
+
+      try{
+
+        // Worker connection will be added next.
+        alert("Reward code entered: " + code);
+
+      }catch(error){
+
+        console.error(
+          "Reward code error:",
+          error
+        );
+
+        alert(
+          "Unable to redeem reward code."
+        );
+
+      }finally{
+
+        if(button){
+
+          button.disabled = false;
+          button.textContent = "Redeem ₱10";
+
+        }
+
+      }
+
+    }
+  );
   
 /* =====================================================
    MODAL ELEMENTS
