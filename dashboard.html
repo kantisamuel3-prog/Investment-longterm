@@ -3409,24 +3409,33 @@ rewardTodayButton?.addEventListener(
 const rewardCodeButton =
   document.getElementById("rewardCodeButton");
 
-rewardCodeButton.addEventListener("click", () => {
+rewardCodeButton?.addEventListener(
+  "click",
+  () => {
 
-  const modal =
-    document.getElementById("rewardCodeModal");
+    const modal =
+      document.getElementById("rewardCodeModal");
 
-  const input =
-    document.getElementById("rewardCodeInput");
+    const input =
+      document.getElementById("rewardCodeInput");
 
-  if(!modal) return;
+    if(!modal) return;
 
-  modal.classList.add("show");
+    modal.classList.add("show");
 
-  if(input){
-    input.value = "";
-    setTimeout(() => input.focus(), 100);
+    if(input){
+
+      input.value = "";
+
+      setTimeout(
+        () => input.focus(),
+        100
+      );
+
+    }
+
   }
-
-});
+);
 
 
 function closeRewardCodeModal(){
@@ -3435,7 +3444,9 @@ function closeRewardCodeModal(){
     document.getElementById("rewardCodeModal");
 
   if(modal){
+
     modal.classList.remove("show");
+
   }
 
 }
@@ -3456,6 +3467,7 @@ document
     closeRewardCodeModal
   );
 
+
 document
   .getElementById("confirmRewardCode")
   ?.addEventListener(
@@ -3463,57 +3475,165 @@ document
     async () => {
 
       const input =
-        document.getElementById("rewardCodeInput");
+        document.getElementById(
+          "rewardCodeInput"
+        );
 
       const code =
         input?.value.trim();
 
       if(!code){
 
-        alert("Please enter your reward code.");
+        alert(
+          "Please enter your reward code."
+        );
 
         input?.focus();
 
         return;
+
       }
+
 
       if(!currentUser){
 
-        alert("Please login first.");
+        alert(
+          "Please login first."
+        );
 
         return;
+
       }
+
 
       const button =
-        document.getElementById("confirmRewardCode");
+        document.getElementById(
+          "confirmRewardCode"
+        );
+
 
       if(button){
+
         button.disabled = true;
-        button.textContent = "Redeeming...";
+
+        button.textContent =
+          "Redeeming...";
+
       }
+
 
       try{
 
-        // Worker connection will be added next.
-        alert("Reward code entered: " + code);
+        const idToken =
+          await currentUser.getIdToken();
+
+
+        const response =
+          await fetch(
+            "https://novarise-payermax.kantisamuel3.workers.dev/reward-code",
+            {
+              method: "POST",
+
+              headers: {
+
+                "Content-Type":
+                  "application/json",
+
+                "Authorization":
+                  `Bearer ${idToken}`
+
+              },
+
+              body: JSON.stringify({
+                code: code
+              })
+
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if(!response.ok){
+
+          if(
+            data.error ===
+            "CODE_USED"
+          ){
+
+            alert(
+              "This reward code has already been used."
+            );
+
+          }else if(
+            data.error ===
+            "INVALID_CODE"
+          ){
+
+            alert(
+              "Invalid reward code."
+            );
+
+          }else if(
+            data.error ===
+            "CODE_INACTIVE"
+          ){
+
+            alert(
+              "This reward code is inactive."
+            );
+
+          }else{
+
+            alert(
+              data.message ||
+              "Unable to redeem reward code."
+            );
+
+          }
+
+          return;
+
+        }
+
+
+        await loadUserData(
+          currentUser
+        );
+
+
+        closeRewardCodeModal();
+
+
+        showInvestmentMessage(
+          "Reward Claimed",
+          "₱10.00 has been added to your balance."
+        );
+
 
       }catch(error){
 
         console.error(
-          "Reward code error:",
+          "Reward Code error:",
           error
         );
 
+
         alert(
-          "Unable to redeem reward code."
+          "Unable to redeem reward code. Please try again."
         );
+
 
       }finally{
 
         if(button){
 
           button.disabled = false;
-          button.textContent = "Redeem ₱10";
+
+          button.textContent =
+            "Redeem ₱10";
 
         }
 
@@ -3521,6 +3641,7 @@ document
 
     }
   );
+
   
 /* =====================================================
    MODAL ELEMENTS
