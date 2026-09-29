@@ -3310,6 +3310,53 @@ const rewardTodayButton =
 const rewardCodeButton =
   document.getElementById("rewardCodeButton");
 
+rewardCodeButton.addEventListener("click", () => {
+
+  const modal =
+    document.getElementById("rewardCodeModal");
+
+  const input =
+    document.getElementById("rewardCodeInput");
+
+  if(!modal) return;
+
+  modal.classList.add("show");
+
+  if(input){
+    input.value = "";
+    setTimeout(() => input.focus(), 100);
+  }
+
+});
+
+
+function closeRewardCodeModal(){
+
+  const modal =
+    document.getElementById("rewardCodeModal");
+
+  if(modal){
+    modal.classList.remove("show");
+  }
+
+}
+
+
+document
+  .getElementById("closeRewardCodeModal")
+  ?.addEventListener(
+    "click",
+    closeRewardCodeModal
+  );
+
+
+document
+  .getElementById("cancelRewardCode")
+  ?.addEventListener(
+    "click",
+    closeRewardCodeModal
+  );
+  
 /* =====================================================
    MODAL ELEMENTS
 ===================================================== */
