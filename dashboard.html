@@ -3307,11 +3307,104 @@ const transactionButton =
 const rewardTodayButton =
   document.getElementById("rewardTodayButton");
 
-rewardTodayButton?.addEventListener("click", () => {
+rewardTodayButton?.addEventListener(
+  "click",
+  async () => {
 
-  alert("Reward Today button is working.");
+    if(!currentUser){
 
-});
+      alert("Please login first.");
+
+      return;
+    }
+
+    rewardTodayButton.disabled = true;
+
+    try{
+
+      const idToken =
+        await currentUser.getIdToken();
+
+      const response =
+        await fetch(
+          "https://novarise-payermax.kantisamuel3.workers.dev/reward-today",
+          {
+            method: "POST",
+
+            headers: {
+              Authorization:
+                `Bearer ${idToken}`
+            }
+          }
+        );
+
+      const data =
+        await response.json();
+
+      if(!response.ok){
+
+        if(
+          data.error ===
+            "REWARD_COOLDOWN"
+        ){
+
+          const next =
+            new Date(
+              data.nextEligibleAt
+            );
+
+          alert(
+            "Reward Today has already been claimed.\n\n" +
+            "Next reward: " +
+            next.toLocaleString(
+              "en-PH",
+              {
+                timeZone:
+                  "Asia/Manila"
+              }
+            )
+          );
+
+        }else{
+
+          alert(
+            data.message ||
+            "Unable to claim Reward Today."
+          );
+
+        }
+
+        return;
+      }
+
+      await loadUserData(
+        currentUser
+      );
+
+      showInvestmentMessage(
+        "Reward Claimed",
+        "₱10.00 has been added to your balance."
+      );
+
+    }catch(error){
+
+      console.error(
+        "Reward Today error:",
+        error
+      );
+
+      alert(
+        "Unable to claim Reward Today. Please try again."
+      );
+
+    }finally{
+
+      rewardTodayButton.disabled = false;
+
+    }
+
+  }
+);
 
 const rewardCodeButton =
   document.getElementById("rewardCodeButton");
