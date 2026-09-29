@@ -3303,7 +3303,12 @@ const logoutButton =
 
 const transactionButton =
   document.getElementById("transactionButton");
+  
+const rewardTodayButton =
+  document.getElementById("rewardTodayButton");
 
+const rewardCodeButton =
+  document.getElementById("rewardCodeButton");
 
 /* =====================================================
    MODAL ELEMENTS
@@ -4606,6 +4611,53 @@ await loadUserData(user);
 
 </script>
 
+<!-- REWARD CODE MODAL -->
+<div id="rewardCodeModal" class="modal-overlay">
+  <div class="invest-modal reward-code-modal">
+
+    <button type="button" class="close-modal" id="closeRewardCodeModal">
+      ×
+    </button>
+
+    <div class="modal-product-name">
+      🎟 Reward Code
+    </div>
+
+    <div class="invest-summary">
+      Enter your valid reward code to receive
+      <strong>₱10.00</strong>.
+    </div>
+
+    <div class="cycle-box">
+      <input
+        type="text"
+        id="rewardCodeInput"
+        placeholder="Enter reward code"
+        autocomplete="off"
+        maxlength="50"
+      >
+    </div>
+
+    <button
+      type="button"
+      class="confirm-invest"
+      id="confirmRewardCode"
+    >
+      Redeem ₱10
+    </button>
+
+    <button
+      type="button"
+      class="cancel-invest"
+      id="cancelRewardCode"
+    >
+      Cancel
+    </button>
+
+  </div>
+</div>
+
+  
 <!-- NOVARISE SUCCESS MESSAGE -->
 <div id="successMessage" class="success-message">
   <div class="success-message-box">
