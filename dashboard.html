@@ -1469,6 +1469,373 @@ main{margin:28px auto 34px}
   .logo-copy small{font-size:6.5px}
 }
 
+
+/* =====================================================
+   NOVARISE PREMIUM BALANCE DESIGN
+   Balance card only — existing dashboard functionality untouched
+===================================================== */
+
+.balance-card{
+  isolation:isolate;
+  overflow:hidden;
+  min-height:278px;
+  padding:28px;
+  border-radius:24px;
+  background:
+    radial-gradient(ellipse at 93% 7%,rgba(76,226,255,.38),transparent 25%),
+    radial-gradient(ellipse at 68% 88%,rgba(0,174,255,.22),transparent 31%),
+    linear-gradient(135deg,#032b62 0%,#064b97 48%,#087dc4 100%);
+  box-shadow:0 18px 42px rgba(0,65,125,.26);
+}
+
+.balance-card::before{
+  content:"";
+  position:absolute;
+  width:600px;
+  height:300px;
+  right:-210px;
+  top:-170px;
+  border-radius:50%;
+  background:linear-gradient(145deg,rgba(55,211,255,.25),rgba(255,255,255,.015));
+  border:1px solid rgba(255,255,255,.06);
+  transform:rotate(-8deg);
+  z-index:0;
+}
+
+.balance-card::after{
+  content:"";
+  position:absolute;
+  width:680px;
+  height:300px;
+  right:-180px;
+  bottom:-215px;
+  border-radius:50%;
+  background:rgba(0,183,255,.18);
+  border:1px solid rgba(71,215,255,.17);
+  transform:rotate(-12deg);
+  z-index:0;
+}
+
+.balance-decoration{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:1;
+}
+
+.balance-decoration .curve{
+  position:absolute;
+  width:620px;
+  height:245px;
+  right:-135px;
+  bottom:-65px;
+  border-radius:50%;
+  border:2px solid rgba(64,220,255,.28);
+  transform:rotate(-16deg);
+}
+
+.balance-decoration .curve.two{
+  width:540px;
+  height:205px;
+  right:-100px;
+  bottom:-28px;
+  border-color:rgba(139,238,255,.15);
+}
+
+.balance-decoration .line{
+  position:absolute;
+  width:230px;
+  height:2px;
+  left:40%;
+  top:58%;
+  background:linear-gradient(90deg,transparent,rgba(91,220,255,.65),transparent);
+  transform:rotate(-34deg);
+}
+
+.balance-decoration .dot{
+  position:absolute;
+  right:29%;
+  top:27%;
+  width:32px;
+  height:32px;
+  border:6px solid rgba(99,225,255,.42);
+  border-radius:50%;
+  box-shadow:0 0 22px rgba(55,210,255,.18);
+}
+
+.balance-decoration .coin{
+  position:absolute;
+  right:8%;
+  top:58%;
+  width:70px;
+  height:22px;
+  border-radius:50%;
+  background:linear-gradient(180deg,#74e5ff 0%,#1598df 55%,#0875c3 100%);
+  border:2px solid rgba(213,249,255,.65);
+  box-shadow:
+    0 8px 0 -2px #0874bd,
+    0 15px 0 -4px #075da4,
+    0 22px 25px rgba(0,0,0,.18);
+  transform:rotate(-7deg);
+}
+
+.balance-decoration .coin::after{
+  content:"₱";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:22px;
+  font-weight:900;
+  text-shadow:0 1px 4px rgba(0,0,0,.2);
+}
+
+.balance-decoration .coin.large{
+  right:12%;
+  top:39%;
+  width:94px;
+  height:32px;
+  transform:rotate(-9deg);
+  box-shadow:
+    0 10px 0 -2px #0874bd,
+    0 19px 0 -5px #075da4,
+    0 26px 30px rgba(0,0,0,.2);
+}
+
+.balance-decoration .coin.large::after{
+  font-size:31px;
+}
+
+.balance-decoration .arrow{
+  position:absolute;
+  right:3%;
+  top:27%;
+  width:145px;
+  height:65px;
+  border-top:9px solid rgba(72,226,255,.78);
+  border-radius:50%;
+  transform:rotate(-27deg);
+  filter:drop-shadow(0 0 7px rgba(65,220,255,.28));
+}
+
+.balance-decoration .arrow::after{
+  content:"";
+  position:absolute;
+  right:-4px;
+  top:-21px;
+  width:0;
+  height:0;
+  border-left:25px solid rgba(72,226,255,.82);
+  border-top:15px solid transparent;
+  border-bottom:15px solid transparent;
+}
+
+.reward-actions{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  margin-top:8px;
+  position:relative;
+  z-index:3;
+  max-width:825px;
+}
+
+.reward-button{
+  flex:1;
+  min-height:54px;
+  padding:11px 17px;
+  border-radius:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  color:#fff;
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:.05px;
+  border:1px solid transparent;
+  transition:transform .18s ease,filter .18s ease,box-shadow .18s ease;
+}
+
+.reward-button .reward-icon{
+  width:25px;
+  height:25px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  line-height:1;
+}
+
+.reward-button .reward-arrow{
+  margin-left:auto;
+  font-size:28px;
+  line-height:1;
+  opacity:.95;
+}
+
+#rewardTodayButton{
+  background:linear-gradient(135deg,#18dfaa 0%,#0bc797 52%,#07aa82 100%);
+  box-shadow:
+    0 10px 24px rgba(0,208,155,.25),
+    inset 0 1px 0 rgba(255,255,255,.25);
+}
+
+#rewardCodeButton{
+  background:linear-gradient(135deg,rgba(11,103,202,.46),rgba(6,61,143,.28));
+  border-color:rgba(177,235,255,.88);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.07) inset,
+    0 8px 24px rgba(0,92,190,.16);
+}
+
+.reward-button:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.06);
+}
+
+@media(max-width:850px){
+  .balance-card{
+    min-height:260px;
+  }
+
+  .balance-decoration .coin.large{
+    right:6%;
+  }
+
+  .balance-decoration .coin{
+    right:3%;
+  }
+
+  .balance-decoration .arrow{
+    right:-2%;
+  }
+}
+
+@media(max-width:600px){
+  .balance-card{
+    min-height:235px;
+    padding:19px;
+    border-radius:20px;
+  }
+
+  .balance-card::before{
+    width:420px;
+    height:220px;
+    right:-175px;
+    top:-120px;
+  }
+
+  .balance-card::after{
+    width:480px;
+    height:220px;
+    right:-190px;
+    bottom:-165px;
+  }
+
+  .balance-decoration .curve{
+    width:410px;
+    height:175px;
+    right:-145px;
+    bottom:-48px;
+  }
+
+  .balance-decoration .curve.two{
+    width:350px;
+    height:145px;
+    right:-115px;
+    bottom:-15px;
+  }
+
+  .balance-decoration .line{
+    width:125px;
+    left:41%;
+    top:56%;
+  }
+
+  .balance-decoration .coin{
+    right:3%;
+    top:55%;
+    width:47px;
+    height:15px;
+  }
+
+  .balance-decoration .coin.large{
+    right:7%;
+    top:39%;
+    width:65px;
+    height:22px;
+  }
+
+  .balance-decoration .coin::after{
+    font-size:15px;
+  }
+
+  .balance-decoration .coin.large::after{
+    font-size:21px;
+  }
+
+  .balance-decoration .arrow{
+    right:-4%;
+    top:26%;
+    width:90px;
+    height:40px;
+    border-top-width:6px;
+  }
+
+  .balance-decoration .arrow::after{
+    border-left-width:17px;
+    border-top-width:10px;
+    border-bottom-width:10px;
+    top:-14px;
+  }
+
+  .balance-decoration .dot{
+    right:27%;
+    top:26%;
+    width:24px;
+    height:24px;
+    border-width:4px;
+  }
+
+  .reward-actions{
+    gap:8px;
+    margin-top:2px;
+  }
+
+  .reward-button{
+    min-height:45px;
+    padding:9px 10px;
+    gap:6px;
+    font-size:11px;
+    border-radius:25px;
+  }
+
+  .reward-button .reward-icon{
+    width:19px;
+    height:19px;
+    font-size:17px;
+  }
+
+  .reward-button .reward-arrow{
+    font-size:21px;
+  }
+}
+
+@media(max-width:390px){
+  .balance-card{
+    min-height:228px;
+    padding:17px;
+  }
+
+  .reward-button{
+    font-size:10px;
+    padding:8px 8px;
+  }
+}
 </style>
 </head>
 
@@ -1547,7 +1914,39 @@ main{margin:28px auto 34px}
         ₱0.00
       </div>
 
+      <!-- Premium balance-card decoration -->
+      <div class="balance-decoration" aria-hidden="true">
+        <div class="curve"></div>
+        <div class="curve two"></div>
+        <div class="line"></div>
+        <div class="coin"></div>
+        <div class="coin large"></div>
+        <div class="arrow"></div>
+        <div class="dot"></div>
+      </div>
 
+      <!-- Reward controls -->
+      <div class="reward-actions">
+        <button
+          type="button"
+          class="reward-button"
+          id="rewardTodayButton"
+        >
+          <span class="reward-icon">🎁</span>
+          <span>Reward Today</span>
+          <span class="reward-arrow">›</span>
+        </button>
+
+        <button
+          type="button"
+          class="reward-button"
+          id="rewardCodeButton"
+        >
+          <span class="reward-icon">🎟</span>
+          <span>Reward Code</span>
+          <span class="reward-arrow">›</span>
+        </button>
+      </div>
 
     </div>
 
@@ -4286,6 +4685,387 @@ await loadUserData(user);
       transform: scale(1);
     }
   }
+
+
+/* =====================================================
+   NOVARISE — BALANCE CARD / REWARD UI ONLY
+   Added without changing existing functionality.
+===================================================== */
+
+.balance-card{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:278px;
+  padding:28px;
+  border-radius:24px;
+  background:
+    radial-gradient(ellipse at 94% 4%,rgba(64,224,255,.42),transparent 25%),
+    radial-gradient(ellipse at 61% 96%,rgba(0,176,255,.27),transparent 34%),
+    linear-gradient(135deg,#052d63 0%,#064d98 47%,#087fc4 100%);
+  box-shadow:
+    0 18px 42px rgba(0,66,126,.24),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.balance-card::before{
+  content:"";
+  position:absolute;
+  width:620px;
+  height:300px;
+  right:-205px;
+  top:-165px;
+  border-radius:50%;
+  background:linear-gradient(
+    145deg,
+    rgba(63,215,255,.27),
+    rgba(255,255,255,.02)
+  );
+  border:1px solid rgba(255,255,255,.07);
+  transform:rotate(-9deg);
+  z-index:0;
+}
+
+.balance-card::after{
+  content:"";
+  position:absolute;
+  width:690px;
+  height:300px;
+  right:-205px;
+  bottom:-215px;
+  border-radius:50%;
+  background:rgba(0,181,255,.18);
+  border:1px solid rgba(92,225,255,.16);
+  transform:rotate(-13deg);
+  z-index:0;
+}
+
+.balance-decoration{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:1;
+}
+
+.balance-decoration .curve{
+  position:absolute;
+  width:620px;
+  height:245px;
+  right:-125px;
+  bottom:-64px;
+  border-radius:50%;
+  border:2px solid rgba(69,221,255,.28);
+  transform:rotate(-17deg);
+}
+
+.balance-decoration .curve.two{
+  width:535px;
+  height:205px;
+  right:-88px;
+  bottom:-27px;
+  border-color:rgba(149,239,255,.15);
+}
+
+.balance-decoration .line{
+  position:absolute;
+  width:235px;
+  height:2px;
+  left:39%;
+  top:57%;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(91,222,255,.68),
+    transparent
+  );
+  transform:rotate(-35deg);
+}
+
+.balance-decoration .dot{
+  position:absolute;
+  right:29%;
+  top:25%;
+  width:34px;
+  height:34px;
+  border:6px solid rgba(95,225,255,.43);
+  border-radius:50%;
+}
+
+.balance-decoration .coin{
+  position:absolute;
+  right:8%;
+  top:58%;
+  width:72px;
+  height:23px;
+  border-radius:50%;
+  background:linear-gradient(
+    180deg,
+    #7be8ff,
+    #1598df 55%,
+    #0873bf
+  );
+  border:2px solid rgba(219,250,255,.65);
+  box-shadow:
+    0 8px 0 -2px #0875bd,
+    0 15px 0 -4px #075da4,
+    0 22px 28px rgba(0,0,0,.18);
+  transform:rotate(-7deg);
+}
+
+.balance-decoration .coin::after{
+  content:"₱";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:22px;
+  font-weight:900;
+}
+
+.balance-decoration .coin.large{
+  right:12%;
+  top:39%;
+  width:96px;
+  height:33px;
+  transform:rotate(-9deg);
+}
+
+.balance-decoration .coin.large::after{
+  font-size:31px;
+}
+
+.balance-decoration .arrow{
+  position:absolute;
+  right:3%;
+  top:26%;
+  width:145px;
+  height:65px;
+  border-top:9px solid rgba(75,226,255,.80);
+  border-radius:50%;
+  transform:rotate(-27deg);
+  filter:drop-shadow(0 0 7px rgba(65,220,255,.26));
+}
+
+.balance-decoration .arrow::after{
+  content:"";
+  position:absolute;
+  right:-4px;
+  top:-21px;
+  width:0;
+  height:0;
+  border-left:25px solid rgba(75,226,255,.84);
+  border-top:15px solid transparent;
+  border-bottom:15px solid transparent;
+}
+
+.balance-card > *:not(.balance-decoration){
+  position:relative;
+  z-index:2;
+}
+
+/* Reward controls */
+.reward-actions{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  margin-top:8px;
+  position:relative;
+  z-index:3;
+  max-width:825px;
+}
+
+.reward-button{
+  flex:1;
+  min-height:54px;
+  padding:10px 16px;
+  border-radius:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  color:#fff;
+  font-size:15px;
+  font-weight:800;
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:
+    transform .18s ease,
+    filter .18s ease,
+    box-shadow .18s ease;
+}
+
+.reward-button .reward-icon{
+  width:25px;
+  height:25px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
+  line-height:1;
+}
+
+.reward-button .reward-arrow{
+  margin-left:auto;
+  font-size:28px;
+  line-height:1;
+  font-weight:400;
+}
+
+#rewardTodayButton{
+  background:linear-gradient(
+    135deg,
+    #18ddb0 0%,
+    #0bc797 55%,
+    #08ad81 100%
+  );
+  border-color:rgba(76,255,208,.72);
+  box-shadow:
+    0 10px 24px rgba(0,205,153,.27),
+    inset 0 1px 0 rgba(255,255,255,.27);
+}
+
+#rewardCodeButton{
+  background:rgba(5,87,183,.20);
+  border:2px solid rgba(174,234,255,.92);
+  box-shadow:
+    0 8px 24px rgba(0,70,160,.16),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+.reward-button:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.05);
+}
+
+.reward-button:active{
+  transform:translateY(0);
+}
+
+@media(max-width:600px){
+  .balance-card{
+    min-height:235px;
+    padding:19px;
+    border-radius:20px;
+  }
+
+  .balance-card::before{
+    width:420px;
+    height:220px;
+    right:-175px;
+    top:-120px;
+  }
+
+  .balance-card::after{
+    width:480px;
+    height:220px;
+    right:-190px;
+    bottom:-165px;
+  }
+
+  .balance-decoration .curve{
+    width:410px;
+    height:175px;
+    right:-145px;
+    bottom:-48px;
+  }
+
+  .balance-decoration .curve.two{
+    width:350px;
+    height:145px;
+    right:-115px;
+    bottom:-15px;
+  }
+
+  .balance-decoration .line{
+    width:125px;
+    left:41%;
+    top:56%;
+  }
+
+  .balance-decoration .coin{
+    right:3%;
+    top:55%;
+    width:47px;
+    height:15px;
+  }
+
+  .balance-decoration .coin.large{
+    right:7%;
+    top:39%;
+    width:65px;
+    height:22px;
+  }
+
+  .balance-decoration .coin::after{
+    font-size:15px;
+  }
+
+  .balance-decoration .coin.large::after{
+    font-size:21px;
+  }
+
+  .balance-decoration .arrow{
+    right:-4%;
+    top:26%;
+    width:90px;
+    height:40px;
+    border-top-width:6px;
+  }
+
+  .balance-decoration .arrow::after{
+    border-left-width:17px;
+    border-top-width:10px;
+    border-bottom-width:10px;
+    top:-14px;
+  }
+
+  .balance-decoration .dot{
+    right:27%;
+    top:26%;
+    width:24px;
+    height:24px;
+    border-width:4px;
+  }
+
+  .reward-actions{
+    gap:8px;
+    margin-top:1px;
+  }
+
+  .reward-button{
+    min-height:46px;
+    padding:8px 9px;
+    gap:6px;
+    font-size:10.5px;
+    border-radius:24px;
+  }
+
+  .reward-button .reward-icon{
+    width:19px;
+    height:19px;
+    font-size:16px;
+  }
+
+  .reward-button .reward-arrow{
+    font-size:21px;
+  }
+}
+
+@media(max-width:390px){
+  .balance-card{
+    min-height:228px;
+    padding:17px;
+  }
+
+  .reward-button{
+    font-size:10px;
+    padding:8px 7px;
+  }
+}
+
 </style>
   
 </body>
