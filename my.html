@@ -751,6 +751,262 @@
     .menu-item{padding-left:14px;padding-right:14px}
   }
 
+/* =========================================================
+   NOVARISE WITHDRAW MODAL
+   ========================================================= */
+
+.withdraw-modal{
+  width:min(410px, calc(100% - 30px));
+  max-width:410px;
+  overflow:hidden;
+  border-radius:24px;
+  background:#ffffff;
+  box-shadow:0 24px 70px rgba(4,35,70,.28);
+  animation:withdrawModalIn .22s ease-out;
+}
+
+@keyframes withdrawModalIn{
+  from{
+    opacity:0;
+    transform:translateY(14px) scale(.97);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+.withdraw-header{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:22px 20px 18px;
+  background:linear-gradient(135deg,#073d7b,#0878bd);
+  color:#fff;
+}
+
+.withdraw-header-icon{
+  width:48px;
+  height:48px;
+  flex:0 0 48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:15px;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+}
+
+.withdraw-header-icon svg{
+  width:27px;
+  height:27px;
+}
+
+.withdraw-header-text{
+  min-width:0;
+  padding-right:30px;
+}
+
+.withdraw-header-text h3{
+  margin:0;
+  font-size:20px;
+  font-weight:800;
+  line-height:1.2;
+}
+
+.withdraw-header-text p{
+  margin:5px 0 0;
+  color:rgba(255,255,255,.78);
+  font-size:12px;
+  line-height:1.4;
+}
+
+.withdraw-close{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.13);
+  color:#fff;
+  font-size:23px;
+  line-height:1;
+  cursor:pointer;
+}
+
+.withdraw-body{
+  padding:20px;
+}
+
+.withdraw-field{
+  margin:0;
+}
+
+.withdraw-field label{
+  display:block;
+  margin-bottom:8px;
+  color:#718296;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+.withdraw-input-wrap{
+  display:flex;
+  align-items:center;
+  min-height:58px;
+  border:1px solid #d8e5ef;
+  border-radius:16px;
+  background:#f8fbfd;
+  transition:.2s ease;
+}
+
+.withdraw-input-wrap:focus-within{
+  border-color:#0878bd;
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(8,120,189,.09);
+}
+
+.withdraw-peso{
+  padding-left:17px;
+  color:#075fa8;
+  font-size:22px;
+  font-weight:800;
+}
+
+.withdraw-input-wrap input{
+  width:100%;
+  height:56px;
+  padding:0 16px 0 9px;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#123567;
+  font-size:20px;
+  font-weight:700;
+}
+
+.withdraw-input-wrap input::placeholder{
+  color:#a7b4c0;
+  font-size:15px;
+  font-weight:500;
+}
+
+.withdraw-minimum{
+  display:flex;
+  gap:11px;
+  margin-top:15px;
+  padding:13px 14px;
+  border:1px solid #d8e8f4;
+  border-radius:15px;
+  background:#f3faff;
+}
+
+.withdraw-info-icon{
+  width:27px;
+  height:27px;
+  flex:0 0 27px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#1fa66a;
+  color:#fff;
+  font-size:14px;
+  font-weight:800;
+}
+
+.withdraw-minimum strong{
+  display:block;
+  color:#0a4f89;
+  font-size:12.5px;
+  line-height:1.35;
+}
+
+.withdraw-minimum p{
+  margin:3px 0 0;
+  color:#718296;
+  font-size:11px;
+  line-height:1.4;
+}
+
+.withdraw-note{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+  padding:13px 14px;
+  border-radius:15px;
+  background:#f8fafc;
+  color:#6d7d8c;
+  font-size:11.5px;
+  line-height:1.5;
+}
+
+.withdraw-note-icon{
+  width:24px;
+  height:24px;
+  flex:0 0 24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#e8f2fa;
+  color:#0878bd;
+  font-size:13px;
+  font-weight:800;
+}
+
+.withdraw-note strong{
+  color:#075fa8;
+}
+
+.withdraw-actions{
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  gap:10px;
+  margin-top:18px;
+}
+
+.withdraw-actions .modal-btn{
+  min-height:48px;
+  border-radius:14px;
+  font-size:14px;
+  font-weight:800;
+}
+
+.withdraw-actions .cancel{
+  background:#f1f5f8;
+  color:#52687b;
+  border:1px solid #e0e8ee;
+}
+
+.withdraw-actions .primary{
+  border:0;
+  background:linear-gradient(135deg,#0878bd,#075fa8);
+  color:#fff;
+  box-shadow:0 8px 20px rgba(7,95,168,.20);
+}
+
+@media(max-width:600px){
+
+  .withdraw-modal{
+    width:calc(100% - 24px);
+    border-radius:21px;
+  }
+
+  .withdraw-header{
+    padding:20px 17px 17px;
+  }
+
+  .withdraw-body{
+    padding:17px;
+  }
+
+}
+ 
 </style>
 </head>
 
@@ -946,24 +1202,130 @@
 
 <!-- Withdraw modal -->
 <div class="modal-backdrop" id="moneyModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3 id="moneyTitle">Withdraw</h3>
-      <button class="close" data-close="moneyModal" type="button">×</button>
+
+  <div class="modal withdraw-modal">
+
+    <div class="withdraw-header">
+
+      <div class="withdraw-header-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+            d="M3 7.5A2.5 2.5 0 0 1 5.5 5H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5.5A2.5 2.5 0 0 1 3 16.5v-9Z"
+            stroke="currentColor"
+            stroke-width="1.8"
+          />
+          <path
+            d="M3 8h14.5a2.5 2.5 0 0 1 0 5H17"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+          <path
+            d="M19 10.5h.01"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+
+      <div class="withdraw-header-text">
+        <h3 id="moneyTitle">Withdraw</h3>
+        <p>Enter the amount you want to withdraw.</p>
+      </div>
+
+      <button
+        class="withdraw-close close"
+        data-close="moneyModal"
+        type="button"
+      >
+        ×
+      </button>
+
     </div>
 
-    <div class="field">
-      <label>AMOUNT</label>
-      <input id="moneyAmount" type="number" min="1" step="1" placeholder="Enter amount">
+
+    <div class="withdraw-body">
+
+      <div class="field withdraw-field">
+
+        <label>AMOUNT</label>
+
+        <div class="withdraw-input-wrap">
+
+          <span class="withdraw-peso">₱</span>
+
+          <input
+            id="moneyAmount"
+            type="number"
+            min="110"
+            step="1"
+            placeholder="Enter amount"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="withdraw-minimum">
+
+        <div class="withdraw-info-icon">
+          ✓
+        </div>
+
+        <div>
+          <strong>
+            Minimum withdrawal amount is ₱110
+          </strong>
+
+          <p>
+            You must enter at least ₱110 to proceed with your withdrawal.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="withdraw-note">
+
+        <div class="withdraw-note-icon">
+          i
+        </div>
+
+        <div>
+          Your withdrawal will be recorded after validation.
+          Make sure your withdrawal account is already saved in
+          <strong>Bank</strong>.
+        </div>
+
+      </div>
+
+
+      <div class="modal-actions withdraw-actions">
+
+        <button
+          class="modal-btn cancel"
+          data-close="moneyModal"
+          type="button"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="modal-btn primary withdraw-submit"
+          id="confirmMoneyBtn"
+          type="button"
+        >
+          <span>Withdraw</span>
+        </button>
+
+      </div>
+
     </div>
 
-    <div class="withdraw-note">Your withdrawal will be recorded after validation. Make sure your withdrawal account is already saved in <strong>Bank</strong>.</div>
-
-    <div class="modal-actions">
-      <button class="modal-btn cancel" data-close="moneyModal" type="button">Cancel</button>
-      <button class="modal-btn primary" id="confirmMoneyBtn" type="button">Withdraw</button>
-    </div>
   </div>
+
 </div>
 
 <!-- Bank / Withdrawal Account modal -->
@@ -1149,6 +1511,11 @@
         throw new Error("NO_WITHDRAWAL_ACCOUNT");
       }
 
+     // Check minimum withdrawal amount
+     if(amount < 110){
+       throw new Error("MINIMUM_WITHDRAWAL");
+     }
+
       // Check available balance
       if(amount > balance){
         throw new Error("INSUFFICIENT_BALANCE");
@@ -1191,17 +1558,25 @@
 
   }catch(err){
 
-    if(err.message === "INSUFFICIENT_BALANCE"){
-      toast("Insufficient balance.");
+  if(err.message === "MINIMUM_WITHDRAWAL"){
 
-    }else if(err.message === "NO_WITHDRAWAL_ACCOUNT"){
-      toast("Please save your Bank account first.");
+    toast("Minimum withdrawal amount is ₱110.");
 
-    }else{
-      console.error(err);
-      toast("Something went wrong. Please try again.");
-    }
+  }else if(err.message === "INSUFFICIENT_BALANCE"){
+
+    toast("Insufficient balance.");
+
+  }else if(err.message === "NO_WITHDRAWAL_ACCOUNT"){
+
+    toast("Please save your Bank account first.");
+
+  }else{
+
+    console.error(err);
+    toast("Something went wrong. Please try again.");
+
   }
+}
 }
   $("withdrawBtn").addEventListener("click", () => {
     $("moneyTitle").textContent = "Withdraw";
