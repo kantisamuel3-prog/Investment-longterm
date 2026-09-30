@@ -4948,40 +4948,227 @@ await loadUserData(user);
 <div id="rewardCodeModal" class="modal-overlay">
   <div class="invest-modal reward-code-modal">
 
-    <button type="button" class="close-modal" id="closeRewardCodeModal">
+    <div class="reward-modal-glow reward-glow-one"></div>
+    <div class="reward-modal-glow reward-glow-two"></div>
+
+    <!-- CLOSE -->
+    <button
+      type="button"
+      class="close-modal reward-close"
+      id="closeRewardCodeModal"
+      aria-label="Close"
+    >
       ×
     </button>
 
-    <div class="modal-product-name">
-      🎟 Reward Code
+    <!-- NOVARISE BRAND -->
+    <div class="reward-brand">
+      <div class="reward-brand-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect
+            x="3"
+            y="3"
+            width="42"
+            height="42"
+            rx="13"
+            fill="url(#rewardLogoGradient)"
+          />
+          <path
+            d="M12 29L18 23L23 27L34 15"
+            stroke="white"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M28 15H34V21"
+            stroke="white"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <defs>
+            <linearGradient
+              id="rewardLogoGradient"
+              x1="7"
+              y1="7"
+              x2="41"
+              y2="41"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#21C87A"/>
+              <stop offset="1" stop-color="#2B9CFF"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="reward-brand-text">
+        <div class="reward-brand-name">Novarise</div>
+        <div class="reward-brand-tagline">
+          BUILD INVEST GROW
+        </div>
+      </div>
     </div>
 
-    <div class="invest-summary">
-      Enter your valid reward code to receive
-      <strong>₱10.00</strong>.
+    <!-- HEADING -->
+    <div class="reward-main-heading">
+
+      <div class="reward-ticket-art">
+        <svg viewBox="0 0 100 70" fill="none">
+          <path
+            d="M10 17C10 13.6863 12.6863 11 16 11H84C87.3137 11 90 13.6863 90 17V25C84.4772 25 80 29.4772 80 35C80 40.5228 84.4772 45 90 45V53C90 56.3137 87.3137 59 84 59H16C12.6863 59 10 56.3137 10 53V45C15.5228 45 20 40.5228 20 35C20 29.4772 15.5228 25 10 25V17Z"
+            fill="#EAF4FF"
+            stroke="#2B9CFF"
+            stroke-width="3"
+          />
+
+          <path
+            d="M39 20V50"
+            stroke="#8CC9FF"
+            stroke-width="2"
+            stroke-dasharray="4 4"
+          />
+
+          <circle
+            cx="58"
+            cy="35"
+            r="10"
+            fill="#2B9CFF"
+          />
+
+          <path
+            d="M53 35L57 39L64 31"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+
+      <div class="reward-heading-text">
+        <h3>Reward Code</h3>
+        <p>Enter your reward code below</p>
+      </div>
+
     </div>
 
-    <div class="cycle-box">
+    <!-- REWARD INFO -->
+    <div class="reward-info-card">
+
+      <div class="reward-gift-art">
+        <svg viewBox="0 0 70 70" fill="none">
+
+          <rect
+            x="10"
+            y="27"
+            width="50"
+            height="34"
+            rx="7"
+            fill="#2B9CFF"
+          />
+
+          <rect
+            x="7"
+            y="20"
+            width="56"
+            height="14"
+            rx="6"
+            fill="#21C87A"
+          />
+
+          <path
+            d="M35 20V61"
+            stroke="white"
+            stroke-width="5"
+          />
+
+          <path
+            d="M16 20C12 16 13 10 18 9C24 8 29 14 35 20"
+            stroke="#2B9CFF"
+            stroke-width="5"
+            stroke-linecap="round"
+          />
+
+          <path
+            d="M54 20C58 16 57 10 52 9C46 8 41 14 35 20"
+            stroke="#2B9CFF"
+            stroke-width="5"
+            stroke-linecap="round"
+          />
+
+        </svg>
+      </div>
+
+      <div class="reward-info-divider"></div>
+
+      <div class="reward-info-text">
+        <div class="reward-info-title">
+          REWARD
+        </div>
+
+        <div class="reward-info-subtitle">
+          Claim your reward
+        </div>
+      </div>
+
+      <div class="reward-info-decoration">
+        ✦
+      </div>
+
+    </div>
+
+    <!-- INPUT LABEL -->
+    <div class="reward-input-title">
+      REWARD CODE
+    </div>
+
+    <!-- INPUT -->
+    <div class="reward-input-container">
+
+      <div class="reward-input-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+            d="M20 12H4"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M8 8L4 12L8 16"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+
       <input
         type="text"
         id="rewardCodeInput"
         placeholder="Enter reward code"
         autocomplete="off"
         maxlength="50"
-      >
+      />
+
     </div>
 
+    <!-- REDEEM BUTTON -->
     <button
       type="button"
-      class="confirm-invest"
+      class="confirm-invest reward-confirm-button"
       id="confirmRewardCode"
     >
-      Redeem ₱10
+      <span>Redeem Reward</span>
+      <span class="reward-arrow">→</span>
     </button>
 
+    <!-- CANCEL -->
     <button
       type="button"
-      class="cancel-invest"
+      class="cancel-invest reward-cancel-button"
       id="cancelRewardCode"
     >
       Cancel
@@ -4989,7 +5176,6 @@ await loadUserData(user);
 
   </div>
 </div>
-
   
 <!-- NOVARISE SUCCESS MESSAGE -->
 <div id="successMessage" class="success-message">
@@ -5451,6 +5637,457 @@ await loadUserData(user);
   }
 }
 
+/* =========================================================
+   NOVARISE REWARD CODE MODAL
+   ========================================================= */
+
+.reward-code-modal{
+  position:relative;
+  width:min(430px, calc(100vw - 30px));
+  max-height:calc(100vh - 30px);
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding:28px 24px 22px;
+  border-radius:28px;
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #f9fcff 52%,
+      #eef7ff 100%
+    );
+  box-shadow:
+    0 28px 70px rgba(4,30,70,.30),
+    0 8px 25px rgba(21,111,190,.12);
+  border:1px solid rgba(255,255,255,.95);
+  isolation:isolate;
+}
+
+/* Soft decorative glow */
+
+.reward-modal-glow{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:-1;
+  filter:blur(2px);
+}
+
+.reward-glow-one{
+  width:180px;
+  height:180px;
+  top:-90px;
+  right:-80px;
+  background:rgba(43,156,255,.10);
+}
+
+.reward-glow-two{
+  width:150px;
+  height:150px;
+  bottom:-80px;
+  left:-70px;
+  background:rgba(33,200,122,.08);
+}
+
+/* Close button */
+
+.reward-close{
+  position:absolute;
+  top:16px;
+  right:16px;
+  width:36px;
+  height:36px;
+  border:0;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f1f6fb;
+  color:#58708a;
+  font-size:24px;
+  line-height:1;
+  cursor:pointer;
+  transition:.2s ease;
+  z-index:5;
+}
+
+.reward-close:hover{
+  background:#e5eff8;
+  color:#173b63;
+  transform:rotate(5deg);
+}
+
+/* Brand */
+
+.reward-brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-bottom:24px;
+  padding-right:40px;
+}
+
+.reward-brand-icon{
+  width:45px;
+  height:45px;
+  flex:0 0 45px;
+}
+
+.reward-brand-icon svg{
+  display:block;
+  width:100%;
+  height:100%;
+}
+
+.reward-brand-text{
+  min-width:0;
+}
+
+.reward-brand-name{
+  color:#0b315d;
+  font-size:20px;
+  font-weight:800;
+  line-height:1;
+  letter-spacing:-.4px;
+}
+
+.reward-brand-tagline{
+  margin-top:5px;
+  color:#7a92a8;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:1.5px;
+}
+
+/* Heading */
+
+.reward-main-heading{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.reward-ticket-art{
+  width:74px;
+  min-width:74px;
+  height:56px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.reward-ticket-art svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.reward-heading-text h3{
+  margin:0;
+  color:#103962;
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:-.6px;
+  line-height:1.1;
+}
+
+.reward-heading-text p{
+  margin:7px 0 0;
+  color:#7b91a6;
+  font-size:13px;
+  font-weight:500;
+  line-height:1.4;
+}
+
+/* Reward information card */
+
+.reward-info-card{
+  position:relative;
+  min-height:82px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:13px 16px;
+  margin-bottom:21px;
+  border-radius:18px;
+  background:
+    linear-gradient(
+      135deg,
+      #edf8ff 0%,
+      #f6fbff 100%
+    );
+  border:1px solid #dceefb;
+  overflow:hidden;
+}
+
+.reward-gift-art{
+  width:56px;
+  height:56px;
+  flex:0 0 56px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.reward-gift-art svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.reward-info-divider{
+  width:1px;
+  height:42px;
+  background:#d7e8f5;
+  flex:0 0 1px;
+}
+
+.reward-info-text{
+  min-width:0;
+}
+
+.reward-info-title{
+  color:#248bd8;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:1.8px;
+  line-height:1;
+}
+
+.reward-info-subtitle{
+  margin-top:7px;
+  color:#31506c;
+  font-size:14px;
+  font-weight:700;
+}
+
+.reward-info-decoration{
+  position:absolute;
+  right:13px;
+  top:10px;
+  color:#9bd8bf;
+  font-size:22px;
+  opacity:.7;
+}
+
+/* Input label */
+
+.reward-input-title{
+  margin:0 0 8px 2px;
+  color:#49647d;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.5px;
+}
+
+/* Input */
+
+.reward-input-container{
+  height:52px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:0 14px;
+  margin-bottom:13px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid #d9e6f0;
+  box-shadow:
+    0 4px 13px rgba(24,75,116,.05);
+  transition:.2s ease;
+}
+
+.reward-input-container:focus-within{
+  border-color:#54aaf0;
+  box-shadow:
+    0 0 0 3px rgba(43,156,255,.10);
+}
+
+.reward-input-icon{
+  width:23px;
+  height:23px;
+  flex:0 0 23px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#2b9cff;
+}
+
+.reward-input-icon svg{
+  width:20px;
+  height:20px;
+}
+
+.reward-input-container input{
+  width:100%;
+  min-width:0;
+  border:0;
+  outline:none;
+  background:transparent;
+  color:#173b5f;
+  font-family:inherit;
+  font-size:14px;
+  font-weight:600;
+}
+
+.reward-input-container input::placeholder{
+  color:#9aacbb;
+  font-weight:500;
+}
+
+/* Redeem button */
+
+.reward-confirm-button{
+  width:100%;
+  min-height:52px;
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-top:2px;
+  border:0 !important;
+  border-radius:15px !important;
+  background:
+    linear-gradient(
+      135deg,
+      #1679df 0%,
+      #2b9cff 100%
+    ) !important;
+  color:#fff !important;
+  font-size:14px !important;
+  font-weight:800 !important;
+  letter-spacing:.1px;
+  box-shadow:
+    0 9px 20px rgba(43,156,255,.22);
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.reward-confirm-button:hover{
+  transform:translateY(-1px);
+  box-shadow:
+    0 12px 25px rgba(43,156,255,.28);
+}
+
+.reward-confirm-button:active{
+  transform:translateY(0);
+}
+
+.reward-confirm-button:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.reward-confirm-button .reward-arrow{
+  font-size:20px;
+  line-height:1;
+  margin-left:2px;
+}
+
+/* Cancel */
+
+.reward-cancel-button{
+  width:100%;
+  min-height:43px;
+  margin-top:8px;
+  border:0 !important;
+  border-radius:13px !important;
+  background:#f3f7fa !important;
+  color:#71869a !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.reward-cancel-button:hover{
+  background:#eaf1f6 !important;
+  color:#506b83 !important;
+}
+
+/* Mobile */
+
+@media (max-width:600px){
+
+  .reward-code-modal{
+    width:calc(100vw - 24px);
+    max-height:calc(100vh - 24px);
+    padding:23px 18px 18px;
+    border-radius:24px;
+  }
+
+  .reward-brand{
+    margin-bottom:20px;
+  }
+
+  .reward-brand-icon{
+    width:41px;
+    height:41px;
+    flex-basis:41px;
+  }
+
+  .reward-brand-name{
+    font-size:18px;
+  }
+
+  .reward-brand-tagline{
+    font-size:7px;
+    letter-spacing:1.3px;
+  }
+
+  .reward-main-heading{
+    gap:11px;
+    margin-bottom:17px;
+  }
+
+  .reward-ticket-art{
+    width:65px;
+    min-width:65px;
+    height:50px;
+  }
+
+  .reward-heading-text h3{
+    font-size:22px;
+  }
+
+  .reward-heading-text p{
+    font-size:12px;
+    margin-top:5px;
+  }
+
+  .reward-info-card{
+    min-height:76px;
+    padding:10px 12px;
+    gap:10px;
+    margin-bottom:18px;
+  }
+
+  .reward-gift-art{
+    width:50px;
+    height:50px;
+    flex-basis:50px;
+  }
+
+  .reward-info-divider{
+    height:38px;
+  }
+
+  .reward-info-subtitle{
+    font-size:13px;
+  }
+
+  .reward-input-container{
+    height:50px;
+  }
+
+  .reward-confirm-button{
+    min-height:50px;
+  }
+
+}
+  
 </style>
   
 </body>
