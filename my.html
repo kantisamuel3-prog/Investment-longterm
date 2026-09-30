@@ -1006,6 +1006,537 @@
   }
 
 }
+
+/* =========================================================
+   NOVARISE BANK ACCOUNT MODAL
+========================================================= */
+
+.bank-account-modal{
+  width:min(520px, calc(100% - 28px));
+  max-width:520px;
+  overflow:hidden;
+  padding:0;
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 28px 80px rgba(5,45,82,.28);
+  animation:bankModalIn .22s ease-out;
+}
+
+@keyframes bankModalIn{
+  from{
+    opacity:0;
+    transform:translateY(14px) scale(.97);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+
+/* Header */
+
+.bank-modal-header{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:22px 20px 19px;
+  background:
+    linear-gradient(
+      135deg,
+      #073d7b 0%,
+      #0878bd 72%,
+      #12b987 100%
+    );
+  color:#fff;
+}
+
+.bank-modal-icon{
+  width:52px;
+  height:52px;
+  flex:0 0 52px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:16px;
+
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.18);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+.bank-modal-icon svg{
+  width:28px;
+  height:28px;
+}
+
+.bank-modal-title-wrap{
+  min-width:0;
+  padding-right:38px;
+}
+
+.bank-modal-title-wrap h3{
+  margin:0;
+
+  color:#fff;
+  font-size:20px;
+  font-weight:800;
+  line-height:1.2;
+}
+
+.bank-modal-title-wrap p{
+  margin:5px 0 0;
+
+  color:rgba(255,255,255,.78);
+  font-size:12px;
+  line-height:1.45;
+}
+
+.bank-modal-close{
+  position:absolute;
+  top:14px;
+  right:14px;
+
+  width:35px;
+  height:35px;
+
+  border:0;
+  border-radius:50%;
+
+  background:rgba(255,255,255,.13);
+  color:#fff;
+
+  font-size:23px;
+  line-height:1;
+
+  cursor:pointer;
+}
+
+
+/* Body */
+
+.bank-modal-body{
+  padding:21px 20px 20px;
+}
+
+.bank-section-label{
+  margin-bottom:9px;
+
+  color:#617b91;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+
+/* Payment methods */
+
+.bank-methods{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.bank-method{
+  min-height:105px;
+
+  padding:14px;
+
+  border:1px solid #d9e5ee;
+  border-radius:16px;
+
+  background:#fbfdff;
+  color:#173b5e;
+
+  text-align:left;
+  cursor:pointer;
+
+  transition:
+    border-color .18s ease,
+    box-shadow .18s ease,
+    transform .18s ease,
+    background .18s ease;
+}
+
+.bank-method:hover{
+  transform:translateY(-1px);
+  border-color:#8bc6ee;
+}
+
+.bank-method.active{
+  border:2px solid #0878bd;
+  padding:13px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f1f9ff,
+      #f7fffc
+    );
+
+  box-shadow:
+    0 7px 20px rgba(8,120,189,.12);
+}
+
+.bank-method-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.gcash-brand{
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  color:#0872dc;
+  font-size:20px;
+  font-weight:800;
+}
+
+.gcash-logo{
+  width:29px;
+  height:29px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border:2px solid #0872dc;
+  border-radius:50%;
+
+  font-size:17px;
+  font-weight:900;
+}
+
+.maya-brand{
+  color:#13a978;
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+
+.bank-radio{
+  width:20px;
+  height:20px;
+  flex:0 0 20px;
+
+  border:2px solid #a5bbcd;
+  border-radius:50%;
+
+  position:relative;
+}
+
+.bank-method.active .bank-radio{
+  border-color:#0878bd;
+}
+
+.bank-method.active .bank-radio::after{
+  content:"";
+
+  position:absolute;
+  inset:4px;
+
+  border-radius:50%;
+  background:#0878bd;
+}
+
+.bank-method-bottom{
+  margin-top:13px;
+
+  color:#7890a3;
+  font-size:10.5px;
+  font-weight:600;
+}
+
+
+/* Fields */
+
+.bank-field{
+  margin-top:17px;
+}
+
+.bank-field label{
+  display:block;
+  margin-bottom:7px;
+
+  color:#617b91;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+.bank-input-wrap{
+  display:flex;
+  align-items:center;
+
+  min-height:54px;
+
+  border:1px solid #d8e5ee;
+  border-radius:15px;
+
+  background:#f9fcfe;
+
+  transition:.2s ease;
+}
+
+.bank-input-wrap:focus-within{
+  border-color:#0878bd;
+  background:#fff;
+
+  box-shadow:
+    0 0 0 3px rgba(8,120,189,.08);
+}
+
+.bank-input-icon{
+  width:48px;
+  flex:0 0 48px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:#5b83a5;
+}
+
+.bank-input-icon svg{
+  width:22px;
+  height:22px;
+}
+
+.bank-input-wrap input{
+  width:100%;
+  height:52px;
+
+  padding:0 14px 0 0;
+
+  border:0;
+  outline:0;
+
+  background:transparent;
+
+  color:#123567;
+
+  font-size:15px;
+  font-weight:600;
+}
+
+.bank-input-wrap input::placeholder{
+  color:#a3b1bd;
+  font-size:14px;
+  font-weight:500;
+}
+
+
+/* Information */
+
+.bank-info{
+  display:flex;
+  align-items:flex-start;
+  gap:9px;
+
+  margin-top:12px;
+  padding:11px 12px;
+
+  border-radius:13px;
+
+  background:#f1f8fd;
+
+  color:#648096;
+
+  font-size:11px;
+  line-height:1.45;
+}
+
+.bank-info strong{
+  color:#075fa8;
+}
+
+.bank-info-icon{
+  width:20px;
+  height:20px;
+  flex:0 0 20px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:#0878bd;
+  color:#fff;
+
+  font-size:12px;
+  font-weight:800;
+}
+
+
+/* Buttons */
+
+.bank-modal-actions{
+  display:grid;
+  grid-template-columns:1fr 1.15fr;
+  gap:10px;
+
+  margin-top:18px;
+  padding-top:17px;
+
+  border-top:1px solid #e7eef3;
+}
+
+.bank-cancel-btn,
+.bank-save-btn{
+  min-height:48px;
+
+  border-radius:14px;
+
+  font-size:14px;
+  font-weight:800;
+
+  cursor:pointer;
+}
+
+.bank-cancel-btn{
+  border:1px solid #dfe8ee;
+  background:#f2f6f8;
+  color:#526a7d;
+}
+
+.bank-save-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+
+  border:0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0878bd,
+      #0797d9 52%,
+      #16bd83
+    );
+
+  color:#fff;
+
+  box-shadow:
+    0 8px 20px rgba(8,120,189,.20);
+}
+
+.bank-save-icon{
+  width:21px;
+  height:21px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border:1.5px solid rgba(255,255,255,.9);
+  border-radius:6px;
+
+  font-size:13px;
+}
+
+.bank-cancel-btn:active,
+.bank-save-btn:active,
+.bank-method:active{
+  transform:scale(.98);
+}
+
+
+/* Mobile */
+
+@media(max-width:600px){
+
+  .bank-account-modal{
+    width:calc(100% - 22px);
+    border-radius:21px;
+  }
+
+  .bank-modal-header{
+    padding:19px 16px 17px;
+  }
+
+  .bank-modal-icon{
+    width:46px;
+    height:46px;
+    flex-basis:46px;
+    border-radius:14px;
+  }
+
+  .bank-modal-icon svg{
+    width:25px;
+    height:25px;
+  }
+
+  .bank-modal-title-wrap h3{
+    font-size:18px;
+  }
+
+  .bank-modal-title-wrap p{
+    font-size:11px;
+  }
+
+  .bank-modal-body{
+    padding:17px 16px 17px;
+  }
+
+  .bank-methods{
+    gap:8px;
+  }
+
+  .bank-method{
+    min-height:96px;
+    padding:12px;
+  }
+
+  .bank-method.active{
+    padding:11px;
+  }
+
+  .gcash-brand{
+    font-size:17px;
+  }
+
+  .gcash-logo{
+    width:26px;
+    height:26px;
+    font-size:15px;
+  }
+
+  .maya-brand{
+    font-size:22px;
+  }
+
+  .bank-method-bottom{
+    margin-top:10px;
+    font-size:9.5px;
+  }
+
+}
+
+@media(max-width:390px){
+
+  .bank-method{
+    min-height:90px;
+  }
+
+  .bank-method-bottom{
+    font-size:9px;
+  }
+
+  .bank-modal-title-wrap p{
+    max-width:190px;
+  }
+
+}
  
 </style>
 </head>
@@ -1328,36 +1859,259 @@
 
 </div>
 
-<!-- Bank / Withdrawal Account modal -->
+<!-- =========================================================
+     BANK ACCOUNT MODAL
+========================================================= -->
+
 <div class="modal-backdrop" id="bankModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>Bank Account</h3>
-      <button class="close" data-close="bankModal" type="button">×</button>
+
+  <div class="modal bank-account-modal">
+
+    <!-- Header -->
+    <div class="bank-modal-header">
+
+      <div class="bank-modal-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+            d="M3.5 8.5A2.5 2.5 0 0 1 6 6h12.5A2.5 2.5 0 0 1 21 8.5v8A2.5 2.5 0 0 1 18.5 19H6a2.5 2.5 0 0 1-2.5-2.5v-8Z"
+            stroke="currentColor"
+            stroke-width="1.8"
+          />
+          <path
+            d="M3.5 9h13.2a2.3 2.3 0 0 1 0 4.6H15"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+          <circle
+            cx="17.8"
+            cy="11.3"
+            r=".8"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
+
+      <div class="bank-modal-title-wrap">
+
+        <h3>
+          Bank Account
+        </h3>
+
+        <p>
+          Add your GCash or Maya account for withdrawals.
+        </p>
+
+      </div>
+
+      <button
+        class="bank-modal-close close"
+        data-close="bankModal"
+        type="button"
+      >
+        ×
+      </button>
+
     </div>
 
-    <div class="field">
-      <label>BANK NAME</label>
-      <input id="bankName" type="text" placeholder="GCash/Maya">
+
+    <!-- Body -->
+    <div class="bank-modal-body">
+
+      <div class="bank-section-label">
+        PAYMENT METHOD
+      </div>
+
+
+      <!-- Payment method -->
+      <div class="bank-methods">
+
+        <!-- GCash -->
+        <button
+          type="button"
+          class="bank-method active"
+          data-bank-method="GCash"
+        >
+
+          <div class="bank-method-top">
+
+            <div class="gcash-brand">
+              <span class="gcash-logo">G</span>
+              <span>GCash</span>
+            </div>
+
+            <span class="bank-radio"></span>
+
+          </div>
+
+          <div class="bank-method-bottom">
+            Fast&nbsp;&nbsp;•&nbsp;&nbsp;Secure&nbsp;&nbsp;•&nbsp;&nbsp;24/7
+          </div>
+
+        </button>
+
+
+        <!-- Maya -->
+        <button
+          type="button"
+          class="bank-method maya-method"
+          data-bank-method="Maya"
+        >
+
+          <div class="bank-method-top">
+
+            <div class="maya-brand">
+              maya
+            </div>
+
+            <span class="bank-radio"></span>
+
+          </div>
+
+          <div class="bank-method-bottom">
+            Fast&nbsp;&nbsp;•&nbsp;&nbsp;Secure&nbsp;&nbsp;•&nbsp;&nbsp;24/7
+          </div>
+
+        </button>
+
+      </div>
+
+
+      <!-- Hidden value used by existing Firebase JS -->
+      <input
+        id="bankName"
+        type="hidden"
+        value="GCash"
+      >
+
+
+      <!-- Account holder -->
+      <div class="bank-field">
+
+        <label for="bankAccountName">
+          ACCOUNT HOLDER NAME
+        </label>
+
+        <div class="bank-input-wrap">
+
+          <span class="bank-input-icon">
+
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle
+                cx="12"
+                cy="8"
+                r="3.2"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <path
+                d="M5.5 19c.7-3.1 2.9-4.7 6.5-4.7s5.8 1.6 6.5 4.7"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+
+          </span>
+
+          <input
+            id="bankAccountName"
+            type="text"
+            placeholder="Enter account holder name"
+            autocomplete="name"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- Account number -->
+      <div class="bank-field">
+
+        <label for="bankAccountNumber">
+          ACCOUNT NUMBER
+        </label>
+
+        <div class="bank-input-wrap">
+
+          <span class="bank-input-icon">
+
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect
+                x="7"
+                y="3.5"
+                width="10"
+                height="17"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <path
+                d="M10.5 17.5h3"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+
+          </span>
+
+          <input
+            id="bankAccountNumber"
+            type="text"
+            placeholder="Enter GCash or Maya number"
+            inputmode="numeric"
+            autocomplete="tel"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- Information -->
+      <div class="bank-info">
+
+        <span class="bank-info-icon">
+          i
+        </span>
+
+        <span>
+          Use the mobile number linked to your
+          <strong>GCash or Maya</strong> account.
+        </span>
+
+      </div>
+
+
+      <!-- Actions -->
+      <div class="bank-modal-actions">
+
+        <button
+          class="bank-cancel-btn"
+          data-close="bankModal"
+          type="button"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="bank-save-btn"
+          id="saveBankBtn"
+          type="button"
+        >
+          <span class="bank-save-icon">✓</span>
+          Save Bank
+        </button>
+
+      </div>
+
     </div>
 
-    <div class="field">
-      <label>ACCOUNT NAME</label>
-      <input id="bankAccountName" type="text" placeholder="Account holder name">
-    </div>
-
-    <div class="field">
-      <label>ACCOUNT NUMBER</label>
-      <input id="bankAccountNumber" type="text" placeholder="Account number" inputmode="numeric">
-    </div>
-
-    <div class="modal-actions">
-      <button class="modal-btn cancel" data-close="bankModal" type="button">Cancel</button>
-      <button class="modal-btn primary" id="saveBankBtn" type="button">Save Bank</button>
-    </div>
   </div>
-</div>
 
+</div>
 <!-- Profile modal -->
 <div class="modal-backdrop" id="profileModal">
   <div class="modal">
@@ -1585,22 +2339,77 @@
   });
 
   $("bankBtn").addEventListener("click", () => {
-    const account = currentData.withdrawalAccount || {};
-    $("bankName").value = account.bankName || "";
-    $("bankAccountName").value = account.accountName || "";
-    $("bankAccountNumber").value = account.accountNumber || "";
-    openModal("bankModal");
+
+  const account =
+    currentData.withdrawalAccount || {};
+
+  const selectedBank =
+    account.bankName || "GCash";
+
+  $("bankName").value = selectedBank;
+
+  $("bankAccountName").value =
+    account.accountName || "";
+
+  $("bankAccountNumber").value =
+    account.accountNumber || "";
+
+  document
+    .querySelectorAll("[data-bank-method]")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.getAttribute("data-bank-method") === selectedBank
+      );
+
+    });
+
+  openModal("bankModal");
+
+});
+
+
+/* =========================================================
+   GCash / Maya PAYMENT METHOD SELECTION
+========================================================= */
+
+document
+  .querySelectorAll("[data-bank-method]")
+  .forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const selectedBank =
+        button.getAttribute("data-bank-method");
+
+      $("bankName").value = selectedBank;
+
+      document
+        .querySelectorAll("[data-bank-method]")
+        .forEach(item => {
+
+          item.classList.remove("active");
+
+        });
+
+      button.classList.add("active");
+
+    });
+
   });
 
-  $("saveBankBtn").addEventListener("click", async () => {
-    const bankName = $("bankName").value.trim();
-    const accountName = $("bankAccountName").value.trim();
-    const accountNumber = $("bankAccountNumber").value.trim();
 
-    if(!bankName || !accountName || !accountNumber){
-      toast("Please complete your bank details.");
-      return;
-    }
+$("saveBankBtn").addEventListener("click", async () => {
+ 
+  const bankName = $("bankName").value.trim();
+  const accountName = $("bankAccountName").value.trim();
+  const accountNumber = $("bankAccountNumber").value.trim();
+
+  if(!bankName || !accountName || !accountNumber){
+    toast("Please complete your bank details.");
+    return;
+  }
 
     if(!currentUser){
       toast("Please login first.");
