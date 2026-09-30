@@ -1981,7 +1981,7 @@
       <input
         id="bankName"
         type="hidden"
-        value="GCash"
+        value=""
       >
 
 
@@ -2344,7 +2344,7 @@
     currentData.withdrawalAccount || {};
 
   const selectedBank =
-    account.bankName || "GCash";
+  account.bankName || "";
 
   $("bankName").value = selectedBank;
 
@@ -2406,10 +2406,15 @@ $("saveBankBtn").addEventListener("click", async () => {
   const accountName = $("bankAccountName").value.trim();
   const accountNumber = $("bankAccountNumber").value.trim();
 
-  if(!bankName || !accountName || !accountNumber){
-    toast("Please complete your bank details.");
-    return;
-  }
+  if(!bankName){
+  toast("Please select GCash or Maya first.");
+  return;
+}
+
+if(!accountName || !accountNumber){
+  toast("Please complete your bank details.");
+  return;
+}
 
     if(!currentUser){
       toast("Please login first.");
