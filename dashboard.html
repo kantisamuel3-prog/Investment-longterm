@@ -3558,45 +3558,69 @@ document
 
         if(!response.ok){
 
-          if(
-            data.error ===
-            "CODE_USED"
-          ){
+  if(
+  data.error ===
+  "CODE_ALREADY_REDEEMED"
+){
 
-            alert(
-              "This reward code has already been used."
-            );
+    const modal =
+      document.getElementById(
+        "rewardMessageModal"
+      );
 
-          }else if(
-            data.error ===
-            "INVALID_CODE"
-          ){
+    const title =
+      document.getElementById(
+        "rewardMessageTitle"
+      );
 
-            alert(
-              "Invalid reward code."
-            );
+    const message =
+      document.getElementById(
+        "rewardMessageText"
+      );
 
-          }else if(
-            data.error ===
-            "CODE_INACTIVE"
-          ){
+    if(title){
+      title.textContent =
+        "Already Redeemed";
+    }
 
-            alert(
-              "This reward code is inactive."
-            );
+    if(message){
+      message.textContent =
+        "You have already redeemed this reward code.";
+    }
 
-          }else{
+    if(modal){
+      modal.classList.add("show");
+    }
 
-            alert(
-              data.message ||
-              "Unable to redeem reward code."
-            );
+  }else if(
+    data.error ===
+    "INVALID_CODE"
+  ){
 
-          }
+    alert(
+      "Invalid reward code."
+    );
 
-          return;
+  }else if(
+    data.error ===
+    "CODE_INACTIVE"
+  ){
 
-        }
+    alert(
+      "This reward code is inactive."
+    );
+
+  }else{
+
+    alert(
+      data.message ||
+      "Unable to redeem reward code."
+    );
+
+  }
+
+  return;
+}
 
 
         await loadUserData(
@@ -3632,8 +3656,8 @@ document
 
           button.disabled = false;
 
-          button.textContent =
-            "Redeem ₱10";
+          button.innerHTML =
+  '<span>Redeem Reward</span><span class="reward-arrow">→</span>';
 
         }
 
@@ -3642,6 +3666,36 @@ document
     }
   );
 
+  // =========================================================
+// REWARD MESSAGE MODAL CONTROLS
+// =========================================================
+
+function closeRewardMessageModal(){
+
+  const modal =
+    document.getElementById(
+      "rewardMessageModal"
+    );
+
+  if(modal){
+    modal.classList.remove("show");
+  }
+
+}
+
+document
+  .getElementById("closeRewardMessage")
+  ?.addEventListener(
+    "click",
+    closeRewardMessageModal
+  );
+
+document
+  .getElementById("rewardMessageOkay")
+  ?.addEventListener(
+    "click",
+    closeRewardMessageModal
+  );
   
 /* =====================================================
    MODAL ELEMENTS
