@@ -3564,7 +3564,9 @@ document
 
   if(
   data.error ===
-  "CODE_ALREADY_REDEEMED"
+  "CODE_ALREADY_REDEEMED" ||
+  data.error ===
+  "CODE_USED"
 ){
 
     const modal =
