@@ -2488,16 +2488,16 @@ if(!accountName || !accountNumber){
 });
 
   $("supportBtn").addEventListener("click", () => {
-    /*
-     * Replace this URL with your official support link when ready.
-     */
-    const SUPPORT_URL = "";
-    if(SUPPORT_URL){
-      window.open(SUPPORT_URL,"_blank","noopener");
-    }else{
-      toast("Support link is not set yet.");
-    }
-  });
+
+  const SUPPORT_URL = "t.me/NovariseSupport1";
+
+  if(SUPPORT_URL){
+    window.open(SUPPORT_URL,"_blank","noopener");
+  }else{
+    toast("Support link is not set yet.");
+  }
+
+});
 
   $("supportMenuBtn").addEventListener("click", () => $("supportBtn").click());
 
