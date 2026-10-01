@@ -2476,17 +2476,16 @@ if(!accountName || !accountNumber){
   });
 
   $("groupBtn").addEventListener("click", () => {
-    /*
-     * Replace this URL with your official Novarise Telegram/Facebook
-     * group when you have the final community link.
-     */
-    const OFFICIAL_GROUP_URL = "";
-    if(OFFICIAL_GROUP_URL){
-      window.open(OFFICIAL_GROUP_URL,"_blank","noopener");
-    }else{
-      toast("Official Group Not Set");
-    }
-  });
+
+  const OFFICIAL_GROUP_URL = "https://t.me/+TkiUDTbKmEgxY2U1";
+
+  window.open(
+    OFFICIAL_GROUP_URL,
+    "_blank",
+    "noopener"
+  );
+
+});
 
   $("supportBtn").addEventListener("click", () => {
     /*
