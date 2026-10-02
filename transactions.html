@@ -1771,6 +1771,25 @@ main{
 
   function getTransactionDetails(type) {
 
+  if (type === "Commission Received") {
+
+    return {
+
+      icon: "✓",
+
+      iconClass: "deposit-icon",
+
+      amountClass: "deposit-amount",
+
+      sign: "+",
+
+      description: "Referral commission"
+
+    };
+
+  }
+
+
   if (type === "Deposit") {
 
     return {
@@ -1967,98 +1986,6 @@ main{
     sign: "-",
 
     description: ""
-
-  };
-
-}
-  
-
-  /* =========================
-     COMMISSION RECEIVED
-     ========================= */
-
-  if (type === "Commission Received") {
-
-    return {
-
-      icon: "✓",
-
-      iconClass: "deposit-icon",
-
-      amountClass: "deposit-amount",
-
-      sign: "+",
-
-      description: "Referral commission"
-
-    };
-
-  }
-
-
-  if (type === "Deposit") {
-
-    return {
-
-      icon: "↓",
-
-      iconClass: "deposit-icon",
-
-      amountClass: "deposit-amount",
-
-      sign: "+"
-
-    };
-
-  }
-
-
-  if (
-    type === "Withdraw" ||
-    type === "Withdrawal Request"
-  ) {
-
-    return {
-
-      icon: "↑",
-
-      iconClass: "withdraw-icon",
-
-      amountClass: "withdraw-amount",
-
-      sign: "-"
-
-    };
-
-  }
-
-
-  if (type === "Recharge") {
-
-    return {
-
-      icon: "↓",
-
-      iconClass: "deposit-icon",
-
-      amountClass: "deposit-amount",
-
-      sign: "+"
-
-    };
-
-  }
-
-
-  return {
-
-    icon: "📈",
-
-    iconClass: "investment-icon",
-
-    amountClass: "investment-amount",
-
-    sign: "-"
 
   };
 
