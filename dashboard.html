@@ -3664,24 +3664,94 @@ document
     }
 
   }else if(
-    data.error ===
-    "INVALID_CODE"
-  ){
+  data.error ===
+  "INVALID_CODE"
+){
 
-    alert(
-      "Invalid reward code."
+  const modal =
+    document.getElementById(
+      "rewardMessageModal"
     );
 
-  }else if(
-    data.error ===
-    "CODE_INACTIVE"
-  ){
-
-    alert(
-      "This reward code is inactive."
+  const title =
+    document.getElementById(
+      "rewardMessageTitle"
     );
 
-  }else{
+  const message =
+    document.getElementById(
+      "rewardMessageText"
+    );
+
+  if(title){
+
+    title.textContent =
+      "Invalid Reward Code";
+
+  }
+
+  if(message){
+
+    message.textContent =
+      "The reward code you entered is invalid or does not exist.";
+
+  }
+
+  closeRewardCodeModal();
+
+  if(modal){
+
+    modal.classList.add(
+      "show"
+    );
+
+  }
+
+}else if(
+  data.error ===
+  "CODE_INACTIVE"
+){
+
+  const modal =
+    document.getElementById(
+      "rewardMessageModal"
+    );
+
+  const title =
+    document.getElementById(
+      "rewardMessageTitle"
+    );
+
+  const message =
+    document.getElementById(
+      "rewardMessageText"
+    );
+
+  if(title){
+
+    title.textContent =
+      "Reward Code Inactive";
+
+  }
+
+  if(message){
+
+    message.textContent =
+      "This reward code is currently inactive.";
+
+  }
+
+  closeRewardCodeModal();
+
+  if(modal){
+
+    modal.classList.add(
+      "show"
+    );
+
+  }
+
+}else{
 
     alert(
       data.message ||
